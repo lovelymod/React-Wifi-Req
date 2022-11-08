@@ -1,10 +1,19 @@
 .App {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
+  /* text-align: center; */
+  /* display: flex;
+  flex-direction: column; */
 }
 
-form{
-  display: flex;
-  flex-direction: column;
+h1{
+  text-align: center;
 }
+
+.form-control{
+  margin-bottom: 10px;
+}
+
+
+
+
+
+
