@@ -13,8 +13,8 @@ const db = mysql.createConnection({
     database: "wifireq2"
 })
 
-app.get('/wifirequest', (req,res) => {
-    db.query('SELECT * FROM wifireq2' , (err, result) => {
+app.get('/adminid', (req,res) => {
+    db.query('SELECT * FROM idadmin' , (err, result) => {
         if(err){
             console.log(err);
         } else{
@@ -23,6 +23,26 @@ app.get('/wifirequest', (req,res) => {
     })
 })
 
+app.post('/login',(req,res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    db.query(
+        "SELECT * FROM idadmin WHERE username ? AND passwd = ?",
+        [username,password],
+        (err,result) => {
+            if(err){
+                res.send({err:err});
+            }
+
+            if(result.length > 0){
+                res.send(result);
+            }else {
+                res.send({message : 'Wrong username or password'});
+            }
+        }
+    )
+})
 
 
 app.post('/create', (req,res) => {

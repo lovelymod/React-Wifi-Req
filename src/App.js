@@ -64,7 +64,7 @@ function App() {
   };
 
   const [IsDisable, setIsDisable] = useState("");
-  const [etcDisable, setetcDisable] = useState("");
+  const [etcDisable, setetcDisable] = useState("false");
 
   const swapData = () => {
     if (strDtype === "etc.") {
