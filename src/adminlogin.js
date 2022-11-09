@@ -12,25 +12,24 @@ function Login() {
             <div className="row-contain">
               <input
                 type="text"
-                className="form-control"
+                className="form-control input"
                 id=""
-                placeholder=""
+                placeholder="Username"
               />
             </div>
             <div className="row-contain">
               <input
                 type="text"
-                className="form-control"
+                className="form-control input"
                 id=""
-                placeholder=""
-              />
-
-              <input
-                type=""
-                className="btn"
-                value="Submit"
+                placeholder="Password"
               />
             </div>
+            <input
+                type=""
+                className="btn regisbutt"
+                value="Submit"
+              />
           </form>
         </div>
       </div>
