@@ -317,7 +317,7 @@ function App() {
             </div>
 
             <input
-              type=""
+              type="submit"
               className="btn"
               value="Submit"
               onClick={addRequest}

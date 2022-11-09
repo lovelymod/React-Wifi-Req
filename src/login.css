@@ -13,11 +13,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
-    width: 500px;
+    /* border: 1px solid black; */
+    width: 700px;
     height: 500px;
     padding: 20px;
     box-shadow: 5px 5px 50px 5px gray;
+    border-radius: 20px;
+    background-color: #0174B3;
 
 }
 
@@ -25,3 +27,15 @@
     width: 150px;
     height: 150px;
 }
+
+.btn{
+    background-color: #FF5240 !important;
+    color: #FFB401 !important;
+    border-radius: 50px !important;
+    width: 150px !important;
+    height: 70px !important;
+    font-size: 24px !important;
+    margin-top: 30px !important;
+    margin-bottom: 30px;
+    font-weight: bold !important;
+  }
