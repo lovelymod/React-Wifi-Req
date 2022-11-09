@@ -1,0 +1,27 @@
+*{
+    box-sizing: border-box;
+}
+.App2{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bg2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    width: 500px;
+    height: 500px;
+    padding: 20px;
+    box-shadow: 5px 5px 50px 5px gray;
+
+}
+
+.logo{
+    width: 150px;
+    height: 150px;
+}
