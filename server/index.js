@@ -1,3 +1,4 @@
+
 const express = require('express');
 const app = express();
 const mysql = require('mysql');
@@ -13,7 +14,7 @@ const db = mysql.createConnection({
     database: "wifireq2"
 })
 
-app.get('/adminid', (req,res) => {
+app.get('/idadmin', (req,res) => {
     db.query('SELECT * FROM idadmin' , (err, result) => {
         if(err){
             console.log(err);
@@ -28,21 +29,36 @@ app.post('/login',(req,res) => {
     const password = req.body.password;
 
     db.query(
-        "SELECT * FROM idadmin WHERE username ? AND passwd = ?",
+        "SELECT * FROM idadmin WHERE username = ? AND passwd = ?",
         [username,password],
+        
         (err,result) => {
+            // console.log(result);
             if(err){
-                res.send({err:err});
-            }
-
-            if(result.length > 0){
-                res.send(result);
+                // res.send(err);
+                res.sendStatus(400); 
             }else {
-                res.send({message : 'Wrong username or password'});
+                let data = null;
+                // username or password not match 
+                if(result.length === 0){
+                     data = {
+                        result: result,
+                        message: 'Wrong username or password'
+                    }
+
+                // username and password not match 
+                }else{
+                     data = {
+                        result: result,
+                        message: 'Matched'
+                    }
+
+                }
+                res.json(data);
             }
         }
-    )
-})
+    );
+});
 
 
 app.post('/create', (req,res) => {
@@ -52,7 +68,6 @@ app.post('/create', (req,res) => {
     const tel = req.body.tel;
     const email = req.body.email;
     const dtype = req.body.dtype;
-    // const etc = req.body.etc;
     const dbrand = req.body.dbrand;
     const dname = req.body.dname;
     const startdate = req.body.startdate;

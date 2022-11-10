@@ -1,27 +1,35 @@
 import "./login.css";
 import { useState } from "react";
 import Axios from "axios";
-import { BrowserRouter as Router,Route ,Switch } from "react-router-dom";
+import Table from "./table";
+import { useNavigate } from "react-router-dom";
 
-
-function Login() {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // const [adminList, setAdminList] = useState([]);
+  const navigate = useNavigate();
+
+  const [loginStat, setLoginstat] = useState("");
+
+  const testdata = () => {
+    console.log(loginStat);
+  };
 
   const login = () => {
-    Axios.post('http://localhost:3001/login',{
+    Axios.post("http://localhost:3001/login", {
       username: username,
       password: password,
     }).then((response) => {
-      console.log(response);
-    })
+      console.log(response.data.message);
+      if (response.data.message === "Matched") {
+        setLoginstat("true");
+        navigate("/table");
+      } else {
+        setLoginstat("false");
+      }
+    });
   };
-
-
-  
-
   return (
     <div className="App2">
       <div className="bg2">
@@ -52,17 +60,28 @@ function Login() {
                 }}
               />
             </div>
+
+            {/* <button
+              type="submit"
+              className="btn regisbutt"
+              onClick={() => login()}
+            >
+              Submit
+            </button> */}
+
             <input
               type=""
               className="btn regisbutt"
               value="Submit"
               onClick={login}
             />
+
+            <h1>{loginStat}</h1>
           </form>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Login;

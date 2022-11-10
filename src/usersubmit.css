@@ -4,14 +4,6 @@
   box-sizing: border-box;
 }
 
-.content{
-  /* border: 100px solid black; */
-  margin: 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .App {
   font-family: 'Kanit', sans-serif;
   display: flex;
@@ -22,6 +14,7 @@
   width: 1500px;
   height: fit-content;
   box-shadow: 5px 5px 50px 5px gray;
+  /* border: 100px solid black; */
 }
 
 h1{
@@ -81,11 +74,14 @@ img{
   justify-content: space-between;
   align-items: center;
   width: 700px;
+  /* border: 1px solid black; */
 }
 
 span{
   
   justify-content: space-between;
+  /* border: 1px solid black; */
+
 }
 
 

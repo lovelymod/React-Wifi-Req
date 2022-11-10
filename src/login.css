@@ -1,17 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,300&display=swap');
 *{
     box-sizing: border-box;
+
 }
 .App2{
     height: 100vh;
     width: 100vw;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: 'Kanit', sans-serif;
+
 }
 .bg2{
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    justify-content: center;
     align-items: center;
     /* border: 1px solid black; */
     width: 700px;
@@ -27,8 +32,11 @@ form{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* border: 1px solid black; */
-    padding: 30px;
+}
+
+.row-contain{
+    display: flex;
+    justify-content: center;
 }
 
 .input{
@@ -42,7 +50,7 @@ form{
     width: 150px;
     height: 150px;
     margin-top: 30px;
-    margin-bottom: 30px;
+    
 }
 
 .regisbutt{
@@ -53,7 +61,7 @@ form{
     height: 70px !important;
     font-size: 24px !important;
     font-weight: bold !important;
-    margin-top: 20px;
+    margin: 5px !important;
   }
 
   .regisbutt:active{
