@@ -1,10 +1,9 @@
 import "./login.css";
 import { useState } from "react";
 import Axios from "axios";
-import Table from "./table";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,6 +21,7 @@ const Login = () => {
       password: password,
     }).then((response) => {
       console.log(response.data.message);
+      console.log(response.data.result);
       if (response.data.message === "Matched") {
         setLoginstat("true");
         navigate("/table");
@@ -38,7 +38,7 @@ const Login = () => {
         </div>
         <div className="container">
           <form>
-            <div className="row-contain">
+            <div className="row-contain-login">
               <input
                 type="text"
                 className="form-control input"
@@ -49,7 +49,7 @@ const Login = () => {
                 }}
               />
             </div>
-            <div className="row-contain">
+            <div className="row-contain-login">
               <input
                 type="password"
                 className="form-control input"
@@ -71,7 +71,7 @@ const Login = () => {
 
             <input
               type=""
-              className="btn regisbutt"
+              className="btn loginbutt"
               value="Submit"
               onClick={login}
             />
@@ -82,6 +82,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Login;

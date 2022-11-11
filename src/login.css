@@ -34,9 +34,10 @@ form{
     align-items: center;
 }
 
-.row-contain{
+.row-contain-login{
     display: flex;
     justify-content: center;
+
 }
 
 .input{
@@ -53,7 +54,7 @@ form{
     
 }
 
-.regisbutt{
+.loginbutt{
     background-color: #FF5240 !important;
     color: #FFB401 !important;
     border-radius: 50px !important;
@@ -64,7 +65,7 @@ form{
     margin: 5px !important;
   }
 
-  .regisbutt:active{
+  .loginbutt:active{
     background-color: #FFB401 !important;
     color: #FF5240 !important;
 

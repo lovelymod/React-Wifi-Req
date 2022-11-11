@@ -17,27 +17,45 @@
   /* border: 100px solid black; */
 }
 
-h1{
+.message{
   text-align: center;
   color: #FFB401;
   
 }
 
-.btn{
+
+.regisbutt{
   background-color: #0174B3 !important;
-  color: #FFB401 !important;
+  color: white !important;
   border-radius: 50px !important;
   width: 150px !important;
   height: 70px !important;
   font-size: 24px !important;
   margin-top: 30px !important;
-  margin-bottom: 30px;
+  margin-bottom: 30px !important;
   font-weight: bold !important;
 }
 
-.btn:active{
+.backbutt{
+  background-color: #FFB401 !important;
+  color: white !important;
+  border-radius: 50px !important;
+  width: 150px !important;
+  height: 70px !important;
+  font-size: 24px !important;
+  margin-top: 30px !important;
+  margin-bottom: 30px !important;
+  font-weight: bold !important;
+}
+
+.regisbutt:active{
   background-color: #FFB401 !important;
   color: #FF5240 !important;
+}
+
+.backbutt:active{
+  background-color: #FF5240 !important;
+  color: #FFB401 !important;
 }
 
 .form-control,.form-select{
@@ -49,7 +67,6 @@ h1{
 
 .solo{
   display: flex;
-  
   align-items: center;
   width: 700px;
   justify-content: flex-end;
@@ -74,15 +91,33 @@ img{
   justify-content: space-between;
   align-items: center;
   width: 700px;
-  /* border: 1px solid black; */
+  /* border: 1px solid blue; */
 }
 
-span{
+.row-contain-butt{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 700px;
+  /* border: 1px solid blue; */
+}
+
+
+
+.split-contain{
   
   justify-content: space-between;
   /* border: 1px solid black; */
 
 }
+/* .split-contain-last{
+  border: 1px solid black;
+  width: 100%;
+}
+
+.remark{
+  width: 100% !important;
+} */
 
 
 form{
@@ -104,11 +139,18 @@ label{
 
   }
 
+  .row-contain-butt{
+    width: 400px;
+  }
+
   .bg{
     max-width: 500px;
   }
 
- 
+  .backbutt{
+    height: 50px !important;
+    width: 125px !important;
+  }
 }
 
 @media only screen and (min-width:601px) and (max-width:900px) {
@@ -117,10 +159,19 @@ label{
     flex-direction: column;
   }
 
+  .row-contain-butt{
+    width: 500px;
+  }
+
   .bg{
     max-width: 800px;
   }
 
+  .backbutt{
+    height: 60px !important;
+  }
+
+  
  
 }
 

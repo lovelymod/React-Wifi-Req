@@ -1,8 +1,9 @@
 import "./usersubmit.css";
 import { useState } from "react";
 import Axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function UserSubmit() {
+function AdminSub() {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [utype, setUtype] = useState("");
@@ -101,6 +102,13 @@ function UserSubmit() {
       setetcDisable(true);
     }
   };
+
+  const navigate = useNavigate();
+
+  const Back = () => {
+    navigate("/table");
+  };
+
   return (
     <div className="App">
       <div className="bg">
@@ -340,7 +348,7 @@ function UserSubmit() {
                 type=""
                 className="btn backbutt"
                 value="Cancel"
-                
+                onClick={Back}
               />
             </div>
           </form>
@@ -350,4 +358,4 @@ function UserSubmit() {
   );
 }
 
-export default UserSubmit;
+export default AdminSub;

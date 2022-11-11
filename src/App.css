@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,300&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,300&display=swap');
 
 *{
   box-sizing: border-box;
 }
 
 .content{
-  /* border: 100px solid black; */
+  border: 100px solid black;
   margin: 0px;
   display: flex;
   justify-content: center;
@@ -131,4 +131,4 @@ label{
 
 
 
-
+ */

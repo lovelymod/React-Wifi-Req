@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,300&display=swap');
+
+
+.App3{
+    height: 99vh;
+    width: 99vw;
+    font-family: 'Kanit', sans-serif;
+
+    /* border: 5px solid black; */
+}
+
+.bg3{
+    margin-top: 10px;
+    /* border-radius: 15px; */
+    height: 100vh;
+    border: 1px solid black;
+}
+
+.header-top{
+    /* border: 1px solid orange ; */
+    display: flex;
+    justify-content: space-around;
+    background-color: #0174B3  ;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    height: 140px;
+ 
+}
+
+.name{
+    color: #FFB401;
+    font-size: 32px;
+}
+
+.left{
+    /* border: 5px solid yellowgreen ; */
+    display: flex;
+    align-items: center;
+
+
+}
+
+.right{
+    /* border: 5px solid yellowgreen ; */
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+    align-items: center;
+    width: 50%;
+
+
+}
+
+.create{
+    background-color: #FFB401 !important;
+    color: #0174B3 !important;
+    width: 130px !important;
+    font-size: 20px !important;
+}
+
+.export{
+    background-color: #FFB401 !important;
+    color: #0174B3 !important;
+    width: 125px !important;
+    margin-left: 50px;
+    font-size: 20px !important;
+
+}
+
+.head-table{
+    /* display: flex;
+    justify-content: space-around;
+    padding-right: 500px;
+    align-items: center; */
+    display: grid;
+    grid-template-columns: repeat(13,180px);
+    /* border: 2px solid brown ; */
+    height: auto;
+    padding-top: 10px;
+}
+
+.head-data{
+    /* border: 2px solid crimson ; */
+    display: flex;
+    justify-content: center;
+
+}
+
+.member{
+    display: grid;
+    /* border: 2px solid deepskyblue ; */
+    height: 50px;
+    align-items: center;
+    font-weight: bold;
+    margin-top: 10px;
+    grid-template-columns: repeat(10,180px);
+}
+
+.member-data{
+    /* border: 2px solid crimson ; */
+    display: flex;
+    justify-content: center;
+
+}
+
+.utype-colors{
+    padding: 5px;
+    border-radius: 20px;
+    width: fit-content;
+    background-color: #A8FFA6;
+}
+
+.box-edit{
+    /* border: 2px solid crimson ; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    grid-column: 9/13;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.edit-butt{
+    width: 75px !important;
+    height: 30px !important;
+    background-color: #0174B3 !important;
+    color: white !important;
+    padding: 0px !important;
+
+}
+
+.edit-butt:active{
+    background-color: #FFB401 !important;
+    color: #FF5240 !important;
+}
+
+.hr-last{
+    grid-column: 1/13;
+}
