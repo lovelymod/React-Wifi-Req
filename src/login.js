@@ -11,9 +11,9 @@ function Login() {
 
   const [loginStat, setLoginstat] = useState("");
 
-  const testdata = () => {
-    console.log(loginStat);
-  };
+  // const testdata = () => {
+  //   console.log(loginStat);
+  // };
 
   const login = () => {
     Axios.post("http://localhost:3001/login", {

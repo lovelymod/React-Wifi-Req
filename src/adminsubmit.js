@@ -134,6 +134,7 @@ function AdminSub() {
                   placeholder="Firstname(English)"
                   onChange={(e) => {
                     setFname(e.target.value);
+                    getDateandTime();
                   }}
                 />
               </span>

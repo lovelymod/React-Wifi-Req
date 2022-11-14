@@ -107,6 +107,9 @@ app.post("/create", (req, res) => {
   const date = req.body.date;
   const time = req.body.time;
 
+  console.log(date);
+  console.log(time);
+
   db.query(
     "INSERT INTO wifireq2 (firstname, lastname, usertype, tel, email, dtype, dbrand, dname, startdate, enddate, remark, date ,time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
     [

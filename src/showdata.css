@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,300&display=swap');
+
+*{
+    box-sizing: border-box;
+}
+
+.App4{
+    /* border: 2px solid black; */
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Kanit', sans-serif;
+}
+
+.bg4{
+    /* border: 2px solid red; */
+    width: 100vw;
+    height: 100vh;
+    margin-top: 20px;
+    margin-left: 20px;
+    border-top-left-radius: 30px ;
+    display: flex;
+    justify-content: center;
+    box-shadow: 5px 5px 50px 5px gray;
+    
+}
+
+.left2{
+    /* border: 2px solid yellowgreen; */
+    width: 20%;
+    height: 100%;
+    background-color: #0174B3;
+    border-top-left-radius: 30px ;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 50px;
+
+
+}
+
+.right2{
+    /* border: 2px solid yellowgreen; */
+    width: 100%;
+    height: 100%;
+
+}
+
+.backbutt2{
+    font-size: 32px !important;
+    font-weight: bold !important;
+    color: white !important;
+
+}
+
+.headerInfo{
+    /* border: 2px solid purple; */
+    color: #FFB401;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    padding-left: 100px;
+}
+
+.showcontain{
+    display: flex;
+
+    /* border: 2px solid purple; */
+    height: 76%;
+
+}
+
+.contain-left{
+    /* border: 2px solid green; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.contain-right{
+    /* border: 2px solid green; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.contain-data{
+    /* border: 2px solid pink; */
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+    
+}
+
+.row-data{
+    /* border: 2px solid crimson; */
+    height: 50px;
+    display: flex;
+    margin-top: 40px;
+    padding-left:40px ;
+}
+
+.label-data{
+    color: #0174B3;
+    margin-right: 20px;
+}
+
+.data{
+    font-size: 28px;
+}
+
+.row-butt{
+    /* border: 2px solid pink; */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.emtpy-box{
+    width: 100px;
+}
+
+.edit-butt-sw{
+    width: 85px !important;
+    height: 40px !important;
+    background-color: #0174B3 !important;
+    color: white !important;
+    padding: 0px !important;
+    font-size: 24px !important;
+    font-weight: bold !important;
+}

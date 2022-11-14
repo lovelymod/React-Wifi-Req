@@ -2,7 +2,8 @@ import UserSubmit from "./usersubmit";
 import Login from "./login";
 import Table from "./table";
 import AdminSub from "./adminsubmit";
-
+import ShowData from "./showdata";
+import EditUser from "./edituser";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -15,6 +16,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/table" element={<Table />} />
             <Route path="/adminsubmit" element={<AdminSub />} />
+            <Route path="/showdata" element={<ShowData />} />
+            <Route path="/edituser" element={<EditUser />} />
           </Routes>
         </div>
       </div>

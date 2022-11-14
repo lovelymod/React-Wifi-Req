@@ -126,6 +126,7 @@ function UserSubmit() {
                   placeholder="Firstname(English)"
                   onChange={(e) => {
                     setFname(e.target.value);
+                    getDateandTime();
                   }}
                 />
               </span>
@@ -336,12 +337,7 @@ function UserSubmit() {
                 onClick={addRequest}
               />
 
-              <input
-                type=""
-                className="btn backbutt"
-                value="Cancel"
-                
-              />
+              <input type="" className="btn backbutt" value="Cancel" />
             </div>
           </form>
         </div>
