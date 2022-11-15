@@ -110,6 +110,10 @@ img{
   /* border: 1px solid black; */
 
 }
+
+.remark{
+  width: 700px !important;
+}
 /* .split-contain-last{
   border: 1px solid black;
   width: 100%;
@@ -119,6 +123,9 @@ img{
   width: 100% !important;
 } */
 
+.fill-message{
+  color: red;
+}
 
 form{
   display: flex;
@@ -151,12 +158,16 @@ label{
     height: 50px !important;
     width: 125px !important;
   }
+
+  .remark{
+    width: 300px !important;
+  }
 }
 
 @media only screen and (min-width:601px) and (max-width:900px) {
 
   .row-contain,.solo{
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .row-contain-butt{
@@ -169,6 +180,10 @@ label{
 
   .backbutt{
     height: 60px !important;
+  }
+
+  .remark{
+    width: 700px !important;
   }
 
   

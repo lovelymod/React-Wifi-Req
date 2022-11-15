@@ -132,6 +132,11 @@ app.post("/create", (req, res) => {
         console.log(err);
       } else {
         res.send("Value Inserted");
+        let data = null;
+        data = {
+          result: result,
+          message: "Inserted"
+        }
       }
     }
   );

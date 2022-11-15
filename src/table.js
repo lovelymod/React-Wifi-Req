@@ -73,7 +73,7 @@ function Table() {
         </div>
         <div className="bottom-img">
           <button className="icon" onClick={BtoLogin}>
-            <LogoutOutlinedIcon sx={{ fontSize: "40px", color: "#0174B3" }} />
+            <LogoutOutlinedIcon className="icon-exit" sx={{ fontSize: "40px", color: "#0174B3" }} />
           </button>
         </div>
       </div>
