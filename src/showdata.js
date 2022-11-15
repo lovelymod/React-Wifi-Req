@@ -10,8 +10,25 @@ function ShowData() {
   const Back = () => {
     navigate("/table");
   };
+
+
+  const edituser = (id) => {
+    const newMemberList = showNewMember.filter((val) => val.id === id);
+    navigate("/edituser", { state: { newMemberList }});
+  }
+
   return (
     <div className="App4">
+      <div className="left-manu">
+        <div className="top-img">
+          <img className="logo-table" src="img/LS-02.png" alt="" srcSet="" />
+        </div>
+        <div className="bottom-img">
+          {/* <button className="icon" onClick={BtoLogin}>
+            <LogoutOutlinedIcon sx={{ fontSize: "40px", color: "#0174B3" }} />
+          </button> */}
+        </div>
+      </div>
       <div className="bg4">
         <span className="left2">
           <button className="btn backbutt2" onClick={Back}>
@@ -90,7 +107,7 @@ function ShowData() {
                     <div className="row-data">
                     </div>
                     <div className="row-butt">
-                      <button className="btn edit-butt-sw">Edit</button>
+                      <button className="btn edit-butt-sw" onClick={() => {edituser(val.id)}}>Edit</button>
                       <div className="emtpy-box"></div>
                       <button className="btn edit-butt-sw">Delete</button>
                     </div>

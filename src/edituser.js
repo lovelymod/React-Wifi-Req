@@ -2,13 +2,13 @@ import "./edituser.css";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import Axios from "axios";
 
 function EditUser() {
   const navigate = useNavigate();
   const location = useLocation();
   const showNewMember = location.state.newMemberList;
-
-  //   console.log(showNewMember);
+  const [newMember, setNewmember] = useState(showNewMember);
 
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
@@ -16,7 +16,7 @@ function EditUser() {
   const [tel, setTel] = useState("");
   const [email, setEmail] = useState("");
   const [dtype, setDtype] = useState("");
-  const [etc, setEtc] = useState("");
+  // const [etc, setEtc] = useState("");
   const [dbrand, setDbrand] = useState("");
   const [dname, setDname] = useState("");
   const [startdate, setStartdate] = useState("");
@@ -27,6 +27,46 @@ function EditUser() {
 
   const Back = () => {
     navigate("/table");
+  };
+
+  const UpdateData = (id) => {
+    Axios.put("http://localhost:3001/update", {
+      id: id,
+      firstname: fname,
+      lastname: lname,
+      usertype: utype,
+      tel: tel,
+      email: email,
+      dtype: dtype,
+      dbrand: dbrand,
+      dname: dname,
+      startdate: startdate,
+      enddate: enddate,
+      remark: remark,
+    })
+      .then((response) => {
+        setNewmember(
+          newMember.map((val) => {
+            return val.id === id
+              ? {
+                  id: id,
+                  firstname: fname,
+                  lastname: lname,
+                  usertype: utype,
+                  tel: tel,
+                  email: email,
+                  dtype: dtype,
+                  dbrand: dbrand,
+                  dname: dname,
+                  startdate: startdate,
+                  enddate: enddate,
+                  remark: remark,
+                }
+              : val;
+          })
+        );
+      })
+      .catch((err) => {});
   };
 
   const Check = (value) => {
@@ -40,6 +80,16 @@ function EditUser() {
 
   return (
     <div className="App5">
+      <div className="left-manu">
+        <div className="top-img">
+          <img className="logo-table" src="img/LS-02.png" alt="" srcSet="" />
+        </div>
+        <div className="bottom-img">
+          {/* <button className="icon" onClick={BtoLogin}>
+            <LogoutOutlinedIcon sx={{ fontSize: "40px", color: "#0174B3" }} />
+          </button> */}
+        </div>
+      </div>
       <div className="bg5">
         <span className="left3">
           <button className="btn backbutt3" onClick={Back}>
@@ -238,7 +288,19 @@ function EditUser() {
             })}
 
             <div className="row-butt2">
-              <button className="btn savebutt">Save</button>
+              {showNewMember.map((val, key) => {
+                return (
+                  <button
+                    className="btn savebutt"
+                    onClick={() => {
+                      UpdateData(val.id);
+                    }}
+                  >
+                    Save
+                  </button>
+                );
+              })}
+
               <div className="empty-box2"></div>
               <button className="btn cancelbutt" onClick={Back}>
                 Cancle

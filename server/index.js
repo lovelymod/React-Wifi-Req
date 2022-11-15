@@ -137,6 +137,28 @@ app.post("/create", (req, res) => {
   );
 });
 
+app.put('/update',(req,res) => {
+  const id = req.body.id;
+  const fname = req.body.firstname;
+  const lname = req.body.lastname;
+  const utype = req.body.usertype;
+  const tel = req.body.tel;
+  const email = req.body.email;
+  const dtype = req.body.dtype;
+  const dbrand = req.body.dbrand;
+  const dname = req.body.dname;
+  const startdate = req.body.startdate;
+  const enddate = req.body.enddate;
+  const remark = req.body.remark;
+  db.query("UPDATE wifireq2 SET firstname = ? , lastname = ? , usertype = ? , tel = ? , email = ? , dtype = ? , dbrand = ? , dname = ? , startdate = ? , enddate = ?, remark = ? WHERE id = ?", [fname,lname,utype,tel,email,dtype,dbrand,dname,startdate,enddate,remark,id] ,(err,result) => {
+    if(err){
+      console.log(err);
+    }else {
+      res.send(result);
+    }
+  })
+})
+
 app.get('/member', (req,res) => {
     db.query('SELECT * FROM wifireq2' , (err, result) => {
         if(err){
