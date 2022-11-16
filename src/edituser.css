@@ -5,31 +5,53 @@
 }
 
 .App5{
-    /* border: 2px solid black; */
-    height: 1080px;
-    width: 1920px;
+    border: 2px solid black;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     font-family: 'Kanit', sans-serif;
-    background-color: rgb(184, 179, 179);
+    background-color: rgb(190, 190, 190);
 
 }
 
-.bg5{
-    /* border: 2px solid red; */
-    width: 100%;
-    height: 99%;
-    margin-top: 10px;
-    margin-left: 20px;
-    border-top-left-radius: 30px ;
+.left-manu5{
+    border: 2px solid black;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-top-right-radius: 30px;
+    margin-right: 10px;
+    background-color: white;
+    height: 100%;
+    width: 10%;
+}
+
+.top-img5{
+    border: 2px solid black;
+    padding-top: 20px;
+    height: 50%;
+}
+
+.bottom-img5{
+    border: 2px solid black;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.bg5{
+    border: 2px solid red;
+    width: 90%;
+    height: 100%;
+    border-top-left-radius: 30px ;
     box-shadow: 5px 5px 50px 5px gray;
     background-color: white;
     
 }
 
 .left3{
-    /* border: 2px solid yellowgreen; */
+    border: 2px solid yellowgreen;
     width: 20%;
     height: 100%;
     background-color: #0174B3;
@@ -43,45 +65,53 @@
 }
 
 .right3{
-    /* border: 2px solid yellowgreen; */
+    border: 2px solid yellowgreen;
     width: 100%;
     height: 100%;
 
 }
 
-.backbutt3{
-    font-size: 32px !important;
-    font-weight: bold !important;
-    color: white !important;
-
-}
-
 .headerInfo2{
-    /* border: 2px solid purple; */
+    border: 2px solid purple;
+    background-color: #0174B3;
     color: #FFB401;
-    height: 20%;
+    border-top-left-radius: 28px ;
+    height: 13%;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+.backbutt3{
+    border: 2px solid black !important;
+    color: #FFB401 !important;
+    display: flex !important;
     align-items: center;
-    padding-left: 100px;
+    width: fit-content;
+    height: fit-content;
+    margin-left: 50px; 
+    margin-top: 20px;
+    
+
 }
 
 .showcontain2{
     display: flex;
     justify-content: center;
-    /* border: 2px solid purple; */
+    border: 5px solid purple;
     height: fit-content;
 
 }
 
 .wrap-contain{
-    /* border: 2px solid yellow; */
+    border: 5px solid yellow;
     display: flex;
     flex-direction: column;
     height: 77%;
 }
 
 .contain-left2{
-    /* border: 2px solid green; */
+    border: 2px solid green;
     width: 100%;
     height: fit-content;
     display: flex;
@@ -103,29 +133,53 @@
 }
 
 .contain-data2{
-    /* border: 2px solid pink; */
-    display: flex;
-    flex-direction: column;
-    
-    width: 80%;
-    height: fit-content;
+    border: 5px solid pink;
+    height: 87%;
+    overflow: auto;
     
 }
 
 .row-data2{
-    /* border: 2px solid crimson; */
+    border: 2px solid crimson;
     height: fit-content;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    width: 65%;
     margin-top: 20px;
-    padding-left:40px ;
+    
 }
+
+.split-containedit{
+  
+    justify-content: space-between;
+    border: 1px solid black;
+  
+  }
+
+  .solo2{
+    display: flex;
+    align-items: flex-end;
+    width: 65%;
+    justify-content: flex-end;
+    border: 2px solid black;
+  
+  }
+
+  .fl2{
+    font-size: 24px;
+  }
+
+  .split-containRemarkedit{
+    border: 1px solid black;
+    width: 100%;
+  
+  }
 
 .row-data-remark{
     align-self: center;
-    /* border: 2px solid crimson; */
+    border: 2px solid crimson;
     height: fit-content;
-    width: 90%;
+    width: 65%;
     display: flex;
     flex-direction: column;
     margin-top: 20px;
@@ -133,13 +187,17 @@
 }
 
 .inputedit{
-    height: 50px !important;
-    border-color: gray !important;
+  width: 500px !important;
+  height: 75px !important;
+  border-radius: 25px !important;
+  margin-bottom: 10px !important;
+  border-color: gray !important;
 }
 
 .inputeditremark{
-    height: 50px !important;
+    height: 75px !important;
     width: 100% !important;
+    border-radius: 25px !important;
     border-color: gray !important;
 }
 
@@ -155,14 +213,11 @@
 }
 
 .row-butt2{
-    /* border: 2px solid pink; */
-    align-self: center;
-    height: fit-content;
-    width: 90%;
+    border: 2px solid pink;
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    margin-top: 20px;
+  justify-content: space-around;
+  align-items: center;
+  width: 65%;
 }
 
 .savebutt{

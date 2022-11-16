@@ -33,15 +33,15 @@ function Login() {
   return (
     <div className="App2">
       <div className="bg2">
-        <div className="images">
-          <img className="logo" src="img/LS-02.png" alt="" srcSet="" />
+        <div className="images2">
+          <img className="logo2" src="img/LS-02.png" alt="" srcSet="" />
         </div>
-        <div className="container">
+        <div className="container2">
           <form>
-            <div className="row-contain-login">
+            <div className="row-contain-login2">
               <input
                 type="text"
-                className="form-control input"
+                className="form-control input2"
                 id="username"
                 placeholder="Username"
                 onChange={(e) => {
@@ -49,10 +49,10 @@ function Login() {
                 }}
               />
             </div>
-            <div className="row-contain-login">
+            <div className="row-contain-login2">
               <input
                 type="password"
-                className="form-control input"
+                className="form-control input2"
                 id="password"
                 placeholder="Password"
                 onChange={(e) => {
@@ -71,8 +71,8 @@ function Login() {
 
             <input
               type=""
-              className="btn loginbutt"
-              value="Submit"
+              className="btn loginbutt2"
+              value="Login"
               onClick={login}
             />
 

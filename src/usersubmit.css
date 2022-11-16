@@ -4,13 +4,13 @@
   box-sizing: border-box;
 }
 
-.App {
+.App1 {
   font-family: 'Kanit', sans-serif;
   display: flex;
   justify-content: center;
 }
 
-.bg{
+.bg1{
   width: 1500px;
   height: fit-content;
   box-shadow: 5px 5px 50px 5px gray;
@@ -65,7 +65,7 @@
   margin-bottom: 10px !important;
 }
 
-.solo{
+.solo1{
   display: flex;
   align-items: center;
   width: 700px;
@@ -73,7 +73,7 @@
 }
 
 
-.images{
+.images1{
   display: flex;
   justify-content: center;
   margin-bottom: 50px;
@@ -86,7 +86,7 @@ img{
   height: 150px;
 }
 
-.row-contain{
+.row-contain1{
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -94,7 +94,7 @@ img{
   /* border: 1px solid blue; */
 }
 
-.row-contain-butt{
+.row-contain-butt1{
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -104,14 +104,14 @@ img{
 
 
 
-.split-contain{
+.split-contain1{
   
   justify-content: space-between;
   /* border: 1px solid black; */
 
 }
 
-.remark{
+.remark1{
   width: 700px !important;
 }
 /* .split-contain-last{
@@ -140,17 +140,17 @@ label{
 
 @media only screen and (max-width:600px) {
 
-  .row-contain,.solo{
+  .row-contain1,.solo1{
     flex-direction: column;
     width: fit-content;
 
   }
 
-  .row-contain-butt{
+  .row-contain-butt1{
     width: 400px;
   }
 
-  .bg{
+  .bg1{
     max-width: 500px;
   }
 
@@ -159,22 +159,22 @@ label{
     width: 125px !important;
   }
 
-  .remark{
+  .remark1{
     width: 300px !important;
   }
 }
 
 @media only screen and (min-width:601px) and (max-width:900px) {
 
-  .row-contain,.solo{
+  .row-contain1,.solo1{
     flex-direction: row;
   }
 
-  .row-contain-butt{
+  .row-contain-butt1{
     width: 500px;
   }
 
-  .bg{
+  .bg1{
     max-width: 800px;
   }
 
@@ -182,7 +182,7 @@ label{
     height: 60px !important;
   }
 
-  .remark{
+  .remark1{
     width: 700px !important;
   }
 

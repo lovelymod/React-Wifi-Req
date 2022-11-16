@@ -67,44 +67,44 @@ function Table() {
 
   return (
     <div className="App3">
-      <div className="left-manu">
-        <div className="top-img">
-          <img className="logo-table" src="img/LS-02.png" alt="" srcSet="" />
+      <div className="left-manu3">
+        <div className="top-img3">
+          <img className="logo-table3" src="img/LS-02.png" alt="" srcSet="" />
         </div>
-        <div className="bottom-img">
-          <button className="icon" onClick={BtoLogin}>
-            <LogoutOutlinedIcon className="icon-exit" sx={{ fontSize: "40px", color: "#0174B3" }} />
+        <div className="bottom-img3">
+          <button className="icon3" onClick={BtoLogin}>
+            <LogoutOutlinedIcon className="icon-exit3" sx={{ fontSize: "40px", color: "#0174B3" }} />
           </button>
         </div>
       </div>
       <div className="bg3">
-        <div className="header-top">
-          <span className="left">
-            <h2 className="name">Wi-fi Request List</h2>
+        <div className="header-top3">
+          <span className="left3">
+            <h2 className="name3">Wi-fi Request List</h2>
           </span>
-          <span className="right">
+          <span className="right3">
             <input
               type="button"
-              className="btn create"
+              className="btn create3"
               value="Create User"
               onClick={gotoAdminSub}
             />
             <CSVLink {...csvReport}>
-              <input type="button" className="btn export" value="Export .csv" />
+              <input type="button" className="btn export3" value="Export .csv" />
             </CSVLink>
           </span>
         </div>
 
-        <div className="head-table">
-          <p className="head-data">No</p>
-          <p className="head-data">Date</p>
-          <p className="head-data">Time</p>
-          <p className="head-data">Name</p>
-          <p className="head-data">Lastname</p>
-          <p className="head-data">User Type</p>
-          <p className="head-data">Start Date</p>
-          <p className="head-data">End Date</p>
-          <p className="head-empty"></p>
+        <div className="head-table3">
+          <p className="head-data3">No</p>
+          <p className="head-data3">Date</p>
+          <p className="head-data3">Time</p>
+          <p className="head-data3">Name</p>
+          <p className="head-data3">Lastname</p>
+          <p className="head-data3">User Type</p>
+          <p className="head-data3">Start Date</p>
+          <p className="head-data3">End Date</p>
+          <p className="head-empty3"></p>
         </div>
         <hr />
 

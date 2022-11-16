@@ -13,20 +13,20 @@ const Blogslist = ({
       {memberList.map((val, key) => {
         return (
           <div className="big">
-            <div className="member" key={val.id}>
-              <div className="member-data">{val.id}</div>
-              <div className="member-data">{val.date}</div>
-              <div className="member-data">{val.time}</div>
-              <div className="member-data">{val.firstname}</div>
-              <div className="member-data">{val.lastname}</div>
-              <div className="member-data">
-                <div className="utype-colors">{val.usertype}</div>
+            <div className="member3" key={val.id}>
+              <div className="member-data3">{val.id}</div>
+              <div className="member-data3">{val.date}</div>
+              <div className="member-data3">{val.time}</div>
+              <div className="member-data3">{val.firstname}</div>
+              <div className="member-data3">{val.lastname}</div>
+              <div className="member-data3">
+                <div className="utype-colors3">{val.usertype}</div>
               </div>
-              <div className="member-data">{val.startdate}</div>
-              <div className="member-data">{val.enddate}</div>
-              <div className="box-edit">
+              <div className="member-data3">{val.startdate}</div>
+              <div className="member-data3">{val.enddate}</div>
+              <div className="box-edit3">
                 <button
-                  className="btn edit-butt"
+                  className="btn edit-butt3"
                   onClick={() => {
                     showUser(val.id);
                   }}
@@ -36,12 +36,12 @@ const Blogslist = ({
 
                 <input
                   type="button"
-                  className="btn edit-butt"
+                  className="btn edit-butt3"
                   value="Edit"
                   onClick={() => edituser(val.id)}
                 />
                 <button
-                  className="btn edit-butt"
+                  className="btn edit-butt3"
                   onClick={() => deleteMember(val.id)}
                 >
                   Delete

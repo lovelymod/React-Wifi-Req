@@ -3,9 +3,12 @@ import { useState } from "react";
 import Axios from "axios";
 import { useForm } from "react-hook-form";
 
-
 function UserSubmit() {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [utype, setUtype] = useState("");
@@ -41,7 +44,11 @@ function UserSubmit() {
     times.toString();
   };
 
+  const OnSubmit = () => {
+    addRequest();
+  }
   const addRequest = () => {
+    console.log('Hi');
     swapData();
     getDateandTime();
     Axios.post("http://localhost:3001/create", {
@@ -62,28 +69,9 @@ function UserSubmit() {
       if (response.data.message === "Inserted") {
         alert("Submited");
       }
-      // setWifiReqList([
-      //   ...wifireqList,
-      //   {
-      //     firstname: fname,
-      //     lastname: lname,
-      //     usertype: strUtype,
-      //     tel: tel,
-      //     email: email,
-      //     dtype: strDtype,
-      //     dbrand: dbrand,
-      //     dname: dname,
-      //     startdate: startdate,
-      //     enddate: enddate,
-      //     remark: remark,
-      //     date: dates,
-      //     time: times,
-      //   },
-      // ]);
     });
   };
 
-  const [IsDisable, setIsDisable] = useState("");
   const [Labelhide, setLabelhide] = useState("");
   const [etcDisable, setetcDisable] = useState("hidden");
 
@@ -101,64 +89,52 @@ function UserSubmit() {
     }
   };
 
-  const Check = (value) => {
-    if (value === "staff") {
-      setIsDisable("hidden");
-    } else if (value !== "staff") {
-      setIsDisable("date");
-    }
-  };
-
   const Checketc = (value) => {
     if (value === "etc.") {
-      setetcDisable("text");
+      setetcDisable("");
     } else if (value !== "etc.") {
       setetcDisable("hidden");
     }
   };
 
-  const showOrnot = () => {
-
-  }
-
   return (
-    <div className="App">
-      <div className="bg">
-        <div className="images">
-          <img className="logo" src="img/LS-01.png" alt="" srcSet="" />
+    <div className="App1">
+      <div className="bg1">
+        <div className="images1">
+          <img className="logo1" src="img/LS-01.png" alt="" srcSet="" />
         </div>
 
-        <div className="header">
+        <div className="header1">
           <h1 className="message">Please fill out a request form</h1>
         </div>
-        <div className="container">
-          <form action="">
-            <div className="row-contain">
-              <span className="split-contain">
+        <div className="container1">
+          <form onSubmit={handleSubmit(OnSubmit)}>
+            <div className="row-contain1">
+              <span className="split-contain1">
                 <label htmlFor="inputFname" className="form-label">
                   First Name :
                 </label>
 
                 <input
-                  required
-                  type="text"
                   className="form-control"
-                  id="inputFirstname"
+                  type="text"
                   placeholder="First Name"
                   onChange={(e) => {
                     setFname(e.target.value);
                     getDateandTime();
                   }}
+                  {...register("inputFirstname", { required: true })}
                 />
-                <p className="fill-message">Please fill this form</p>
+                {errors.inputFirstname && (
+                  <p className="fill-message">Please fill this form</p>
+                )}
               </span>
 
-              <span className="split-contain">
+              <span className="split-contain1">
                 <label htmlFor="inputLname" className="form-label">
                   Last Name :
                 </label>
                 <input
-                  required
                   type="text"
                   className="form-control"
                   id="inputLastname"
@@ -166,19 +142,21 @@ function UserSubmit() {
                   onChange={(e) => {
                     setLname(e.target.value);
                   }}
-                />
-                <p className="fill-message">Please fill this form</p>
+                  {...register("inputLastname", { required: true })}
+                  />
+                  {errors.inputLastname && (
+                    <p className="fill-message">Please fill this form</p>
+                  )}
               </span>
             </div>
 
-            <div className="row-contain">
-              <span className="split-contain">
+            <div className="row-contain1">
+              <span className="split-contain1">
                 <label htmlFor="email" className="form-label">
                   Email :
                 </label>
 
                 <input
-                  required
                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                   type="email"
                   className="form-control"
@@ -187,17 +165,19 @@ function UserSubmit() {
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
-                />
-                <p className="fill-message">Please fill this form</p>
+                  {...register("inputEmail", { required: true ,pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$"})}
+                  />
+                  {errors.inputEmail && (
+                    <p className="fill-message">Please fill this form</p>
+                  )}
               </span>
 
-              <span className="split-contain">
+              <span className="split-contain1">
                 <label htmlFor="tel" className="form-label">
                   Tel :
                 </label>
 
                 <input
-                  required
                   type="number"
                   className="form-control"
                   id="inputTel"
@@ -205,24 +185,25 @@ function UserSubmit() {
                   onChange={(e) => {
                     setTel(e.target.value);
                   }}
-                />
-                <p className="fill-message">Please fill this form</p>
+                  {...register("inputTel", { required: true , maxLength: 10})}
+                  />
+                  {errors.inputTel && (
+                    <p className="fill-message">Please correct this form</p>
+                  )}
               </span>
             </div>
 
-            <div className="row-contain">
-              <span className="split-contain">
+            <div className="row-contain1">
+              <span className="split-contain1">
                 <label htmlFor="UserType" className="form-label">
                   User Type :
                 </label>
 
                 <select
-                  required
                   name="userType"
                   className="form-select"
                   id="inputUsertype"
                   onChange={(e) => {
-                    Check(e.target.value);
                     setUtype(e.target.value);
                     HideLabel(e.target.value);
                   }}
@@ -234,13 +215,12 @@ function UserSubmit() {
                 </select>
               </span>
 
-              <span className="split-contain">
+              <span className="split-contain1">
                 <label htmlFor="DeviceType" className="form-label">
                   Device Type :
                 </label>
 
                 <select
-                  required
                   name="deviceType"
                   className="form-select"
                   id="inputDevicetype"
@@ -259,31 +239,31 @@ function UserSubmit() {
               </span>
             </div>
 
-            <div className="solo">
-              <span className="split-contain">
+            <div className="solo1" hidden={etcDisable}>
+              <span className="split-contain1">
                 <input
-                  required
-                  // disabled={etcDisable}
-                  type={etcDisable}
+                  type='text'
                   className="form-control etc"
                   id="inputEtc"
                   placeholder="Etc please fill ..."
                   onChange={(e) => {
                     setEtc(e.target.value);
                   }}
-                />
-                
+                  {...register("inputEtc", { required: false })}
+                  />
+                  {errors.inputEtc && (
+                    <p className="fill-message">Please fill this form</p>
+                  )}
               </span>
             </div>
 
-            <div className="row-contain">
-              <span className="split-contain">
+            <div className="row-contain1">
+              <span className="split-contain1">
                 <label htmlFor="deviceBrand" className="form-label">
                   Device Brand :
                 </label>
 
                 <input
-                  required
                   type="text"
                   className="form-control"
                   id="inputdeviceBrand"
@@ -291,17 +271,19 @@ function UserSubmit() {
                   onChange={(e) => {
                     setDbrand(e.target.value);
                   }}
-                />
-                <p className="fill-message">Please fill this form</p>
+                  {...register("inputdeviceBrand", { required: true })}
+                  />
+                  {errors.inputdeviceBrand && (
+                    <p className="fill-message">Please fill this form</p>
+                  )}
               </span>
 
-              <span className="split-contain">
+              <span className="split-contain1">
                 <label htmlFor="deviceName" className="form-label">
                   Device Name :
                 </label>
 
                 <input
-                  required
                   type="text"
                   className="form-control"
                   id="inputdeviceName"
@@ -309,19 +291,21 @@ function UserSubmit() {
                   onChange={(e) => {
                     setDname(e.target.value);
                   }}
-                />
-                <p className="fill-message">Please fill this form</p>
+                  {...register("inputdeviceName", { required: true })}
+                  />
+                  {errors.inputdeviceName && (
+                    <p className="fill-message">Please fill this form</p>
+                  )}
               </span>
             </div>
 
-            <div className="row-contain">
-              <span className="split-contain">
+            <div className="row-contain1">
+              <span className="split-contain1">
                 <label htmlFor="startDate" className="form-label">
                   Start Date :
                 </label>
 
                 <input
-                  required
                   type="date"
                   className="form-control"
                   name="startDate"
@@ -329,13 +313,16 @@ function UserSubmit() {
                   onChange={(e) => {
                     setStartdate(e.target.value);
                   }}
-                />
-                <p className="fill-message">Please fill this form</p>
+                  {...register("startDate", { required: true })}
+                  />
+                  {errors.startDate && (
+                    <p className="fill-message">Please fill this form</p>
+                  )}
               </span>
 
-              <span className="split-contain">
+              <span className="split-contain1" hidden={Labelhide}>
                 <label
-                  hidden={Labelhide}
+            
                   htmlFor="endDate"
                   className="form-label"
                 >
@@ -343,28 +330,30 @@ function UserSubmit() {
                 </label>
 
                 <input
-                  required
-                  type={IsDisable}
+                  type='date'
                   className="form-control"
                   name="endDate"
                   id="endDate"
                   onChange={(e) => {
                     setEnddate(e.target.value);
                   }}
-                />
-                <p className="fill-message">Please fill this form</p>
+                  {...register("endDate", { required: false })}
+                  />
+                  {errors.endDate && (
+                    <p className="fill-message">Please fill this form</p>
+                  )}
               </span>
             </div>
 
-            <div className="row-contain">
-              <span className="split-contain">
+            <div className="row-contain1">
+              <span className="split-containRemark1">
                 <label htmlFor="remark" className="form-label">
                   Remark :
                 </label>
 
                 <input
                   type="text"
-                  className="form-control remark"
+                  className="form-control remark1"
                   name="remark"
                   id="remark"
                   onChange={(e) => {
@@ -374,12 +363,12 @@ function UserSubmit() {
               </span>
             </div>
 
-            <div className="row-contain-butt">
+            <div className="row-contain-butt1">
               <input
-                type=""
+                type="submit"
                 className="btn regisbutt"
                 value="Submit"
-                onClick={addRequest}
+                // onClick={addRequest}
               />
 
               <input type="" className="btn backbutt" value="Cancel" />

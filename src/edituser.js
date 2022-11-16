@@ -1,7 +1,9 @@
 import "./edituser.css";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+// import { useForm } from "react-hook-form";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Axios from "axios";
 
 function EditUser() {
@@ -10,26 +12,44 @@ function EditUser() {
   const showNewMember = location.state.newMemberList;
   const [newMember, setNewmember] = useState(showNewMember);
 
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm();
+
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [utype, setUtype] = useState("");
   const [tel, setTel] = useState("");
   const [email, setEmail] = useState("");
   const [dtype, setDtype] = useState("");
-  // const [etc, setEtc] = useState("");
+  const [etc, setEtc] = useState("");
   const [dbrand, setDbrand] = useState("");
   const [dname, setDname] = useState("");
   const [startdate, setStartdate] = useState("");
   const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
 
-  const [IsDisable, setIsDisable] = useState(false);
+  let strDtype = dtype;
+
+  const swapData = () => {
+    if (strDtype === "etc.") {
+      strDtype = etc;
+    }
+  };
 
   const Back = () => {
     navigate("/table");
   };
 
+  const BtoLogin = () => {
+    navigate("/login");
+  };
+
+
   const UpdateData = (id) => {
+    swapData();
     Axios.put("http://localhost:3001/update", {
       id: id,
       firstname: fname,
@@ -37,7 +57,7 @@ function EditUser() {
       usertype: utype,
       tel: tel,
       email: email,
-      dtype: dtype,
+      dtype: strDtype,
       dbrand: dbrand,
       dname: dname,
       startdate: startdate,
@@ -69,29 +89,39 @@ function EditUser() {
       .catch((err) => {});
   };
 
-  const Check = (value) => {
-    console.log(value);
+  const [Labelhide, setLabelhide] = useState("");
+  const [etcDisable, setetcDisable] = useState("hidden");
+
+  const HideLabel = (value) => {
     if (value === "staff") {
-      setIsDisable(true);
+      setLabelhide("hidden");
     } else if (value !== "staff") {
-      setIsDisable(false);
+      setLabelhide("");
+    }
+  };
+
+  const Checketc = (value) => {
+    if (value === "etc.") {
+      setetcDisable("");
+    } else if (value !== "etc.") {
+      setetcDisable("hidden");
     }
   };
 
   return (
     <div className="App5">
-      <div className="left-manu">
-        <div className="top-img">
-          <img className="logo-table" src="img/LS-02.png" alt="" srcSet="" />
+      <div className="left-manu5">
+        <div className="top-img5">
+          <img className="logo-table" src="img/LS-01.png" alt="" srcSet="" />
         </div>
-        <div className="bottom-img">
-          {/* <button className="icon" onClick={BtoLogin}>
+        <div className="bottom-img5">
+          <button className="icon" onClick={BtoLogin}>
             <LogoutOutlinedIcon sx={{ fontSize: "40px", color: "#0174B3" }} />
-          </button> */}
+          </button>
         </div>
       </div>
       <div className="bg5">
-        <span className="left3">
+        <div className="headerInfo2">
           <button className="btn backbutt3" onClick={Back}>
             {
               <ArrowBackIosIcon
@@ -100,214 +130,241 @@ function EditUser() {
                 }}
               />
             }{" "}
-            Edit
+            <h1>Edit</h1>
           </button>
-        </span>
-        <span className="right3">
-          <div className="headerInfo2">
-            <h1>Edit User Information</h1>
-          </div>
-          <hr />
-          <div className="wrap-contain">
-            <div className="showcontain2">
-              <span className="contain-left2">
-                {showNewMember.map((val, key) => {
-                  return (
-                    <div className="contain-data2">
-                      <div className="row-data2">
-                        <h2 className="label-data2">Firstname:</h2>
+          <p className="message">Wi-Fi Request List/Edit</p>
+        </div>
+        {showNewMember.map((val, key) => {
+          return (
+            <div className="contain-data2">
+              <form onSubmit="">
+                <div className="row-data2">
+                  <span className="split-contain">
+                    <label htmlFor="inputFname" className="form-label fl2">
+                      First Name :
+                    </label>
 
-                        <input
-                          type="text"
-                          className="form-control inputedit"
-                          id="inputFirstname"
-                          placeholder={val.firstname}
-                          onChange={(e) => {
-                            setFname(e.target.value);
-                          }}
-                        />
-                      </div>
-                      <div className="row-data2">
-                        <h2 className="label-data2">User Type:</h2>
-
-                        <select
-                          name="userType"
-                          className="form-select inputedit"
-                          id="inputUsertype"
-                          onChange={(e) => {
-                            Check(e.target.value);
-                            setUtype(e.target.value);
-                          }}
-                        >
-                          <option value="-">-</option>
-                          <option value="staff">Staff</option>
-                          <option value="internship">Internship</option>
-                          <option value="guest">Guest</option>
-                        </select>
-                      </div>
-                      <div className="row-data2">
-                        <h2 className="label-data2">Email:</h2>
-
-                        <input
-                          type="text"
-                          className="form-control inputedit"
-                          id="inputEmail"
-                          placeholder={val.email}
-                          onChange={(e) => {
-                            setEmail(e.target.value);
-                          }}
-                        />
-                      </div>
-                      <div className="row-data2">
-                        <h2 className="label-data2">Device Brand:</h2>
-
-                        <input
-                          type="text"
-                          className="form-control inputedit"
-                          id="inputdbrand"
-                          placeholder={val.dbrand}
-                          onChange={(e) => {
-                            setDbrand(e.target.value);
-                          }}
-                        />
-                      </div>
-                      <div className="row-data2">
-                        <h2 className="label-data2">Start Date:</h2>
-
-                        <input
-                          type="date"
-                          className="form-control inputedit"
-                          id="inputStartdate"
-                          placeholder={val.startdate}
-                          onChange={(e) => {
-                            setStartdate(e.target.value);
-                          }}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
-              </span>
-              <span className="contain-right2">
-                {showNewMember.map((val, key) => {
-                  return (
-                    <div className="contain-data2">
-                      <div className="row-data2">
-                        <h2 className="label-data2">Lastname:</h2>
-
-                        <input
-                          type="text"
-                          className="form-control inputedit"
-                          id="inputLastname"
-                          placeholder={val.lastname}
-                          onChange={(e) => {
-                            setLname(e.target.value);
-                          }}
-                        />
-                      </div>
-                      <div className="row-data2">
-                        <h2 className="label-data2">Tel:</h2>
-
-                        <input
-                          type="text"
-                          className="form-control inputedit"
-                          id="inputTel"
-                          placeholder={val.tel}
-                          onChange={(e) => {
-                            setTel(e.target.value);
-                          }}
-                        />
-                      </div>
-                      <div className="row-data2">
-                        <h2 className="label-data2">Device Type:</h2>
-
-                        <select
-                          name="deviceType"
-                          className="form-select inputedit"
-                          id="inputDevicetype"
-                          onChange={(e) => {
-                            setDtype(e.target.value);
-                          }}
-                        >
-                          <option value="-">-</option>
-                          <option value="mobile">Mobile</option>
-                          <option value="notebook">Notebook</option>
-                          <option value="tablet">Tablet</option>
-                          <option value="ipad">Ipad</option>
-                          <option value="etc.">etc.</option>
-                        </select>
-                      </div>
-                      <div className="row-data2">
-                        <h2 className="label-data2">Device Name:</h2>
-
-                        <input
-                          type="text"
-                          className="form-control inputedit"
-                          id="inputdbrand"
-                          placeholder={val.dname}
-                          onChange={(e) => {
-                            setDname(e.target.value);
-                          }}
-                        />
-                      </div>
-                      <div className="row-data2">
-                        <h2 className="label-data2">End Date:</h2>
-
-                        <input
-                          disabled={IsDisable}
-                          type="date"
-                          className="form-control inputedit"
-                          id="inputEnddate"
-                          placeholder={val.enddate}
-                          onChange={(e) => {
-                            setEnddate(e.target.value);
-                          }}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
-              </span>
-            </div>
-            {showNewMember.map((val, key) => {
-              return (
-                <div className="row-data-remark">
-                  <h2 className="label-data2">Remark:</h2>
-
-                  <input
-                    type="text"
-                    className="form-control inputeditremark"
-                    id="inputremark"
-                    placeholder={val.remark}
-                    onChange={(e) => {
-                      setRemark(e.target.value);
-                    }}
-                  />
+                    <input
+                      className=" form-control fcAdmin"
+                      type="text"
+                      defaultValue={val.firstname}
+                      onChange={(e) => {
+                        setFname(e.target.value);
+                        console.log(e.target.value);
+                      }}
+                    />
+                  </span>
+                  <span className="split-contain">
+                    <label htmlFor="inputLname" className="form-label fl2">
+                      Last Name :
+                    </label>
+                    <input
+                      type="text"
+                      className=" form-control fcAdmin"
+                      id="inputLastname"
+                      defaultValue={val.lastname}
+                      onChange={(e) => {
+                        setLname(e.target.value);
+                      }}
+                    />
+                  </span>
                 </div>
-              );
-            })}
+                <div className="row-data2">
+                  <span className="split-contain">
+                    <label htmlFor="email" className="form-label fl2">
+                      Email :
+                    </label>
 
-            <div className="row-butt2">
-              {showNewMember.map((val, key) => {
-                return (
-                  <button
+                    <input
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                      type="email"
+                      className=" form-control fcAdmin"
+                      id="inputEmail"
+                      defaultValue={val.email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                    />
+                  </span>
+
+                  <span className="split-contain">
+                    <label htmlFor="tel" className="form-label fl2">
+                      Tel :
+                    </label>
+
+                    <input
+                      type="number"
+                      className=" form-control fcAdmin"
+                      id="inputTel"
+                      defaultValue={val.tel}
+                      onChange={(e) => {
+                        setTel(e.target.value);
+                      }}
+                    />
+                  </span>
+                </div>
+                <div className="row-data2">
+                  <span className="split-contain">
+                    <label htmlFor="UserType" className="form-label fl2">
+                      User Type :
+                    </label>
+
+                    <select
+                      name="userType"
+                      className="form-select fsAdmin"
+                      id="inputUsertype"
+                      defaultValue={val.usertype}
+                      onChange={(e) => {
+                        setUtype(e.target.value);
+                        HideLabel(e.target.value);
+                      }}
+                    >
+                      <option value="-">Please Select</option>
+                      <option value="staff">Staff</option>
+                      <option value="internship">Internship</option>
+                      <option value="guest">Guest</option>
+                    </select>
+                  </span>
+
+                  <span className="split-contain">
+                    <label htmlFor="DeviceType" className="form-label fl2">
+                      Device Type :
+                    </label>
+
+                    <select
+                      name="deviceType"
+                      className="form-select fsAdmin"
+                      id="inputDevicetype"
+                      defaultValue={val.dtype}
+                      onChange={(e) => {
+                        Checketc(e.target.value);
+                        setDtype(e.target.value);
+                      }}
+                    >
+                      <option value="-">Please Select</option>
+                      <option value="mobile">Mobile</option>
+                      <option value="notebook">Notebook</option>
+                      <option value="tablet">Tablet</option>
+                      <option value="ipad">Ipad</option>
+                      <option value="etc.">etc.</option>
+                    </select>
+                  </span>
+                </div>
+
+                <div className="solo2" hidden={etcDisable}>
+                  <span className="split-contain">
+                    <input
+                      type="text"
+                      className=" form-control fcAdmin etc"
+                      id="inputEtc"
+                      onChange={(e) => {
+                        setEtc(e.target.value);
+                      }}
+                    />
+                  </span>
+                </div>
+
+                <div className="row-data2">
+                  <span className="split-contain">
+                    <label htmlFor="deviceBrand" className="form-label fl2">
+                      Device Brand :
+                    </label>
+
+                    <input
+                      type="text"
+                      className=" form-control fcAdmin"
+                      id="inputdeviceBrand"
+                      defaultValue={val.dbrand}
+                      onChange={(e) => {
+                        setDbrand(e.target.value);
+                      }}
+                    />
+                  </span>
+
+                  <span className="split-contain">
+                    <label htmlFor="deviceName" className="form-label fl2">
+                      Device Name :
+                    </label>
+
+                    <input
+                      type="text"
+                      className=" form-control fcAdmin"
+                      id="inputdeviceName"
+                      defaultValue={val.dname}
+                      onChange={(e) => {
+                        setDname(e.target.value);
+                      }}
+                    />
+                  </span>
+                </div>
+                <div className="row-data2">
+                  <span className="split-contain">
+                    <label htmlFor="startDate" className="form-label fl2">
+                      Start Date :
+                    </label>
+
+                    <input
+                      type="date"
+                      className=" form-control fcAdmin"
+                      name="startDate"
+                      id="startDate"
+                      defaultValue={val.startdate}
+                      onChange={(e) => {
+                        setStartdate(e.target.value);
+                      }}
+                    />
+                  </span>
+
+                  <span className="split-containedit" hidden={Labelhide}>
+                    <label htmlFor="endDate" className="form-label fl2">
+                      End Date :
+                    </label>
+
+                    <input
+                      type="date"
+                      className=" form-control fcAdmin"
+                      name="endDate"
+                      id="endDate"
+                      defaultValue={val.enddate}
+                      onChange={(e) => {
+                        setEnddate(e.target.value);
+                      }}
+                    />
+                  </span>
+                </div>
+                <div className="row-data2">
+                  <span className="split-containRemarkedit">
+                    <label htmlFor="remark" className="form-label flAdmin">
+                      Remark :
+                    </label>
+
+                    <input
+                      type="text"
+                      className=" form-control inputeditremark"
+                      id="inputremark"
+                      defaultValue={val.remark}
+                      onChange={(e) => {
+                        setRemark(e.target.value);
+                      }}
+                    />
+                  </span>
+                </div>
+                <div className="row-butt2">
+                  <input
+                    type=""
                     className="btn savebutt"
-                    onClick={() => {
-                      UpdateData(val.id);
-                    }}
-                  >
-                    Save
-                  </button>
-                );
-              })}
+                    value="Submit"
+                    onClick={() => UpdateData(val.id)}
+                  />
 
-              <div className="empty-box2"></div>
-              <button className="btn cancelbutt" onClick={Back}>
-                Cancle
-              </button>
+                  <button className="btn cancelbutt" onClick={Back}>
+                    Cancel
+                  </button>
+                </div>
+              </form>
             </div>
-          </div>
-        </span>
+          );
+        })}
       </div>
     </div>
   );
