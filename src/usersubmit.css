@@ -8,6 +8,8 @@
   font-family: 'Kanit', sans-serif;
   display: flex;
   justify-content: center;
+  align-items: center;
+  background-color: #f0f1f2;
 }
 
 .bg1{
@@ -150,17 +152,15 @@ label{
     width: 400px;
   }
 
-  .bg1{
-    max-width: 500px;
+  .regisbutt,.backbutt{
+    width: 100px !important;
+    height: 50px !important;
   }
 
-  .backbutt{
-    height: 50px !important;
-    width: 125px !important;
-  }
 
   .remark1{
     width: 300px !important;
+    height: 300px !important;
   }
 }
 
@@ -178,9 +178,6 @@ label{
     max-width: 800px;
   }
 
-  .backbutt{
-    height: 60px !important;
-  }
 
   .remark1{
     width: 700px !important;

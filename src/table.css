@@ -2,36 +2,33 @@
 
 
 .App3{
-    /* height: 1080px;
-    width: 1920px; */
     height: 100vh;
     width: 100vw;
     font-family: 'Kanit', sans-serif;
     display: flex;
-    background-color: rgb(184, 179, 179);
-
+    background-color: #f0f1f2;
     /* border: 1px solid rgb(17, 247, 74); */
 }
 
-.bg3{
-    margin-top: 10px;
-    width: 100%;
-    height: 99%;
-    background-color: white;
-    border-top-left-radius: 30px;
+.left-manu3{
     border-top-right-radius: 30px;
-
+    margin-right: 10px;
     /* border: 1px solid black; */
+    background-color: white;
+    height: 100%;
+    width: 10%;
 }
 
 .top-img3{
-    background-color: #0174B3;
-    height: 13%;
+    background-color: white;
+    height: 50%;
     border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
+    padding-top: 20px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    /* border: 1px solid black; */
+
 }
 
 .logo-table3{
@@ -41,11 +38,12 @@
 
 .bottom-img3{
     background-color: white;
-    height: 87%;
-    border-top-right-radius: 30px;
+    height: 50%;
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    /* border: 1px solid black; */
+
 }
 
 .icon3{
@@ -54,14 +52,13 @@
     background-color: white;
 }
 
-.left-manu3{
+.bg3{
+    width: 90%;
+    height: 100%;
+    background-color: white;
+    border-top-left-radius: 30px;
     border-top-right-radius: 30px;
-    margin-top: 10px;
-    margin-right: 50px;
     /* border: 1px solid black; */
-    background-color: rgb(184, 179, 179);
-    height: 99%;
-    width: 200px;
 }
 
 .header-top3{
@@ -75,28 +72,30 @@
  
 }
 
+.left3{
+    width: 50%;
+    height: 100%;
+    /* border: 5px solid yellowgreen ; */
+    display: flex;
+    align-items: center;
+
+
+}
+
 .name3{
     color: #FFB401;
     font-size: 32px;
-}
-
-.left3{
-    /* border: 5px solid yellowgreen ; */
-    display: flex;
-    align-items: center;
-
-
+    padding-left: 30px;
 }
 
 .right3{
+    width: 50%;
+    height: 100%;
     /* border: 5px solid yellowgreen ; */
     display: flex;
     justify-content: flex-end;
-    padding-top: 20px;
     align-items: center;
-    width: 50%;
-
-
+    padding-right: 50px;
 }
 
 .create3{
@@ -122,31 +121,14 @@
     /* border: 2px solid brown ; */
     height: 50px;
     padding-top: 10px;
-    /* display: grid;
-    grid-template-columns: repeat(13,auto); */
-    /* padding-right: 500px; */
-    /* padding-right: 80px; */
-    
-}
-
-.member3{
-    
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    /* border: 2px solid deepskyblue ; */
-    height: 50px;
-    font-weight: bold;
-    margin-top: 10px;
-    /* display: grid;
-    grid-template-columns: repeat(10,auto); */
 }
 
 .head-data3{
     /* border: 2px solid crimson ; */
     display: flex;
-    justify-content: center;    
-    width: 150px;
+    justify-content: center;
+    width: 150px;  
+    padding-right: 30px;
 
 }
 
@@ -156,10 +138,32 @@
     flex-direction: row;
     justify-content: center;
     /* border: 2px solid crimson ; */
+}
 
+.all-scroll{
+    /* border: 2px solid crimson ; */
+    height: 85%;
+}
+
+.table-scroll{
+    /* border: 2px solid crimson ; */
+    height: 89%;
+    overflow: auto;
 }
 
 
+.member3{
+    
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* border: 2px solid deepskyblue ; */
+    height: 50px;
+    width: 100%;
+    font-weight: bold;
+    margin-top: 10px;
+    padding-right: 30px;
+}
 
 .member-data3{
     /* border: 2px solid crimson ; */
@@ -182,13 +186,11 @@
     flex-direction: row;
     justify-content: space-between;
     width: 300px;
-    /* grid-column: 9/13; */
-    /* padding-left: 30px;
-    padding-right: 30px; */
 }
 
 .edit-butt3{
-    width: 75px !important;
+    min-width: 60px !important;   
+    max-width: 75px !important;
     height: 30px !important;
     background-color: #0174B3 !important;
     color: white !important;
@@ -196,21 +198,131 @@
 
 }
 
+.del-butt3{
+    min-width: 55px !important;
+    max-width: 75px !important;
+    height: 30px !important;
+    background-color: #FF5240 !important;
+    color: white !important;
+    padding: 0px !important;
+}
+
 .edit-butt3:active{
     background-color: #FFB401 !important;
     color: #FF5240 !important;
 }
 
-.hr-last{
-    grid-column: 1/13;
+@media only screen and (max-width:600px) {
+    .App3{
+        display: flex;
+        flex-direction: column; 
+    }
+
+    .left-manu3{
+        display: none; 
+    }
+
+    .bg3{
+        height: 100%;
+        width: 100%;
+    }
+
+    .header-top3{
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        background-color: white;
+        height: 10%;
+    }
+
+    .left3{
+        
+        width: 60%;
+
+    }
+    .right3{
+        width: 40%;
+        
+
+    }
+
+    .top-table{
+        width: 250%;
+    }
+
+    .name3{
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        padding: 0px;
+        padding-left: 40px;
+        margin-top: 5px;
+        
+    }
+
+    .icon-export3,.icon-create3{
+        width: fit-content;
+        height: fit-content;
+        border: 0px;
+        background-color: #0174B3 ;
+        border-radius: 5px;
+        padding-bottom: 5px;   
+    }
+
+    .icon-back2{
+        background-color: #0174B3;
+        border: 0px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px ;
+        padding-bottom: 5px;
+    }
+
+    .icon-create3{
+        margin-right: 10px;
+    }
+
+    .all-scroll{
+        /* border: 1px solid aqua ; */
+        width: 100%;
+        height: 90%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+
+    }
+
+    .head-table3{
+        width: 250%;
+
+    }
+
+    .table-scroll{
+        /* border: 3px solid crimson ; */
+        width: 250%;
+        height: 91%;
+    }
+
+    .member3{
+        padding-right: 10px;
+    }
+
+    .edit-butt3{
+        min-width: 50px !important;   
+        max-width: 75px !important;
+    }
+    
+    .del-butt3{
+        min-width: 50px !important;
+        max-width: 75px !important;  
+    }
+
+
 }
+
 
 @media only screen and (min-width:601px) and (max-width:900px) {
 
     .App3{
         display: flex;
         flex-direction: column; 
-        background-color: rgb(187, 183, 183);
+        
     }
 
     .left-manu3{
@@ -218,11 +330,12 @@
         flex-direction: row;
         justify-content: space-between;
         margin-top: 0px;
+        margin-bottom: 10px;
         margin-right: 0px ;
         border-top-right-radius: 0px;
         border-bottom-left-radius: 30px;
         border-bottom-right-radius: 30px;
-        height: 200px;
+        height: 15%;
         width: 100%;
         background-color: #0174B3;  
     }
@@ -235,41 +348,73 @@
     .top-img3{
         /* border: 1px solid black; */
         background-color: #0174B3;
-        height: 100% !important;
-        width: 20%;
-        border-top-right-radius: 0px !important;
-        border-bottom-right-radius: 0px !important;
+        height: 100%;
+        width: 50%;
+        border-top-right-radius: 0px ;
+        border-bottom-right-radius: 0px ;
         border-bottom-left-radius: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        padding-top: 20px;
+        padding-left: 50px;
+        align-items: flex-start;
     }
     
     .bottom-img3{
         /* border: 1px solid black; */
-        background-color: #0174B3 !important;
-        height: 100% !important;
-        width: 20%;
-        border-top-right-radius: 0px !important;
-        border-bottom-right-radius: 30px !important;
-
-        display: flex;
-        justify-content: center;
-        align-items: flex-end !important;
+        background-color: #0174B3 ;
+        height: 100% ;
+        width: 50%;
+        border-top-right-radius: 0px ;
+        border-bottom-right-radius: 30px ;
+        padding-right: 50px;
+        justify-content: flex-end;
     }
 
-    .icon-exit3{
-        border-color: #0174B3 !important;
+    .icon3{
+        background-color: #0174B3;
+    }
+
+    .bg3{
+        height: 85%;
+        width: 100%;
     }
 
     .header-top3{
         background-color: white;
     }
 
+    .top-table{
+        width: 150%;
+    }
+
     .export3,.create3{
         color: white !important;
     }
-  
+    .all-scroll{
+        /* border: 7px solid crimson ; */
+        width: 100%;
+        height: 86%;
+        overflow-x: scroll;
+    }
+
+    .head-table3{
+        width: 150%;
+    }
+
+    .table-scroll{
+        /* border: 5px solid crimson ; */
+        width: 150%;
+        height: 91%;
+    }
+    
+    .edit-butt3{
+        min-width: 50px !important;   
+        max-width: 75px !important;
+    }
+    
+    .del-butt3{
+        min-width: 50px !important;
+        max-width: 75px !important;  
+    }
     
    
   }

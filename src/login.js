@@ -23,10 +23,13 @@ function Login() {
       console.log(response.data.message);
       console.log(response.data.result);
       if (response.data.message === "Matched") {
-        setLoginstat("true");
-        navigate("/table");
+        alert("Logged In")
+        setTimeout(function() {
+          navigate("/table");
+        }, 2000);
+        
       } else {
-        setLoginstat("false");
+        alert("Wrong Username or Password")
       }
     });
   };
@@ -75,8 +78,6 @@ function Login() {
               value="Login"
               onClick={login}
             />
-
-            <h1>{loginStat}</h1>
           </form>
         </div>
       </div>

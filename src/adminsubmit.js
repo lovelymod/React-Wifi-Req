@@ -72,6 +72,9 @@ function AdminSub() {
     }).then((response) => {
       if (response.data.message === "Inserted") {
         alert("Submited");
+        setTimeout(function() {
+          navigate("/table");
+        }, 2000);
       }
     });
   };
@@ -119,7 +122,7 @@ function AdminSub() {
           <button className="icon4" onClick={BtoLogin}>
             <LogoutOutlinedIcon
               className="icon-exit4"
-              sx={{ fontSize: "40px", color: "#0174B3" }}
+              style={{ fontSize: "40px", color: "#0174B3" }}
             />
           </button>
         </div>
@@ -127,15 +130,7 @@ function AdminSub() {
       <div className="bgAdmin4">
         <div className="headerAdmin4">
           <button className="backbuttAdminTop4" onClick={Back}>
-            {
-              <ArrowBackIosIcon
-                sx={{
-                  fontSize: "32px",
-                  color: "#0174B3",
-                }}
-              />
-            }{" "}
-            <h1>Create User</h1>
+            {<ArrowBackIosIcon className="Arrow4" />} <h1>Create User</h1>
           </button>
           <p className="message4">Wi-Fi Request List/Create User</p>
         </div>

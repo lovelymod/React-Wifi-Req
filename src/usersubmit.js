@@ -351,7 +351,7 @@ function UserSubmit() {
                   Remark :
                 </label>
 
-                <input
+                <textarea 
                   type="text"
                   className="form-control remark1"
                   name="remark"

@@ -109,20 +109,20 @@ function EditUser() {
   };
 
   return (
-    <div className="App5">
-      <div className="left-manu5">
-        <div className="top-img5">
-          <img className="logo-table" src="img/LS-01.png" alt="" srcSet="" />
+    <div className="App6">
+      <div className="left-manu6">
+        <div className="top-img6">
+          <img className="logo-table6" src="img/LS-01.png" alt="" srcSet="" />
         </div>
-        <div className="bottom-img5">
-          <button className="icon" onClick={BtoLogin}>
+        <div className="bottom-img6">
+          <button className="icon6" onClick={BtoLogin}>
             <LogoutOutlinedIcon sx={{ fontSize: "40px", color: "#0174B3" }} />
           </button>
         </div>
       </div>
-      <div className="bg5">
-        <div className="headerInfo2">
-          <button className="btn backbutt3" onClick={Back}>
+      <div className="bg6">
+        <div className="headerInfo6">
+          <button className="btn backbutt6" onClick={Back}>
             {
               <ArrowBackIosIcon
                 sx={{
@@ -136,16 +136,16 @@ function EditUser() {
         </div>
         {showNewMember.map((val, key) => {
           return (
-            <div className="contain-data2">
+            <div className="contain-data6">
               <form onSubmit="">
-                <div className="row-data2">
-                  <span className="split-contain">
-                    <label htmlFor="inputFname" className="form-label fl2">
+                <div className="row-data6">
+                  <span className="split-contain6">
+                    <label htmlFor="inputFname" className="form-label fl6">
                       First Name :
                     </label>
 
                     <input
-                      className=" form-control fcAdmin"
+                      className=" form-control fcAdmin6"
                       type="text"
                       defaultValue={val.firstname}
                       onChange={(e) => {
@@ -154,13 +154,13 @@ function EditUser() {
                       }}
                     />
                   </span>
-                  <span className="split-contain">
-                    <label htmlFor="inputLname" className="form-label fl2">
+                  <span className="split-contain6">
+                    <label htmlFor="inputLname" className="form-label fl6">
                       Last Name :
                     </label>
                     <input
                       type="text"
-                      className=" form-control fcAdmin"
+                      className=" form-control fcAdmin6"
                       id="inputLastname"
                       defaultValue={val.lastname}
                       onChange={(e) => {
@@ -169,16 +169,16 @@ function EditUser() {
                     />
                   </span>
                 </div>
-                <div className="row-data2">
-                  <span className="split-contain">
-                    <label htmlFor="email" className="form-label fl2">
+                <div className="row-data6">
+                  <span className="split-contain6">
+                    <label htmlFor="email" className="form-label fl6">
                       Email :
                     </label>
 
                     <input
                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                       type="email"
-                      className=" form-control fcAdmin"
+                      className=" form-control fcAdmin6"
                       id="inputEmail"
                       defaultValue={val.email}
                       onChange={(e) => {
@@ -187,14 +187,14 @@ function EditUser() {
                     />
                   </span>
 
-                  <span className="split-contain">
-                    <label htmlFor="tel" className="form-label fl2">
+                  <span className="split-contain6">
+                    <label htmlFor="tel" className="form-label fl6">
                       Tel :
                     </label>
 
                     <input
                       type="number"
-                      className=" form-control fcAdmin"
+                      className=" form-control fcAdmin6"
                       id="inputTel"
                       defaultValue={val.tel}
                       onChange={(e) => {
@@ -203,15 +203,15 @@ function EditUser() {
                     />
                   </span>
                 </div>
-                <div className="row-data2">
-                  <span className="split-contain">
-                    <label htmlFor="UserType" className="form-label fl2">
+                <div className="row-data6">
+                  <span className="split-contain6">
+                    <label htmlFor="UserType" className="form-label fl6">
                       User Type :
                     </label>
 
                     <select
                       name="userType"
-                      className="form-select fsAdmin"
+                      className="form-select fsAdmin6"
                       id="inputUsertype"
                       defaultValue={val.usertype}
                       onChange={(e) => {
@@ -226,14 +226,14 @@ function EditUser() {
                     </select>
                   </span>
 
-                  <span className="split-contain">
-                    <label htmlFor="DeviceType" className="form-label fl2">
+                  <span className="split-contain6">
+                    <label htmlFor="DeviceType" className="form-label fl6">
                       Device Type :
                     </label>
 
                     <select
                       name="deviceType"
-                      className="form-select fsAdmin"
+                      className="form-select fsAdmin6"
                       id="inputDevicetype"
                       defaultValue={val.dtype}
                       onChange={(e) => {
@@ -251,11 +251,11 @@ function EditUser() {
                   </span>
                 </div>
 
-                <div className="solo2" hidden={etcDisable}>
-                  <span className="split-contain">
+                <div className="solo6" hidden={etcDisable}>
+                  <span className="split-contain6">
                     <input
                       type="text"
-                      className=" form-control fcAdmin etc"
+                      className=" form-control fcAdmin6 etc6"
                       id="inputEtc"
                       onChange={(e) => {
                         setEtc(e.target.value);
@@ -264,15 +264,15 @@ function EditUser() {
                   </span>
                 </div>
 
-                <div className="row-data2">
-                  <span className="split-contain">
-                    <label htmlFor="deviceBrand" className="form-label fl2">
+                <div className="row-data6">
+                  <span className="split-contain6">
+                    <label htmlFor="deviceBrand" className="form-label fl6">
                       Device Brand :
                     </label>
 
                     <input
                       type="text"
-                      className=" form-control fcAdmin"
+                      className=" form-control fcAdmin6"
                       id="inputdeviceBrand"
                       defaultValue={val.dbrand}
                       onChange={(e) => {
@@ -281,14 +281,14 @@ function EditUser() {
                     />
                   </span>
 
-                  <span className="split-contain">
-                    <label htmlFor="deviceName" className="form-label fl2">
+                  <span className="split-contain6">
+                    <label htmlFor="deviceName" className="form-label fl6">
                       Device Name :
                     </label>
 
                     <input
                       type="text"
-                      className=" form-control fcAdmin"
+                      className=" form-control fcAdmin6"
                       id="inputdeviceName"
                       defaultValue={val.dname}
                       onChange={(e) => {
@@ -297,15 +297,15 @@ function EditUser() {
                     />
                   </span>
                 </div>
-                <div className="row-data2">
-                  <span className="split-contain">
-                    <label htmlFor="startDate" className="form-label fl2">
+                <div className="row-data6">
+                  <span className="split-contain6">
+                    <label htmlFor="startDate" className="form-label fl6">
                       Start Date :
                     </label>
 
                     <input
                       type="date"
-                      className=" form-control fcAdmin"
+                      className=" form-control fcAdmin6"
                       name="startDate"
                       id="startDate"
                       defaultValue={val.startdate}
@@ -315,14 +315,14 @@ function EditUser() {
                     />
                   </span>
 
-                  <span className="split-containedit" hidden={Labelhide}>
-                    <label htmlFor="endDate" className="form-label fl2">
+                  <span className="split-containedit6" hidden={Labelhide}>
+                    <label htmlFor="endDate" className="form-label fl6">
                       End Date :
                     </label>
 
                     <input
                       type="date"
-                      className=" form-control fcAdmin"
+                      className=" form-control fcAdmin6"
                       name="endDate"
                       id="endDate"
                       defaultValue={val.enddate}
@@ -332,15 +332,15 @@ function EditUser() {
                     />
                   </span>
                 </div>
-                <div className="row-data2">
-                  <span className="split-containRemarkedit">
-                    <label htmlFor="remark" className="form-label flAdmin">
+                <div className="row-data6">
+                  <span className="split-containRemarkedit6">
+                    <label htmlFor="remark" className="form-label flAdmin6">
                       Remark :
                     </label>
 
                     <input
                       type="text"
-                      className=" form-control inputeditremark"
+                      className=" form-control inputeditremark6"
                       id="inputremark"
                       defaultValue={val.remark}
                       onChange={(e) => {
@@ -349,15 +349,15 @@ function EditUser() {
                     />
                   </span>
                 </div>
-                <div className="row-butt2">
+                <div className="row-butt6">
                   <input
                     type=""
-                    className="btn savebutt"
+                    className="btn savebutt6"
                     value="Submit"
                     onClick={() => UpdateData(val.id)}
                   />
 
-                  <button className="btn cancelbutt" onClick={Back}>
+                  <button className="btn cancelbutt6" onClick={Back}>
                     Cancel
                   </button>
                 </div>

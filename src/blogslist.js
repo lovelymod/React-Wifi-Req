@@ -9,7 +9,7 @@ const Blogslist = ({
   testdata,
 }) => {
   return (
-    <div>
+    <div className="big3">
       {memberList.map((val, key) => {
         return (
           <div className="big">
@@ -41,7 +41,7 @@ const Blogslist = ({
                   onClick={() => edituser(val.id)}
                 />
                 <button
-                  className="btn edit-butt3"
+                  className="btn del-butt3"
                   onClick={() => deleteMember(val.id)}
                 >
                   Delete
