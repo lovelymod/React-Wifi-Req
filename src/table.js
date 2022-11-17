@@ -20,8 +20,11 @@ function Table() {
   };
 
   const deleteMember = (id) => {
-    const newMemberList = memberList.filter((val) => val.id !== id);
-    setMemberList(newMemberList);
+    if (window.confirm("Confirm Delete")) {
+      const newMemberList = memberList.filter((val) => val.id !== id);
+      setMemberList(newMemberList);
+    } else {
+    }
   };
 
   const edituser = (id) => {
@@ -42,9 +45,9 @@ function Table() {
     { label: "No", key: "id" },
     { label: "First Name", key: "firstname" },
     { label: "Last Name", key: "lastname" },
-    { label: "Usertype", key: "usertype" },
-    { label: "Tel", key: "tel" },
     { label: "Email", key: "email" },
+    { label: "Tel", key: "tel" },
+    { label: "Usertype", key: "usertype" },
     { label: "DeviceType", key: "devicetype" },
     { label: "DeviceBrand", key: "devicebrand" },
     { label: "DeviceName", key: "devicename" },
@@ -57,7 +60,7 @@ function Table() {
   const csvReport = {
     headers: headers,
     data: memberList,
-    filename: "CSV_MemberList.csv",
+    filename: "RequestList_.csv",
   };
 
   const gotoAdminSub = () => {

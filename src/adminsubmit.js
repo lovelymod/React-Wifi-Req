@@ -41,7 +41,7 @@ function AdminSub() {
     const hours = new Date().getHours();
     const min = new Date().getMinutes();
 
-    setDates(date + "/" + month + "/" + year);
+    setDates(date + "-" + month + "-" + year);
     setTimes(hours + ":" + min);
 
     dates.toString();
@@ -72,7 +72,7 @@ function AdminSub() {
     }).then((response) => {
       if (response.data.message === "Inserted") {
         alert("Submited");
-        setTimeout(function() {
+        setTimeout(function () {
           navigate("/table");
         }, 2000);
       }
@@ -116,22 +116,66 @@ function AdminSub() {
     <div className="AppAdmin4">
       <div className="imagesAdmin4">
         <div className="boxtop4">
-          <img className="logoAdmin4" src="img/LS-01.png" alt="" srcSet="" />
+          {window.innerWidth > 100 && window.innerWidth < 1000 ? (
+            <div>
+              <img
+                className="logo-table3"
+                src="img/LS-02.png"
+                alt=""
+                srcSet=""
+              />
+            </div>
+          ) : (
+            <div>
+              <img
+                className="logo-table3"
+                src="img/LS-01.png"
+                alt=""
+                srcSet=""
+              />
+            </div>
+          )}
         </div>
         <div className="boxbottom4">
-          <button className="icon4" onClick={BtoLogin}>
-            <LogoutOutlinedIcon
-              className="icon-exit4"
-              style={{ fontSize: "40px", color: "#0174B3" }}
-            />
-          </button>
+          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
+            <div>
+              <button className="icon4" onClick={BtoLogin}>
+                <LogoutOutlinedIcon
+                  className="icon-exit4"
+                  sx={{ fontSize: "40px", color: "white" }}
+                />
+              </button>
+            </div>
+          ) : (
+            <div>
+              <button className="icon4" onClick={BtoLogin}>
+                <LogoutOutlinedIcon
+                  className="icon-exit4"
+                  style={{ fontSize: "40px", color: "#0174B3" }}
+                />
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className="bgAdmin4">
         <div className="headerAdmin4">
-          <button className="backbuttAdminTop4" onClick={Back}>
-            {<ArrowBackIosIcon className="Arrow4" />} <h1>Create User</h1>
-          </button>
+          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
+            <div>
+              <button className="backbuttAdminTop4" onClick={Back}>
+                {<ArrowBackIosIcon sx={{ fontSize: "28px", color: "#0174B3" }} />}{" "}
+                <h1>Create User</h1>
+              </button>
+            </div>
+          ) : (
+            <div>
+              <button className="backbuttAdminTop4" onClick={Back}>
+                {<ArrowBackIosIcon sx={{ fontSize: "28px", color: "#FFB401" }} />}{" "}
+                <h1>Create User</h1>
+              </button>
+            </div>
+          )}
+
           <p className="message4">Wi-Fi Request List/Create User</p>
         </div>
         <div className="containerAdmin4">
@@ -380,7 +424,7 @@ function AdminSub() {
                   Remark :
                 </label>
 
-                <input
+                <textarea
                   type="text"
                   className=" form-control remark4"
                   name="remark"

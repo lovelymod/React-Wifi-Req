@@ -37,7 +37,7 @@ function UserSubmit() {
     const hours = new Date().getHours();
     const min = new Date().getMinutes();
 
-    setDates(date + "/" + month + "/" + year);
+    setDates(date + "-" + month + "-" + year);
     setTimes(hours + ":" + min);
 
     dates.toString();
@@ -119,11 +119,11 @@ function UserSubmit() {
                   className="form-control"
                   type="text"
                   placeholder="First Name"
+                  {...register("inputFirstname", { required: true })}
                   onChange={(e) => {
                     setFname(e.target.value);
                     getDateandTime();
                   }}
-                  {...register("inputFirstname", { required: true })}
                 />
                 {errors.inputFirstname && (
                   <p className="fill-message">Please fill this form</p>
@@ -139,10 +139,10 @@ function UserSubmit() {
                   className="form-control"
                   id="inputLastname"
                   placeholder="Last Name"
+                  {...register("inputLastname", { required: true })}
                   onChange={(e) => {
                     setLname(e.target.value);
                   }}
-                  {...register("inputLastname", { required: true })}
                   />
                   {errors.inputLastname && (
                     <p className="fill-message">Please fill this form</p>
@@ -162,10 +162,10 @@ function UserSubmit() {
                   className="form-control"
                   id="inputEmail"
                   placeholder="admin@gmail.com"
+                  {...register("inputEmail", { required: true ,pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$"})}
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
-                  {...register("inputEmail", { required: true ,pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$"})}
                   />
                   {errors.inputEmail && (
                     <p className="fill-message">Please fill this form</p>
@@ -182,10 +182,10 @@ function UserSubmit() {
                   className="form-control"
                   id="inputTel"
                   placeholder="095xxxxxxx"
+                  {...register("inputTel", { required: true , maxLength: 10})}
                   onChange={(e) => {
                     setTel(e.target.value);
                   }}
-                  {...register("inputTel", { required: true , maxLength: 10})}
                   />
                   {errors.inputTel && (
                     <p className="fill-message">Please correct this form</p>
@@ -246,10 +246,10 @@ function UserSubmit() {
                   className="form-control etc"
                   id="inputEtc"
                   placeholder="Etc please fill ..."
+                  {...register("inputEtc", { required: false })}
                   onChange={(e) => {
                     setEtc(e.target.value);
                   }}
-                  {...register("inputEtc", { required: false })}
                   />
                   {errors.inputEtc && (
                     <p className="fill-message">Please fill this form</p>
@@ -268,10 +268,10 @@ function UserSubmit() {
                   className="form-control"
                   id="inputdeviceBrand"
                   placeholder="Apple , Sumsung , ..."
+                  {...register("inputdeviceBrand", { required: true })}
                   onChange={(e) => {
                     setDbrand(e.target.value);
                   }}
-                  {...register("inputdeviceBrand", { required: true })}
                   />
                   {errors.inputdeviceBrand && (
                     <p className="fill-message">Please fill this form</p>
@@ -288,10 +288,10 @@ function UserSubmit() {
                   className="form-control"
                   id="inputdeviceName"
                   placeholder=""
+                  {...register("inputdeviceName", { required: true })}
                   onChange={(e) => {
                     setDname(e.target.value);
                   }}
-                  {...register("inputdeviceName", { required: true })}
                   />
                   {errors.inputdeviceName && (
                     <p className="fill-message">Please fill this form</p>
@@ -310,10 +310,10 @@ function UserSubmit() {
                   className="form-control"
                   name="startDate"
                   id="startDate"
+                  {...register("startDate", { required: true })}
                   onChange={(e) => {
                     setStartdate(e.target.value);
                   }}
-                  {...register("startDate", { required: true })}
                   />
                   {errors.startDate && (
                     <p className="fill-message">Please fill this form</p>
@@ -334,10 +334,10 @@ function UserSubmit() {
                   className="form-control"
                   name="endDate"
                   id="endDate"
+                  {...register("endDate", { required: false })}
                   onChange={(e) => {
                     setEnddate(e.target.value);
                   }}
-                  {...register("endDate", { required: false })}
                   />
                   {errors.endDate && (
                     <p className="fill-message">Please fill this form</p>
