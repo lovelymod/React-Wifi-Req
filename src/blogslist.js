@@ -1,3 +1,4 @@
+import { backdropClasses } from "@mui/material";
 import "./table.css";
 // import { useEffect } from "react";
 
@@ -20,7 +21,36 @@ const Blogslist = ({
               <div className="member-data3">{val.firstname}</div>
               <div className="member-data3">{val.lastname}</div>
               <div className="member-data3">
-                <div className="utype-colors3">{val.usertype}</div>
+                {val.usertype === "staff" ? (
+                  <div
+                    className="utype-colors3"
+                    style={{ backgroundColor: "#A8FFA6" }}
+                  >
+                    {val.usertype}
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+                {val.usertype === "internship" ? (
+                  <div
+                    className="utype-colors3"
+                    style={{ backgroundColor: "#ffbeb7" }}
+                  >
+                    {val.usertype}
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+                {val.usertype === "guest" ? (
+                  <div
+                    className="utype-colors3"
+                    style={{ backgroundColor: "#b2e4ff" }}
+                  >
+                    {val.usertype}
+                  </div>
+                ) : (
+                  <div></div>
+                )}
               </div>
               <div className="member-data3">{val.startdate}</div>
               <div className="member-data3">{val.enddate}</div>

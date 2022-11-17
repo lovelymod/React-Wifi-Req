@@ -32,29 +32,22 @@ function AdminSub() {
   const strUtype = utype;
   let strDtype = dtype;
 
-  // const [wifireqList, setWifiReqList] = useState([]);
-
-  const getDateandTime = () => {
+  const OnSubmit = () => {
+    addRequest();
+  };
+  const addRequest = () => {
+    swapData();
     const date = new Date().getDate();
     const month = new Date().getMonth() + 1;
     const year = new Date().getFullYear();
     const hours = new Date().getHours();
     const min = new Date().getMinutes();
 
-    setDates(date + "-" + month + "-" + year);
-    setTimes(hours + ":" + min);
+    const dates = year + "-" + month + "-" + date;
+    const times = hours + ":" + min;
 
     dates.toString();
     times.toString();
-  };
-
-  const OnSubmit = () => {
-    addRequest();
-  };
-  const addRequest = () => {
-    console.log("Hi");
-    swapData();
-    getDateandTime();
     Axios.post("http://localhost:3001/create", {
       firstname: fname,
       lastname: lname,
@@ -119,7 +112,7 @@ function AdminSub() {
           {window.innerWidth > 100 && window.innerWidth < 1000 ? (
             <div>
               <img
-                className="logo-table3"
+                className="logoAdmin4"
                 src="img/LS-02.png"
                 alt=""
                 srcSet=""
@@ -128,7 +121,7 @@ function AdminSub() {
           ) : (
             <div>
               <img
-                className="logo-table3"
+                className="logoAdmin4"
                 src="img/LS-01.png"
                 alt=""
                 srcSet=""
@@ -161,18 +154,26 @@ function AdminSub() {
       <div className="bgAdmin4">
         <div className="headerAdmin4">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
-            <div>
+            <div className="box44">
               <button className="backbuttAdminTop4" onClick={Back}>
-                {<ArrowBackIosIcon sx={{ fontSize: "28px", color: "#0174B3" }} />}{" "}
-                <h1>Create User</h1>
+                {
+                  <ArrowBackIosIcon
+                    sx={{ fontSize: "28px", color: "#0174B3" }}
+                  />
+                }{" "}
               </button>
+                <h1>Create User</h1>
             </div>
           ) : (
-            <div>
+            <div className="box44">
               <button className="backbuttAdminTop4" onClick={Back}>
-                {<ArrowBackIosIcon sx={{ fontSize: "28px", color: "#FFB401" }} />}{" "}
-                <h1>Create User</h1>
+                {
+                  <ArrowBackIosIcon
+                    sx={{ fontSize: "28px", color: "#FFB401" }}
+                  />
+                }{" "}
               </button>
+                <h1>Create User</h1>
             </div>
           )}
 
@@ -190,14 +191,13 @@ function AdminSub() {
                 </label>
 
                 <input
-                  className=" form-control fcAdmin4"
                   type="text"
+                  className=" form-control fcAdmin4"
                   placeholder="First Name"
-                  onChange={(e) => {
-                    setFname(e.target.value);
-                    getDateandTime();
-                  }}
-                  {...register("inputFirstname", { required: true })}
+                  {...register("inputFirstname", {
+                    onChange: (e) => setFname(e.target.value),
+                    required: true,
+                  })}
                 />
                 {errors.inputFirstname && (
                   <p className="fill-message">Please fill this form</p>
@@ -213,10 +213,10 @@ function AdminSub() {
                   className=" form-control fcAdmin4"
                   id="inputLastname"
                   placeholder="Last Name"
-                  onChange={(e) => {
-                    setLname(e.target.value);
-                  }}
-                  {...register("inputLastname", { required: true })}
+                  {...register("inputLastname", {
+                    onChange: (e) => setLname(e.target.value),
+                    required: true,
+                  })}
                 />
                 {errors.inputLastname && (
                   <p className="fill-message">Please fill this form</p>
@@ -236,10 +236,8 @@ function AdminSub() {
                   className=" form-control fcAdmin4"
                   id="inputEmail"
                   placeholder="admin@gmail.com"
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
                   {...register("inputEmail", {
+                    onChange: (e) => setEmail(e.target.value),
                     required: true,
                     pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$",
                   })}
@@ -255,14 +253,17 @@ function AdminSub() {
                 </label>
 
                 <input
-                  type="number"
+                  type="text"
                   className=" form-control fcAdmin4"
                   id="inputTel"
                   placeholder="095xxxxxxx"
-                  onChange={(e) => {
-                    setTel(e.target.value);
-                  }}
-                  {...register("inputTel", { required: true, maxLength: 10 })}
+                  {...register("inputTel", {
+                    onChange: (e) => setTel(e.target.value),
+                    pattern: /[0-9]/,
+                    required: true,
+                    maxLength: 10,
+                    minLength: 9,
+                  })}
                 />
                 {errors.inputTel && (
                   <p className="fill-message">Please correct this form</p>
@@ -323,10 +324,10 @@ function AdminSub() {
                   className=" form-control fcAdmin4 etc4"
                   id="inputEtc"
                   placeholder="Etc please fill ..."
-                  onChange={(e) => {
-                    setEtc(e.target.value);
-                  }}
-                  {...register("inputEtc", { required: false })}
+                  {...register("inputEtc", {
+                    onChange: (e) => setEtc(e.target.value),
+                    required: false,
+                  })}
                 />
                 {errors.inputEtc && (
                   <p className="fill-message">Please fill this form</p>
@@ -345,10 +346,10 @@ function AdminSub() {
                   className=" form-control fcAdmin4"
                   id="inputdeviceBrand"
                   placeholder="Apple , Sumsung , ..."
-                  onChange={(e) => {
-                    setDbrand(e.target.value);
-                  }}
-                  {...register("inputdeviceBrand", { required: true })}
+                  {...register("inputdeviceBrand", {
+                    onChange: (e) => setDbrand(e.target.value),
+                    required: true,
+                  })}
                 />
                 {errors.inputdeviceBrand && (
                   <p className="fill-message">Please fill this form</p>
@@ -365,10 +366,10 @@ function AdminSub() {
                   className=" form-control fcAdmin4"
                   id="inputdeviceName"
                   placeholder=""
-                  onChange={(e) => {
-                    setDname(e.target.value);
-                  }}
-                  {...register("inputdeviceName", { required: true })}
+                  {...register("inputdeviceName", {
+                    onChange: (e) => setDname(e.target.value),
+                    required: true,
+                  })}
                 />
                 {errors.inputdeviceName && (
                   <p className="fill-message">Please fill this form</p>
@@ -387,10 +388,10 @@ function AdminSub() {
                   className=" form-control fcAdmin4"
                   name="startDate"
                   id="startDate"
-                  onChange={(e) => {
-                    setStartdate(e.target.value);
-                  }}
-                  {...register("startDate", { required: true })}
+                  {...register("startDate", {
+                    onChange: (e) => setStartdate(e.target.value),
+                    required: true,
+                  })}
                 />
                 {errors.startDate && (
                   <p className="fill-message">Please fill this form</p>
@@ -407,10 +408,10 @@ function AdminSub() {
                   className=" form-control fcAdmin4"
                   name="endDate"
                   id="endDate"
-                  onChange={(e) => {
-                    setEnddate(e.target.value);
-                  }}
-                  {...register("endDate", { required: false })}
+                  {...register("endDate", {
+                    onChange: (e) => setEnddate(e.target.value),
+                    required: false,
+                  })}
                 />
                 {errors.endDate && (
                   <p className="fill-message">Please fill this form</p>
@@ -441,7 +442,6 @@ function AdminSub() {
                 type="submit"
                 className="btn regisbuttAdmin4"
                 value="Submit"
-                // onClick={addRequest}
               />
 
               <input

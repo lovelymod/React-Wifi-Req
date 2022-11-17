@@ -1,68 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,300&display=swap");
 
-*{
+* {
   box-sizing: border-box;
 }
 
-.AppAdmin4{
-  font-family: 'Kanit', sans-serif;
+.AppAdmin4 {
+  font-family: "Kanit", sans-serif;
   display: flex;
   justify-content: center;
   /* border: 2px solid yellow; */
   width: 100vw;
-  height: 100vh;    
+  height: 100vh;
   background-color: #f0f1f2;
 }
 
-
-.bgAdmin4{
+.bgAdmin4 {
   width: 90%;
   height: 100% !important;
   height: fit-content;
   /* border: 5px solid green; */
   background-color: white;
-  border-top-left-radius: 30px ;
+  border-top-left-radius: 30px;
 }
-.headerAdmin4{
+.headerAdmin4 {
   /* border: 5px solid black; */
   display: flex;
   flex-direction: column;
-  border-top-left-radius: 28px ;
+  border-top-left-radius: 28px;
   height: 13%;
-  background-color: #0174B3;
+  background-color: #0174b3;
 }
 
-.containerAdmin4{
-    /* border: 2px solid red; */
-    height: 87%;
-    overflow: auto;
+.containerAdmin4 {
+  /* border: 2px solid red; */
+  height: 87%;
+  overflow: auto;
 }
 
-.backbuttAdminTop4{
-    display: flex;
-    border: 0px;
-    flex-direction: row;
-    align-items: center;
-    width: fit-content;
-    height: fit-content;
-    color: #FFB401 !important;
-    margin-left: 50px; 
-    margin-top: 20px;
-    background-color:#0174B3 ;
-    
+.backbuttAdminTop4 {
+  display: flex;
+  border: 0px;
+  flex-direction: row;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+  color: #ffb401 !important;
+  margin-left: 50px;
+  margin-top: 20px;
+  background-color: #0174b3;
 }
 
-.message4{
+.message4 {
   text-align: start;
   padding-left: 100px;
   color: white;
   font-size: 24px;
-  
 }
 
-
-.regisbuttAdmin4{
-  background-color: #0174B3 !important;
+.regisbuttAdmin4 {
+  background-color: #0174b3 !important;
   color: white !important;
   border-radius: 50px !important;
   width: 150px !important;
@@ -72,8 +68,8 @@
   font-weight: bold !important;
 }
 
-.backbuttAdmin4{
-  background-color: #FFB401 !important;
+.backbuttAdmin4 {
+  background-color: #ffb401 !important;
   color: white !important;
   border-radius: 50px !important;
   width: 150px !important;
@@ -83,17 +79,18 @@
   font-weight: bold !important;
 }
 
-.regisbuttAdmin4:active{
-  background-color: #FFB401 !important;
-  color: #FF5240 !important;
+.regisbuttAdmin4:active {
+  background-color: #ffb401 !important;
+  color: #ff5240 !important;
 }
 
-.backbuttAdmin4:active{
-  background-color: #FF5240 !important;
-  color: #FFB401 !important;
+.backbuttAdmin4:active {
+  background-color: #ff5240 !important;
+  color: #ffb401 !important;
 }
 
-.fcAdmin4,.fsAdmin4{
+.fcAdmin4,
+.fsAdmin4 {
   width: 100% !important;
   height: 75px !important;
   border-radius: 25px !important;
@@ -101,52 +98,48 @@
   border-color: gray !important;
 }
 
-.flAdmin4{
-    font-size: 24px;
-  }
+.flAdmin4 {
+  font-size: 24px;
+}
 
-.solo4{
+.solo4 {
   display: flex;
   align-items: flex-end;
   width: 65%;
   justify-content: flex-end;
-  border: 2px solid black;
+  /* border: 2px solid black; */
 }
 
-.row-containAdmin4{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 65%;
-    /* border: 1px solid blue; */
-  }
+.row-containAdmin4 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 65%;
+  /* border: 1px solid blue; */
+}
 
-
-.imagesAdmin4{
+.imagesAdmin4 {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid black;
+  /* border: 2px solid black; */
   height: 100%;
   width: 10%;
   background-color: white;
   margin-right: 10px;
-  border-top-right-radius: 30px ;
-
-
-  
+  border-top-right-radius: 30px;
 }
-.boxtop4{
+.boxtop4 {
   /* border: 2px solid black; */
-  height: 50%;  
+  height: 50%;
   padding-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.boxbottom4{
+.boxbottom4 {
   /* border: 2px solid black; */
   height: 50%;
   padding-bottom: 20px;
@@ -154,23 +147,19 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  
 }
 
-.icon4{
+.icon4 {
   border: 0px;
   background-color: white;
 }
 
-
-.logoAdmin4{
-  width: 100px ;
-  height: 100px ; 
+.logoAdmin4 {
+  width: 100px;
+  height: 100px;
 }
 
-
-
-.row-containAdmin-butt4{
+.row-containAdmin-butt4 {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -179,253 +168,246 @@
   margin-bottom: 20px;
 }
 
-.row-containMessage4{
-    color: #FFB401;
-    /* border: 1px solid blue; */
-    align-self: start;
-    padding-top: 50px;
-    padding-left: 150px;
+.row-containMessage4 {
+  color: #ffb401;
+  /* border: 1px solid blue; */
+  align-self: start;
+  padding-top: 50px;
+  padding-left: 150px;
 }
 
-.split-contain4{
+.split-contain4 {
   width: 45%;
   justify-content: space-between;
   /* border: 1px solid black ; */
-
 }
 
-.split-containRemark4{
-    /* border: 1px solid black; */
-    width: 100%;
-    justify-content: space-between;
-
-  }
-
-.remark4{ 
-    width: 100%  !important;
-    height: 75px !important;
-    border-radius: 25px !important;
-    margin-bottom: 10px !important;
-    border-color: gray !important;
+.split-containRemark4 {
+  /* border: 1px solid black; */
+  width: 100%;
+  justify-content: space-between;
 }
 
-.fill-message{
+.remark4 {
+  width: 100% !important;
+  height: 75px !important;
+  border-radius: 25px !important;
+  margin-bottom: 10px !important;
+  border-color: gray !important;
+}
+
+.fill-message {
   color: red;
 }
 
-form{
+form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+@media only screen and (max-width: 600px) {
+  .AppAdmin4 {
+    flex-direction: column;
+    overflow: scroll;
+  }
 
+  .imagesAdmin4 {
+    width: 100%;
+    height: 15%;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    margin-bottom: 10px;
+    background-color: #0174b3;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 
-@media only screen and (max-width:600px) {
+  .boxtop4 {
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .AppAdmin4{
-        flex-direction: column;
-        overflow: scroll;
-    }
+  .logoAdmin4 {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 10px;
+  }
 
-    .imagesAdmin4{
-        width: 100%;
-        height:  15%;
-        border-top-right-radius: 0px;
-        border-bottom-left-radius: 30px;
-        border-bottom-right-radius: 30px;
-        margin-bottom: 10px;
-        background-color: #0174B3;
-        flex-direction: row;
-        justify-content: space-between;
-    }
+  .boxbottom4 {
+    height: 100%;
+    width: 0%;
+    align-items: flex-end;
+    padding-right: 50px;
+    display: none;
+  }
 
-    .boxtop4{
-        height: 100%;
-        width: 100%;
-        justify-content: center;
-        align-items: center; 
-    }
+  .icon4 {
+    border: 0px;
+    background-color: #0174b3;
+  }
 
-    .logoAdmin4{
-        width: 70px;
-        height: 70px;
-    }
+  .bgAdmin4 {
+    width: 100%;
+    height: 85% !important;
+    border-top-right-radius: 30px;
+  }
 
+  .headerAdmin4 {
+    background-color: white;
+    border-top-right-radius: 30px;
+    flex-direction: row;
+    align-items: center;
+  }
 
-    .boxbottom4{
-        height: 100%;
-        width: 0%;
-        align-items: flex-end;
-        padding-right: 50px;
-        display: none;
+  .box44 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #ffb401;
+  }
 
-    }
+  .backbuttAdminTop4 {
+    background-color: white;
+    border: 0px;
+    padding-left: 0px;
+    margin-left: 20px;
+    margin-bottom: 25px;
+  }
 
-    .icon4{
-        border: 0px;
-        background-color: #0174B3;
-    }
+  .message4 {
+    color: black;
+    display: none;
+  }
 
+  .row-containMessage4 {
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 36px;
+    padding: 0px;
+    align-self: center;
+    margin-bottom: 20px;
+  }
 
-    .bgAdmin4{
-      width: 100%;
-      height: 85% !important;
-      border-top-right-radius: 30px;
+  .row-containAdmin4 {
+    width: 85%;
+    flex-direction: column;
+  }
+  .flAdmin4 {
+    font-size: 18px;
+  }
 
-    }
+  .split-contain4 {
+    width: 100%;
+  }
 
-    .headerAdmin4{
-        background-color: white;
-        border-top-right-radius: 30px;
-        flex-direction: row;
-        align-items: center;
+  .solo4 {
+    width: 85%;
+  }
 
-    }
+  .row-containAdmin-butt4 {
+    width: 85%;
+    margin-bottom: 30px;
+  }
 
-    .backbuttAdminTop4{
-        background-color: white;
-        border: 0px;
-        padding-left: 0px;
-        margin-left: 20px;
-    }
-
-
-    .message4{
-        color: black;
-        display: none;
-    }
-
-    .row-containMessage4{
-        justify-content: center;
-        margin-top: 20px;
-        font-size: 36px;
-        padding: 0px;
-        align-self: center;
-        margin-bottom: 20px;
-    }
-
-    .row-containAdmin4{
-        width: 85%;
-        flex-direction: column;
-    }
-    .flAdmin4{
-        font-size: 18px;
-    }
-
-    .split-contain4{
-        width: 100%;
-    }
-
-    .solo4{
-        width: 85%;
-    }
-
-    .row-containAdmin-butt4{
-        width: 85%;
-        margin-bottom: 30px;
-
-    }
-
-
-    .regisbuttAdmin4,.backbuttAdmin4{
-        height: 60px !important;
-        width: 120px !important;
-    }
-
+  .regisbuttAdmin4,
+  .backbuttAdmin4 {
+    height: 60px !important;
+    width: 120px !important;
+  }
 }
 
-@media only screen and (min-width:601px) and (max-width:900px) {
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+  .AppAdmin4 {
+    flex-direction: column;
+    overflow: scroll;
+  }
 
-    .AppAdmin4{
-        flex-direction: column;
-        overflow: scroll;
-    }
+  .imagesAdmin4 {
+    /* border: 5px solid green; */
+    width: 100%;
+    height: 15%;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    margin-bottom: 10px;
+    background-color: #0174b3;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 
-    .imagesAdmin4{
-      /* border: 5px solid green; */
-        width: 100%;
-        height: 15%;
-        border-top-right-radius: 0px;
-        border-bottom-left-radius: 30px;
-        border-bottom-right-radius: 30px;
-        margin-bottom: 10px;
-        background-color: #0174B3;
-        flex-direction: row;
-        justify-content: space-between;
-    }
+  .boxtop4 {
+    height: 100%;
+    width: 50%;
+    align-items: flex-start;
+    padding-top: 30px;
+    padding-left: 50px;
+  }
 
-    .boxtop4{
-        height: 100%;
-        width: 50%;
-        align-items: flex-start;
-        padding-top: 30px;
-        padding-left: 50px;
-    }
+  .boxbottom4 {
+    height: 100%;
+    width: 50%;
+    align-items: flex-end;
+    padding-right: 50px;
+  }
 
+  .icon4 {
+    border: 0px;
+    background-color: #0174b3;
+  }
 
-    .boxbottom4{
-        height: 100%;
-        width: 50%;
-        align-items: flex-end;
-        padding-right: 50px;
-    }
+  .bgAdmin4 {
+    width: 100%;
+    height: 85% !important;
+    border-top-right-radius: 30px;
+  }
 
-    .icon4{
-        border: 0px;
-        background-color: #0174B3;
-    }
+  .headerAdmin4 {
+    background-color: white;
+    border-top-right-radius: 30px;
+  }
 
-    .bgAdmin4{
-      width: 100%;
-      height: 85% !important;
-      border-top-right-radius: 30px;
+  .box44 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #ffb401;
+  }
 
-    }
+  .backbuttAdminTop4 {
+    background-color: white;
+    border: 0px;
+    margin-bottom: 30px;
+  }
 
-    .headerAdmin4{
-        background-color: white;
-      border-top-right-radius: 30px;
+  .message4 {
+    color: black;
+  }
 
-    }
+  .row-containMessage4 {
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 36px;
+    padding: 0px;
+    align-self: center;
+  }
 
-    .backbuttAdminTop4{
-        background-color: white;
-        border: 0px ;
-        margin-bottom: 10px;
-    }
+  .row-containAdmin4 {
+    width: 90%;
+  }
 
-    .message4{
-        color: black;
-    }
+  .solo4 {
+    width: 90%;
+  }
 
-    .row-containMessage4{
-        justify-content: center;
-        margin-top: 20px;
-        font-size: 36px;
-        padding: 0px;
-        align-self: center;
-    }
-
-    .row-containAdmin4{
-        width: 90%;
-    }
-
-    .solo4{
-        width: 90%;
-    }
-
-    .row-containAdmin-butt4{
-        width: 90%;
-        margin-bottom: 30px;
-    }
-
-  
- 
+  .row-containAdmin-butt4 {
+    width: 90%;
+    margin-bottom: 30px;
+  }
 }
-
-
-
-
-

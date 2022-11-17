@@ -22,35 +22,25 @@ function UserSubmit() {
   const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
 
-  const [dates, setDates] = useState("");
-  const [times, setTimes] = useState("");
-
   const strUtype = utype;
   let strDtype = dtype;
 
-  // const [wifireqList, setWifiReqList] = useState([]);
-
-  const getDateandTime = () => {
+  const OnSubmit = () => {
+    addRequest();
+  };
+  const addRequest = () => {
+    swapData();
     const date = new Date().getDate();
     const month = new Date().getMonth() + 1;
     const year = new Date().getFullYear();
     const hours = new Date().getHours();
     const min = new Date().getMinutes();
 
-    setDates(date + "-" + month + "-" + year);
-    setTimes(hours + ":" + min);
+    const dates = year + "-" + month + "-" + date;
+    const times = hours + ":" + min;
 
     dates.toString();
     times.toString();
-  };
-
-  const OnSubmit = () => {
-    addRequest();
-  }
-  const addRequest = () => {
-    console.log('Hi');
-    swapData();
-    getDateandTime();
     Axios.post("http://localhost:3001/create", {
       firstname: fname,
       lastname: lname,
@@ -119,11 +109,10 @@ function UserSubmit() {
                   className="form-control"
                   type="text"
                   placeholder="First Name"
-                  {...register("inputFirstname", { required: true })}
-                  onChange={(e) => {
-                    setFname(e.target.value);
-                    getDateandTime();
-                  }}
+                  {...register("inputFirstname", {
+                    onChange: (e) => setFname(e.target.value),
+                    required: true,
+                  })}
                 />
                 {errors.inputFirstname && (
                   <p className="fill-message">Please fill this form</p>
@@ -139,14 +128,14 @@ function UserSubmit() {
                   className="form-control"
                   id="inputLastname"
                   placeholder="Last Name"
-                  {...register("inputLastname", { required: true })}
-                  onChange={(e) => {
-                    setLname(e.target.value);
-                  }}
-                  />
-                  {errors.inputLastname && (
-                    <p className="fill-message">Please fill this form</p>
-                  )}
+                  {...register("inputLastname", {
+                    onChange: (e) => setLname(e.target.value),
+                    required: true,
+                  })}
+                />
+                {errors.inputLastname && (
+                  <p className="fill-message">Please fill this form</p>
+                )}
               </span>
             </div>
 
@@ -162,14 +151,15 @@ function UserSubmit() {
                   className="form-control"
                   id="inputEmail"
                   placeholder="admin@gmail.com"
-                  {...register("inputEmail", { required: true ,pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$"})}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                  />
-                  {errors.inputEmail && (
-                    <p className="fill-message">Please fill this form</p>
-                  )}
+                  {...register("inputEmail", {
+                    onChange: (e) => setEmail(e.target.value),
+                    required: true,
+                    pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$",
+                  })}
+                />
+                {errors.inputEmail && (
+                  <p className="fill-message">Please fill this form</p>
+                )}
               </span>
 
               <span className="split-contain1">
@@ -178,18 +168,21 @@ function UserSubmit() {
                 </label>
 
                 <input
-                  type="number"
+                  type="text"
                   className="form-control"
                   id="inputTel"
                   placeholder="095xxxxxxx"
-                  {...register("inputTel", { required: true , maxLength: 10})}
-                  onChange={(e) => {
-                    setTel(e.target.value);
-                  }}
-                  />
-                  {errors.inputTel && (
-                    <p className="fill-message">Please correct this form</p>
-                  )}
+                  {...register("inputTel", {
+                    onChange: (e) => setTel(e.target.value),
+                    pattern: /[0-9]/,
+                    required: true,
+                    maxLength: 10,
+                    minLength: 9,
+                  })}
+                />
+                {errors.inputTel && (
+                  <p className="fill-message">Please correct this form</p>
+                )}
               </span>
             </div>
 
@@ -242,18 +235,18 @@ function UserSubmit() {
             <div className="solo1" hidden={etcDisable}>
               <span className="split-contain1">
                 <input
-                  type='text'
+                  type="text"
                   className="form-control etc"
                   id="inputEtc"
                   placeholder="Etc please fill ..."
-                  {...register("inputEtc", { required: false })}
-                  onChange={(e) => {
-                    setEtc(e.target.value);
-                  }}
-                  />
-                  {errors.inputEtc && (
-                    <p className="fill-message">Please fill this form</p>
-                  )}
+                  {...register("inputEtc", {
+                    onChange: (e) => setEtc(e.target.value),
+                    required: false,
+                  })}
+                />
+                {errors.inputEtc && (
+                  <p className="fill-message">Please fill this form</p>
+                )}
               </span>
             </div>
 
@@ -268,14 +261,14 @@ function UserSubmit() {
                   className="form-control"
                   id="inputdeviceBrand"
                   placeholder="Apple , Sumsung , ..."
-                  {...register("inputdeviceBrand", { required: true })}
-                  onChange={(e) => {
-                    setDbrand(e.target.value);
-                  }}
-                  />
-                  {errors.inputdeviceBrand && (
-                    <p className="fill-message">Please fill this form</p>
-                  )}
+                  {...register("inputdeviceBrand", {
+                    onChange: (e) => setDbrand(e.target.value),
+                    required: true,
+                  })}
+                />
+                {errors.inputdeviceBrand && (
+                  <p className="fill-message">Please fill this form</p>
+                )}
               </span>
 
               <span className="split-contain1">
@@ -288,14 +281,14 @@ function UserSubmit() {
                   className="form-control"
                   id="inputdeviceName"
                   placeholder=""
-                  {...register("inputdeviceName", { required: true })}
-                  onChange={(e) => {
-                    setDname(e.target.value);
-                  }}
-                  />
-                  {errors.inputdeviceName && (
-                    <p className="fill-message">Please fill this form</p>
-                  )}
+                  {...register("inputdeviceName", {
+                    onChange: (e) => setDname(e.target.value),
+                    required: true,
+                  })}
+                />
+                {errors.inputdeviceName && (
+                  <p className="fill-message">Please fill this form</p>
+                )}
               </span>
             </div>
 
@@ -310,38 +303,34 @@ function UserSubmit() {
                   className="form-control"
                   name="startDate"
                   id="startDate"
-                  {...register("startDate", { required: true })}
-                  onChange={(e) => {
-                    setStartdate(e.target.value);
-                  }}
-                  />
-                  {errors.startDate && (
-                    <p className="fill-message">Please fill this form</p>
-                  )}
+                  {...register("startDate", {
+                    onChange: (e) => setStartdate(e.target.value),
+                    required: true,
+                  })}
+                />
+                {errors.startDate && (
+                  <p className="fill-message">Please fill this form</p>
+                )}
               </span>
 
               <span className="split-contain1" hidden={Labelhide}>
-                <label
-            
-                  htmlFor="endDate"
-                  className="form-label"
-                >
+                <label htmlFor="endDate" className="form-label">
                   End Date :
                 </label>
 
                 <input
-                  type='date'
+                  type="date"
                   className="form-control"
                   name="endDate"
                   id="endDate"
-                  {...register("endDate", { required: false })}
-                  onChange={(e) => {
-                    setEnddate(e.target.value);
-                  }}
-                  />
-                  {errors.endDate && (
-                    <p className="fill-message">Please fill this form</p>
-                  )}
+                  {...register("endDate", {
+                    onChange: (e) => setEnddate(e.target.value),
+                    required: false,
+                  })}
+                />
+                {errors.endDate && (
+                  <p className="fill-message">Please fill this form</p>
+                )}
               </span>
             </div>
 
@@ -351,7 +340,7 @@ function UserSubmit() {
                   Remark :
                 </label>
 
-                <textarea 
+                <textarea
                   type="text"
                   className="form-control remark1"
                   name="remark"
@@ -364,12 +353,7 @@ function UserSubmit() {
             </div>
 
             <div className="row-contain-butt1">
-              <input
-                type="submit"
-                className="btn regisbutt"
-                value="Submit"
-                // onClick={addRequest}
-              />
+              <input type="submit" className="btn regisbutt" value="Submit" />
 
               <input type="" className="btn backbutt" value="Cancel" />
             </div>

@@ -24,7 +24,7 @@ function ShowData() {
     <div className="App5">
       <div className="left-manu5">
         <div className="top-img5">
-          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
+          {window.innerWidth > 100 && window.innerWidth < 1000 ? (
             <div>
               <img
                 className="logo-table5"
@@ -67,41 +67,29 @@ function ShowData() {
         </div>
       </div>
       <div className="bg5">
-        {/* <span className="left5">
-          <button className="btn backbutt5" onClick={Back}>
-            {
-              <ArrowBackIosIcon
-                sx={{
-                  color: "#FFB401",
-                }}
-              />
-            }{" "}
-            Show
-          </button>
-        </span> */}
         <span className="right5">
           <div className="headerInfo5">
-            {window.innerWidth > 601 && window.innerWidth < 1000 ? (
-              <div>
+            {window.innerWidth > 100 && window.innerWidth < 1000 ? (
+              <div className="box55">
                 <button className="backbutt5" onClick={Back}>
                   {
                     <ArrowBackIosIcon
                       sx={{ fontSize: "28px", color: "#0174B3" }}
                     />
                   }{" "}
-                  <h1>User Information</h1>
                 </button>
+                <h1>User Information</h1>
               </div>
             ) : (
-              <div>
+              <div className="box55">
                 <button className="backbutt5" onClick={Back}>
                   {
                     <ArrowBackIosIcon
                       sx={{ fontSize: "28px", color: "#FFB401" }}
                     />
                   }{" "}
-                  <h1>User Information</h1>
                 </button>
+                <h1>User Information</h1>
               </div>
             )}
 
@@ -167,8 +155,10 @@ function ShowData() {
                     </span>
                   </div>
                   <div className="row-data5">
-                    <h1 className="label-data5">Remark:</h1>
-                    <p className="data5">{val.remark}</p>
+                    <span className="splitcontain5">
+                      <h1 className="label-data5">Remark:</h1>
+                      <p className="data5">{val.remark}</p>
+                    </span>
                   </div>
                   <div className="row-butt5">
                     <button

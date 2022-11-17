@@ -33,7 +33,6 @@ app.post("/login", (req, res) => {
 
     (err, result) => {
       if (err) {
-        // res.send(err);
         res.sendStatus(400);
       } else {
         let data = null;
@@ -43,7 +42,6 @@ app.post("/login", (req, res) => {
             result: result,
             message: "Wrong username or password",
           };
-
           // username and password not match
         } else {
           data = {
@@ -107,9 +105,6 @@ app.post("/create", (req, res) => {
   const date = req.body.date;
   const time = req.body.time;
 
-  console.log(date);
-  console.log(time);
-
   db.query(
     "INSERT INTO wifireq2 (firstname, lastname, usertype, tel, email, dtype, dbrand, dname, startdate, enddate, remark, date ,time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
     [
@@ -131,12 +126,12 @@ app.post("/create", (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("Value Inserted");
         let data = null;
         data = {
           result: result,
           message: "Inserted"
         }
+        res.send(data);
       }
     }
   );
@@ -159,7 +154,12 @@ app.put('/update',(req,res) => {
     if(err){
       console.log(err);
     }else {
-      res.send(result);
+      let data = null;
+        data = {
+          result: result,
+          message: "Editted"
+        }
+        res.send(data);
     }
   })
 })

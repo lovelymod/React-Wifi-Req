@@ -6,14 +6,8 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
 
-  const [loginStat, setLoginstat] = useState("");
-
-  // const testdata = () => {
-  //   console.log(loginStat);
-  // };
 
   const login = () => {
     Axios.post("http://localhost:3001/login", {
@@ -29,7 +23,7 @@ function Login() {
         }, 2000);
         
       } else {
-        alert("Wrong Username or Password")
+        alert(response.data.message)
       }
     });
   };
@@ -63,14 +57,6 @@ function Login() {
                 }}
               />
             </div>
-
-            {/* <button
-              type="submit"
-              className="btn regisbutt"
-              onClick={() => login()}
-            >
-              Submit
-            </button> */}
 
             <input
               type=""

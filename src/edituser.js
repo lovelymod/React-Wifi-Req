@@ -1,7 +1,7 @@
 import "./edituser.css";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-// import { useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Axios from "axios";
@@ -12,11 +12,11 @@ function EditUser() {
   const showNewMember = location.state.newMemberList;
   const [newMember, setNewmember] = useState(showNewMember);
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
@@ -47,7 +47,6 @@ function EditUser() {
     navigate("/login");
   };
 
-
   const UpdateData = (id) => {
     swapData();
     Axios.put("http://localhost:3001/update", {
@@ -65,6 +64,12 @@ function EditUser() {
       remark: remark,
     })
       .then((response) => {
+        if(response.data.message === "Editted"){
+          alert("Editted");
+          setTimeout(function() {
+            navigate("/table");
+          }, 1300);
+        }
         setNewmember(
           newMember.map((val) => {
             return val.id === id
@@ -112,32 +117,79 @@ function EditUser() {
     <div className="App6">
       <div className="left-manu6">
         <div className="top-img6">
-          <img className="logo-table6" src="img/LS-01.png" alt="" srcSet="" />
+          {window.innerWidth > 100 && window.innerWidth < 1000 ? (
+            <div>
+              <img
+                className="logo-table6"
+                src="img/LS-02.png"
+                alt=""
+                srcSet=""
+              />
+            </div>
+          ) : (
+            <div>
+              <img
+                className="logo-table6"
+                src="img/LS-01.png"
+                alt=""
+                srcSet=""
+              />
+            </div>
+          )}
         </div>
         <div className="bottom-img6">
-          <button className="icon6" onClick={BtoLogin}>
-            <LogoutOutlinedIcon sx={{ fontSize: "40px", color: "#0174B3" }} />
-          </button>
+          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
+            <div>
+              <button className="icon6" onClick={BtoLogin}>
+                <LogoutOutlinedIcon
+                  className="icon-exit6"
+                  sx={{ fontSize: "40px", color: "white" }}
+                />
+              </button>
+            </div>
+          ) : (
+            <div>
+              <button className="icon6" onClick={BtoLogin}>
+                <LogoutOutlinedIcon
+                  className="icon-exit6"
+                  style={{ fontSize: "40px", color: "#0174B3" }}
+                />
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className="bg6">
         <div className="headerInfo6">
-          <button className="btn backbutt6" onClick={Back}>
-            {
-              <ArrowBackIosIcon
-                sx={{
-                  color: "#FFB401",
-                }}
-              />
-            }{" "}
-            <h1>Edit</h1>
-          </button>
-          <p className="message">Wi-Fi Request List/Edit</p>
+          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
+            <div className="box66">
+              <button className="btn backbutt6" onClick={Back}>
+                {
+                  <ArrowBackIosIcon
+                    sx={{ fontSize: "28px", color: "#0174B3" }}
+                  />
+                }{" "}
+              </button>
+                <h1>Edit</h1>
+            </div>
+          ) : (
+            <div className="box66">
+              <button className="btn backbutt6" onClick={Back}>
+                {
+                  <ArrowBackIosIcon
+                    sx={{ fontSize: "28px", color: "#FFB401" }}
+                  />
+                }{" "}
+              </button>
+                <h1>Edit</h1>
+            </div>
+          )}
+          <p className="message6">Wi-Fi Request List/Edit</p>
         </div>
         {showNewMember.map((val, key) => {
           return (
             <div className="contain-data6">
-              <form onSubmit="">
+              <form onSubmit={handleSubmit(() => {UpdateData(val.id)})}>
                 <div className="row-data6">
                   <span className="split-contain6">
                     <label htmlFor="inputFname" className="form-label fl6">
@@ -145,14 +197,17 @@ function EditUser() {
                     </label>
 
                     <input
-                      className=" form-control fcAdmin6"
+                      className=" form-control fc6"
                       type="text"
                       defaultValue={val.firstname}
-                      onChange={(e) => {
-                        setFname(e.target.value);
-                        console.log(e.target.value);
-                      }}
+                      {...register("inputFirstname", {
+                        onChange: (e) => setFname(e.target.value),
+                        required: true,
+                      })}
                     />
+                    {errors.inputFirstname && (
+                      <p className="fill-message">Please fill this form</p>
+                    )}
                   </span>
                   <span className="split-contain6">
                     <label htmlFor="inputLname" className="form-label fl6">
@@ -160,13 +215,17 @@ function EditUser() {
                     </label>
                     <input
                       type="text"
-                      className=" form-control fcAdmin6"
+                      className=" form-control fc6"
                       id="inputLastname"
                       defaultValue={val.lastname}
-                      onChange={(e) => {
-                        setLname(e.target.value);
-                      }}
+                      {...register("inputLastname", {
+                        onChange: (e) => setLname(e.target.value),
+                        required: true,
+                      })}
                     />
+                    {errors.inputLastname && (
+                      <p className="fill-message">Please fill this form</p>
+                    )}
                   </span>
                 </div>
                 <div className="row-data6">
@@ -178,13 +237,18 @@ function EditUser() {
                     <input
                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                       type="email"
-                      className=" form-control fcAdmin6"
+                      className=" form-control fc6"
                       id="inputEmail"
                       defaultValue={val.email}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                      }}
+                      {...register("inputEmail", {
+                        onChange: (e) => setEmail(e.target.value),
+                        required: true,
+                        pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$",
+                      })}
                     />
+                    {errors.inputEmail && (
+                      <p className="fill-message">Please fill this form</p>
+                    )}
                   </span>
 
                   <span className="split-contain6">
@@ -193,14 +257,21 @@ function EditUser() {
                     </label>
 
                     <input
-                      type="number"
-                      className=" form-control fcAdmin6"
+                      type="text"
+                      className=" form-control fc6"
                       id="inputTel"
                       defaultValue={val.tel}
-                      onChange={(e) => {
-                        setTel(e.target.value);
-                      }}
+                      {...register("inputTel", {
+                        onChange: (e) => setTel(e.target.value),
+                        pattern: /[0-9]/,
+                        required: true,
+                        maxLength: 10,
+                        minLength: 9,
+                      })}
                     />
+                    {errors.inputTel && (
+                      <p className="fill-message">Please correct this form</p>
+                    )}
                   </span>
                 </div>
                 <div className="row-data6">
@@ -211,7 +282,7 @@ function EditUser() {
 
                     <select
                       name="userType"
-                      className="form-select fsAdmin6"
+                      className="form-select fs6"
                       id="inputUsertype"
                       defaultValue={val.usertype}
                       onChange={(e) => {
@@ -233,7 +304,7 @@ function EditUser() {
 
                     <select
                       name="deviceType"
-                      className="form-select fsAdmin6"
+                      className="form-select fs6"
                       id="inputDevicetype"
                       defaultValue={val.dtype}
                       onChange={(e) => {
@@ -255,12 +326,16 @@ function EditUser() {
                   <span className="split-contain6">
                     <input
                       type="text"
-                      className=" form-control fcAdmin6 etc6"
+                      className=" form-control fc6 etc6"
                       id="inputEtc"
-                      onChange={(e) => {
-                        setEtc(e.target.value);
-                      }}
+                      {...register("inputEtc", {
+                        onChange: (e) => setEtc(e.target.value),
+                        required: false,
+                      })}
                     />
+                    {errors.inputEtc && (
+                      <p className="fill-message">Please fill this form</p>
+                    )}
                   </span>
                 </div>
 
@@ -272,13 +347,17 @@ function EditUser() {
 
                     <input
                       type="text"
-                      className=" form-control fcAdmin6"
+                      className=" form-control fc6"
                       id="inputdeviceBrand"
                       defaultValue={val.dbrand}
-                      onChange={(e) => {
-                        setDbrand(e.target.value);
-                      }}
+                      {...register("inputdeviceBrand", {
+                        onChange: (e) => setDbrand(e.target.value),
+                        required: true,
+                      })}
                     />
+                    {errors.inputdeviceBrand && (
+                      <p className="fill-message">Please fill this form</p>
+                    )}
                   </span>
 
                   <span className="split-contain6">
@@ -288,13 +367,17 @@ function EditUser() {
 
                     <input
                       type="text"
-                      className=" form-control fcAdmin6"
+                      className=" form-control fc6"
                       id="inputdeviceName"
                       defaultValue={val.dname}
-                      onChange={(e) => {
-                        setDname(e.target.value);
-                      }}
+                      {...register("inputdeviceName", {
+                        onChange: (e) => setDname(e.target.value),
+                        required: true,
+                      })}
                     />
+                    {errors.inputdeviceName && (
+                      <p className="fill-message">Please fill this form</p>
+                    )}
                   </span>
                 </div>
                 <div className="row-data6">
@@ -305,42 +388,50 @@ function EditUser() {
 
                     <input
                       type="date"
-                      className=" form-control fcAdmin6"
+                      className=" form-control fc6"
                       name="startDate"
                       id="startDate"
                       defaultValue={val.startdate}
-                      onChange={(e) => {
-                        setStartdate(e.target.value);
-                      }}
+                      {...register("startDate", {
+                        onChange: (e) => setStartdate(e.target.value),
+                        required: true,
+                      })}
                     />
+                    {errors.startDate && (
+                      <p className="fill-message">Please fill this form</p>
+                    )}
                   </span>
 
-                  <span className="split-containedit6" hidden={Labelhide}>
+                  <span className="split-contain6" hidden={Labelhide}>
                     <label htmlFor="endDate" className="form-label fl6">
                       End Date :
                     </label>
 
                     <input
                       type="date"
-                      className=" form-control fcAdmin6"
+                      className=" form-control fc6"
                       name="endDate"
                       id="endDate"
                       defaultValue={val.enddate}
-                      onChange={(e) => {
-                        setEnddate(e.target.value);
-                      }}
+                      {...register("endDate", {
+                        onChange: (e) => setEnddate(e.target.value),
+                        required: false,
+                      })}
                     />
+                    {errors.endDate && (
+                      <p className="fill-message">Please fill this form</p>
+                    )}
                   </span>
                 </div>
                 <div className="row-data6">
                   <span className="split-containRemarkedit6">
-                    <label htmlFor="remark" className="form-label flAdmin6">
+                    <label htmlFor="remark" className="form-label fl6">
                       Remark :
                     </label>
 
                     <input
                       type="text"
-                      className=" form-control inputeditremark6"
+                      className=" form-control remark6"
                       id="inputremark"
                       defaultValue={val.remark}
                       onChange={(e) => {
@@ -351,10 +442,10 @@ function EditUser() {
                 </div>
                 <div className="row-butt6">
                   <input
-                    type=""
+                    type="submit"
                     className="btn savebutt6"
-                    value="Submit"
-                    onClick={() => UpdateData(val.id)}
+                    value="Save"
+                    // onClick={() => UpdateData(val.id)}
                   />
 
                   <button className="btn cancelbutt6" onClick={Back}>
