@@ -2,6 +2,8 @@ import "./usersubmit.css";
 import { useState } from "react";
 import Axios from "axios";
 import { useForm } from "react-hook-form";
+import moment from 'moment'
+
 
 function UserSubmit() {
   const {
@@ -25,22 +27,16 @@ function UserSubmit() {
   const strUtype = utype;
   let strDtype = dtype;
 
+
+
   const OnSubmit = () => {
     addRequest();
   };
   const addRequest = () => {
     swapData();
-    const date = new Date().getDate();
-    const month = new Date().getMonth() + 1;
-    const year = new Date().getFullYear();
-    const hours = new Date().getHours();
-    const min = new Date().getMinutes();
+    const dates = moment().format('YYYY-MM-DD');
+    const times = moment().format('hh:mm');
 
-    const dates = year + "-" + month + "-" + date;
-    const times = hours + ":" + min;
-
-    dates.toString();
-    times.toString();
     Axios.post("http://localhost:3001/create", {
       firstname: fname,
       lastname: lname,

@@ -1,6 +1,7 @@
 import "./table.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 import Axios from "axios";
 import Blogslist from "./blogslist";
 import { CSVLink } from "react-csv";
@@ -48,19 +49,21 @@ function Table() {
     { label: "Email", key: "email" },
     { label: "Tel", key: "tel" },
     { label: "Usertype", key: "usertype" },
-    { label: "DeviceType", key: "devicetype" },
-    { label: "DeviceBrand", key: "devicebrand" },
-    { label: "DeviceName", key: "devicename" },
+    { label: "DeviceType", key: "dtype" },
+    { label: "DeviceBrand", key: "dbrand" },
+    { label: "DeviceName", key: "dname" },
     { label: "StartDate", key: "startdate" },
     { label: "EndDate", key: "enddate" },
     { label: "Date", key: "date" },
     { label: "Time", key: "time" },
   ];
 
+  const timeStamp = moment().format("YYYY_MM_DD");
+
   const csvReport = {
     headers: headers,
     data: memberList,
-    filename: "RequestList_.csv",
+    filename: `RequestList_${timeStamp}.csv`,
   };
 
   const gotoAdminSub = () => {
@@ -155,6 +158,7 @@ function Table() {
                 />
                 <CSVLink {...csvReport}>
                   <input
+                    asyncOnClick={true}
                     type="button"
                     className="btn export3"
                     value="Export .csv"

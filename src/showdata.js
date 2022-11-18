@@ -1,4 +1,5 @@
 import "./showdata.css";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
@@ -7,6 +8,20 @@ function ShowData() {
   const navigate = useNavigate();
   const location = useLocation();
   const showNewMember = location.state.newMemberList;
+  const [memberList, setMemberList] = useState(showNewMember);
+  const [Labelhide, setLabelhide] = useState("");
+
+  const onFirstCheckEnd = () => {
+    if (!showNewMember[0].enddate) {
+      setLabelhide("hidden");
+    } else {
+      setLabelhide("");
+    }
+  };
+
+  useEffect(() => {
+    onFirstCheckEnd();
+  }, []);
 
   const Back = () => {
     navigate("/table");
@@ -14,6 +29,14 @@ function ShowData() {
   const BtoLogin = () => {
     navigate("/login");
   };
+
+  // const deleteMember = (id) => {
+  //   if (window.confirm("Confirm Delete")) {
+  //     const newMemberList = memberList.filter((val) => val.id !== id);
+  //     setMemberList(newMemberList);
+  //   } else {
+  //   }
+  // };
 
   const edituser = (id) => {
     const newMemberList = showNewMember.filter((val) => val.id === id);
@@ -149,7 +172,7 @@ function ShowData() {
                       <p className="data5">{val.startdate}</p>
                     </span>
 
-                    <span className="splitcontain5">
+                    <span className="splitcontain5" hidden={Labelhide}>
                       <h1 className="label-data5">End Date:</h1>
                       <p className="data5">{val.enddate}</p>
                     </span>
@@ -175,47 +198,6 @@ function ShowData() {
                 </div>
               );
             })}
-
-            {/* <span className="contain-right5">
-              {showNewMember.map((val, key) => {
-                return (
-                  <div className="contain-data5">
-                    <div className="row-data5">
-                      <p className="label-data5">Lastname:</p>
-                      <p className="data5">{val.lastname}</p>
-                    </div>
-                    <div className="row-data5">
-                      <p className="label-data5">Tel:</p>
-                      <p className="data5">{val.tel}</p>
-                    </div>
-                    <div className="row-data5">
-                      <p className="label-data5">Device Type:</p>
-                      <p className="data5">{val.dtype}</p>
-                    </div>
-                    <div className="row-data5">
-                      <p className="label-data5">Device name:</p>
-                      <p className="data5">{val.dname}</p>
-                    </div>
-                    <div className="row-data5">
-                      <p className="label-data5">End Date:</p>
-                      <p className="data5">{val.enddate}</p>
-                    </div>
-                    <div className="row-butt5">
-                      <button
-                        className="btn edit-butt-sw5"
-                        onClick={() => {
-                          edituser(val.id);
-                        }}
-                      >
-                        Edit
-                      </button>
-                      <div className="emtpy-box5"></div>
-                      <button className="btn edit-butt-sw5">Delete</button>
-                    </div>
-                  </div>
-                );
-              })}
-            </span> */}
           </div>
         </span>
       </div>

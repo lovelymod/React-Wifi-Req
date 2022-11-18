@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useNavigate } from "react-router-dom";
+import moment from 'moment'
 
 function AdminSub() {
   const navigate = useNavigate();
@@ -26,9 +27,6 @@ function AdminSub() {
   const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
 
-  const [dates, setDates] = useState("");
-  const [times, setTimes] = useState("");
-
   const strUtype = utype;
   let strDtype = dtype;
 
@@ -37,17 +35,9 @@ function AdminSub() {
   };
   const addRequest = () => {
     swapData();
-    const date = new Date().getDate();
-    const month = new Date().getMonth() + 1;
-    const year = new Date().getFullYear();
-    const hours = new Date().getHours();
-    const min = new Date().getMinutes();
+    const dates = moment().format('YYYY-MM-DD');
+    const times = moment().format('hh:mm');
 
-    const dates = year + "-" + month + "-" + date;
-    const times = hours + ":" + min;
-
-    dates.toString();
-    times.toString();
     Axios.post("http://localhost:3001/create", {
       firstname: fname,
       lastname: lname,
@@ -169,7 +159,7 @@ function AdminSub() {
               <button className="backbuttAdminTop4" onClick={Back}>
                 {
                   <ArrowBackIosIcon
-                    sx={{ fontSize: "28px", color: "#FFB401" }}
+                    sx={{ fontSize: "32px", color: "#FFB401" }}
                   />
                 }{" "}
               </button>

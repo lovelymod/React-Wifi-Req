@@ -1,5 +1,5 @@
 import "./edituser.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -11,7 +11,6 @@ function EditUser() {
   const location = useLocation();
   const showNewMember = location.state.newMemberList;
   const [newMember, setNewmember] = useState(showNewMember);
-
   const {
     register,
     handleSubmit,
@@ -64,9 +63,9 @@ function EditUser() {
       remark: remark,
     })
       .then((response) => {
-        if(response.data.message === "Editted"){
+        if (response.data.message === "Editted") {
           alert("Editted");
-          setTimeout(function() {
+          setTimeout(function () {
             navigate("/table");
           }, 1300);
         }
@@ -95,7 +94,7 @@ function EditUser() {
   };
 
   const [Labelhide, setLabelhide] = useState("");
-  const [etcDisable, setetcDisable] = useState("hidden");
+  const [etcDisable, setetcDisable] = useState("");
 
   const HideLabel = (value) => {
     if (value === "staff") {
@@ -112,6 +111,31 @@ function EditUser() {
       setetcDisable("hidden");
     }
   };
+  const onFirstCheck = () => {
+    if (
+      newMember[0].dtype === "mobile" ||
+      newMember[0].dtype === "notebook" ||
+      newMember[0].dtype === "tablet" ||
+      newMember[0].dtype === "ipad"
+    ) {
+      setetcDisable("hidden");
+    } else {
+      setetcDisable("");
+    }
+  };
+
+  const onFirstCheckEnd = () => {
+    if (!newMember[0].enddate) {
+      setLabelhide("hidden");
+    } else {
+      setLabelhide("");
+    }
+  };
+
+  useEffect(() => {
+    onFirstCheck();
+    onFirstCheckEnd();
+  }, []);
 
   return (
     <div className="App6">
@@ -170,7 +194,7 @@ function EditUser() {
                   />
                 }{" "}
               </button>
-                <h1>Edit</h1>
+              <h1>Edit</h1>
             </div>
           ) : (
             <div className="box66">
@@ -181,7 +205,7 @@ function EditUser() {
                   />
                 }{" "}
               </button>
-                <h1>Edit</h1>
+              <h1>Edit</h1>
             </div>
           )}
           <p className="message6">Wi-Fi Request List/Edit</p>
@@ -189,7 +213,11 @@ function EditUser() {
         {showNewMember.map((val, key) => {
           return (
             <div className="contain-data6">
-              <form onSubmit={handleSubmit(() => {UpdateData(val.id)})}>
+              <form
+                onSubmit={handleSubmit(() => {
+                  UpdateData(val.id);
+                })}
+              >
                 <div className="row-data6">
                   <span className="split-contain6">
                     <label htmlFor="inputFname" className="form-label fl6">
@@ -306,7 +334,14 @@ function EditUser() {
                       name="deviceType"
                       className="form-select fs6"
                       id="inputDevicetype"
-                      defaultValue={val.dtype}
+                      defaultValue={
+                        val.dtype !== "mobile" &&
+                        val.dtype !== "notebook" &&
+                        val.dtype !== "tablet" &&
+                        val.dtype !== "ipad"
+                          ? "etc."
+                          : val.dtype
+                      }
                       onChange={(e) => {
                         Checketc(e.target.value);
                         setDtype(e.target.value);
@@ -321,13 +356,13 @@ function EditUser() {
                     </select>
                   </span>
                 </div>
-
                 <div className="solo6" hidden={etcDisable}>
                   <span className="split-contain6">
                     <input
                       type="text"
                       className=" form-control fc6 etc6"
                       id="inputEtc"
+                      defaultValue={val.dtype}
                       {...register("inputEtc", {
                         onChange: (e) => setEtc(e.target.value),
                         required: false,

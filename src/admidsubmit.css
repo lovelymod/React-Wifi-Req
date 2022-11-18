@@ -29,6 +29,7 @@
   border-top-left-radius: 28px;
   height: 13%;
   background-color: #0174b3;
+  padding-top: 10px;
 }
 
 .containerAdmin4 {
@@ -46,7 +47,7 @@
   height: fit-content;
   color: #ffb401 !important;
   margin-left: 50px;
-  margin-top: 20px;
+  margin-top: 12px;
   background-color: #0174b3;
 }
 
@@ -157,6 +158,14 @@
 .logoAdmin4 {
   width: 100px;
   height: 100px;
+}
+
+.box44{
+  /* border: 1px solid black; */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  color: #FFB401;
 }
 
 .row-containAdmin-butt4 {
@@ -277,7 +286,7 @@ form {
     border: 0px;
     padding-left: 0px;
     margin-left: 20px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 
   .message4 {
@@ -383,7 +392,8 @@ form {
   .backbuttAdminTop4 {
     background-color: white;
     border: 0px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    margin-top: 15px;
   }
 
   .message4 {
