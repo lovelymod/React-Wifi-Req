@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Axios from "axios";
+import Swal from "sweetalert2";
 
 function EditUser() {
   const navigate = useNavigate();
@@ -17,18 +18,18 @@ function EditUser() {
     formState: { errors },
   } = useForm();
 
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [utype, setUtype] = useState("");
-  const [tel, setTel] = useState("");
-  const [email, setEmail] = useState("");
-  const [dtype, setDtype] = useState("");
-  const [etc, setEtc] = useState("");
-  const [dbrand, setDbrand] = useState("");
-  const [dname, setDname] = useState("");
-  const [startdate, setStartdate] = useState("");
-  const [enddate, setEnddate] = useState("");
-  const [remark, setRemark] = useState("");
+  const [fname, setFname] = useState(showNewMember[0].firstname);
+  const [lname, setLname] = useState(showNewMember[0].lastname);
+  const [email, setEmail] = useState(showNewMember[0].email);
+  const [tel, setTel] = useState(showNewMember[0].tel);
+  const [utype, setUtype] = useState(showNewMember[0].usertype);
+  const [dtype, setDtype] = useState(showNewMember[0].dtype);
+  const [etc, setEtc] = useState(showNewMember[0].dtype);
+  const [dbrand, setDbrand] = useState(showNewMember[0].dbrand);
+  const [dname, setDname] = useState(showNewMember[0].dname);
+  const [startdate, setStartdate] = useState(showNewMember[0].startdate);
+  const [enddate, setEnddate] = useState(showNewMember[0].enddate);
+  const [remark, setRemark] = useState(showNewMember[0].remark);
 
   let strDtype = dtype;
 
@@ -64,10 +65,15 @@ function EditUser() {
     })
       .then((response) => {
         if (response.data.message === "Editted") {
-          alert("Editted");
+          Swal.fire({
+            icon: "success",
+            title: "Editted",
+            timer: 1200,
+            timerProgressBar: true,
+          });
           setTimeout(function () {
             navigate("/table");
-          }, 1300);
+          }, 1500);
         }
         setNewmember(
           newMember.map((val) => {
@@ -111,6 +117,7 @@ function EditUser() {
       setetcDisable("hidden");
     }
   };
+
   const onFirstCheck = () => {
     if (
       newMember[0].dtype === "mobile" ||
@@ -121,8 +128,10 @@ function EditUser() {
       setetcDisable("hidden");
     } else {
       setetcDisable("");
+
     }
   };
+
 
   const onFirstCheckEnd = () => {
     if (!newMember[0].enddate) {
@@ -187,7 +196,7 @@ function EditUser() {
         <div className="headerInfo6">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
             <div className="box66">
-              <button className="btn backbutt6" onClick={Back}>
+              <button className="backbutt6" onClick={Back}>
                 {
                   <ArrowBackIosIcon
                     sx={{ fontSize: "28px", color: "#0174B3" }}
@@ -198,7 +207,7 @@ function EditUser() {
             </div>
           ) : (
             <div className="box66">
-              <button className="btn backbutt6" onClick={Back}>
+              <button className="backbutt6" onClick={Back}>
                 {
                   <ArrowBackIosIcon
                     sx={{ fontSize: "28px", color: "#FFB401" }}
@@ -318,7 +327,6 @@ function EditUser() {
                         HideLabel(e.target.value);
                       }}
                     >
-                      <option value="-">Please Select</option>
                       <option value="staff">Staff</option>
                       <option value="internship">Internship</option>
                       <option value="guest">Guest</option>
@@ -347,7 +355,6 @@ function EditUser() {
                         setDtype(e.target.value);
                       }}
                     >
-                      <option value="-">Please Select</option>
                       <option value="mobile">Mobile</option>
                       <option value="notebook">Notebook</option>
                       <option value="tablet">Tablet</option>

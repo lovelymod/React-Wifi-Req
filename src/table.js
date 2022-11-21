@@ -1,6 +1,6 @@
 import "./table.css";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import moment from "moment";
 import Axios from "axios";
 import Blogslist from "./blogslist";
@@ -9,10 +9,35 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import DownloadIcon from "@mui/icons-material/Download";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import Swal from "sweetalert2";
 
 function Table() {
-  const [memberList, setMemberList] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [memberList, setMemberList] = useState([]);
+
+  // const fetchData = () => {
+  //   let dataBox = memberList;
+  //   let dataList = [];
+
+  //   dataBox.forEach((item) => {
+  //     dataList.push({
+  //       firstname: dataBox.firstname.toString(),
+  //       lastname: dataBox.lastname.toString(),
+  //       email: dataBox.email.toString(),
+  //       tel: "0821838216",
+  //       usertype: dataBox.usertype.toString(),
+  //       devicetype: dataBox.devicetype.toString(),
+  //       devicebrand: dataBox.devicebrand.toString(),
+  //       devicename: dataBox.devicename.toString(),
+  //       startdate: dataBox.startdate.toString(),
+  //       enddate: dataBox.enddate.toString(),
+  //     });
+  //   });
+
+  //   setMemberList(dataList);
+  // };
+
 
   const getMember = () => {
     Axios.get("http://localhost:3001/member").then((response) => {
@@ -21,11 +46,21 @@ function Table() {
   };
 
   const deleteMember = (id) => {
-    if (window.confirm("Confirm Delete")) {
-      const newMemberList = memberList.filter((val) => val.id !== id);
-      setMemberList(newMemberList);
-    } else {
-    }
+    Swal.fire({
+      title: "Confirm Delete?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newMemberList = memberList.filter((val) => val.id !== id);
+        setMemberList(newMemberList);
+        Swal.fire("Deleted!", "success");
+      }
+    });
   };
 
   const edituser = (id) => {
@@ -70,9 +105,13 @@ function Table() {
     navigate("/adminsubmit");
   };
 
+  
   useEffect(() => {
     getMember();
+    // fetchData();
   }, []);
+
+  console.log(memberList);
 
   return (
     <div className="App3">
@@ -158,7 +197,6 @@ function Table() {
                 />
                 <CSVLink {...csvReport}>
                   <input
-                    asyncOnClick={true}
                     type="button"
                     className="btn export3"
                     value="Export .csv"

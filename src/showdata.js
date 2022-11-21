@@ -8,7 +8,7 @@ function ShowData() {
   const navigate = useNavigate();
   const location = useLocation();
   const showNewMember = location.state.newMemberList;
-  const [memberList, setMemberList] = useState(showNewMember);
+  // const [memberList, setMemberList] = useState(showNewMember);
   const [Labelhide, setLabelhide] = useState("");
 
   const onFirstCheckEnd = () => {
@@ -29,14 +29,6 @@ function ShowData() {
   const BtoLogin = () => {
     navigate("/login");
   };
-
-  // const deleteMember = (id) => {
-  //   if (window.confirm("Confirm Delete")) {
-  //     const newMemberList = memberList.filter((val) => val.id !== id);
-  //     setMemberList(newMemberList);
-  //   } else {
-  //   }
-  // };
 
   const edituser = (id) => {
     const newMemberList = showNewMember.filter((val) => val.id === id);

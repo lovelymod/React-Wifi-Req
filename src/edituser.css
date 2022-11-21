@@ -46,6 +46,11 @@
   background-color: white;
 }
 
+.icon6:hover{
+  background-color: #f1f2f3 ;
+  border-radius: 10px;
+}
+
 .bottom-img6 {
   height: 50%;
   padding-bottom: 20px;
@@ -69,7 +74,7 @@
   display: flex;
   flex-direction: column;
   border-top-left-radius: 28px;
-  height: 13%;
+  height: 15%;
   background-color: #0174b3;
   padding-top: 10px;
 }
@@ -88,10 +93,15 @@
   align-items: center;
   width: fit-content;
   height: fit-content;
-  color: #ffb401 !important;
+  color: #ffb401 ;
   margin-left: 50px;
   margin-top: 0px;
   background-color: #0174b3;
+}
+
+.backbutt6:hover{
+  background-color: #0069a1 ;
+  border-radius: 10px ;
 }
 
 .message6 {
@@ -104,7 +114,7 @@
 
 .contain-data6 {
   /* border: 5px solid pink; */
-  height: 87%;
+  height: 85%;
   overflow: auto;
 }
 
@@ -271,6 +281,11 @@
     margin-bottom: 10px !important;
   }
 
+  .backbutt6:hover{
+    background-color: #f1f2f3 ;
+    border-radius: 10px ;
+  }
+
   .message6 {
     color: black;
     display: none;
@@ -349,6 +364,10 @@
     background-color: #0174b3;
   }
 
+  .icon6:hover{
+    background-color: #0069a1;
+  }
+
   .bg6 {
     width: 100%;
     height: 85% !important;
@@ -371,6 +390,10 @@
   .backbutt6 {
     background-color: white !important;
     margin-bottom: 10px !important;
+  }
+  .backbutt6:hover{
+    background-color: #f1f2f3 ;
+    border-radius: 10px ;
   }
 
   .message6 {

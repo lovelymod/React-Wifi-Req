@@ -52,6 +52,11 @@
     background-color: white;
 }
 
+.icon3:hover{
+    background-color: #f0f1f2;
+    border-radius: 10px;
+}
+
 .bg3{
     width: 90%;
     height: 100%;
@@ -68,7 +73,7 @@
     background-color: #0174B3  ;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
-    height: 140px;
+    height: 15%;
  
 }
 
@@ -370,6 +375,9 @@
 
     .icon3{
         background-color: #0174B3;
+    }
+    .icon3:hover{
+        background-color: #012d44;
     }
 
     .bg3{

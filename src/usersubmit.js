@@ -2,13 +2,14 @@ import "./usersubmit.css";
 import { useState } from "react";
 import Axios from "axios";
 import { useForm } from "react-hook-form";
-import moment from 'moment'
-
+import moment from "moment";
+import Swal from "sweetalert2";
 
 function UserSubmit() {
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
   } = useForm();
   const [fname, setFname] = useState("");
@@ -27,15 +28,13 @@ function UserSubmit() {
   const strUtype = utype;
   let strDtype = dtype;
 
-
-
-  const OnSubmit = () => {
+  const OnSubmit = (event) => {
     addRequest();
   };
   const addRequest = () => {
     swapData();
-    const dates = moment().format('YYYY-MM-DD');
-    const times = moment().format('hh:mm');
+    const dates = moment().format("YYYY-MM-DD");
+    const times = moment().format("HH:mm");
 
     Axios.post("http://localhost:3001/create", {
       firstname: fname,
@@ -53,7 +52,24 @@ function UserSubmit() {
       time: times,
     }).then((response) => {
       if (response.data.message === "Inserted") {
-        alert("Submited");
+        Swal.fire({
+          icon: "success",
+          title: "Submited",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        resetField("inputFirstname");
+        resetField("inputLastname");
+        resetField("inputEmail");
+        resetField("inputTel");
+        resetField("inputUsertype");
+        resetField("inputDevicetype");
+        resetField("inputEtc");
+        resetField("inputdeviceBrand");
+        resetField("inputdeviceName");
+        resetField("startDate");
+        resetField("endDate");
+        resetField("remark");
       }
     });
   };
@@ -142,19 +158,21 @@ function UserSubmit() {
                 </label>
 
                 <input
-                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                   type="email"
                   className="form-control"
                   id="inputEmail"
                   placeholder="admin@gmail.com"
                   {...register("inputEmail", {
                     onChange: (e) => setEmail(e.target.value),
-                    required: true,
-                    pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$",
+                    required: "Please fill this form",
+                    pattern: {
+                      value: /[a-z0-9._]+@[a-z0-9.-]+.[a-z]{2,}$/,
+                      message: "Please correct this form",
+                    },
                   })}
                 />
-                {errors.inputEmail && (
-                  <p className="fill-message">Please fill this form</p>
+                {errors?.inputEmail && (
+                  <p className="fill-message">{errors.inputEmail.message}</p>
                 )}
               </span>
 
@@ -164,20 +182,25 @@ function UserSubmit() {
                 </label>
 
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
                   id="inputTel"
                   placeholder="095xxxxxxx"
                   {...register("inputTel", {
                     onChange: (e) => setTel(e.target.value),
-                    pattern: /[0-9]/,
-                    required: true,
-                    maxLength: 10,
-                    minLength: 9,
+                    required: "Please fill this form",
+                    maxLength: {
+                      value: 10,
+                      message: "Password must have at most 10 characters"
+                    },
+                    minLength: {
+                      value: 9,
+                      message: "Password must have at least 8 characters"
+                    },
                   })}
                 />
-                {errors.inputTel && (
-                  <p className="fill-message">Please correct this form</p>
+                {errors?.inputTel && (
+                  <p className="fill-message">{errors.inputTel.message}</p>
                 )}
               </span>
             </div>
@@ -192,12 +215,17 @@ function UserSubmit() {
                   name="userType"
                   className="form-select"
                   id="inputUsertype"
-                  onChange={(e) => {
-                    setUtype(e.target.value);
-                    HideLabel(e.target.value);
-                  }}
+                  {...register("inputUsertype", {
+                    onChange: (e) => {
+                      setUtype(e.target.value);
+                      HideLabel(e.target.value);
+                    },
+                    required: false,
+                  })}
                 >
-                  <option value="-">Please Select</option>
+                  <option disabled selected value="-">
+                    Please Select
+                  </option>
                   <option value="staff">Staff</option>
                   <option value="internship">Internship</option>
                   <option value="guest">Guest</option>
@@ -213,12 +241,17 @@ function UserSubmit() {
                   name="deviceType"
                   className="form-select"
                   id="inputDevicetype"
-                  onChange={(e) => {
-                    Checketc(e.target.value);
-                    setDtype(e.target.value);
-                  }}
+                  {...register("inputDevicetype", {
+                    onChange: (e) => {
+                      Checketc(e.target.value);
+                      setDtype(e.target.value);
+                    },
+                    required: false,
+                  })}
                 >
-                  <option value="-">Please Select</option>
+                  <option disabled selected value="-">
+                    Please Select
+                  </option>
                   <option value="mobile">Mobile</option>
                   <option value="notebook">Notebook</option>
                   <option value="tablet">Tablet</option>
@@ -313,7 +346,6 @@ function UserSubmit() {
                 <label htmlFor="endDate" className="form-label">
                   End Date :
                 </label>
-
                 <input
                   type="date"
                   className="form-control"
@@ -341,9 +373,10 @@ function UserSubmit() {
                   className="form-control remark1"
                   name="remark"
                   id="remark"
-                  onChange={(e) => {
-                    setRemark(e.target.value);
-                  }}
+                  {...register("remark", {
+                    onChange: (e) => setRemark(e.target.value),
+                    required: false,
+                  })}
                 />
               </span>
             </div>

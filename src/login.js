@@ -2,6 +2,7 @@ import "./login.css";
 import { useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -14,16 +15,23 @@ function Login() {
       username: username,
       password: password,
     }).then((response) => {
-      console.log(response.data.message);
-      console.log(response.data.result);
       if (response.data.message === "Matched") {
-        alert("Logged In")
+        Swal.fire({
+          icon: 'success',
+          title: 'LOGGED IN',
+          showConfirmButton: false,  
+          timer: 1200,
+          timerProgressBar: true,
+        })
         setTimeout(function() {
           navigate("/table");
-        }, 2000);
+        }, 1500);
         
       } else {
-        alert(response.data.message)
+        Swal.fire({
+          icon: 'error',
+          title: 'Wrong Username or Password', 
+        })
       }
     });
   };

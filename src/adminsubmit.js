@@ -5,13 +5,15 @@ import { useForm } from "react-hook-form";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useNavigate } from "react-router-dom";
-import moment from 'moment'
+import moment from "moment";
+import Swal from "sweetalert2";
 
 function AdminSub() {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
   } = useForm();
   const [fname, setFname] = useState("");
@@ -35,8 +37,8 @@ function AdminSub() {
   };
   const addRequest = () => {
     swapData();
-    const dates = moment().format('YYYY-MM-DD');
-    const times = moment().format('hh:mm');
+    const dates = moment().format("YYYY-MM-DD");
+    const times = moment().format("HH:mm");
 
     Axios.post("http://localhost:3001/create", {
       firstname: fname,
@@ -54,7 +56,25 @@ function AdminSub() {
       time: times,
     }).then((response) => {
       if (response.data.message === "Inserted") {
-        alert("Submited");
+        Swal.fire({
+          icon: "success",
+          title: "Submited",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 1500,
+        });
+        resetField("inputFirstname");
+        resetField("inputLastname");
+        resetField("inputEmail");
+        resetField("inputTel");
+        resetField("inputUsertype");
+        resetField("inputDevicetype");
+        resetField("inputEtc");
+        resetField("inputdeviceBrand");
+        resetField("inputdeviceName");
+        resetField("startDate");
+        resetField("endDate");
+        resetField("remark");
         setTimeout(function () {
           navigate("/table");
         }, 2000);
@@ -152,7 +172,7 @@ function AdminSub() {
                   />
                 }{" "}
               </button>
-                <h1>Create User</h1>
+              <h1>Create User</h1>
             </div>
           ) : (
             <div className="box44">
@@ -163,7 +183,7 @@ function AdminSub() {
                   />
                 }{" "}
               </button>
-                <h1>Create User</h1>
+              <h1>Create User</h1>
             </div>
           )}
 
@@ -228,12 +248,15 @@ function AdminSub() {
                   placeholder="admin@gmail.com"
                   {...register("inputEmail", {
                     onChange: (e) => setEmail(e.target.value),
-                    required: true,
-                    pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$",
+                    required: "Please fill this form",
+                    pattern: {
+                      value: /[a-z0-9._]+@[a-z0-9.-]+.[a-z]{2,}$/,
+                      message: "Please correct this form",
+                    },
                   })}
                 />
-                {errors.inputEmail && (
-                  <p className="fill-message">Please fill this form</p>
+                {errors?.inputEmail && (
+                  <p className="fill-message">{errors.inputEmail.message}</p>
                 )}
               </span>
 
@@ -243,20 +266,25 @@ function AdminSub() {
                 </label>
 
                 <input
-                  type="text"
+                  type="number"
                   className=" form-control fcAdmin4"
                   id="inputTel"
                   placeholder="095xxxxxxx"
                   {...register("inputTel", {
                     onChange: (e) => setTel(e.target.value),
-                    pattern: /[0-9]/,
-                    required: true,
-                    maxLength: 10,
-                    minLength: 9,
+                    required: "Please fill this form",
+                    maxLength: {
+                      value: 10,
+                      message: "Password must have at most 10 characters"
+                    },
+                    minLength: {
+                      value: 9,
+                      message: "Password must have at least 8 characters"
+                    },
                   })}
                 />
-                {errors.inputTel && (
-                  <p className="fill-message">Please correct this form</p>
+                {errors?.inputTel && (
+                  <p className="fill-message">{errors.inputTel.message}</p>
                 )}
               </span>
             </div>
@@ -271,12 +299,17 @@ function AdminSub() {
                   name="userType"
                   className="form-select fsAdmin4"
                   id="inputUsertype"
-                  onChange={(e) => {
-                    setUtype(e.target.value);
-                    HideLabel(e.target.value);
-                  }}
+                  {...register("inputUsertype", {
+                    onChange: (e) => {
+                      setUtype(e.target.value);
+                      HideLabel(e.target.value);
+                    },
+                    required: false,
+                  })}
                 >
-                  <option value="-">Please Select</option>
+                  <option disabled selected value="-">
+                    Please Select
+                  </option>
                   <option value="staff">Staff</option>
                   <option value="internship">Internship</option>
                   <option value="guest">Guest</option>
@@ -292,12 +325,17 @@ function AdminSub() {
                   name="deviceType"
                   className="form-select fsAdmin4"
                   id="inputDevicetype"
-                  onChange={(e) => {
-                    Checketc(e.target.value);
-                    setDtype(e.target.value);
-                  }}
+                  {...register("inputDevicetype", {
+                    onChange: (e) => {
+                      Checketc(e.target.value);
+                      setDtype(e.target.value);
+                    },
+                    required: false,
+                  })}
                 >
-                  <option value="-">Please Select</option>
+                  <option disabled selected value="-">
+                    Please Select
+                  </option>
                   <option value="mobile">Mobile</option>
                   <option value="notebook">Notebook</option>
                   <option value="tablet">Tablet</option>
@@ -420,9 +458,10 @@ function AdminSub() {
                   className=" form-control remark4"
                   name="remark"
                   id="remark"
-                  onChange={(e) => {
-                    setRemark(e.target.value);
-                  }}
+                  {...register("remark", {
+                    onChange: (e) => setRemark(e.target.value),
+                    required: false,
+                  })}
                 />
               </span>
             </div>
