@@ -7,6 +7,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Axios from "axios";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
+import ListIcon from "@mui/icons-material/List";
 
 function EditUser() {
   const navigate = useNavigate();
@@ -19,18 +20,18 @@ function EditUser() {
     formState: { errors },
   } = useForm();
 
-  const [fname, setFname] = useState(showNewMember[0].firstname);
-  const [lname, setLname] = useState(showNewMember[0].lastname);
-  const [email, setEmail] = useState(showNewMember[0].email);
-  const [tel, setTel] = useState(showNewMember[0].tel);
-  const [utype, setUtype] = useState(showNewMember[0].usertype);
-  const [dtype, setDtype] = useState(showNewMember[0].dtype);
-  const [etc, setEtc] = useState(showNewMember[0].dtype);
-  const [dbrand, setDbrand] = useState(showNewMember[0].dbrand);
-  const [dname, setDname] = useState(showNewMember[0].dname);
-  const [startdate, setStartdate] = useState(showNewMember[0].startdate);
-  const [enddate, setEnddate] = useState(showNewMember[0].enddate);
-  const [remark, setRemark] = useState(showNewMember[0].remark);
+  const [fname, setFname] = useState(showNewMember[0].Firstname);
+  const [lname, setLname] = useState(showNewMember[0].Lastname);
+  const [email, setEmail] = useState(showNewMember[0].Email);
+  const [tel, setTel] = useState(showNewMember[0].Tel);
+  const [utype, setUtype] = useState(showNewMember[0].User_Type);
+  const [dtype, setDtype] = useState(showNewMember[0].Device_Type);
+  const [etc, setEtc] = useState(showNewMember[0].Device_Type);
+  const [dbrand, setDbrand] = useState(showNewMember[0].Device_Brand);
+  const [dname, setDname] = useState(showNewMember[0].Device_Name);
+  const [startdate, setStartdate] = useState(showNewMember[0].Start_Date);
+  const [enddate, setEnddate] = useState(showNewMember[0].End_Date);
+  const [remark, setRemark] = useState(showNewMember[0].Remark);
 
   let strDtype = dtype;
 
@@ -58,22 +59,36 @@ function EditUser() {
 
   const UpdateData = (id) => {
     swapData();
-    Axios.put("http://localhost:3001/update", {
+    // Axios.put("http://localhost:3001/update", {
+    //   id: id,
+    //   Firstname: fname,
+    //   Lastname: lname,
+    //   Email: email,
+    //   Tel: tel,
+    //   User_Type: utype,
+    //   Device_Type: strDtype,
+    //   Device_Brand: dbrand,
+    //   Device_Name: dname,
+    //   Start_Date: startdate,
+    //   End_Date: enddate,
+    //   Remark: remark,
+    // })
+    Axios.patch("http://localhost:3002/updateusers", {
       id: id,
-      firstname: fname,
-      lastname: lname,
-      usertype: utype,
-      tel: tel,
-      email: email,
-      dtype: strDtype,
-      dbrand: dbrand,
-      dname: dname,
-      startdate: startdate,
-      enddate: enddate,
-      remark: remark,
+      Firstname: fname,
+      Lastname: lname,
+      Email: email,
+      Tel: tel,
+      User_Type: utype,
+      Device_Type: strDtype,
+      Device_Brand: dbrand,
+      Device_Name: dname,
+      Start_Date: startdate,
+      End_Date: enddate,
+      Remark: remark,
     })
       .then((response) => {
-        if (response.data.message === "Editted") {
+        if (response.data.msg === "User Updated") {
           Swal.fire({
             icon: "success",
             title: "Editted",
@@ -89,17 +104,17 @@ function EditUser() {
             return val.id === id
               ? {
                   id: id,
-                  firstname: fname,
-                  lastname: lname,
-                  usertype: utype,
-                  tel: tel,
-                  email: email,
-                  dtype: dtype,
-                  dbrand: dbrand,
-                  dname: dname,
-                  startdate: startdate,
-                  enddate: enddate,
-                  remark: remark,
+                  Firstname: fname,
+                  Lastname: lname,
+                  User_Type: utype,
+                  Tel: tel,
+                  Email: email,
+                  Device_Type: dtype,
+                  Device_Brand: dbrand,
+                  Device_Name: dname,
+                  Start_Date: startdate,
+                  End_Date: enddate,
+                  Remark: remark,
                 }
               : val;
           })
@@ -129,10 +144,10 @@ function EditUser() {
 
   const onFirstCheck = () => {
     if (
-      newMember[0].dtype === "mobile" ||
-      newMember[0].dtype === "notebook" ||
-      newMember[0].dtype === "tablet" ||
-      newMember[0].dtype === "ipad"
+      newMember[0].Device_Type === "mobile" ||
+      newMember[0].Device_Type === "notebook" ||
+      newMember[0].Device_Type === "tablet" ||
+      newMember[0].Device_Type === "ipad"
     ) {
       setetcDisable("hidden");
     } else {
@@ -141,7 +156,7 @@ function EditUser() {
   };
 
   const onFirstCheckEnd = () => {
-    if (!newMember[0].enddate) {
+    if (!newMember[0].End_Date) {
       setLabelhide("hidden");
     } else {
       setLabelhide("");
@@ -161,7 +176,6 @@ function EditUser() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ delay: 0.1 }}
-
     >
       <div className="left-manu6">
         <div className="top-img6">
@@ -175,19 +189,35 @@ function EditUser() {
               />
             </div>
           ) : (
-            <div>
+            <div className="box-intop">
               <img
                 className="logo-table6"
                 src="img/LS-01.png"
                 alt=""
                 srcSet=""
               />
+              <button
+                className="ListIcon6"
+                onClick={() => {
+                  Back();
+                }}
+              >
+                <ListIcon sx={{ fontSize: "32px", color: "white" }} />
+              </button>
             </div>
           )}
         </div>
         <div className="bottom-img6">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
             <div>
+              <button
+                className="ListIcon6"
+                onClick={() => {
+                  Back();
+                }}
+              >
+                <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
+              </button>
               <button
                 className="icon6"
                 onClick={() => {
@@ -252,7 +282,17 @@ function EditUser() {
               <h1>Edit</h1>
             </div>
           )}
-          <p className="message6">Wi-Fi Request List/Edit</p>
+          <div className="row-nameButt4">
+            <button
+              className="nameButt4"
+              onClick={() => {
+                Back();
+              }}
+            >
+              <p className="message4">Wi-Fi Request List/</p>
+            </button>
+            <p className="message4-back">Edit</p>
+          </div>
         </div>
         {showNewMember.map((val, key) => {
           return (
@@ -271,7 +311,7 @@ function EditUser() {
                     <input
                       className=" form-control fc6"
                       type="text"
-                      defaultValue={val.firstname}
+                      defaultValue={val.Firstname}
                       {...register("inputFirstname", {
                         onChange: (e) => setFname(e.target.value),
                         required: true,
@@ -289,7 +329,7 @@ function EditUser() {
                       type="text"
                       className=" form-control fc6"
                       id="inputLastname"
-                      defaultValue={val.lastname}
+                      defaultValue={val.Lastname}
                       {...register("inputLastname", {
                         onChange: (e) => setLname(e.target.value),
                         required: true,
@@ -311,7 +351,7 @@ function EditUser() {
                       type="email"
                       className=" form-control fc6"
                       id="inputEmail"
-                      defaultValue={val.email}
+                      defaultValue={val.Email}
                       {...register("inputEmail", {
                         onChange: (e) => setEmail(e.target.value),
                         required: "Please fill this form",
@@ -337,7 +377,7 @@ function EditUser() {
                       type="number"
                       className=" form-control fc6"
                       id="inputTel"
-                      defaultValue={val.tel}
+                      defaultValue={val.Tel}
                       {...register("inputTel", {
                         onChange: (e) => setTel(e.target.value),
                         required: "Please fill this form",
@@ -366,7 +406,7 @@ function EditUser() {
                       name="userType"
                       className="form-select fs6"
                       id="inputUsertype"
-                      defaultValue={val.usertype}
+                      defaultValue={val.User_Type}
                       onChange={(e) => {
                         setUtype(e.target.value);
                         HideLabel(e.target.value);
@@ -388,12 +428,12 @@ function EditUser() {
                       className="form-select fs6"
                       id="inputDevicetype"
                       defaultValue={
-                        val.dtype !== "mobile" &&
-                        val.dtype !== "notebook" &&
-                        val.dtype !== "tablet" &&
-                        val.dtype !== "ipad"
+                        val.Device_Type !== "mobile" &&
+                        val.Device_Type !== "notebook" &&
+                        val.Device_Type !== "tablet" &&
+                        val.Device_Type !== "ipad"
                           ? "etc."
-                          : val.dtype
+                          : val.Device_Type
                       }
                       onChange={(e) => {
                         Checketc(e.target.value);
@@ -414,10 +454,10 @@ function EditUser() {
                       type="text"
                       className=" form-control fc6 etc6"
                       id="inputEtc"
-                      defaultValue={val.dtype}
+                      defaultValue={val.Device_Type}
                       {...register("inputEtc", {
                         onChange: (e) => setEtc(e.target.value),
-                        required: false,
+                        required: dtype === "etc." ? true : false,
                       })}
                     />
                     {errors.inputEtc && (
@@ -436,7 +476,7 @@ function EditUser() {
                       type="text"
                       className=" form-control fc6"
                       id="inputdeviceBrand"
-                      defaultValue={val.dbrand}
+                      defaultValue={val.Device_Brand}
                       {...register("inputdeviceBrand", {
                         onChange: (e) => setDbrand(e.target.value),
                         required: true,
@@ -456,7 +496,7 @@ function EditUser() {
                       type="text"
                       className=" form-control fc6"
                       id="inputdeviceName"
-                      defaultValue={val.dname}
+                      defaultValue={val.Device_Name}
                       {...register("inputdeviceName", {
                         onChange: (e) => setDname(e.target.value),
                         required: true,
@@ -478,7 +518,7 @@ function EditUser() {
                       className=" form-control fc6"
                       name="startDate"
                       id="startDate"
-                      defaultValue={val.startdate}
+                      defaultValue={val.Start_Date}
                       {...register("startDate", {
                         onChange: (e) => setStartdate(e.target.value),
                         required: true,
@@ -499,10 +539,10 @@ function EditUser() {
                       className=" form-control fc6"
                       name="endDate"
                       id="endDate"
-                      defaultValue={val.enddate}
+                      defaultValue={val.End_Date}
                       {...register("endDate", {
                         onChange: (e) => setEnddate(e.target.value),
-                        required: false,
+                        required: utype === "staff" ? false : true,
                       })}
                     />
                     {errors.endDate && (
@@ -520,7 +560,7 @@ function EditUser() {
                       type="text"
                       className=" form-control remark6"
                       id="inputremark"
-                      defaultValue={val.remark}
+                      defaultValue={val.Remark}
                       onChange={(e) => {
                         setRemark(e.target.value);
                       }}
@@ -528,21 +568,16 @@ function EditUser() {
                   </span>
                 </div>
                 <div className="row-butt6">
-                  <input
-                    type="submit"
-                    className="btn savebutt6"
-                    value="Save"
-                    // onClick={() => UpdateData(val.id)}
-                  />
+                  <button className="btn savebutt6">Save</button>
 
-                  <button
+                  <input
+                    type=""
                     className="btn cancelbutt6"
+                    value="Cancel"
                     onClick={() => {
                       Back();
                     }}
-                  >
-                    Cancel
-                  </button>
+                  />
                 </div>
               </form>
             </div>

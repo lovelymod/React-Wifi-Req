@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-
+import ListIcon from "@mui/icons-material/List";
 
 const TableSideBar = () => {
   const navigate = useNavigate();
@@ -11,6 +11,10 @@ const TableSideBar = () => {
   const BtoLogin = () => {
     localStorage.removeItem("auth");
     navigate("/login");
+  };
+
+  const Back = () => {
+    navigate("/table");
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -39,14 +43,30 @@ const TableSideBar = () => {
             <img className="logo-table3" src="img/LS-02.png" alt="" srcSet="" />
           </div>
         ) : (
-          <div>
+          <div className="box-intop">
             <img className="logo-table3" src="img/LS-01.png" alt="" srcSet="" />
+            <button
+              className="ListIcon3"
+              onClick={() => {
+                Back();
+              }}
+            >
+              <ListIcon sx={{ fontSize: "32px", color: "white" }} />
+            </button>
           </div>
         )}
       </div>
       <div className="bottom-img3">
         {window.innerWidth > 601 && window.innerWidth < 1000 ? (
           <div>
+            <button
+              className="ListIcon3"
+              onClick={() => {
+                Back();
+              }}
+            >
+              <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
+            </button>
             <button
               className="icon3"
               onClick={() => {

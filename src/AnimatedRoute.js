@@ -8,6 +8,7 @@ import Testform from "./testform";
 import { useLocation } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import Register from "./page/Register";
 
 function AnimatedRoute() {
   const location = useLocation();
@@ -16,6 +17,7 @@ function AnimatedRoute() {
       <Routes location={location} key={location.pathname}>
         <Route path="/usersubmit" element={<UserSubmit />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/table" element={<Table />} />
         <Route path="/adminsubmit" element={<AdminSub />} />
         <Route path="/showdata" element={<ShowData />} />

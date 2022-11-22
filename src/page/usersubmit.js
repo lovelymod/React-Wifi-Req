@@ -36,22 +36,22 @@ function UserSubmit() {
     const dates = moment().format("YYYY-MM-DD");
     const times = moment().format("HH:mm");
 
-    Axios.post("http://localhost:3001/create", {
-      firstname: fname,
-      lastname: lname,
-      usertype: strUtype,
-      tel: tel,
-      email: email,
-      dtype: strDtype,
-      dbrand: dbrand,
-      dname: dname,
-      startdate: startdate,
-      enddate: enddate,
-      remark: remark,
-      date: dates,
-      time: times,
+    Axios.post("http://localhost:3002/users", {
+      Firstname: fname,
+      Lastname: lname,
+      User_Type: strUtype,
+      Tel: tel,
+      Email: email,
+      Device_Type: strDtype,
+      Device_Brand: dbrand,
+      Device_Name: dname,
+      Start_Date: startdate,
+      End_Date: enddate,
+      Remark: remark,
+      Dates: dates,
+      Times: times,
     }).then((response) => {
-      if (response.data.message === "Inserted") {
+      if (response.data.msg === "User Created") {
         Swal.fire({
           icon: "success",
           title: "Submited",
@@ -74,7 +74,47 @@ function UserSubmit() {
     });
   };
 
+  //   Axios.post("http://localhost:3001/create", {
+  //     firstname: fname,
+  //     lastname: lname,
+  //     usertype: strUtype,
+  //     tel: tel,
+  //     email: email,
+  //     dtype: strDtype,
+  //     dbrand: dbrand,
+  //     dname: dname,
+  //     startdate: startdate,
+  //     enddate: enddate,
+  //     remark: remark,
+  //     date: dates,
+  //     time: times,
+  //   }).then((response) => {
+  //     if (response.data.message === "Inserted") {
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "Submited",
+  //         showConfirmButton: false,
+  //         timer: 1500,
+  //       });
+  //       resetField("inputFirstname");
+  //       resetField("inputLastname");
+  //       resetField("inputEmail");
+  //       resetField("inputTel");
+  //       resetField("inputUsertype");
+  //       resetField("inputDevicetype");
+  //       resetField("inputEtc");
+  //       resetField("inputdeviceBrand");
+  //       resetField("inputdeviceName");
+  //       resetField("startDate");
+  //       resetField("endDate");
+  //       resetField("remark");
+  //     }
+  //   });
+  // };
+
   const [Labelhide, setLabelhide] = useState("");
+  const [reqEtc, setReqEtc] = useState("");
+  const [reqEnddate, setReqenddate] = useState(true);
   const [etcDisable, setetcDisable] = useState("hidden");
 
   const swapData = () => {
@@ -86,8 +126,10 @@ function UserSubmit() {
   const HideLabel = (value) => {
     if (value === "staff") {
       setLabelhide("hidden");
+      setReqenddate(false);
     } else if (value !== "staff") {
       setLabelhide("");
+      setReqenddate(true);
     }
   };
 
@@ -226,16 +268,19 @@ function UserSubmit() {
                       setUtype(e.target.value);
                       HideLabel(e.target.value);
                     },
-                    required: false,
+                    required: "Please select one option",
                   })}
                 >
-                  <option disabled selected value="-">
+                  <option disabled selected value="">
                     Please Select
                   </option>
                   <option value="staff">Staff</option>
                   <option value="internship">Internship</option>
                   <option value="guest">Guest</option>
                 </select>
+                {errors?.inputUsertype && (
+                  <p className="fill-message">{errors.inputUsertype.message}</p>
+                )}
               </span>
 
               <span className="split-contain1">
@@ -252,10 +297,10 @@ function UserSubmit() {
                       Checketc(e.target.value);
                       setDtype(e.target.value);
                     },
-                    required: false,
+                    required: "Please select one option",
                   })}
                 >
-                  <option disabled selected value="-">
+                  <option disabled selected value="">
                     Please Select
                   </option>
                   <option value="mobile">Mobile</option>
@@ -264,6 +309,11 @@ function UserSubmit() {
                   <option value="ipad">Ipad</option>
                   <option value="etc.">etc.</option>
                 </select>
+                {errors?.inputDevicetype && (
+                  <p className="fill-message">
+                    {errors.inputDevicetype.message}
+                  </p>
+                )}
               </span>
             </div>
 
@@ -276,7 +326,7 @@ function UserSubmit() {
                   placeholder="Etc please fill ..."
                   {...register("inputEtc", {
                     onChange: (e) => setEtc(e.target.value),
-                    required: false,
+                    required: dtype === "etc." ? true : false,
                   })}
                 />
                 {errors.inputEtc && (
@@ -359,12 +409,13 @@ function UserSubmit() {
                   id="endDate"
                   {...register("endDate", {
                     onChange: (e) => setEnddate(e.target.value),
-                    required: false,
+                    required: utype === "staff" ? false : true,
                   })}
                 />
                 {errors.endDate && (
                   <p className="fill-message">Please fill this form</p>
                 )}
+                +
               </span>
             </div>
 

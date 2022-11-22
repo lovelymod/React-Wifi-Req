@@ -1,6 +1,6 @@
 import "./table.css";
-const $ = require('jquery')
-$.DataTable = require('datatables.net')
+const $ = require("jquery");
+$.DataTable = require("datatables.net");
 // import { useEffect } from "react";
 
 const Blogslist = ({
@@ -8,7 +8,6 @@ const Blogslist = ({
   deleteMember,
   showUser,
   edituser,
-  testdata,
 }) => {
   return (
     <div className="big3">
@@ -17,44 +16,44 @@ const Blogslist = ({
           <div className="big">
             <div className="member3" key={val.id}>
               <div className="member-data3">{val.id}</div>
-              <div className="member-data3">{val.date}</div>
-              <div className="member-data3">{val.time}</div>
-              <div className="member-data3">{val.firstname}</div>
-              <div className="member-data3">{val.lastname}</div>
+              <div className="member-data3">{val.Dates}</div>
+              <div className="member-data3">{val.Times}</div>
+              <div className="member-data3">{val.Firstname}</div>
+              <div className="member-data3">{val.Lastname}</div>
               <div className="member-data3">
-                {val.usertype === "staff" ? (
+                {val.User_Type === "staff" ? (
                   <div
                     className="utype-colors3"
                     style={{ backgroundColor: "#A8FFA6" }}
                   >
-                    {val.usertype}
+                    {val.User_Type}
                   </div>
                 ) : (
                   <div></div>
                 )}
-                {val.usertype === "internship" ? (
+                {val.User_Type === "internship" ? (
                   <div
                     className="utype-colors3"
                     style={{ backgroundColor: "#ffbeb7" }}
                   >
-                    {val.usertype}
+                    {val.User_Type}
                   </div>
                 ) : (
                   <div></div>
                 )}
-                {val.usertype === "guest" ? (
+                {val.User_Type === "guest" ? (
                   <div
                     className="utype-colors3"
                     style={{ backgroundColor: "#b2e4ff" }}
                   >
-                    {val.usertype}
+                    {val.User_Type}
                   </div>
                 ) : (
                   <div></div>
                 )}
               </div>
-              <div className="member-data3">{val.startdate}</div>
-              <div className="member-data3">{val.enddate}</div>
+              <div className="member-data3">{val.Start_Date}</div>
+              <div className="member-data3">{val.End_Date}</div>
               <div className="box-edit3">
                 <button
                   className="btn edit-butt3"

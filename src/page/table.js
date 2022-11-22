@@ -1,6 +1,6 @@
 import "./table.css";
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import Axios from "axios";
 import Blogslist from "./blogslist";
@@ -12,40 +12,46 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Swal from "sweetalert2";
 import TableSideBar from "./tablesideBar";
 import { motion } from "framer-motion";
+import ListIcon from "@mui/icons-material/List";
+
 
 function Table() {
   const navigate = useNavigate();
-  const location = useLocation();
   const [memberList, setMemberList] = useState([]);
   // const [exMemberList, setExMemberList] = useState([]);
 
-  // const fetchData = () => {
-  //   let dataBox = memberList;
-  //   let dataList = [];
-  //   console.log(exMemberList);
-
-  //   dataBox.forEach((item) => {
-  //     dataList.push({
-  //       firstname: dataBox.firstname.toString(),
-  //       lastname: dataBox.lastname.toString(),
-  //       email: dataBox.email.toString(),
-  //       tel: "0821838216",
-  //       usertype: dataBox.usertype.toString(),
-  //       devicetype: dataBox.devicetype.toString(),
-  //       devicebrand: dataBox.devicebrand.toString(),
-  //       devicename: dataBox.devicename.toString(),
-  //       startdate: dataBox.startdate.toString(),
-  //       enddate: dataBox.enddate.toString(),
-  //     });
+  // const getMember = () => {
+  //   Axios.get("http://localhost:3002/getusers").then((response) => {
+  //     setMemberList(response.data);
   //   });
-
-  //   setExMemberList(dataList);
   // };
 
-  const getMember = () => {
-    Axios.get("http://localhost:3001/member").then((response) => {
-      setMemberList(response.data);
-    });
+  console.log(memberList);
+  const fetchData = async () => {
+    const getUser = await Axios.get("http://localhost:3002/getusers");
+    // .then((response) => {
+    setMemberList(getUser.data);
+    // });
+
+    // let dataBox = memberList;
+    // let dataList = [];
+
+    // dataBox.forEach((item) => {
+    //   dataList.push({
+    //     Firstname: item.Firstname.toString(),
+    //     Lastname: item.Lastname.toString(),
+    //     Email: item.Email.toString(),
+    //     Tel: item.Tel+"''",
+    //     User_Type: item.User_Type.toString(),
+    //     Device_Type: item.Device_Type.toString(),
+    //     Device_Brand: item.Device_Brand.toString(),
+    //     Device_Name: item.Device_Name.toString(),
+    //     Start_Date: item.Start_Date.toString(),
+    //     End_Date: item.End_Date.toString(),
+    //   });
+    // });
+    // console.log(dataList[0]);
+    // setExMemberList(dataList[0]);
   };
 
   const deleteMember = (id) => {
@@ -90,19 +96,20 @@ function Table() {
 
   const headers = [
     { label: "No", key: "id" },
-    { label: "First Name", key: "firstname" },
-    { label: "Last Name", key: "lastname" },
-    { label: "Email", key: "email" },
-    { label: "Tel", key: "tel" },
-    { label: "Usertype", key: "usertype" },
-    { label: "DeviceType", key: "dtype" },
-    { label: "DeviceBrand", key: "dbrand" },
-    { label: "DeviceName", key: "dname" },
-    { label: "StartDate", key: "startdate" },
-    { label: "EndDate", key: "enddate" },
-    { label: "Date", key: "date" },
-    { label: "Time", key: "time" },
+    { label: "First Name", key: "Firstname" },
+    { label: "Last Name", key: "Lastname" },
+    { label: "Email", key: "Email" },
+    { label: "Tel", key: "Tel" },
+    { label: "Usertype", key: "User_Type" },
+    { label: "DeviceType", key: "Device_Type" },
+    { label: "DeviceBrand", key: "Device_Brand" },
+    { label: "DeviceName", key: "Device_Name" },
+    { label: "StartDate", key: "Start_Date" },
+    { label: "EndDate", key: "End_Date" },
+    { label: "Date", key: "Dates" },
+    { label: "Time", key: "Times" },
   ];
+
 
   const timeStamp = moment().format("YYYY_MM_DD");
 
@@ -115,6 +122,9 @@ function Table() {
   const gotoAdminSub = () => {
     navigate("/adminsubmit");
   };
+  const Back = () => {
+    navigate("/table");
+  };
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
@@ -123,8 +133,8 @@ function Table() {
 
   useEffect(() => {
     auth();
-    getMember();
-    // fetchData();
+    // getMember();
+    fetchData();
   }, []);
 
   return (
@@ -161,6 +171,15 @@ function Table() {
               srcSet=""
               style={{ display: isOpen ? "block" : "none" }}
             />
+            <button
+              className="ListIcon3"
+              onClick={() => {
+                Back();
+              }}
+              style={{ display: isOpen ? "block" : "none" }}
+            >
+              <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
+            </button>
           </div>
           <div className="bottom-img3">
             <button
@@ -197,7 +216,7 @@ function Table() {
                 >
                   <AddIcon sx={{ fontSize: "20px", color: "white" }} />
                 </button>
-                <CSVLink {...csvReport}>
+                <CSVLink {...csvReport} dataType="string">
                   <button className="icon-export3">
                     <DownloadIcon sx={{ fontSize: "18px", color: "white" }} />
                   </button>

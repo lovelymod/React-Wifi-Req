@@ -18,11 +18,11 @@ function Login() {
   };
 
   const login = () => {
-    Axios.post("http://localhost:3001/login", {
-      username: username,
-      password: password,
+    Axios.post("http://localhost:3002/login", {
+      Username: username,
+      Password: password,
     }).then((response) => {
-      if (response.data.message === "Matched") {
+      if (response.data.msg === "Matched") {
         localStorage.setItem("auth", "adminLogin");
         Swal.fire({
           icon: "success",
@@ -34,7 +34,7 @@ function Login() {
         setTimeout(function () {
           navigate("/table");
         }, 1500);
-      } else {
+      } else if (response.data.msg === "not Matched"){
         Swal.fire({
           icon: "error",
           title: "Wrong Username or Password",
@@ -42,6 +42,32 @@ function Login() {
       }
     });
   };
+
+  // const login = () => {
+  //   Axios.post("http://localhost:3001/login", {
+  //     username: username,
+  //     password: password,
+  //   }).then((response) => {
+  //     if (response.data.message === "Matched") {
+  //       localStorage.setItem("auth", "adminLogin");
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "LOGGED IN",
+  //         showConfirmButton: false,
+  //         timer: 1200,
+  //         timerProgressBar: true,
+  //       });
+  //       setTimeout(function () {
+  //         navigate("/table");
+  //       }, 1500);
+  //     } else {
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: "Wrong Username or Password",
+  //       });
+  //     }
+  //   });
+  // };
 
   useEffect(() => {
     checkLogin();

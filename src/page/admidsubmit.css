@@ -56,6 +56,21 @@
   border-radius: 10px;
 }
 
+.row-nameButt4{
+  display: flex;
+}
+
+.nameButt4{
+  width: fit-content;
+  border: 0px;
+  background-color: #0174b3;
+}
+
+.message4-back{
+  text-align: start;
+  color: white;
+  font-size: 24px;
+}
 
 .message4 {
   text-align: start;
@@ -144,6 +159,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.ListIcon4{
+  border: 0px;
+  border-radius: 10px;
+  background-color: #0174B3;
+  margin-top: 50px;
+  width: 50px;
+  height: 50px;
 }
 
 .boxbottom4 {
@@ -305,6 +329,10 @@ form {
     
   }
 
+  .nameButt4{
+    display: none;
+  }
+
   .message4 {
     color: black;
     display: none;
@@ -381,6 +409,15 @@ form {
     padding-right: 50px;
   }
 
+  .ListIcon4{
+    border: 0px;
+    border-radius: 10px;
+    background-color: white;
+    margin-right: 50px;
+    width: 50px;
+    height: 50px;
+  }
+
   .icon4 {
     border: 0px;
     background-color: #0174b3;
@@ -410,6 +447,17 @@ form {
     border: 0px;
     margin-bottom: 20px;
     margin-top: 15px;
+  }
+  .nameButt4{
+    width: fit-content;
+    border: 0px;
+    background-color: white;
+  }
+  
+  .message4-back{
+    text-align: start;
+    color: black;
+    font-size: 24px;
   }
 
   .message4 {

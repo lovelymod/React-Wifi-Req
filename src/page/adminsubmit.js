@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
+import ListIcon from "@mui/icons-material/List";
 
 function AdminSub() {
   const navigate = useNavigate();
@@ -41,28 +42,27 @@ function AdminSub() {
     const dates = moment().format("YYYY-MM-DD");
     const times = moment().format("HH:mm");
 
-    Axios.post("http://localhost:3001/create", {
-      firstname: fname,
-      lastname: lname,
-      usertype: strUtype,
-      tel: tel,
-      email: email,
-      dtype: strDtype,
-      dbrand: dbrand,
-      dname: dname,
-      startdate: startdate,
-      enddate: enddate,
-      remark: remark,
-      date: dates,
-      time: times,
+    Axios.post("http://localhost:3002/users", {
+      Firstname: fname,
+      Lastname: lname,
+      User_Type: strUtype,
+      Tel: tel,
+      Email: email,
+      Device_Type: strDtype,
+      Device_Brand: dbrand,
+      Device_Name: dname,
+      Start_Date: startdate,
+      End_Date: enddate,
+      Remark: remark,
+      Dates: dates,
+      Times: times,
     }).then((response) => {
-      if (response.data.message === "Inserted") {
+      if (response.data.msg === "User Created") {
         Swal.fire({
           icon: "success",
           title: "Submited",
           showConfirmButton: false,
-          timerProgressBar: true,
-          timer: 1500,
+          timer: 1200,
         });
         resetField("inputFirstname");
         resetField("inputLastname");
@@ -78,9 +78,50 @@ function AdminSub() {
         resetField("remark");
         setTimeout(function () {
           navigate("/table");
-        }, 2000);
+        }, 1500);
       }
     });
+
+    // Axios.post("http://localhost:3001/create", {
+    //   firstname: fname,
+    //   lastname: lname,
+    //   usertype: strUtype,
+    //   tel: tel,
+    //   email: email,
+    //   dtype: strDtype,
+    //   dbrand: dbrand,
+    //   dname: dname,
+    //   startdate: startdate,
+    //   enddate: enddate,
+    //   remark: remark,
+    //   date: dates,
+    //   time: times,
+    // }).then((response) => {
+    //   if (response.data.message === "Inserted") {
+    //     Swal.fire({
+    //       icon: "success",
+    //       title: "Submited",
+    //       showConfirmButton: false,
+    //       timerProgressBar: true,
+    //       timer: 1500,
+    //     });
+    //     resetField("inputFirstname");
+    //     resetField("inputLastname");
+    //     resetField("inputEmail");
+    //     resetField("inputTel");
+    //     resetField("inputUsertype");
+    //     resetField("inputDevicetype");
+    //     resetField("inputEtc");
+    //     resetField("inputdeviceBrand");
+    //     resetField("inputdeviceName");
+    //     resetField("startDate");
+    //     resetField("endDate");
+    //     resetField("remark");
+    //     setTimeout(function () {
+    //       navigate("/table");
+    //     }, 2000);
+    //   }
+    // });
   };
 
   const [Labelhide, setLabelhide] = useState("");
@@ -135,7 +176,6 @@ function AdminSub() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ delay: 0.1 }}
-
     >
       <div className="imagesAdmin4">
         <div className="boxtop4">
@@ -149,19 +189,35 @@ function AdminSub() {
               />
             </div>
           ) : (
-            <div>
+            <div className="box-intop">
               <img
                 className="logoAdmin4"
                 src="img/LS-01.png"
                 alt=""
                 srcSet=""
               />
+              <button
+                className="ListIcon4"
+                onClick={() => {
+                  Back();
+                }}
+              >
+                <ListIcon sx={{ fontSize: "32px", color: "white" }} />
+              </button>
             </div>
           )}
         </div>
         <div className="boxbottom4">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
             <div>
+              <button
+                className="ListIcon4"
+                onClick={() => {
+                  Back();
+                }}
+              >
+                <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
+              </button>
               <button
                 className="icon4"
                 onClick={() => {
@@ -226,8 +282,17 @@ function AdminSub() {
               <h1>Create User</h1>
             </div>
           )}
-
-          <p className="message4">Wi-Fi Request List/Create User</p>
+          <div className="row-nameButt4">
+            <button
+              className="nameButt4"
+              onClick={() => {
+                Back();
+              }}
+            >
+              <p className="message4">Wi-Fi Request List/</p>
+            </button>
+            <p className="message4-back">Create User</p>
+          </div>
         </div>
         <div className="containerAdmin4">
           <form onSubmit={handleSubmit(OnSubmit)}>
@@ -344,16 +409,19 @@ function AdminSub() {
                       setUtype(e.target.value);
                       HideLabel(e.target.value);
                     },
-                    required: false,
+                    required: "Please select one option",
                   })}
                 >
-                  <option disabled selected value="-">
+                  <option disabled selected value="">
                     Please Select
                   </option>
                   <option value="staff">Staff</option>
                   <option value="internship">Internship</option>
                   <option value="guest">Guest</option>
                 </select>
+                {errors?.inputUsertype && (
+                  <p className="fill-message">{errors.inputUsertype.message}</p>
+                )}
               </span>
 
               <span className="split-contain4">
@@ -370,10 +438,10 @@ function AdminSub() {
                       Checketc(e.target.value);
                       setDtype(e.target.value);
                     },
-                    required: false,
+                    required: "Please select one option",
                   })}
                 >
-                  <option disabled selected value="-">
+                  <option disabled selected value="">
                     Please Select
                   </option>
                   <option value="mobile">Mobile</option>
@@ -382,6 +450,11 @@ function AdminSub() {
                   <option value="ipad">Ipad</option>
                   <option value="etc.">etc.</option>
                 </select>
+                {errors?.inputDevicetype && (
+                  <p className="fill-message">
+                    {errors.inputDevicetype.message}
+                  </p>
+                )}
               </span>
             </div>
 
@@ -394,7 +467,7 @@ function AdminSub() {
                   placeholder="Etc please fill ..."
                   {...register("inputEtc", {
                     onChange: (e) => setEtc(e.target.value),
-                    required: false,
+                    required: dtype === "etc." ? true : false,
                   })}
                 />
                 {errors.inputEtc && (
@@ -478,7 +551,7 @@ function AdminSub() {
                   id="endDate"
                   {...register("endDate", {
                     onChange: (e) => setEnddate(e.target.value),
-                    required: false,
+                    required: utype === "staff" ? false : true,
                   })}
                 />
                 {errors.endDate && (

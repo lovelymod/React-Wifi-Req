@@ -3,13 +3,15 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import Axios from "axios";
+import Swal from "sweetalert2";
 import { motion } from "framer-motion";
+import ListIcon from "@mui/icons-material/List";
 
 function ShowData() {
   const navigate = useNavigate();
   const location = useLocation();
   const showNewMember = location.state.newMemberList;
-  // const [memberList, setMemberList] = useState(showNewMember);
   const [Labelhide, setLabelhide] = useState("");
 
   const onFirstCheckEnd = () => {
@@ -36,6 +38,34 @@ function ShowData() {
     navigate("/table");
   };
 
+  const DeleteUser = (id) => {
+    Swal.fire({
+      title: "Confirm Delete?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Axios.delete(`http://localhost:3002/users/${id}`).then((response) => {
+          if (response.data.msg === "User Deleted") {
+            Swal.fire({
+              icon: "success",
+              title: "Deleted!",
+              timer: 1200,
+              timerProgressBar: true,
+            });
+            setTimeout(function () {
+              navigate("/table");
+            }, 1500);
+          }
+        });
+      }
+    });
+  };
+
   const edituser = (id) => {
     const newMemberList = showNewMember.filter((val) => val.id === id);
     navigate("/edituser", { state: { newMemberList } });
@@ -53,7 +83,6 @@ function ShowData() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ delay: 0.1 }}
-
     >
       <div className="left-manu5">
         <div className="top-img5">
@@ -67,19 +96,35 @@ function ShowData() {
               />
             </div>
           ) : (
-            <div>
+            <div className="box-intop">
               <img
                 className="logo-table5"
                 src="img/LS-01.png"
                 alt=""
                 srcSet=""
               />
+              <button
+                className="ListIcon5"
+                onClick={() => {
+                  Back();
+                }}
+              >
+                <ListIcon sx={{ fontSize: "32px", color: "white" }} />
+              </button>
             </div>
           )}
         </div>
         <div className="bottom-img5">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
             <div>
+              <button
+                className="ListIcon4"
+                onClick={() => {
+                  Back();
+                }}
+              >
+                <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
+              </button>
               <button
                 className="icon5"
                 onClick={() => {
@@ -145,8 +190,17 @@ function ShowData() {
                 <h1>User Information</h1>
               </div>
             )}
-
-            <p className="headerMsg5">Wi-Fi Request List/User Information</p>
+            <div className="row-nameButt4">
+              <button
+                className="nameButt4"
+                onClick={() => {
+                  Back();
+                }}
+              >
+                <p className="message4">Wi-Fi Request List/</p>
+              </button>
+              <p className="message4-back">User Information</p>
+            </div>
           </div>
           <div className="showcontain5">
             {showNewMember.map((val, key) => {
@@ -155,62 +209,62 @@ function ShowData() {
                   <div className="row-data5">
                     <span className="splitcontain5">
                       <h1 className="label-data5">Firstname:</h1>
-                      <p className="data5">{val.firstname}</p>
+                      <p className="data5">{val.Firstname}</p>
                     </span>
 
                     <span className="splitcontain5">
                       <h1 className="label-data5">Lastname:</h1>
-                      <p className="data5">{val.lastname}</p>
+                      <p className="data5">{val.Lastname}</p>
                     </span>
                   </div>
                   <div className="row-data5">
                     <span className="splitcontain5">
                       <h1 className="label-data5">Email:</h1>
-                      <p className="data5">{val.email}</p>
+                      <p className="data5">{val.Email}</p>
                     </span>
 
                     <span className="splitcontain5">
                       <h1 className="label-data5">Tel:</h1>
-                      <p className="data5">{val.tel}</p>
+                      <p className="data5">{val.Tel}</p>
                     </span>
                   </div>
                   <div className="row-data5">
                     <span className="splitcontain5">
                       <h1 className="label-data5">User Type:</h1>
-                      <p className="data5">{val.usertype}</p>
+                      <p className="data5">{val.User_Type}</p>
                     </span>
 
                     <span className="splitcontain5">
                       <h1 className="label-data5">Device Type:</h1>
-                      <p className="data5">{val.dtype}</p>
+                      <p className="data5">{val.Device_Type}</p>
                     </span>
                   </div>
                   <div className="row-data5">
                     <span className="splitcontain5">
                       <h1 className="label-data5">Device Brand:</h1>
-                      <p className="data5">{val.dbrand}</p>
+                      <p className="data5">{val.Device_Brand}</p>
                     </span>
 
                     <span className="splitcontain5">
                       <h1 className="label-data5">Device name:</h1>
-                      <p className="data5">{val.dname}</p>
+                      <p className="data5">{val.Device_Name}</p>
                     </span>
                   </div>
                   <div className="row-data5">
                     <span className="splitcontain5">
                       <h1 className="label-data5">Start Date:</h1>
-                      <p className="data5">{val.startdate}</p>
+                      <p className="data5">{val.Start_Date}</p>
                     </span>
 
                     <span className="splitcontain5" hidden={Labelhide}>
                       <h1 className="label-data5">End Date:</h1>
-                      <p className="data5">{val.enddate}</p>
+                      <p className="data5">{val.End_Date}</p>
                     </span>
                   </div>
                   <div className="row-data5">
                     <span className="splitcontain5">
                       <h1 className="label-data5">Remark:</h1>
-                      <p className="data5">{val.remark}</p>
+                      <p className="data5">{val.Remark}</p>
                     </span>
                   </div>
                   <div className="row-butt5">
@@ -223,7 +277,14 @@ function ShowData() {
                       Edit
                     </button>
                     <div className="emtpy-box5"></div>
-                    <button className="btn del-butt-sw5">Delete</button>
+                    <button
+                      className="btn del-butt-sw5"
+                      onClick={() => {
+                        DeleteUser(val.id);
+                      }}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               );
