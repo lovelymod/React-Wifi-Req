@@ -17,7 +17,7 @@ const Users = db.define("users", {
     allowNull: false,
   },
   Tel: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   Email: {

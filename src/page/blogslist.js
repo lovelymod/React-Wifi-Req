@@ -78,7 +78,7 @@ const Blogslist = ({
                 </button>
               </div>
             </div>
-            <hr />
+            <hr/>
           </div>
         );
       })}

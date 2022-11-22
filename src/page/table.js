@@ -14,10 +14,17 @@ import TableSideBar from "./tablesideBar";
 import { motion } from "framer-motion";
 import ListIcon from "@mui/icons-material/List";
 
-
 function Table() {
   const navigate = useNavigate();
   const [memberList, setMemberList] = useState([]);
+  const [sortid, setsortid] = useState(true);
+  const [sortDate, setsortDate] = useState(true);
+  const [sortTime, setsortTime] = useState(true);
+  const [sortFname, setsortFname] = useState(true);
+  const [sortUser, setsortUser] = useState(true);
+  const [sortStart, setsortStart] = useState(true);
+  const [sortEnd, setsortEnd] = useState(true);
+  console.log(memberList);
   // const [exMemberList, setExMemberList] = useState([]);
 
   // const getMember = () => {
@@ -25,13 +32,45 @@ function Table() {
   //     setMemberList(response.data);
   //   });
   // };
+  const chgSortId = () => {
+    sortid === true
+      ? memberList.sort((a, b) => (a.id < b.id ? 1 : -1))
+      : memberList.sort((a, b) => (a.id > b.id ? 1 : -1));
+  };
+  const chgSortDate = () => {
+    sortDate === true
+      ? memberList.sort((a, b) => (a.Dates < b.Dates ? 1 : -1))
+      : memberList.sort((a, b) => (a.Dates > b.Dates ? 1 : -1));
+  };
+  const chgSortTime = () => {
+    sortTime === true
+      ? memberList.sort((a, b) => (a.Times < b.Times ? 1 : -1))
+      : memberList.sort((a, b) => (a.Times > b.Times ? 1 : -1));
+  };
+  const chgSortFname = () => {
+    sortFname === true
+      ? memberList.sort((a, b) => (a.Firstname < b.Firstname ? 1 : -1))
+      : memberList.sort((a, b) => (a.Firstname > b.Firstname ? 1 : -1));
+  };
+  const chgSortUser = () => {
+    sortUser === true
+      ? memberList.sort((a, b) => (a.User_Type < b.User_Type ? 1 : -1))
+      : memberList.sort((a, b) => (a.User_Type > b.User_Type ? 1 : -1));
+  };
+  const chgSortStart = () => {
+    sortStart === true
+      ? memberList.sort((a, b) => (a.Start_Date < b.Start_Date ? 1 : -1))
+      : memberList.sort((a, b) => (a.Start_Date > b.Start_Date ? 1 : -1));
+  };
+  const chgSortEnd = () => {
+    sortEnd === true
+      ? memberList.sort((a, b) => (a.End_Date < b.End_Date ? 1 : -1))
+      : memberList.sort((a, b) => (a.End_Date > b.End_Date ? 1 : -1));
+  };
 
-  console.log(memberList);
   const fetchData = async () => {
     const getUser = await Axios.get("http://localhost:3002/getusers");
-    // .then((response) => {
     setMemberList(getUser.data);
-    // });
 
     // let dataBox = memberList;
     // let dataList = [];
@@ -110,7 +149,6 @@ function Table() {
     { label: "Time", key: "Times" },
   ];
 
-
   const timeStamp = moment().format("YYYY_MM_DD");
 
   const csvReport = {
@@ -133,8 +171,8 @@ function Table() {
 
   useEffect(() => {
     auth();
-    // getMember();
     fetchData();
+    // getMember();
   }, []);
 
   return (
@@ -245,14 +283,70 @@ function Table() {
         </div>
         <div className="all-scroll">
           <div className="head-table3">
-            <p className="head-data3">No</p>
-            <p className="head-data3">Date</p>
-            <p className="head-data3">Time</p>
-            <p className="head-data3">Name</p>
-            <p className="head-data3">Lastname</p>
-            <p className="head-data3">User Type</p>
-            <p className="head-data3">Start Date</p>
-            <p className="head-data3">End Date</p>
+            <p
+              className="head-data3"
+              onClick={() => {
+                setsortid(!sortid);
+                chgSortId();
+              }}
+            >
+              No
+            </p>
+            <p
+              className="head-data3"
+              onClick={() => {
+                setsortDate(!sortDate);
+                chgSortDate();
+              }}
+            >
+              Date
+            </p>
+            <p
+              className="head-data3"
+              onClick={() => {
+                setsortTime(!sortTime);
+                chgSortTime();
+              }}
+            >
+              Time
+            </p>
+            <p
+              className="head-data3"
+              onClick={() => {
+                setsortFname(!sortFname);
+                chgSortFname();
+              }}
+            >
+              Firstname
+            </p>
+            <p className="head-data3 lname">Lastname</p>
+            <p
+              className="head-data3"
+              onClick={() => {
+                setsortUser(!sortUser);
+                chgSortUser();
+              }}
+            >
+              User Type
+            </p>
+            <p
+              className="head-data3"
+              onClick={() => {
+                setsortStart(!sortStart);
+                chgSortStart();
+              }}
+            >
+              Start Date
+            </p>
+            <p
+              className="head-data3"
+              onClick={() => {
+                setsortEnd(!sortEnd);
+                chgSortEnd();
+              }}
+            >
+              End Date
+            </p>
             <p className="head-empty3"></p>
           </div>
           <hr className="top-table" />

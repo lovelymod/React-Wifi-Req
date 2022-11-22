@@ -113,8 +113,6 @@ function UserSubmit() {
   // };
 
   const [Labelhide, setLabelhide] = useState("");
-  const [reqEtc, setReqEtc] = useState("");
-  const [reqEnddate, setReqenddate] = useState(true);
   const [etcDisable, setetcDisable] = useState("hidden");
 
   const swapData = () => {
@@ -126,10 +124,8 @@ function UserSubmit() {
   const HideLabel = (value) => {
     if (value === "staff") {
       setLabelhide("hidden");
-      setReqenddate(false);
     } else if (value !== "staff") {
       setLabelhide("");
-      setReqenddate(true);
     }
   };
 
@@ -415,7 +411,6 @@ function UserSubmit() {
                 {errors.endDate && (
                   <p className="fill-message">Please fill this form</p>
                 )}
-                +
               </span>
             </div>
 

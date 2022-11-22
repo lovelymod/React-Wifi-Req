@@ -1,8 +1,6 @@
 import "./table.css";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ListIcon from "@mui/icons-material/List";
 
 const TableSideBar = () => {
@@ -16,28 +14,10 @@ const TableSideBar = () => {
   const Back = () => {
     navigate("/table");
   };
-
-  const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
+ 
   return (
     <div className="left-manu3">
       <div className="top-img3">
-        {window.innerWidth > 100 && window.innerWidth < 600 ? (
-          <div>
-            <button
-              className="icon-back2"
-              onClick={() => {
-                toggle();
-              }}
-            >
-              <ArrowForwardIosIcon sx={{ fontSize: "20px", color: "white" }} />
-            </button>
-          </div>
-        ) : (
-          <div></div>
-        )}
         {window.innerWidth > 601 && window.innerWidth < 1000 ? (
           <div>
             <img className="logo-table3" src="img/LS-02.png" alt="" srcSet="" />

@@ -2,7 +2,6 @@
 
 *{
     z-index: 0;
-
 }
 .App3{
     height: 100vh;
@@ -155,10 +154,24 @@
     /* border: 2px solid crimson ; */
     display: flex;
     justify-content: center;
-    width: 150px;  
-    padding-right: 30px;
+    min-width: 100px;
+    max-width: 150px;  
+    /* padding-right: 30px; */
+}
+
+.head-data3:hover{
+    cursor: pointer;
+}
+
+.lname:hover{
+    cursor: default;
+}
+
+.butt-data3{
+    border: 2px solid crimson ;
 
 }
+
 
 .head-empty3{
     width: 300px;
@@ -197,7 +210,8 @@
     /* border: 2px solid crimson ; */
     display: flex;
     justify-content: center;
-    width: 150px;
+    min-width: 130px;
+    max-width: 150px;
 
 }
 
@@ -365,6 +379,10 @@
         width: 250%;
 
     }
+    .head-data3{
+        min-width: 90px;
+        max-width: 100px;
+    }
 
     .table-scroll{
         /* border: 3px solid crimson ; */
@@ -374,6 +392,11 @@
 
     .member3{
         padding-right: 10px;
+    }
+
+    .member-data3{
+        min-width: 91px;
+        max-width: 100px;
     }
 
     .edit-butt3{
@@ -483,6 +506,16 @@
 
     .head-table3{
         width: 150%;
+    }
+    
+    .head-data3{
+        min-width: 115px;
+        max-width: 150px;
+    }
+
+    .member-data3{
+        min-width: 115px;
+        max-width: 150px;
     }
 
     .table-scroll{
