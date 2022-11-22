@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import { motion } from "framer-motion";
 
 function ShowData() {
   const navigate = useNavigate();
@@ -19,15 +20,20 @@ function ShowData() {
     }
   };
 
-  useEffect(() => {
-    onFirstCheckEnd();
-  }, []);
+  const auth = () => {
+    const checkUser = localStorage.getItem("auth");
+    if (checkUser !== "adminLogin") {
+      navigate("/login");
+    }
+  };
+
+  const BtoLogin = () => {
+    localStorage.removeItem("auth");
+    navigate("/login");
+  };
 
   const Back = () => {
     navigate("/table");
-  };
-  const BtoLogin = () => {
-    navigate("/login");
   };
 
   const edituser = (id) => {
@@ -35,8 +41,20 @@ function ShowData() {
     navigate("/edituser", { state: { newMemberList } });
   };
 
+  useEffect(() => {
+    auth();
+    onFirstCheckEnd();
+  }, []);
+
   return (
-    <div className="App5">
+    <motion.div
+      className="App5"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ delay: 0.1 }}
+
+    >
       <div className="left-manu5">
         <div className="top-img5">
           {window.innerWidth > 100 && window.innerWidth < 1000 ? (
@@ -62,7 +80,12 @@ function ShowData() {
         <div className="bottom-img5">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
             <div>
-              <button className="icon5" onClick={BtoLogin}>
+              <button
+                className="icon5"
+                onClick={() => {
+                  BtoLogin();
+                }}
+              >
                 <LogoutOutlinedIcon
                   className="icon-exit5"
                   sx={{ fontSize: "40px", color: "white" }}
@@ -71,7 +94,12 @@ function ShowData() {
             </div>
           ) : (
             <div>
-              <button className="icon5" onClick={BtoLogin}>
+              <button
+                className="icon5"
+                onClick={() => {
+                  BtoLogin();
+                }}
+              >
                 <LogoutOutlinedIcon
                   className="icon-exit5"
                   sx={{ fontSize: "40px", color: "#0174B3" }}
@@ -86,7 +114,12 @@ function ShowData() {
           <div className="headerInfo5">
             {window.innerWidth > 100 && window.innerWidth < 1000 ? (
               <div className="box55">
-                <button className="backbutt5" onClick={Back}>
+                <button
+                  className="backbutt5"
+                  onClick={() => {
+                    Back();
+                  }}
+                >
                   {
                     <ArrowBackIosIcon
                       sx={{ fontSize: "28px", color: "#0174B3" }}
@@ -97,7 +130,12 @@ function ShowData() {
               </div>
             ) : (
               <div className="box55">
-                <button className="backbutt5" onClick={Back}>
+                <button
+                  className="backbutt5"
+                  onClick={() => {
+                    Back();
+                  }}
+                >
                   {
                     <ArrowBackIosIcon
                       sx={{ fontSize: "28px", color: "#FFB401" }}
@@ -193,7 +231,7 @@ function ShowData() {
           </div>
         </span>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

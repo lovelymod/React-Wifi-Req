@@ -1,6 +1,6 @@
 import "./table.css";
 import { useState, useEffect } from "react";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import moment from "moment";
 import Axios from "axios";
 import Blogslist from "./blogslist";
@@ -10,15 +10,19 @@ import AddIcon from "@mui/icons-material/Add";
 import DownloadIcon from "@mui/icons-material/Download";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Swal from "sweetalert2";
+import TableSideBar from "./tablesideBar";
+import { motion } from "framer-motion";
 
 function Table() {
   const navigate = useNavigate();
   const location = useLocation();
   const [memberList, setMemberList] = useState([]);
+  // const [exMemberList, setExMemberList] = useState([]);
 
   // const fetchData = () => {
   //   let dataBox = memberList;
   //   let dataList = [];
+  //   console.log(exMemberList);
 
   //   dataBox.forEach((item) => {
   //     dataList.push({
@@ -35,9 +39,8 @@ function Table() {
   //     });
   //   });
 
-  //   setMemberList(dataList);
+  //   setExMemberList(dataList);
   // };
-
 
   const getMember = () => {
     Axios.get("http://localhost:3001/member").then((response) => {
@@ -73,7 +76,15 @@ function Table() {
     navigate("/showdata", { state: { newMemberList } });
   };
 
+  const auth = () => {
+    const checkUser = localStorage.getItem("auth");
+    if (checkUser !== "adminLogin") {
+      navigate("/login");
+    }
+  };
+
   const BtoLogin = () => {
+    localStorage.removeItem("auth");
     navigate("/login");
   };
 
@@ -105,80 +116,85 @@ function Table() {
     navigate("/adminsubmit");
   };
 
-  
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => {
+    setIsOpen(!isOpen);
+  };
+
   useEffect(() => {
+    auth();
     getMember();
     // fetchData();
   }, []);
 
-  console.log(memberList);
-
   return (
-    <div className="App3">
-      <div className="left-manu3">
-        <div className="top-img3">
-          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
-            <div>
-              <img
-                className="logo-table3"
-                src="img/LS-02.png"
-                alt=""
-                srcSet=""
+    <motion.div
+      className="App3"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ delay: 0.1 }}
+    >
+      {window.innerWidth > 100 && window.innerWidth < 600 ? (
+        <div
+          className="left-manu3"
+          style={{
+            width: isOpen ? "25%" : "0%",
+            marginRight: isOpen ? "10px" : "0px",
+          }}
+        >
+          <div className="top-img3">
+            <button
+              className="icon-back2"
+              onClick={() => {
+                toggle();
+              }}
+              style={{ left: isOpen ? "50px" : "10px" }}
+            >
+              <ArrowForwardIosIcon sx={{ fontSize: "20px", color: "white" }} />
+            </button>
+
+            <img
+              className="logo-table3"
+              src="img/LS-02.png"
+              alt=""
+              srcSet=""
+              style={{ display: isOpen ? "block" : "none" }}
+            />
+          </div>
+          <div className="bottom-img3">
+            <button
+              className="icon3"
+              onClick={() => {
+                BtoLogin();
+              }}
+              style={{ display: isOpen ? "block" : "none" }}
+            >
+              <LogoutOutlinedIcon
+                className="icon-exit3"
+                sx={{ fontSize: "40px", color: "white" }}
               />
-            </div>
-          ) : (
-            <div>
-              <img
-                className="logo-table3"
-                src="img/LS-01.png"
-                alt=""
-                srcSet=""
-              />
-            </div>
-          )}
+            </button>
+          </div>
         </div>
-        <div className="bottom-img3">
-          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
-            <div>
-              <button className="icon3" onClick={BtoLogin}>
-                <LogoutOutlinedIcon
-                  className="icon-exit3"
-                  sx={{ fontSize: "40px", color: "white" }}
-                />
-              </button>
-            </div>
-          ) : (
-            <div>
-              <button className="icon3" onClick={BtoLogin}>
-                <LogoutOutlinedIcon
-                  className="icon-exit3"
-                  sx={{ fontSize: "40px", color: "#0174B3" }}
-                />
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="bg3">
+      ) : (
+        <TableSideBar />
+      )}
+
+      <div className="bg3" style={{ width: isOpen ? "75%" : "100%" }}>
         <div className="header-top3">
           <span className="left3">
-            {window.innerWidth > 100 && window.innerWidth < 600 ? (
-              <div>
-                <button className="icon-back2">
-                  <ArrowForwardIosIcon
-                    sx={{ fontSize: "20px", color: "white" }}
-                  />
-                </button>
-              </div>
-            ) : (
-              <div></div>
-            )}
             <h2 className="name3">Wi-Fi Request List</h2>
           </span>
           <span className="right3">
             {window.innerWidth > 100 && window.innerWidth < 600 ? (
               <div>
-                <button className="icon-create3" onClick={gotoAdminSub}>
+                <button
+                  className="icon-create3"
+                  onClick={() => {
+                    gotoAdminSub();
+                  }}
+                >
                   <AddIcon sx={{ fontSize: "20px", color: "white" }} />
                 </button>
                 <CSVLink {...csvReport}>
@@ -193,7 +209,9 @@ function Table() {
                   type="button"
                   className="btn create3"
                   value="Create User"
-                  onClick={gotoAdminSub}
+                  onClick={() => {
+                    gotoAdminSub();
+                  }}
                 />
                 <CSVLink {...csvReport}>
                   <input
@@ -229,7 +247,7 @@ function Table() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

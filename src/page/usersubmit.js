@@ -4,7 +4,7 @@ import Axios from "axios";
 import { useForm } from "react-hook-form";
 import moment from "moment";
 import Swal from "sweetalert2";
-
+import { motion } from "framer-motion";
 function UserSubmit() {
   const {
     register,
@@ -100,7 +100,13 @@ function UserSubmit() {
   };
 
   return (
-    <div className="App1">
+    <motion.div
+      className="App1"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ delay: 0.1 }}
+    >
       <div className="bg1">
         <div className="images1">
           <img className="logo1" src="img/LS-01.png" alt="" srcSet="" />
@@ -191,11 +197,11 @@ function UserSubmit() {
                     required: "Please fill this form",
                     maxLength: {
                       value: 10,
-                      message: "Password must have at most 10 characters"
+                      message: "Password must have at most 10 characters",
                     },
                     minLength: {
                       value: 9,
-                      message: "Password must have at least 8 characters"
+                      message: "Password must have at least 8 characters",
                     },
                   })}
                 />
@@ -389,7 +395,7 @@ function UserSubmit() {
           </form>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

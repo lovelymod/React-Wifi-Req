@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,300&display=swap');
 
+*{
+    z-index: 0;
 
+}
 .App3{
     height: 100vh;
     width: 100vw;
@@ -217,18 +220,50 @@
 }
 
 @media only screen and (max-width:600px) {
+    
     .App3{
         display: flex;
-        flex-direction: column; 
+        /* flex-direction: column;  */     
+    }
+    .left-manu3{
+        z-index: 1 ;
+        /* margin-right: 0px; */
+        transition: all 0.5s;
     }
 
-    .left-manu3{
-        display: none; 
+    .icon-back2{
+        position: relative;
+        z-index: 1;
+        transition: all 0.5s;
+    }
+    .top-img3{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .logo-table3{
+        width: 65px;
+        height: 65px;
+        z-index: 1;
+        transition: all 0.5s;
+        
+    }
+    
+
+    .top-img3, .bottom-img3{
+        display: flex ;
+        background-color: #0174B3;
+        z-index: 1;
+
     }
 
     .bg3{
         height: 100%;
-        width: 100%;
+        /* width: 100%; */
+        /* display: none; */
+        z-index: 0;
+        transition: all 0.5s;
+        
     }
 
     .header-top3{
@@ -238,19 +273,26 @@
         height: 10%;
     }
 
-    .left3{
-        
+    .left3{  
         width: 60%;
+    }
+
+    .icon3{
+        margin-top: 50px;
+        border: 0px;
+        background-color: #0174B3;
+        z-index: 1;
+        transition: all 0.5s;
 
     }
+
     .right3{
         width: 40%;
-        
-
     }
 
     .top-table{
         width: 250%;
+
     }
 
     .name3{
@@ -261,6 +303,7 @@
         margin-top: 5px;
         
     }
+
 
     .icon-export3,.icon-create3{
         width: fit-content;
@@ -277,6 +320,8 @@
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px ;
         padding-bottom: 5px;
+        z-index: 1;
+
     }
 
     .icon-create3{

@@ -1,5 +1,5 @@
 import "./admidsubmit.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
 import { useForm } from "react-hook-form";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
@@ -7,6 +7,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
 
 function AdminSub() {
   const navigate = useNavigate();
@@ -107,7 +108,15 @@ function AdminSub() {
     }
   };
 
+  const auth = () => {
+    const checkUser = localStorage.getItem("auth");
+    if (checkUser !== "adminLogin") {
+      navigate("/login");
+    }
+  };
+
   const BtoLogin = () => {
+    localStorage.removeItem("auth");
     navigate("/login");
   };
 
@@ -115,8 +124,19 @@ function AdminSub() {
     navigate("/table");
   };
 
+  useEffect(() => {
+    auth();
+  }, []);
+
   return (
-    <div className="AppAdmin4">
+    <motion.div
+      className="AppAdmin4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ delay: 0.1 }}
+
+    >
       <div className="imagesAdmin4">
         <div className="boxtop4">
           {window.innerWidth > 100 && window.innerWidth < 1000 ? (
@@ -142,7 +162,12 @@ function AdminSub() {
         <div className="boxbottom4">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
             <div>
-              <button className="icon4" onClick={BtoLogin}>
+              <button
+                className="icon4"
+                onClick={() => {
+                  BtoLogin();
+                }}
+              >
                 <LogoutOutlinedIcon
                   className="icon-exit4"
                   sx={{ fontSize: "40px", color: "white" }}
@@ -151,7 +176,12 @@ function AdminSub() {
             </div>
           ) : (
             <div>
-              <button className="icon4" onClick={BtoLogin}>
+              <button
+                className="icon4"
+                onClick={() => {
+                  BtoLogin();
+                }}
+              >
                 <LogoutOutlinedIcon
                   className="icon-exit4"
                   style={{ fontSize: "40px", color: "#0174B3" }}
@@ -165,7 +195,12 @@ function AdminSub() {
         <div className="headerAdmin4">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
             <div className="box44">
-              <button className="backbuttAdminTop4" onClick={Back}>
+              <button
+                className="backbuttAdminTop4"
+                onClick={() => {
+                  Back();
+                }}
+              >
                 {
                   <ArrowBackIosIcon
                     sx={{ fontSize: "28px", color: "#0174B3" }}
@@ -176,7 +211,12 @@ function AdminSub() {
             </div>
           ) : (
             <div className="box44">
-              <button className="backbuttAdminTop4" onClick={Back}>
+              <button
+                className="backbuttAdminTop4"
+                onClick={() => {
+                  Back();
+                }}
+              >
                 {
                   <ArrowBackIosIcon
                     sx={{ fontSize: "32px", color: "#FFB401" }}
@@ -275,11 +315,11 @@ function AdminSub() {
                     required: "Please fill this form",
                     maxLength: {
                       value: 10,
-                      message: "Password must have at most 10 characters"
+                      message: "Password must have at most 10 characters",
                     },
                     minLength: {
                       value: 9,
-                      message: "Password must have at least 8 characters"
+                      message: "Password must have at least 8 characters",
                     },
                   })}
                 />
@@ -477,13 +517,15 @@ function AdminSub() {
                 type=""
                 className="btn backbuttAdmin4"
                 value="Cancel"
-                onClick={Back}
+                onClick={() => {
+                  Back();
+                }}
               />
             </div>
           </form>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

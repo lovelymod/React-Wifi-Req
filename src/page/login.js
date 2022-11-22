@@ -1,14 +1,21 @@
 import "./login.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
+import { motion } from "framer-motion";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const checkLogin = () => {
+    const auth = localStorage.getItem("auth");
+    if (auth === "adminLogin") {
+      navigate("/table");
+    }
+  };
 
   const login = () => {
     Axios.post("http://localhost:3001/login", {
@@ -16,27 +23,38 @@ function Login() {
       password: password,
     }).then((response) => {
       if (response.data.message === "Matched") {
+        localStorage.setItem("auth", "adminLogin");
         Swal.fire({
-          icon: 'success',
-          title: 'LOGGED IN',
-          showConfirmButton: false,  
+          icon: "success",
+          title: "LOGGED IN",
+          showConfirmButton: false,
           timer: 1200,
           timerProgressBar: true,
-        })
-        setTimeout(function() {
+        });
+        setTimeout(function () {
           navigate("/table");
         }, 1500);
-        
       } else {
         Swal.fire({
-          icon: 'error',
-          title: 'Wrong Username or Password', 
-        })
+          icon: "error",
+          title: "Wrong Username or Password",
+        });
       }
     });
   };
+
+  useEffect(() => {
+    checkLogin();
+  }, []);
   return (
-    <div className="App2">
+    <motion.div
+      className="App2"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ delay: 0.1 }}
+
+    >
       <div className="bg2">
         <div className="images2">
           <img className="logo2" src="img/LS-02.png" alt="" srcSet="" />
@@ -70,12 +88,14 @@ function Login() {
               type=""
               className="btn loginbutt2"
               value="Login"
-              onClick={login}
+              onClick={() => {
+                login();
+              }}
             />
           </form>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

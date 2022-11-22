@@ -6,6 +6,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Axios from "axios";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
 
 function EditUser() {
   const navigate = useNavigate();
@@ -43,7 +44,15 @@ function EditUser() {
     navigate("/table");
   };
 
+  const auth = () => {
+    const checkUser = localStorage.getItem("auth");
+    if (checkUser !== "adminLogin") {
+      navigate("/login");
+    }
+  };
+
   const BtoLogin = () => {
+    localStorage.removeItem("auth");
     navigate("/login");
   };
 
@@ -128,10 +137,8 @@ function EditUser() {
       setetcDisable("hidden");
     } else {
       setetcDisable("");
-
     }
   };
-
 
   const onFirstCheckEnd = () => {
     if (!newMember[0].enddate) {
@@ -142,12 +149,20 @@ function EditUser() {
   };
 
   useEffect(() => {
+    auth();
     onFirstCheck();
     onFirstCheckEnd();
   }, []);
 
   return (
-    <div className="App6">
+    <motion.div
+      className="App6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ delay: 0.1 }}
+
+    >
       <div className="left-manu6">
         <div className="top-img6">
           {window.innerWidth > 100 && window.innerWidth < 1000 ? (
@@ -173,7 +188,12 @@ function EditUser() {
         <div className="bottom-img6">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
             <div>
-              <button className="icon6" onClick={BtoLogin}>
+              <button
+                className="icon6"
+                onClick={() => {
+                  BtoLogin();
+                }}
+              >
                 <LogoutOutlinedIcon
                   className="icon-exit6"
                   sx={{ fontSize: "40px", color: "white" }}
@@ -182,7 +202,12 @@ function EditUser() {
             </div>
           ) : (
             <div>
-              <button className="icon6" onClick={BtoLogin}>
+              <button
+                className="icon6"
+                onClick={() => {
+                  BtoLogin();
+                }}
+              >
                 <LogoutOutlinedIcon
                   className="icon-exit6"
                   style={{ fontSize: "40px", color: "#0174B3" }}
@@ -196,7 +221,12 @@ function EditUser() {
         <div className="headerInfo6">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
             <div className="box66">
-              <button className="backbutt6" onClick={Back}>
+              <button
+                className="backbutt6"
+                onClick={() => {
+                  Back();
+                }}
+              >
                 {
                   <ArrowBackIosIcon
                     sx={{ fontSize: "28px", color: "#0174B3" }}
@@ -207,7 +237,12 @@ function EditUser() {
             </div>
           ) : (
             <div className="box66">
-              <button className="backbutt6" onClick={Back}>
+              <button
+                className="backbutt6"
+                onClick={() => {
+                  Back();
+                }}
+              >
                 {
                   <ArrowBackIosIcon
                     sx={{ fontSize: "28px", color: "#FFB401" }}
@@ -279,12 +314,17 @@ function EditUser() {
                       defaultValue={val.email}
                       {...register("inputEmail", {
                         onChange: (e) => setEmail(e.target.value),
-                        required: true,
-                        pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$",
+                        required: "Please fill this form",
+                        pattern: {
+                          value: /[a-z0-9._]+@[a-z0-9.-]+.[a-z]{2,}$/,
+                          message: "Please correct this form",
+                        },
                       })}
                     />
-                    {errors.inputEmail && (
-                      <p className="fill-message">Please fill this form</p>
+                    {errors?.inputEmail && (
+                      <p className="fill-message">
+                        {errors.inputEmail.message}
+                      </p>
                     )}
                   </span>
 
@@ -294,20 +334,25 @@ function EditUser() {
                     </label>
 
                     <input
-                      type="text"
+                      type="number"
                       className=" form-control fc6"
                       id="inputTel"
                       defaultValue={val.tel}
                       {...register("inputTel", {
                         onChange: (e) => setTel(e.target.value),
-                        pattern: /[0-9]/,
-                        required: true,
-                        maxLength: 10,
-                        minLength: 9,
+                        required: "Please fill this form",
+                        maxLength: {
+                          value: 10,
+                          message: "Password must have at most 10 characters",
+                        },
+                        minLength: {
+                          value: 9,
+                          message: "Password must have at least 8 characters",
+                        },
                       })}
                     />
-                    {errors.inputTel && (
-                      <p className="fill-message">Please correct this form</p>
+                    {errors?.inputTel && (
+                      <p className="fill-message">{errors.inputTel.message}</p>
                     )}
                   </span>
                 </div>
@@ -490,7 +535,12 @@ function EditUser() {
                     // onClick={() => UpdateData(val.id)}
                   />
 
-                  <button className="btn cancelbutt6" onClick={Back}>
+                  <button
+                    className="btn cancelbutt6"
+                    onClick={() => {
+                      Back();
+                    }}
+                  >
                     Cancel
                   </button>
                 </div>
@@ -499,7 +549,7 @@ function EditUser() {
           );
         })}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
