@@ -33,6 +33,9 @@ function EditUser() {
   const [enddate, setEnddate] = useState(showNewMember[0].End_Date);
   const [remark, setRemark] = useState(showNewMember[0].Remark);
 
+  const [Labelhide, setLabelhide] = useState("");
+  const [etcDisable, setetcDisable] = useState("");
+
   let strDtype = dtype;
 
   const swapData = () => {
@@ -94,6 +97,7 @@ function EditUser() {
             title: "Editted",
             timer: 1200,
             timerProgressBar: true,
+            showConfirmButton: false,
           });
           setTimeout(function () {
             navigate("/table");
@@ -122,9 +126,6 @@ function EditUser() {
       })
       .catch((err) => {});
   };
-
-  const [Labelhide, setLabelhide] = useState("");
-  const [etcDisable, setetcDisable] = useState("");
 
   const HideLabel = (value) => {
     if (value === "staff") {
@@ -259,11 +260,11 @@ function EditUser() {
               >
                 {
                   <ArrowBackIosIcon
-                    sx={{ fontSize: "28px", color: "#0174B3" }}
+                    sx={{ fontSize: "32px", color: "#0174B3" }}
                   />
                 }{" "}
               </button>
-              <h1>Edit</h1>
+              <p className="afterButt6">Edit User</p>
             </div>
           ) : (
             <div className="box66">
@@ -275,11 +276,11 @@ function EditUser() {
               >
                 {
                   <ArrowBackIosIcon
-                    sx={{ fontSize: "28px", color: "#FFB401" }}
+                    sx={{ fontSize: "32px", color: "#FFB401" }}
                   />
                 }{" "}
               </button>
-              <h1>Edit</h1>
+              <p className="afterButt6">Edit User</p>
             </div>
           )}
           <div className="row-nameButt4">
@@ -289,9 +290,9 @@ function EditUser() {
                 Back();
               }}
             >
-              <p className="message4">Wi-Fi Request List/</p>
+              <p className="message4">Wi-Fi Request List</p>
             </button>
-            <p className="message4-back">Edit</p>
+            <p className="message4-back">/Edit</p>
           </div>
         </div>
         {showNewMember.map((val, key) => {
@@ -347,7 +348,6 @@ function EditUser() {
                     </label>
 
                     <input
-                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                       type="email"
                       className=" form-control fc6"
                       id="inputEmail"

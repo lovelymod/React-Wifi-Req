@@ -109,7 +109,7 @@
     background-color: #0174B3;
     display: flex;
     align-items: center;
-    margin-top: 11px;
+    /* margin-top: 11px; */
     margin-left: 50px;
 }
 
@@ -134,8 +134,17 @@
     width: 100%;
     display: flex;
     flex-direction: row;
+    align-items: center;
     color: #FFB401;
 }
+
+.afterButt5{
+    position: relative;
+    color: #ffb401;
+    font-size: 36px;
+    top: 6px;
+    
+  }
 
 .headerMsg5{
     text-align: start;
@@ -308,6 +317,14 @@
         display: flex;
         flex-direction: row;
         color: #FFB401;
+    }
+
+    .row-nameButt4{
+        display: none;
+    }
+
+    .afterButt5{
+        top: 8px;
     }
 
     .backbutt5{

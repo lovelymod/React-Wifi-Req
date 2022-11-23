@@ -38,36 +38,13 @@ function Login() {
         Swal.fire({
           icon: "error",
           title: "Wrong Username or Password",
+          showConfirmButton: false,
+          timer: 1200,
+          timerProgressBar: true,
         });
       }
     });
   };
-
-  // const login = () => {
-  //   Axios.post("http://localhost:3001/login", {
-  //     username: username,
-  //     password: password,
-  //   }).then((response) => {
-  //     if (response.data.message === "Matched") {
-  //       localStorage.setItem("auth", "adminLogin");
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "LOGGED IN",
-  //         showConfirmButton: false,
-  //         timer: 1200,
-  //         timerProgressBar: true,
-  //       });
-  //       setTimeout(function () {
-  //         navigate("/table");
-  //       }, 1500);
-  //     } else {
-  //       Swal.fire({
-  //         icon: "error",
-  //         title: "Wrong Username or Password",
-  //       });
-  //     }
-  //   });
-  // };
 
   useEffect(() => {
     checkLogin();

@@ -27,6 +27,9 @@ function UserSubmit() {
   const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
 
+  const [Labelhide, setLabelhide] = useState("");
+  const [etcDisable, setetcDisable] = useState("hidden");
+
   const strUtype = utype;
   let strDtype = dtype;
 
@@ -60,6 +63,7 @@ function UserSubmit() {
           title: "Submited",
           showConfirmButton: false,
           timer: 1500,
+          timerProgressBar: true,
         });
         resetField("inputFirstname");
         resetField("inputLastname");
@@ -77,46 +81,20 @@ function UserSubmit() {
     });
   };
 
-  //   Axios.post("http://localhost:3001/create", {
-  //     firstname: fname,
-  //     lastname: lname,
-  //     usertype: strUtype,
-  //     tel: tel,
-  //     email: email,
-  //     dtype: strDtype,
-  //     dbrand: dbrand,
-  //     dname: dname,
-  //     startdate: startdate,
-  //     enddate: enddate,
-  //     remark: remark,
-  //     date: dates,
-  //     time: times,
-  //   }).then((response) => {
-  //     if (response.data.message === "Inserted") {
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "Submited",
-  //         showConfirmButton: false,
-  //         timer: 1500,
-  //       });
-  //       resetField("inputFirstname");
-  //       resetField("inputLastname");
-  //       resetField("inputEmail");
-  //       resetField("inputTel");
-  //       resetField("inputUsertype");
-  //       resetField("inputDevicetype");
-  //       resetField("inputEtc");
-  //       resetField("inputdeviceBrand");
-  //       resetField("inputdeviceName");
-  //       resetField("startDate");
-  //       resetField("endDate");
-  //       resetField("remark");
-  //     }
-  //   });
-  // };
-
-  const [Labelhide, setLabelhide] = useState("");
-  const [etcDisable, setetcDisable] = useState("hidden");
+  const resetForm = () => {
+    resetField("inputFirstname");
+    resetField("inputLastname");
+    resetField("inputEmail");
+    resetField("inputTel");
+    resetField("inputUsertype");
+    resetField("inputDevicetype");
+    resetField("inputEtc");
+    resetField("inputdeviceBrand");
+    resetField("inputdeviceName");
+    resetField("startDate");
+    resetField("endDate");
+    resetField("remark");
+  };
 
   const swapData = () => {
     if (strDtype === "etc.") {
@@ -439,7 +417,14 @@ function UserSubmit() {
             <div className="row-contain-butt1">
               <input type="submit" className="btn regisbutt" value="Submit" />
 
-              <input type="" className="btn backbutt" value="Cancel" />
+              <input
+                type=""
+                className="btn backbutt"
+                value="Cancel"
+                onClick={() => {
+                  resetForm();
+                }}
+              />
             </div>
           </form>
         </div>

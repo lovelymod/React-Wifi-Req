@@ -253,6 +253,13 @@
     color: #FF5240 !important;
 }
 
+.del-butt3:active{
+    background-color: white !important;
+    color: #FF5240 !important;
+    border: 1px solid #FF5240 !important;
+
+}
+
 @media only screen and (max-width:600px) {
     
     .App3{
@@ -409,6 +416,8 @@
         min-width: 50px !important;
         max-width: 75px !important;  
     }
+
+    
 
 
 }

@@ -94,7 +94,16 @@
   flex-direction: row;
   align-items: center;
   color: #ffb401;
+  /* border: 1px solid black; */
 }
+
+.afterButt6{
+  position: relative;
+  color: #ffb401;
+  font-size: 36px;
+  top: 6px;
+}
+
 .backbutt6 {
   display: flex;
   border: 0px;
@@ -282,6 +291,10 @@
     color: #ffb401;
   }
 
+  .afterButt6{
+    top: 2px !important;
+  }
+
   .backbutt6 {
     background-color: white !important;
     border: 0px !important;
@@ -405,6 +418,10 @@
     color: #ffb401;
   }
 
+  .afterButt6{
+    top: 0px !important;
+  }
+
   .backbutt6 {
     background-color: white !important;
     margin-bottom: 10px !important;
@@ -412,6 +429,14 @@
   .backbutt6:hover{
     background-color: #f1f2f3 ;
     border-radius: 10px ;
+  }
+
+  .afterButt6{
+    position: relative;
+    color: #ffb401;
+    font-size: 36px;
+    top: 6px;
+    
   }
 
   .message6 {

@@ -2,6 +2,7 @@
 
 * {
   box-sizing: border-box;
+  transition: all 0.5s;
 }
 
 .AppAdmin4 {
@@ -47,8 +48,16 @@
   height: fit-content;
   color: #ffb401 !important;
   margin-left: 50px;
-  margin-top: 12px;
+  /* margin-top: 12px; */
   background-color: #0174b3;
+}
+
+.afterButt4{
+  position: relative;
+  color: #ffb401;
+  font-size: 36px;
+  top: 6px;
+  
 }
 
 .backbuttAdminTop4:hover{
@@ -75,8 +84,13 @@
 .message4 {
   text-align: start;
   padding-left: 100px;
-  color: white;
+  color: #d2d2d2;
   font-size: 24px;
+}
+
+.message4:hover{
+  color: white;
+
 }
 
 .regisbuttAdmin4 {
@@ -200,6 +214,7 @@
   width: 100%;
   display: flex;
   flex-direction: row;
+  align-items: center;
   color: #FFB401;
 }
 
@@ -322,6 +337,11 @@ form {
     padding-left: 0px;
     margin-left: 20px;
     margin-bottom: 20px;
+  }
+
+  .afterButt4{
+    top: -3px;
+    
   }
 
   .backbuttAdminTop4:hover{
@@ -447,6 +467,11 @@ form {
     border: 0px;
     margin-bottom: 20px;
     margin-top: 15px;
+  }
+
+  .afterButt4{
+    top: 4px;
+    
   }
   .nameButt4{
     width: fit-content;

@@ -2,6 +2,7 @@ import "./table.css";
 import { useNavigate } from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ListIcon from "@mui/icons-material/List";
+import { hover } from "@testing-library/user-event/dist/hover";
 
 const TableSideBar = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const TableSideBar = () => {
                 Back();
               }}
             >
-              <ListIcon sx={{ fontSize: "32px", color: "white" }} />
+              <ListIcon sx={{ fontSize: "32px", color: "white"}} />
             </button>
           </div>
         )}

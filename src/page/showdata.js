@@ -56,6 +56,7 @@ function ShowData() {
               title: "Deleted!",
               timer: 1200,
               timerProgressBar: true,
+              showConfirmButton: false,
             });
             setTimeout(function () {
               navigate("/table");
@@ -167,11 +168,11 @@ function ShowData() {
                 >
                   {
                     <ArrowBackIosIcon
-                      sx={{ fontSize: "28px", color: "#0174B3" }}
+                      sx={{ fontSize: "32px", color: "#0174B3" }}
                     />
                   }{" "}
                 </button>
-                <h1>User Information</h1>
+                <p className="afterButt5">User Information</p>
               </div>
             ) : (
               <div className="box55">
@@ -183,11 +184,11 @@ function ShowData() {
                 >
                   {
                     <ArrowBackIosIcon
-                      sx={{ fontSize: "28px", color: "#FFB401" }}
+                      sx={{ fontSize: "32px", color: "#FFB401" }}
                     />
                   }{" "}
                 </button>
-                <h1>User Information</h1>
+                <p className="afterButt5">User Information</p>
               </div>
             )}
             <div className="row-nameButt4">
@@ -197,9 +198,9 @@ function ShowData() {
                   Back();
                 }}
               >
-                <p className="message4">Wi-Fi Request List/</p>
+                <p className="message4">Wi-Fi Request List</p>
               </button>
-              <p className="message4-back">User Information</p>
+              <p className="message4-back">/User Information</p>
             </div>
           </div>
           <div className="showcontain5">

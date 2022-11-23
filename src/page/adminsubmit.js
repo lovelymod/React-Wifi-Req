@@ -31,6 +31,9 @@ function AdminSub() {
   const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
 
+  const [Labelhide, setLabelhide] = useState("");
+  const [etcDisable, setetcDisable] = useState("hidden");
+
   const strUtype = utype;
   let strDtype = dtype;
 
@@ -62,6 +65,7 @@ function AdminSub() {
           icon: "success",
           title: "Submited",
           showConfirmButton: false,
+          timerProgressBar: true,
           timer: 1200,
         });
         resetField("inputFirstname");
@@ -81,51 +85,7 @@ function AdminSub() {
         }, 1500);
       }
     });
-
-    // Axios.post("http://localhost:3001/create", {
-    //   firstname: fname,
-    //   lastname: lname,
-    //   usertype: strUtype,
-    //   tel: tel,
-    //   email: email,
-    //   dtype: strDtype,
-    //   dbrand: dbrand,
-    //   dname: dname,
-    //   startdate: startdate,
-    //   enddate: enddate,
-    //   remark: remark,
-    //   date: dates,
-    //   time: times,
-    // }).then((response) => {
-    //   if (response.data.message === "Inserted") {
-    //     Swal.fire({
-    //       icon: "success",
-    //       title: "Submited",
-    //       showConfirmButton: false,
-    //       timerProgressBar: true,
-    //       timer: 1500,
-    //     });
-    //     resetField("inputFirstname");
-    //     resetField("inputLastname");
-    //     resetField("inputEmail");
-    //     resetField("inputTel");
-    //     resetField("inputUsertype");
-    //     resetField("inputDevicetype");
-    //     resetField("inputEtc");
-    //     resetField("inputdeviceBrand");
-    //     resetField("inputdeviceName");
-    //     resetField("startDate");
-    //     resetField("endDate");
-    //     resetField("remark");
-    //     setTimeout(function () {
-    //       navigate("/table");
-    //     }, 2000);
-    //   }
-    // });
   };
-
-  const [Labelhide, setLabelhide] = useState("");
-  const [etcDisable, setetcDisable] = useState("hidden");
 
   const swapData = () => {
     if (strDtype === "etc.") {
@@ -259,11 +219,11 @@ function AdminSub() {
               >
                 {
                   <ArrowBackIosIcon
-                    sx={{ fontSize: "28px", color: "#0174B3" }}
+                    sx={{ fontSize: "32px", color: "#0174B3" }}
                   />
                 }{" "}
               </button>
-              <h1>Create User</h1>
+              <p className="afterButt4">Create User</p>
             </div>
           ) : (
             <div className="box44">
@@ -279,7 +239,7 @@ function AdminSub() {
                   />
                 }{" "}
               </button>
-              <h1>Create User</h1>
+              <p className="afterButt4">Create User</p>
             </div>
           )}
           <div className="row-nameButt4">
@@ -289,9 +249,9 @@ function AdminSub() {
                 Back();
               }}
             >
-              <p className="message4">Wi-Fi Request List/</p>
+              <p className="message4">Wi-Fi Request List</p>
             </button>
-            <p className="message4-back">Create User</p>
+            <p className="message4-back">/Create User</p>
           </div>
         </div>
         <div className="containerAdmin4">
@@ -346,7 +306,6 @@ function AdminSub() {
                 </label>
 
                 <input
-                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                   type="email"
                   className=" form-control fcAdmin4"
                   id="inputEmail"

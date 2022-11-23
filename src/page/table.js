@@ -26,7 +26,10 @@ function Table() {
   const [sortEnd, setsortEnd] = useState(true);
   const timeStamp = moment().format("YYYY_MM_DD");
 
-  // const [exMemberList, setExMemberList] = useState([]);
+  const [exMemberList, setExMemberList] = useState([]);
+
+  const [isOpen, setIsOpen] = useState(false);
+
 
   // const getMember = () => {
   //   Axios.get("http://localhost:3002/getusers").then((response) => {
@@ -73,25 +76,24 @@ function Table() {
     const getUser = await Axios.get("http://localhost:3002/getusers");
     setMemberList(getUser.data);
 
-    // let dataBox = memberList;
-    // let dataList = [];
+    let dataBox = getUser.data;
+    let dataList = [];
 
-    // dataBox.forEach((item) => {
-    //   dataList.push({
-    //     Firstname: item.Firstname.toString(),
-    //     Lastname: item.Lastname.toString(),
-    //     Email: item.Email.toString(),
-    //     Tel: item.Tel+"''",
-    //     User_Type: item.User_Type.toString(),
-    //     Device_Type: item.Device_Type.toString(),
-    //     Device_Brand: item.Device_Brand.toString(),
-    //     Device_Name: item.Device_Name.toString(),
-    //     Start_Date: item.Start_Date.toString(),
-    //     End_Date: item.End_Date.toString(),
-    //   });
-    // });
-    // console.log(dataList[0]);
-    // setExMemberList(dataList[0]);
+    dataBox.forEach((item) => {
+      dataList.push({
+        Firstname: item.Firstname.toString(),
+        Lastname: item.Lastname.toString(),
+        Email: item.Email.toString(),
+        Tel: '=""'+item.Tel+'""',
+        User_Type: item.User_Type.toString(),
+        Device_Type: item.Device_Type.toString(),
+        Device_Brand: item.Device_Brand.toString(),
+        Device_Name: item.Device_Name.toString(),
+        Start_Date: item.Start_Date.toString(),
+        End_Date: item.End_Date.toString(),
+      });
+    });
+    setExMemberList(dataList);
   };
 
   const showUser = (id) => {
@@ -117,7 +119,13 @@ function Table() {
       if (result.isConfirmed) {
         const newMemberList = memberList.filter((val) => val.id !== id);
         setMemberList(newMemberList);
-        Swal.fire("Deleted!", "success");
+        Swal.fire({
+          icon: "success",
+          title: "Deleted !",
+          timer: 1200,
+          timerProgressBar: true,
+          showConfirmButton: false,
+        });
       }
     });
   };
@@ -161,11 +169,10 @@ function Table() {
 
   const csvReport = {
     headers: headers,
-    data: memberList,
+    data: exMemberList,
     filename: `RequestList_${timeStamp}.csv`,
   };
 
-  const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -174,7 +181,6 @@ function Table() {
   useEffect(() => {
     auth();
     fetchData();
-    // getMember();
   }, []);
 
   return (
@@ -256,7 +262,7 @@ function Table() {
                 >
                   <AddIcon sx={{ fontSize: "20px", color: "white" }} />
                 </button>
-                <CSVLink {...csvReport} dataType="string">
+                <CSVLink {...csvReport}>
                   <button className="icon-export3">
                     <DownloadIcon sx={{ fontSize: "18px", color: "white" }} />
                   </button>
