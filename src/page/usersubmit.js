@@ -240,15 +240,17 @@ function UserSubmit() {
                   name="userType"
                   className="form-select"
                   id="inputUsertype"
+                  defaultValue=""
                   {...register("inputUsertype", {
                     onChange: (e) => {
                       setUtype(e.target.value);
                       HideLabel(e.target.value);
                     },
                     required: "Please select one option",
+                    
                   })}
                 >
-                  <option disabled selected value="">
+                  <option disabled  value="">
                     Please Select
                   </option>
                   <option value="staff">Staff</option>
@@ -269,6 +271,7 @@ function UserSubmit() {
                   name="deviceType"
                   className="form-select"
                   id="inputDevicetype"
+                  defaultValue=""
                   {...register("inputDevicetype", {
                     onChange: (e) => {
                       Checketc(e.target.value);
@@ -277,7 +280,7 @@ function UserSubmit() {
                     required: "Please select one option",
                   })}
                 >
-                  <option disabled selected value="">
+                  <option disabled value="">
                     Please Select
                   </option>
                   <option value="mobile">Mobile</option>

@@ -297,7 +297,7 @@ function EditUser() {
         </div>
         {showNewMember.map((val, key) => {
           return (
-            <div className="contain-data6">
+            <div className="contain-data6" key={val.id}>
               <form
                 onSubmit={handleSubmit(() => {
                   UpdateData(val.id);

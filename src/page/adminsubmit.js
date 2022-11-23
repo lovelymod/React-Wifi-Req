@@ -363,6 +363,7 @@ function AdminSub() {
                   name="userType"
                   className="form-select fsAdmin4"
                   id="inputUsertype"
+                  defaultValue=""
                   {...register("inputUsertype", {
                     onChange: (e) => {
                       setUtype(e.target.value);
@@ -371,7 +372,7 @@ function AdminSub() {
                     required: "Please select one option",
                   })}
                 >
-                  <option disabled selected value="">
+                  <option disabled value="">
                     Please Select
                   </option>
                   <option value="staff">Staff</option>
@@ -392,6 +393,7 @@ function AdminSub() {
                   name="deviceType"
                   className="form-select fsAdmin4"
                   id="inputDevicetype"
+                  defaultValue=""
                   {...register("inputDevicetype", {
                     onChange: (e) => {
                       Checketc(e.target.value);
@@ -400,7 +402,7 @@ function AdminSub() {
                     required: "Please select one option",
                   })}
                 >
-                  <option disabled selected value="">
+                  <option disabled value="">
                     Please Select
                   </option>
                   <option value="mobile">Mobile</option>

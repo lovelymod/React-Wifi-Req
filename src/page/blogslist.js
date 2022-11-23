@@ -10,8 +10,8 @@ const Blogslist = ({
     <div className="big3">
       {memberList.map((val, key) => {
         return (
-          <div className="big">
-            <div className="member3" key={val.id}>
+          <div className="big" key={val.id}>
+            <div className="member3">
               <div className="member-data3">{val.id}</div>
               <div className="member-data3">{val.Dates}</div>
               <div className="member-data3">{val.Times}</div>

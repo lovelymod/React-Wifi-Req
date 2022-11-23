@@ -206,7 +206,7 @@ function ShowData() {
           <div className="showcontain5">
             {showNewMember.map((val, key) => {
               return (
-                <div className="contain-data5">
+                <div className="contain-data5" key={val.id}>
                   <div className="row-data5">
                     <span className="splitcontain5">
                       <h1 className="label-data5">Firstname:</h1>
