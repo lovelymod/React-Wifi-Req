@@ -1,7 +1,4 @@
 import "./table.css";
-const $ = require("jquery");
-$.DataTable = require("datatables.net");
-// import { useEffect } from "react";
 
 const Blogslist = ({
   memberList,

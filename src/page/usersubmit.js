@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
+
 function UserSubmit() {
   const {
     register,
@@ -12,6 +13,7 @@ function UserSubmit() {
     resetField,
     formState: { errors },
   } = useForm();
+
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [utype, setUtype] = useState("");
@@ -28,9 +30,10 @@ function UserSubmit() {
   const strUtype = utype;
   let strDtype = dtype;
 
-  const OnSubmit = (event) => {
+  const OnSubmit = (e) => {
     addRequest();
   };
+
   const addRequest = () => {
     swapData();
     const dates = moment().format("YYYY-MM-DD");

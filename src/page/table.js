@@ -24,7 +24,8 @@ function Table() {
   const [sortUser, setsortUser] = useState(true);
   const [sortStart, setsortStart] = useState(true);
   const [sortEnd, setsortEnd] = useState(true);
-  console.log(memberList);
+  const timeStamp = moment().format("YYYY_MM_DD");
+
   // const [exMemberList, setExMemberList] = useState([]);
 
   // const getMember = () => {
@@ -93,6 +94,16 @@ function Table() {
     // setExMemberList(dataList[0]);
   };
 
+  const showUser = (id) => {
+    const newMemberList = memberList.filter((val) => val.id === id);
+    navigate("/showdata", { state: { newMemberList } });
+  };
+  
+  const edituser = (id) => {
+    const newMemberList = memberList.filter((val) => val.id === id);
+    navigate("/edituser", { state: { newMemberList } });
+  };
+
   const deleteMember = (id) => {
     Swal.fire({
       title: "Confirm Delete?",
@@ -111,16 +122,6 @@ function Table() {
     });
   };
 
-  const edituser = (id) => {
-    const newMemberList = memberList.filter((val) => val.id === id);
-    navigate("/edituser", { state: { newMemberList } });
-  };
-
-  const showUser = (id) => {
-    const newMemberList = memberList.filter((val) => val.id === id);
-    navigate("/showdata", { state: { newMemberList } });
-  };
-
   const auth = () => {
     const checkUser = localStorage.getItem("auth");
     if (checkUser !== "adminLogin") {
@@ -131,6 +132,14 @@ function Table() {
   const BtoLogin = () => {
     localStorage.removeItem("auth");
     navigate("/login");
+  };
+
+  const gotoAdminSub = () => {
+    navigate("/adminsubmit");
+  };
+
+  const Back = () => {
+    navigate("/table");
   };
 
   const headers = [
@@ -149,7 +158,6 @@ function Table() {
     { label: "Time", key: "Times" },
   ];
 
-  const timeStamp = moment().format("YYYY_MM_DD");
 
   const csvReport = {
     headers: headers,
@@ -157,14 +165,8 @@ function Table() {
     filename: `RequestList_${timeStamp}.csv`,
   };
 
-  const gotoAdminSub = () => {
-    navigate("/adminsubmit");
-  };
-  const Back = () => {
-    navigate("/table");
-  };
-
   const [isOpen, setIsOpen] = useState(false);
+
   const toggle = () => {
     setIsOpen(!isOpen);
   };
@@ -197,7 +199,7 @@ function Table() {
               onClick={() => {
                 toggle();
               }}
-              style={{ left: isOpen ? "50px" : "10px" }}
+              style={{ left: isOpen ? "50px" : "10px" ,transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
             >
               <ArrowForwardIosIcon sx={{ fontSize: "20px", color: "white" }} />
             </button>

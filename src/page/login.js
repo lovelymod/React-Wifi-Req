@@ -21,7 +21,7 @@ function Login() {
     Axios.post("http://localhost:3002/login", {
       Username: username,
       Password: password,
-    }).then((response) => {
+    }).then(async (response) => {
       if (response.data.msg === "Matched") {
         localStorage.setItem("auth", "adminLogin");
         Swal.fire({
