@@ -93,8 +93,7 @@ function Table() {
         Start_Date: item.Start_Date.toString(),
         End_Date: item.End_Date.toString(),
         Dates: item.Dates.toString(),
-        Times: item.Times.toString(),
-
+        Times: item.Times.toString(),       
       });
     });
     setExMemberList(dataList);
@@ -363,6 +362,8 @@ function Table() {
           </div>
           <hr className="top-table" />
           <div className="table-scroll">
+
+            {/* // todo use Datatables Library  */}
             <Blogslist
               memberList={memberList}
               deleteMember={deleteMember}
