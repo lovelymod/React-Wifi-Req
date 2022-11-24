@@ -157,29 +157,35 @@ function AdminSub() {
                 alt=""
                 srcSet=""
               />
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="ListIcon4"
                 onClick={() => {
                   Back();
                 }}
               >
                 <ListIcon sx={{ fontSize: "32px", color: "white" }} />
-              </button>
+              </motion.button>
             </div>
           )}
         </div>
         <div className="boxbottom4">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
             <div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="ListIcon4"
                 onClick={() => {
                   Back();
                 }}
               >
                 <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
-              </button>
-              <button
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="icon4"
                 onClick={() => {
                   BtoLogin();
@@ -189,11 +195,13 @@ function AdminSub() {
                   className="icon-exit4"
                   sx={{ fontSize: "40px", color: "white" }}
                 />
-              </button>
+              </motion.button>
             </div>
           ) : (
             <div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="icon4"
                 onClick={() => {
                   BtoLogin();
@@ -203,7 +211,7 @@ function AdminSub() {
                   className="icon-exit4"
                   style={{ fontSize: "40px", color: "#0174B3" }}
                 />
-              </button>
+              </motion.button>
             </div>
           )}
         </div>
@@ -212,7 +220,9 @@ function AdminSub() {
         <div className="headerAdmin4">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
             <div className="box44">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="backbuttAdminTop4"
                 onClick={() => {
                   Back();
@@ -223,12 +233,14 @@ function AdminSub() {
                     sx={{ fontSize: "32px", color: "#0174B3" }}
                   />
                 }{" "}
-              </button>
+              </motion.button>
               <p className="afterButt4">Create User</p>
             </div>
           ) : (
             <div className="box44">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="backbuttAdminTop4"
                 onClick={() => {
                   Back();
@@ -239,7 +251,7 @@ function AdminSub() {
                     sx={{ fontSize: "32px", color: "#FFB401" }}
                   />
                 }{" "}
-              </button>
+              </motion.button>
               <p className="afterButt4">Create User</p>
             </div>
           )}
@@ -542,14 +554,18 @@ function AdminSub() {
             </div>
 
             <div className="row-containAdmin-butt4">
-              <input
+              <motion.input
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 type="submit"
                 className="btn regisbuttAdmin4"
                 value="Submit"
               />
 
-              <input
-                type=""
+              <motion.input
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                type="button"
                 className="btn backbuttAdmin4"
                 value="Cancel"
                 onClick={() => {

@@ -32,7 +32,6 @@ function UserSubmit() {
 
   const [internalIP, setInternalIP] = useState("");
 
-
   const strUtype = utype;
   let strDtype = dtype;
 
@@ -40,7 +39,7 @@ function UserSubmit() {
     addRequest();
   };
 
-  const GetIP = async() => {
+  const GetIP = async () => {
     await Axios.post("http://localhost:3002/getip").then((response) => {
       setInternalIP(response.data[1].address);
     });
@@ -65,7 +64,7 @@ function UserSubmit() {
       Remark: remark,
       Dates: dates,
       Times: times,
-      Ip_Addr: internalIP
+      Ip_Addr: internalIP,
     }).then((response) => {
       if (response.data.msg === "User Created") {
         Swal.fire({
@@ -431,9 +430,17 @@ function UserSubmit() {
             </div>
 
             <div className="row-contain-butt1">
-              <input type="submit" className="btn regisbutt" value="Submit" />
+              <motion.input
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                type="submit"
+                className="btn regisbutt"
+                value="Submit"
+              />
 
-              <input
+              <motion.input
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 type=""
                 className="btn backbutt"
                 value="Cancel"

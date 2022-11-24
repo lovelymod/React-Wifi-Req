@@ -30,7 +30,6 @@ function Table() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-
   // const getMember = () => {
   //   Axios.get("http://localhost:3002/getusers").then((response) => {
   //     setMemberList(response.data);
@@ -81,11 +80,11 @@ function Table() {
     dataBox.forEach((item) => {
       dataList.push({
         id: item.id,
-        Ip_Addr: item.Ip_Addr ? item.Ip_Addr.toString() : "-" ,
+        Ip_Addr: item.Ip_Addr ? item.Ip_Addr.toString() : "-",
         Firstname: item.Firstname.toString(),
         Lastname: item.Lastname.toString(),
         Email: item.Email.toString(),
-        Tel: '=""'+item.Tel+'""',
+        Tel: '=""' + item.Tel + '""',
         User_Type: item.User_Type.toString(),
         Device_Type: item.Device_Type.toString(),
         Device_Brand: item.Device_Brand.toString(),
@@ -93,7 +92,7 @@ function Table() {
         Start_Date: item.Start_Date.toString(),
         End_Date: item.End_Date.toString(),
         Dates: item.Dates.toString(),
-        Times: item.Times.toString(),       
+        Times: item.Times.toString(),
       });
     });
     setExMemberList(dataList);
@@ -103,7 +102,7 @@ function Table() {
     const newMemberList = memberList.filter((val) => val.id === id);
     navigate("/showdata", { state: { newMemberList } });
   };
-  
+
   const edituser = (id) => {
     const newMemberList = memberList.filter((val) => val.id === id);
     navigate("/edituser", { state: { newMemberList } });
@@ -170,7 +169,6 @@ function Table() {
     { label: "Time(Submit)", key: "Times" },
   ];
 
-
   const csvReport = {
     headers: headers,
     data: exMemberList,
@@ -208,7 +206,10 @@ function Table() {
               onClick={() => {
                 toggle();
               }}
-              style={{ left: isOpen ? "50px" : "10px" ,transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+              style={{
+                left: isOpen ? "50px" : "10px",
+                transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+              }}
             >
               <ArrowForwardIosIcon sx={{ fontSize: "20px", color: "white" }} />
             </button>
@@ -220,7 +221,9 @@ function Table() {
               srcSet=""
               style={{ display: isOpen ? "block" : "none" }}
             />
-            <button
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               className="ListIcon3"
               onClick={() => {
                 Back();
@@ -228,10 +231,12 @@ function Table() {
               style={{ display: isOpen ? "block" : "none" }}
             >
               <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
-            </button>
+            </motion.button>
           </div>
           <div className="bottom-img3">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               className="icon3"
               onClick={() => {
                 BtoLogin();
@@ -242,7 +247,7 @@ function Table() {
                 className="icon-exit3"
                 sx={{ fontSize: "40px", color: "white" }}
               />
-            </button>
+            </motion.button>
           </div>
         </div>
       ) : (
@@ -257,23 +262,31 @@ function Table() {
           <span className="right3">
             {window.innerWidth > 100 && window.innerWidth < 600 ? (
               <div>
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.1}}
+                  whileTap={{ scale: 0.9 }}
                   className="icon-create3"
                   onClick={() => {
                     gotoAdminSub();
                   }}
                 >
                   <AddIcon sx={{ fontSize: "20px", color: "white" }} />
-                </button>
+                </motion.button>
                 <CSVLink {...csvReport}>
-                  <button className="icon-export3">
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="icon-export3"
+                  >
                     <DownloadIcon sx={{ fontSize: "18px", color: "white" }} />
-                  </button>
+                  </motion.button>
                 </CSVLink>
               </div>
             ) : (
               <div>
-                <input
+                <motion.input
+                  whileHover={{ scale: 1.1}}
+                  whileTap={{ scale: 0.9 }}
                   type="button"
                   className="btn create3"
                   value="Create User"
@@ -282,7 +295,9 @@ function Table() {
                   }}
                 />
                 <CSVLink {...csvReport}>
-                  <input
+                  <motion.input
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     type="button"
                     className="btn export3"
                     value="Export .csv"
@@ -362,7 +377,6 @@ function Table() {
           </div>
           <hr className="top-table" />
           <div className="table-scroll">
-
             {/* // todo use Datatables Library  */}
             <Blogslist
               memberList={memberList}

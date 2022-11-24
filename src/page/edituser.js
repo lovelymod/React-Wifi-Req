@@ -197,29 +197,35 @@ function EditUser() {
                 alt=""
                 srcSet=""
               />
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="ListIcon6"
                 onClick={() => {
                   Back();
                 }}
               >
                 <ListIcon sx={{ fontSize: "32px", color: "white" }} />
-              </button>
+              </motion.button>
             </div>
           )}
         </div>
         <div className="bottom-img6">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
             <div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="ListIcon6"
                 onClick={() => {
                   Back();
                 }}
               >
                 <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
-              </button>
-              <button
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="icon6"
                 onClick={() => {
                   BtoLogin();
@@ -229,11 +235,13 @@ function EditUser() {
                   className="icon-exit6"
                   sx={{ fontSize: "40px", color: "white" }}
                 />
-              </button>
+              </motion.button>
             </div>
           ) : (
             <div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="icon6"
                 onClick={() => {
                   BtoLogin();
@@ -243,7 +251,7 @@ function EditUser() {
                   className="icon-exit6"
                   style={{ fontSize: "40px", color: "#0174B3" }}
                 />
-              </button>
+              </motion.button>
             </div>
           )}
         </div>
@@ -252,7 +260,9 @@ function EditUser() {
         <div className="headerInfo6">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
             <div className="box66">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="backbutt6"
                 onClick={() => {
                   Back();
@@ -263,12 +273,14 @@ function EditUser() {
                     sx={{ fontSize: "32px", color: "#0174B3" }}
                   />
                 }{" "}
-              </button>
+              </motion.button>
               <p className="afterButt6">Edit User</p>
             </div>
           ) : (
             <div className="box66">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="backbutt6"
                 onClick={() => {
                   Back();
@@ -279,7 +291,7 @@ function EditUser() {
                     sx={{ fontSize: "32px", color: "#FFB401" }}
                   />
                 }{" "}
-              </button>
+              </motion.button>
               <p className="afterButt6">Edit User</p>
             </div>
           )}
@@ -568,10 +580,18 @@ function EditUser() {
                   </span>
                 </div>
                 <div className="row-butt6">
-                  <button className="btn savebutt6">Save</button>
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="btn savebutt6"
+                  >
+                    Save
+                  </motion.button>
 
-                  <input
-                    type=""
+                  <motion.input
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    type="button"
                     className="btn cancelbutt6"
                     value="Cancel"
                     onClick={() => {

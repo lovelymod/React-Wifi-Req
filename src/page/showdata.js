@@ -12,6 +12,10 @@ function ShowData() {
   const navigate = useNavigate();
   const location = useLocation();
   const showNewMember = location.state.newMemberList;
+  console.log(
+    "🚀 ~ file: showdata.js ~ line 15 ~ ShowData ~ showNewMember",
+    showNewMember
+  );
   const [Labelhide, setLabelhide] = useState("");
 
   const onFirstCheckEnd = () => {
@@ -104,29 +108,35 @@ function ShowData() {
                 alt=""
                 srcSet=""
               />
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="ListIcon5"
                 onClick={() => {
                   Back();
                 }}
               >
                 <ListIcon sx={{ fontSize: "32px", color: "white" }} />
-              </button>
+              </motion.button>
             </div>
           )}
         </div>
         <div className="bottom-img5">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
             <div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="ListIcon4"
                 onClick={() => {
                   Back();
                 }}
               >
                 <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
-              </button>
-              <button
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="icon5"
                 onClick={() => {
                   BtoLogin();
@@ -136,11 +146,13 @@ function ShowData() {
                   className="icon-exit5"
                   sx={{ fontSize: "40px", color: "white" }}
                 />
-              </button>
+              </motion.button>
             </div>
           ) : (
             <div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className="icon5"
                 onClick={() => {
                   BtoLogin();
@@ -150,7 +162,7 @@ function ShowData() {
                   className="icon-exit5"
                   sx={{ fontSize: "40px", color: "#0174B3" }}
                 />
-              </button>
+              </motion.button>
             </div>
           )}
         </div>
@@ -160,7 +172,9 @@ function ShowData() {
           <div className="headerInfo5">
             {window.innerWidth > 100 && window.innerWidth < 1000 ? (
               <div className="box55">
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                   className="backbutt5"
                   onClick={() => {
                     Back();
@@ -171,12 +185,14 @@ function ShowData() {
                       sx={{ fontSize: "32px", color: "#0174B3" }}
                     />
                   }{" "}
-                </button>
+                </motion.button>
                 <p className="afterButt5">User Information</p>
               </div>
             ) : (
               <div className="box55">
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                   className="backbutt5"
                   onClick={() => {
                     Back();
@@ -187,7 +203,7 @@ function ShowData() {
                       sx={{ fontSize: "32px", color: "#FFB401" }}
                     />
                   }{" "}
-                </button>
+                </motion.button>
                 <p className="afterButt5">User Information</p>
               </div>
             )}
@@ -207,12 +223,15 @@ function ShowData() {
             {showNewMember.map((val, key) => {
               return (
                 <div className="contain-data5" key={val.id}>
-                  <div className="row-data5" >
+                  <div className="row-data5">
                     <span className="splitcontain5">
                       <h1 className="label-data5">IP Address:</h1>
-                      <p className="data5">{val.Ip_Addr === "" ? "-" : val.Ip_Addr}</p>
+                      <p className="data5">
+                        {val.Ip_Addr === "" || val.Ip_Addr === null
+                          ? "-"
+                          : val.Ip_Addr}
+                      </p>
                     </span>
-
                   </div>
                   <div className="row-data5">
                     <span className="splitcontain5">
@@ -276,23 +295,27 @@ function ShowData() {
                     </span>
                   </div>
                   <div className="row-butt5">
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                       className="btn edit-butt-sw5"
                       onClick={() => {
                         edituser(val.id);
                       }}
                     >
                       Edit
-                    </button>
+                    </motion.button>
                     <div className="emtpy-box5"></div>
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                       className="btn del-butt-sw5"
                       onClick={() => {
                         DeleteUser(val.id);
                       }}
                     >
                       Delete
-                    </button>
+                    </motion.button>
                   </div>
                 </div>
               );

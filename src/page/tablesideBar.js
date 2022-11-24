@@ -2,6 +2,7 @@ import "./table.css";
 import { useNavigate } from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ListIcon from "@mui/icons-material/List";
+import { motion } from "framer-motion";
 
 const TableSideBar = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const TableSideBar = () => {
   const Back = () => {
     navigate("/table");
   };
- 
+
   return (
     <div className="left-manu3">
       <div className="top-img3">
@@ -25,29 +26,35 @@ const TableSideBar = () => {
         ) : (
           <div className="box-intop">
             <img className="logo-table3" src="img/LS-01.png" alt="" srcSet="" />
-            <button
+            <motion.button
+              whileHover={{ scale: 1.1}}
+              whileTap={{ scale: 0.9 }}
               className="ListIcon3"
               onClick={() => {
                 Back();
               }}
             >
-              <ListIcon sx={{ fontSize: "32px", color: "white"}} />
-            </button>
+              <ListIcon sx={{ fontSize: "32px", color: "white" }} />
+            </motion.button>
           </div>
         )}
       </div>
       <div className="bottom-img3">
         {window.innerWidth > 601 && window.innerWidth < 1000 ? (
           <div>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               className="ListIcon3"
               onClick={() => {
                 Back();
               }}
             >
               <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
-            </button>
-            <button
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               className="icon3"
               onClick={() => {
                 BtoLogin();
@@ -57,11 +64,13 @@ const TableSideBar = () => {
                 className="icon-exit3"
                 sx={{ fontSize: "40px", color: "white" }}
               />
-            </button>
+            </motion.button>
           </div>
         ) : (
           <div>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               className="icon3"
               onClick={() => {
                 BtoLogin();
@@ -71,7 +80,7 @@ const TableSideBar = () => {
                 className="icon-exit3"
                 sx={{ fontSize: "40px", color: "#0174B3" }}
               />
-            </button>
+            </motion.button>
           </div>
         )}
       </div>
