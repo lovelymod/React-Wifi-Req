@@ -59,3 +59,13 @@ export const deleteUser = async(req, res) =>{
         console.log(error.message);
     }
 }
+
+export const getIP = async(req, res) =>{
+    try {
+        const ipAddress = req.socket.remoteAddress;
+        res.send(ipAddress);
+        console.log(ipAddress);   
+    } catch (error) {
+        console.log(error.message);
+    }
+}

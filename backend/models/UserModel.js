@@ -56,6 +56,10 @@ const Users = db.define("users", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  Ip_Addr: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,

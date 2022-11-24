@@ -13,5 +13,6 @@ app.use(cookieParser());
 app.use(express.json());  
 app.use(UserRoute);
 app.use(AdminRoute);
+
  
 app.listen(3002, ()=> console.log('Server running at port 3002'));
