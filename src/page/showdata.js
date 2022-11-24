@@ -207,6 +207,13 @@ function ShowData() {
             {showNewMember.map((val, key) => {
               return (
                 <div className="contain-data5" key={val.id}>
+                  <div className="row-data5" >
+                    <span className="splitcontain5">
+                      <h1 className="label-data5">IP Address:</h1>
+                      <p className="data5">{val.Ip_Addr === "" ? "-" : val.Ip_Addr}</p>
+                    </span>
+
+                  </div>
                   <div className="row-data5">
                     <span className="splitcontain5">
                       <h1 className="label-data5">Firstname:</h1>
@@ -265,7 +272,7 @@ function ShowData() {
                   <div className="row-data5">
                     <span className="splitcontain5">
                       <h1 className="label-data5">Remark:</h1>
-                      <p className="data5">{val.Remark}</p>
+                      <p className="data5">{val.Remark ? val.Remark : "-"}</p>
                     </span>
                   </div>
                   <div className="row-butt5">

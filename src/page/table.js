@@ -75,12 +75,13 @@ function Table() {
   const fetchData = async () => {
     const getUser = await Axios.get("http://localhost:3002/getusers");
     setMemberList(getUser.data);
-
     let dataBox = getUser.data;
     let dataList = [];
 
     dataBox.forEach((item) => {
       dataList.push({
+        id: item.id,
+        Ip_Addr: item.Ip_Addr ? item.Ip_Addr.toString() : "-" ,
         Firstname: item.Firstname.toString(),
         Lastname: item.Lastname.toString(),
         Email: item.Email.toString(),
@@ -91,6 +92,9 @@ function Table() {
         Device_Name: item.Device_Name.toString(),
         Start_Date: item.Start_Date.toString(),
         End_Date: item.End_Date.toString(),
+        Dates: item.Dates.toString(),
+        Times: item.Times.toString(),
+
       });
     });
     setExMemberList(dataList);
@@ -152,6 +156,7 @@ function Table() {
 
   const headers = [
     { label: "No", key: "id" },
+    { label: "IpAddr", key: "Ip_Addr" },
     { label: "First Name", key: "Firstname" },
     { label: "Last Name", key: "Lastname" },
     { label: "Email", key: "Email" },
@@ -162,8 +167,8 @@ function Table() {
     { label: "DeviceName", key: "Device_Name" },
     { label: "StartDate", key: "Start_Date" },
     { label: "EndDate", key: "End_Date" },
-    { label: "Date", key: "Dates" },
-    { label: "Time", key: "Times" },
+    { label: "Date(Submit)", key: "Dates" },
+    { label: "Time(Submit)", key: "Times" },
   ];
 
 
@@ -172,7 +177,6 @@ function Table() {
     data: exMemberList,
     filename: `RequestList_${timeStamp}.csv`,
   };
-
 
   const toggle = () => {
     setIsOpen(!isOpen);

@@ -1,5 +1,5 @@
 import "./usersubmit.css";
-import { useState ,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
 import { useForm } from "react-hook-form";
 import moment from "moment";
@@ -30,6 +30,9 @@ function UserSubmit() {
   const [Labelhide, setLabelhide] = useState("");
   const [etcDisable, setetcDisable] = useState("hidden");
 
+  const [internalIP, setInternalIP] = useState("");
+
+
   const strUtype = utype;
   let strDtype = dtype;
 
@@ -37,17 +40,11 @@ function UserSubmit() {
     addRequest();
   };
 
-  const GetIP = () => {
-    console.log("h1");
-    Axios.post("http://localhost:3002/getip", {
-
-
-      
-    }).then((response) => {
-      console.log(response);
+  const GetIP = async() => {
+    await Axios.post("http://localhost:3002/getip").then((response) => {
+      setInternalIP(response.data[1].address);
     });
-
-  }
+  };
 
   const addRequest = () => {
     swapData();
@@ -68,6 +65,7 @@ function UserSubmit() {
       Remark: remark,
       Dates: dates,
       Times: times,
+      Ip_Addr: internalIP
     }).then((response) => {
       if (response.data.msg === "User Created") {
         Swal.fire({
@@ -263,10 +261,9 @@ function UserSubmit() {
                       HideLabel(e.target.value);
                     },
                     required: "Please select one option",
-                    
                   })}
                 >
-                  <option disabled  value="">
+                  <option disabled value="">
                     Please Select
                   </option>
                   <option value="staff">Staff</option>
