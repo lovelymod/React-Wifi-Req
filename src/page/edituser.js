@@ -466,7 +466,14 @@ function EditUser() {
                       type="text"
                       className=" form-control fc6 etc6"
                       id="inputEtc"
-                      defaultValue={val.Device_Type}
+                      defaultValue={
+                        val.Device_Type === "mobile" ||
+                        val.Device_Type === "notebook" ||
+                        val.Device_Type === "tablet" ||
+                        val.Device_Type === "ipad"
+                          ? null
+                          : val.Device_Type
+                      }
                       {...register("inputEtc", {
                         onChange: (e) => setEtc(e.target.value),
                         required: dtype === "etc." ? true : false,
