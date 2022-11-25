@@ -14,7 +14,9 @@ import TableSideBar from "./tablesideBar";
 import { motion } from "framer-motion";
 import ListIcon from "@mui/icons-material/List";
 
-function Table() {
+function MyTable() {
+  const $ = require("jquery");
+  $.DataTable = require("datatables.net");
   const navigate = useNavigate();
   const [memberList, setMemberList] = useState([]);
   const [sortid, setsortid] = useState(true);
@@ -90,7 +92,7 @@ function Table() {
         Device_Brand: item.Device_Brand.toString(),
         Device_Name: item.Device_Name.toString(),
         Start_Date: item.Start_Date.toString(),
-        End_Date: item.End_Date.toString(),
+        End_Date: item.End_Date ? item.End_Date.toString() : "-",
         Dates: item.Dates.toString(),
         Times: item.Times.toString(),
       });
@@ -263,7 +265,7 @@ function Table() {
             {window.innerWidth > 100 && window.innerWidth < 600 ? (
               <div>
                 <motion.button
-                  whileHover={{ scale: 1.1}}
+                  whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   className="icon-create3"
                   onClick={() => {
@@ -285,7 +287,7 @@ function Table() {
             ) : (
               <div>
                 <motion.input
-                  whileHover={{ scale: 1.1}}
+                  whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   type="button"
                   className="btn create3"
@@ -308,7 +310,7 @@ function Table() {
           </span>
         </div>
         <div className="all-scroll">
-          <div className="head-table3">
+          {/* <div className="head-table3">
             <p
               className="head-data3"
               onClick={() => {
@@ -374,8 +376,8 @@ function Table() {
               End Date
             </p>
             <p className="head-empty3"></p>
-          </div>
-          <hr className="top-table" />
+          </div> */}
+          {/* <hr className="top-table" /> */}
           <div className="table-scroll">
             {/* // todo use Datatables Library  */}
             <Blogslist
@@ -391,4 +393,4 @@ function Table() {
   );
 }
 
-export default Table;
+export default MyTable;

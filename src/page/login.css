@@ -40,9 +40,12 @@ form{
 
 .row-contain-login2{
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-
 }
+
+
 
 .input2{
     width: 350px !important;

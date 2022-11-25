@@ -270,7 +270,7 @@ function AdminSub() {
         <div className="containerAdmin4">
           <form onSubmit={handleSubmit(OnSubmit)}>
             <div className="row-containMessage4">
-              <h2>Please fill out user information</h2>
+              <h3>Please fill out user information</h3>
             </div>
             <div className="row-containAdmin4">
               <span className="split-contain4">
@@ -343,7 +343,7 @@ function AdminSub() {
                 </label>
 
                 <input
-                  type="number"
+                  type="text"
                   className=" form-control fcAdmin4"
                   id="inputTel"
                   placeholder="095xxxxxxx"
@@ -351,12 +351,16 @@ function AdminSub() {
                     onChange: (e) => setTel(e.target.value),
                     required: "Please fill this form",
                     maxLength: {
-                      value: 10,
-                      message: "Password must have at most 10 characters",
+                      value: 12,
+                      message: "Phone number must most 10 characters",
                     },
                     minLength: {
-                      value: 9,
-                      message: "Password must have at least 8 characters",
+                      value: 10,
+                      message: "Phone number must least 10 characters",
+                    },
+                    pattern: {
+                      value: /(^[0-9]{10}$)|(^[0-9]{3}-[0-9]{3}-[0-9]{4}$)/,
+                      message: "Please correct this form",
                     },
                   })}
                 />

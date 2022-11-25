@@ -16,6 +16,7 @@
   width: 1500px;
   height: fit-content;
   box-shadow: 5px 5px 50px 5px gray;
+  background-color: white;
   /* border: 100px solid black; */
 }
 
@@ -62,9 +63,13 @@
 
 .form-control,.form-select{
   width: 300px !important;
-  height: 75px !important;
+  height: 60px !important;
   border-radius: 50px !important;
   margin-bottom: 10px !important;
+}
+
+.fl1{
+  font-size: 16px;
 }
 
 .solo1{

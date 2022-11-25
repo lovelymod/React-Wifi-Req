@@ -151,7 +151,7 @@ function UserSubmit() {
           <form onSubmit={handleSubmit(OnSubmit)}>
             <div className="row-contain1">
               <span className="split-contain1">
-                <label htmlFor="inputFname" className="form-label">
+                <label htmlFor="inputFname" className="form-label fl1">
                   First Name :
                 </label>
 
@@ -170,7 +170,7 @@ function UserSubmit() {
               </span>
 
               <span className="split-contain1">
-                <label htmlFor="inputLname" className="form-label">
+                <label htmlFor="inputLname" className="form-label fl1">
                   Last Name :
                 </label>
                 <input
@@ -191,7 +191,7 @@ function UserSubmit() {
 
             <div className="row-contain1">
               <span className="split-contain1">
-                <label htmlFor="email" className="form-label">
+                <label htmlFor="email" className="form-label fl1">
                   Email :
                 </label>
 
@@ -215,12 +215,12 @@ function UserSubmit() {
               </span>
 
               <span className="split-contain1">
-                <label htmlFor="tel" className="form-label">
+                <label htmlFor="tel" className="form-label fl1">
                   Tel :
                 </label>
 
                 <input
-                  type="number"
+                  type="text"
                   className="form-control"
                   id="inputTel"
                   placeholder="095xxxxxxx"
@@ -228,12 +228,16 @@ function UserSubmit() {
                     onChange: (e) => setTel(e.target.value),
                     required: "Please fill this form",
                     maxLength: {
-                      value: 10,
-                      message: "Password must have at most 10 characters",
+                      value: 12,
+                      message: "Phone number must most 10 characters",
                     },
                     minLength: {
-                      value: 9,
-                      message: "Password must have at least 8 characters",
+                      value: 10,
+                      message: "Phone number must least 10 characters",
+                    },
+                    pattern: {
+                      value: /(^[0-9]{10}$)|(^[0-9]{3}-[0-9]{3}-[0-9]{4}$)/,
+                      message: "Please correct this form",
                     },
                   })}
                 />
@@ -245,7 +249,7 @@ function UserSubmit() {
 
             <div className="row-contain1">
               <span className="split-contain1">
-                <label htmlFor="UserType" className="form-label">
+                <label htmlFor="UserType" className="form-label fl1">
                   User Type :
                 </label>
 
@@ -275,7 +279,7 @@ function UserSubmit() {
               </span>
 
               <span className="split-contain1">
-                <label htmlFor="DeviceType" className="form-label">
+                <label htmlFor="DeviceType" className="form-label fl1">
                   Device Type :
                 </label>
 
@@ -329,7 +333,7 @@ function UserSubmit() {
 
             <div className="row-contain1">
               <span className="split-contain1">
-                <label htmlFor="deviceBrand" className="form-label">
+                <label htmlFor="deviceBrand" className="form-label fl1">
                   Device Brand :
                 </label>
 
@@ -349,7 +353,7 @@ function UserSubmit() {
               </span>
 
               <span className="split-contain1">
-                <label htmlFor="deviceName" className="form-label">
+                <label htmlFor="deviceName" className="form-label fl1">
                   Device Name :
                 </label>
 
@@ -371,7 +375,7 @@ function UserSubmit() {
 
             <div className="row-contain1">
               <span className="split-contain1">
-                <label htmlFor="startDate" className="form-label">
+                <label htmlFor="startDate" className="form-label fl1">
                   Start Date :
                 </label>
 
@@ -391,7 +395,7 @@ function UserSubmit() {
               </span>
 
               <span className="split-contain1" hidden={Labelhide}>
-                <label htmlFor="endDate" className="form-label">
+                <label htmlFor="endDate" className="form-label fl1">
                   End Date :
                 </label>
                 <input
@@ -412,7 +416,7 @@ function UserSubmit() {
 
             <div className="row-contain1">
               <span className="split-containRemark1">
-                <label htmlFor="remark" className="form-label">
+                <label htmlFor="remark" className="form-label fl1">
                   Remark :
                 </label>
 
@@ -441,7 +445,7 @@ function UserSubmit() {
               <motion.input
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                type=""
+                type="button"
                 className="btn backbutt"
                 value="Cancel"
                 onClick={() => {
