@@ -275,7 +275,7 @@ function AdminSub() {
             <div className="row-containAdmin4">
               <span className="split-contain4">
                 <label htmlFor="inputFname" className="form-label flAdmin4">
-                  First Name :
+                  First Name : <p className="star">*</p>
                 </label>
 
                 <input
@@ -294,7 +294,7 @@ function AdminSub() {
 
               <span className="split-contain4">
                 <label htmlFor="inputLname" className="form-label flAdmin4">
-                  Last Name :
+                  Last Name : <p className="star">*</p>
                 </label>
                 <input
                   type="text"
@@ -315,7 +315,7 @@ function AdminSub() {
             <div className="row-containAdmin4">
               <span className="split-contain4">
                 <label htmlFor="email" className="form-label flAdmin4">
-                  Email :
+                  Email : <p className="star">*</p>
                 </label>
 
                 <input
@@ -339,7 +339,7 @@ function AdminSub() {
 
               <span className="split-contain4">
                 <label htmlFor="tel" className="form-label flAdmin4">
-                  Tel :
+                  Tel : <p className="star">*</p>
                 </label>
 
                 <input
@@ -373,7 +373,7 @@ function AdminSub() {
             <div className="row-containAdmin4">
               <span className="split-contain4">
                 <label htmlFor="UserType" className="form-label flAdmin4">
-                  User Type :
+                  User Type : <p className="star">*</p>
                 </label>
 
                 <select
@@ -403,7 +403,7 @@ function AdminSub() {
 
               <span className="split-contain4">
                 <label htmlFor="DeviceType" className="form-label flAdmin4">
-                  Device Type :
+                  Device Type : <p className="star">*</p>
                 </label>
 
                 <select
@@ -457,7 +457,7 @@ function AdminSub() {
             <div className="row-containAdmin4">
               <span className="split-contain4">
                 <label htmlFor="deviceBrand" className="form-label flAdmin4">
-                  Device Brand :
+                  Device Brand : <p className="star">*</p>
                 </label>
 
                 <input
@@ -477,7 +477,7 @@ function AdminSub() {
 
               <span className="split-contain4">
                 <label htmlFor="deviceName" className="form-label flAdmin4">
-                  Device Name :
+                  Device Name : <p className="star">*</p>
                 </label>
 
                 <input
@@ -499,7 +499,7 @@ function AdminSub() {
             <div className="row-containAdmin4">
               <span className="split-contain4">
                 <label htmlFor="startDate" className="form-label flAdmin4">
-                  Start Date :
+                  Start Date : <p className="star">*</p>
                 </label>
 
                 <input
@@ -519,7 +519,7 @@ function AdminSub() {
 
               <span className="split-contain4" hidden={Labelhide}>
                 <label htmlFor="endDate" className="form-label flAdmin4">
-                  End Date :
+                  End Date : <p className="star">*</p>
                 </label>
 
                 <input

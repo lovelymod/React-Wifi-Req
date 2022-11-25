@@ -69,7 +69,18 @@
 }
 
 .fl1{
+  /* border: 1px solid black; */
+
   font-size: 16px;
+  display: flex;
+}
+
+.star{
+  margin-left: 5px;
+  color: red;
+  font-size: 20px;
+  /* border: 1px solid black; */
+  height: 0px;
 }
 
 .solo1{

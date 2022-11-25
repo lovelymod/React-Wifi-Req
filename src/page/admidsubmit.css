@@ -135,6 +135,7 @@
 }
 
 .flAdmin4 {
+  display: flex;
   font-size: 16px;
 }
 

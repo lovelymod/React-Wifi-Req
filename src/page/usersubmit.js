@@ -152,7 +152,7 @@ function UserSubmit() {
             <div className="row-contain1">
               <span className="split-contain1">
                 <label htmlFor="inputFname" className="form-label fl1">
-                  First Name :
+                  First Name : <p className="star">*</p>
                 </label>
 
                 <input
@@ -171,7 +171,7 @@ function UserSubmit() {
 
               <span className="split-contain1">
                 <label htmlFor="inputLname" className="form-label fl1">
-                  Last Name :
+                  Last Name : <p className="star">*</p>
                 </label>
                 <input
                   type="text"
@@ -192,7 +192,7 @@ function UserSubmit() {
             <div className="row-contain1">
               <span className="split-contain1">
                 <label htmlFor="email" className="form-label fl1">
-                  Email :
+                  Email : <p className="star">*</p>
                 </label>
 
                 <input
@@ -216,7 +216,7 @@ function UserSubmit() {
 
               <span className="split-contain1">
                 <label htmlFor="tel" className="form-label fl1">
-                  Tel :
+                  Tel : <p className="star">*</p>
                 </label>
 
                 <input
@@ -250,7 +250,7 @@ function UserSubmit() {
             <div className="row-contain1">
               <span className="split-contain1">
                 <label htmlFor="UserType" className="form-label fl1">
-                  User Type :
+                  User Type : <p className="star">*</p>
                 </label>
 
                 <select
@@ -280,7 +280,7 @@ function UserSubmit() {
 
               <span className="split-contain1">
                 <label htmlFor="DeviceType" className="form-label fl1">
-                  Device Type :
+                  Device Type : <p className="star">*</p>
                 </label>
 
                 <select
@@ -334,7 +334,7 @@ function UserSubmit() {
             <div className="row-contain1">
               <span className="split-contain1">
                 <label htmlFor="deviceBrand" className="form-label fl1">
-                  Device Brand :
+                  Device Brand : <p className="star">*</p>
                 </label>
 
                 <input
@@ -354,7 +354,7 @@ function UserSubmit() {
 
               <span className="split-contain1">
                 <label htmlFor="deviceName" className="form-label fl1">
-                  Device Name :
+                  Device Name : <p className="star">*</p>
                 </label>
 
                 <input
@@ -376,7 +376,7 @@ function UserSubmit() {
             <div className="row-contain1">
               <span className="split-contain1">
                 <label htmlFor="startDate" className="form-label fl1">
-                  Start Date :
+                  Start Date : <p className="star">*</p>
                 </label>
 
                 <input
@@ -396,7 +396,7 @@ function UserSubmit() {
 
               <span className="split-contain1" hidden={Labelhide}>
                 <label htmlFor="endDate" className="form-label fl1">
-                  End Date :
+                  End Date : <p className="star">*</p>
                 </label>
                 <input
                   type="date"
