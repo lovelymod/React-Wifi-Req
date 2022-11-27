@@ -1,39 +1,161 @@
 import "./table.css";
-import { Table, Tag, Space } from "antd";
+import { Table, Tag, Space, Input } from "antd";
 import "antd/dist/antd";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { SearchOutlined } from "@mui/icons-material";
 
 const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [filterMember, setfilterMember] = useState([]);
   const col = [
     {
+      width: '5%',
       title: "No",
       dataIndex: "id",
       key: "no",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.id - b.id,
     },
     {
+      width: '10%',
       title: "Date",
       dataIndex: "Dates",
       key: "date",
+      sorter: (a, b) => a.Dates.localeCompare(b.Dates),
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
+        return (
+          <Input.Search
+            enterButton
+            allowClear
+            autoFocus
+            placeholder="Enter Date..."
+            value={selectedKeys[0]}
+            onChange={(e) => {
+              setSelectedKeys(e.target.value ? [e.target.value] : []);
+            }}
+            onSearch={() => {
+              confirm();
+            }}
+            onPressEnter={() => {
+              confirm();
+            }}
+            onBlur={() => {
+              confirm();
+            }}
+          ></Input.Search>
+        );
+      },
+      onFilter: (value, record) => {
+        return record.Dates.toLowerCase().includes(value.toLowerCase());
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
     },
     {
+      width: '5%',
       title: "Time",
       dataIndex: "Times",
       key: "time",
+      sorter: (a, b) => a.Times.localeCompare(b.Times),
     },
     {
+      width: '15%',
       title: "Firstname",
       dataIndex: "Firstname",
       key: "firstname",
+      sorter: (a, b) => a.Firstname.localeCompare(b.Firstname),
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
+        return (
+          <Input.Search
+            enterButton
+            allowClear
+            autoFocus
+            placeholder="Enter Firstname..."
+            value={selectedKeys[0]}
+            onChange={(e) => {
+              setSelectedKeys(e.target.value ? [e.target.value] : []);
+            }}
+            onSearch={() => {
+              confirm();
+            }}
+            onPressEnter={() => {
+              confirm();
+            }}
+            onBlur={() => {
+              confirm();
+            }}
+          ></Input.Search>
+        );
+      },
+      onFilter: (value, record) => {
+        return record.Firstname.toLowerCase().includes(value.toLowerCase());
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
     },
     {
+      width: '15%',
       title: "Lastname",
       dataIndex: "Lastname",
       key: "lastname",
+      sorter: (a, b) => a.Lastname.localeCompare(b.Lastname),
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
+        return (
+          <Input.Search
+            enterButton
+            allowClear
+            autoFocus
+            placeholder="Enter Lastname..."
+            value={selectedKeys[0]}
+            onChange={(e) => {
+              setSelectedKeys(e.target.value ? [e.target.value] : []);
+            }}
+            onSearch={() => {
+              confirm();
+            }}
+            onPressEnter={() => {
+              confirm();
+            }}
+            onBlur={() => {
+              confirm();
+            }}
+          ></Input.Search>
+        );
+      },
+      onFilter: (value, record) => {
+        return record.Lastname.toLowerCase().includes(value.toLowerCase());
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
     },
     {
+      width: '10%',
       title: "UserType",
       dataIndex: "User_Type",
       key: "userType",
+      sorter: (a, b) => a.User_Type.localeCompare(b.User_Type),
+      filters: [
+        {
+          text: "Staff",
+          value: "staff",
+        },
+        {
+          text: "Internship",
+          value: "internship",
+        },
+        {
+          text: "Guest",
+          value: "guest",
+        },
+      ],
+      onFilter: (value, record) => {
+        return record.User_Type === value;
+      },
       render: (User_Type) => {
         let color = "";
         if (User_Type === "staff") color = "green";
@@ -41,22 +163,86 @@ const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
         if (User_Type === "guest") color = "geekblue";
         return (
           <Tag color={color} key={User_Type}>
-            {User_Type}
+            {User_Type.toUpperCase()}
           </Tag>
         );
       },
     },
     {
+      width: '10%',
+
       title: "Start Date",
       dataIndex: "Start_Date",
       key: "startDate",
+      sorter: (a, b) => a.Start_Date.localeCompare(b.Start_Date),
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
+        return (
+          <Input.Search
+            enterButton
+            allowClear
+            autoFocus
+            placeholder="Enter Start Date..."
+            value={selectedKeys[0]}
+            onChange={(e) => {
+              setSelectedKeys(e.target.value ? [e.target.value] : []);
+            }}
+            onSearch={() => {
+              confirm();
+            }}
+            onPressEnter={() => {
+              confirm();
+            }}
+            onBlur={() => {
+              confirm();
+            }}
+          ></Input.Search>
+        );
+      },
+      onFilter: (value, record) => {
+        return record.Start_Date.toLowerCase().includes(value.toLowerCase());
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
     },
     {
+      width: '10%',
       title: "End Date",
       dataIndex: "End_Date",
       key: "endDate",
+      sorter: (a, b) => a.End_Date.localeCompare(b.End_Date),
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
+        return (
+          <Input.Search
+            enterButton
+            allowClear
+            autoFocus
+            placeholder="Enter End Date..."
+            value={selectedKeys[0]}
+            onChange={(e) => {
+              setSelectedKeys(e.target.value ? [e.target.value] : []);
+            }}
+            onSearch={() => {
+              confirm();
+            }}
+            onPressEnter={() => {
+              confirm();
+            }}
+            onBlur={() => {
+              confirm();
+            }}
+          ></Input.Search>
+        );
+      },
+      onFilter: (value, record) => {
+        return record.End_Date.toLowerCase().includes(value.toLowerCase());
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
     },
     {
+      width: '20%',
       title: "Action",
       dataIndex: "",
       key: "action",
@@ -94,80 +280,22 @@ const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
     },
   ];
   return (
-    <Table dataSource={memberList} columns={col} />
-    // <div className="big3">
-    //   {/* {memberList.map((val, key) => {
-    //     return (
-    //       <div className="big" key={val.id}>
-    //         <div className="member3">
-    //           <div className="member-data3">{val.id}</div>
-    //           <div className="member-data3">{val.Dates}</div>
-    //           <div className="member-data3">{val.Times}</div>
-    //           <div className="member-data3">{val.Firstname}</div>
-    //           <div className="member-data3">{val.Lastname}</div>
-    //           <div className="member-data3">
-    //             {val.User_Type === "staff" ? (
-    //               <div
-    //                 className="utype-colors3"
-    //                 style={{ backgroundColor: "#A8FFA6" }}
-    //               >
-    //                 {val.User_Type}
-    //               </div>
-    //             ) : (
-    //               <div></div>
-    //             )}
-    //             {val.User_Type === "internship" ? (
-    //               <div
-    //                 className="utype-colors3"
-    //                 style={{ backgroundColor: "#ffbeb7" }}
-    //               >
-    //                 {val.User_Type}
-    //               </div>
-    //             ) : (
-    //               <div></div>
-    //             )}
-    //             {val.User_Type === "guest" ? (
-    //               <div
-    //                 className="utype-colors3"
-    //                 style={{ backgroundColor: "#b2e4ff" }}
-    //               >
-    //                 {val.User_Type}
-    //               </div>
-    //             ) : (
-    //               <div></div>
-    //             )}
-    //           </div>
-    //           <div className="member-data3">{val.Start_Date}</div>
-    //           <div className="member-data3">{val.End_Date}</div>
-    //           <div className="box-edit3">
-    //             <button
-    //               className="btn edit-butt3"
-    //               onClick={() => {
-    //                 showUser(val.id);
-    //               }}
-    //             >
-    //               Show
-    //             </button>
-
-    //             <input
-    //               type="button"
-    //               className="btn edit-butt3"
-    //               value="Edit"
-    //               onClick={() => edituser(val.id)}
-    //             />
-    //             <button
-    //               className="btn del-butt3"
-    //               onClick={() => deleteMember(val.id)}
-    //             >
-    //               Delete
-    //             </button>
-    //           </div>
-    //         </div>
-    //         <hr/>
-    //       </div>
-    //     );
-    //   })} */}
-    // </div>
+    <>
+      <Table
+        dataSource={memberList}
+        columns={col}
+        bordered
+        pagination={{
+          current: page,
+          pageSize: pageSize,
+          onChange: (page, pageSize) => {
+            setPage(page);
+            setPageSize(pageSize);
+          },
+        }}
+        scroll={{ x: true, y: true }}
+      />
+    </>
   );
 };
 

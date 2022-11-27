@@ -188,7 +188,7 @@
 
 .table-scroll{
     /* border: 2px solid crimson ; */
-    height: 89%;
+    height: 100%;
     overflow: auto;
 }
 
@@ -308,7 +308,7 @@
         /* width: 100%; */
         /* display: none; */
         z-index: 0;
-        transition: all 0.5s;
+        /* transition: all 0.5s; */
         
     }
 
@@ -395,7 +395,8 @@
     .table-scroll{
         /* border: 3px solid crimson ; */
         width: 250%;
-        height: 91%;
+        height: 100%;
+
     }
 
     .member3{
@@ -531,7 +532,8 @@
     .table-scroll{
         /* border: 5px solid crimson ; */
         width: 150%;
-        height: 91%;
+        height: 100%;
+
     }
     
     .edit-butt3{

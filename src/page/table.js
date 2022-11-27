@@ -19,13 +19,6 @@ function MyTable() {
   $.DataTable = require("datatables.net");
   const navigate = useNavigate();
   const [memberList, setMemberList] = useState([]);
-  const [sortid, setsortid] = useState(true);
-  const [sortDate, setsortDate] = useState(true);
-  const [sortTime, setsortTime] = useState(true);
-  const [sortFname, setsortFname] = useState(true);
-  const [sortUser, setsortUser] = useState(true);
-  const [sortStart, setsortStart] = useState(true);
-  const [sortEnd, setsortEnd] = useState(true);
   const timeStamp = moment().format("YYYY_MM_DD");
 
   const [exMemberList, setExMemberList] = useState([]);
@@ -37,41 +30,6 @@ function MyTable() {
   //     setMemberList(response.data);
   //   });
   // };
-  const chgSortId = () => {
-    sortid === true
-      ? memberList.sort((a, b) => (a.id < b.id ? 1 : -1))
-      : memberList.sort((a, b) => (a.id > b.id ? 1 : -1));
-  };
-  const chgSortDate = () => {
-    sortDate === true
-      ? memberList.sort((a, b) => (a.Dates < b.Dates ? 1 : -1))
-      : memberList.sort((a, b) => (a.Dates > b.Dates ? 1 : -1));
-  };
-  const chgSortTime = () => {
-    sortTime === true
-      ? memberList.sort((a, b) => (a.Times < b.Times ? 1 : -1))
-      : memberList.sort((a, b) => (a.Times > b.Times ? 1 : -1));
-  };
-  const chgSortFname = () => {
-    sortFname === true
-      ? memberList.sort((a, b) => (a.Firstname < b.Firstname ? 1 : -1))
-      : memberList.sort((a, b) => (a.Firstname > b.Firstname ? 1 : -1));
-  };
-  const chgSortUser = () => {
-    sortUser === true
-      ? memberList.sort((a, b) => (a.User_Type < b.User_Type ? 1 : -1))
-      : memberList.sort((a, b) => (a.User_Type > b.User_Type ? 1 : -1));
-  };
-  const chgSortStart = () => {
-    sortStart === true
-      ? memberList.sort((a, b) => (a.Start_Date < b.Start_Date ? 1 : -1))
-      : memberList.sort((a, b) => (a.Start_Date > b.Start_Date ? 1 : -1));
-  };
-  const chgSortEnd = () => {
-    sortEnd === true
-      ? memberList.sort((a, b) => (a.End_Date < b.End_Date ? 1 : -1))
-      : memberList.sort((a, b) => (a.End_Date > b.End_Date ? 1 : -1));
-  };
 
   const fetchData = async () => {
     const getUser = await Axios.get("http://localhost:3002/getusers");
