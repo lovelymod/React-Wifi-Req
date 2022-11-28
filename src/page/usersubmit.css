@@ -10,14 +10,32 @@
   justify-content: center;
   align-items: center;
   background-color: #f0f1f2;
+  /* border: 3px solid blue; */
+  height: 100vh;
+  width: 100vw;
+  /* overflow: auto; */
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .bg1{
-  width: 1500px;
-  height: fit-content;
+  width: 1100px;
+  height: 100%;
+  /* height: fit-content; */
   box-shadow: 5px 5px 50px 5px gray;
   background-color: white;
-  /* border: 100px solid black; */
+  border-radius: 30px;
+  /* border: 2px solid black; */
+  overflow: auto;
+}
+
+.bg1::-webkit-scrollbar {
+  display: none;
+}
+
+.bg1 {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .message{
@@ -25,7 +43,6 @@
   color: #FFB401;
   
 }
-
 
 .regisbutt{
   background-color: #0174B3 !important;
@@ -94,8 +111,13 @@
 .images1{
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
-  margin-top: 20px;
+  margin-bottom: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: #0174B3;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  
   
 }
 

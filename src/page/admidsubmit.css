@@ -39,6 +39,15 @@
   overflow: auto;
 }
 
+.containerAdmin4::-webkit-scrollbar {
+  display: none;
+}
+
+.containerAdmin4 {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 .backbuttAdminTop4 {
   display: flex;
   border: 0px;

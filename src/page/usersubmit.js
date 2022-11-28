@@ -141,7 +141,7 @@ function UserSubmit() {
     >
       <div className="bg1">
         <div className="images1">
-          <img className="logo1" src="img/LS-01.png" alt="" srcSet="" />
+          <img className="logo1" src="img/LS-02.png" alt="" srcSet="" />
         </div>
 
         <div className="header1">
