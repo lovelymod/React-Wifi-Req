@@ -284,6 +284,7 @@ const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
       <Table
         dataSource={memberList}
         columns={col}
+        sticky={true}
         bordered
         pagination={{
           current: page,
@@ -293,7 +294,6 @@ const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
             setPageSize(pageSize);
           },
         }}
-        scroll={{ x: true, y: true }}
       />
     </>
   );
