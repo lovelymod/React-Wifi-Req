@@ -5,13 +5,37 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { SearchOutlined } from "@mui/icons-material";
 
-const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
+const Blogslist = ({
+  memberList,
+  deleteMember,
+  showUser,
+  edituser,
+  setExMemberList,
+}) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [filterMember, setfilterMember] = useState([]);
-  const col = [
+
+  const handleChange = (pagination, _filters, _sorter, extra) => {
+    console.log(extra.currentDataSource);
+    setExMemberList(extra.currentDataSource);
+  };
+
+  const testedData = [
     {
-      width: '5%',
+      id: "1",
+      Dates: "2020",
+      Times: "12:00",
+      Firstname: "gong",
+      Lastname: "sabo",
+      User_Type: "gong",
+      Start_Date: "121",
+      End_Date : "333"
+    },
+  ]
+
+  const columns = [
+    {
+      width: "5%",
       title: "No",
       dataIndex: "id",
       key: "no",
@@ -19,7 +43,7 @@ const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
       sorter: (a, b) => a.id - b.id,
     },
     {
-      width: '10%',
+      width: "10%",
       title: "Date",
       dataIndex: "Dates",
       key: "date",
@@ -55,14 +79,14 @@ const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
       },
     },
     {
-      width: '5%',
+      width: "5%",
       title: "Time",
       dataIndex: "Times",
       key: "time",
       sorter: (a, b) => a.Times.localeCompare(b.Times),
     },
     {
-      width: '15%',
+      width: "15%",
       title: "Firstname",
       dataIndex: "Firstname",
       key: "firstname",
@@ -98,7 +122,7 @@ const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
       },
     },
     {
-      width: '15%',
+      width: "15%",
       title: "Lastname",
       dataIndex: "Lastname",
       key: "lastname",
@@ -134,7 +158,7 @@ const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
       },
     },
     {
-      width: '10%',
+      width: "10%",
       title: "UserType",
       dataIndex: "User_Type",
       key: "userType",
@@ -169,7 +193,7 @@ const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
       },
     },
     {
-      width: '10%',
+      width: "10%",
 
       title: "Start Date",
       dataIndex: "Start_Date",
@@ -206,7 +230,7 @@ const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
       },
     },
     {
-      width: '10%',
+      width: "10%",
       title: "End Date",
       dataIndex: "End_Date",
       key: "endDate",
@@ -242,7 +266,8 @@ const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
       },
     },
     {
-      width: '20%',
+      align: "center",
+      width: "20%",
       title: "Action",
       dataIndex: "",
       key: "action",
@@ -283,10 +308,11 @@ const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
     <>
       <Table
         dataSource={memberList}
-        columns={col}
+        columns={columns}
         sticky={true}
         bordered
         pagination={{
+          position: ["bottomCenter"],
           current: page,
           pageSize: pageSize,
           onChange: (page, pageSize) => {
@@ -294,6 +320,7 @@ const Blogslist = ({ memberList, deleteMember, showUser, edituser }) => {
             setPageSize(pageSize);
           },
         }}
+        onChange={handleChange}
       />
     </>
   );

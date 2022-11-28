@@ -86,6 +86,13 @@ function UserSubmit() {
         resetField("startDate");
         resetField("endDate");
         resetField("remark");
+      }else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: 'Something went wrong!',
+          showConfirmButton: false,
+        });
       }
     });
   };

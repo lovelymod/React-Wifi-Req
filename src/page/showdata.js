@@ -12,10 +12,6 @@ function ShowData() {
   const navigate = useNavigate();
   const location = useLocation();
   const showNewMember = location.state.newMemberList;
-  console.log(
-    "🚀 ~ file: showdata.js ~ line 15 ~ ShowData ~ showNewMember",
-    showNewMember
-  );
   const [Labelhide, setLabelhide] = useState("");
 
   const onFirstCheckEnd = () => {

@@ -15,21 +15,11 @@ import { motion } from "framer-motion";
 import ListIcon from "@mui/icons-material/List";
 
 function MyTable() {
-  const $ = require("jquery");
-  $.DataTable = require("datatables.net");
   const navigate = useNavigate();
   const [memberList, setMemberList] = useState([]);
   const timeStamp = moment().format("YYYY_MM_DD");
-
   const [exMemberList, setExMemberList] = useState([]);
-
   const [isOpen, setIsOpen] = useState(false);
-
-  // const getMember = () => {
-  //   Axios.get("http://localhost:3002/getusers").then((response) => {
-  //     setMemberList(response.data);
-  //   });
-  // };
 
   const fetchData = async () => {
     const getUser = await Axios.get("http://localhost:3002/getusers");
@@ -268,81 +258,13 @@ function MyTable() {
           </span>
         </div>
         <div className="all-scroll">
-          {/* <div className="head-table3">
-            <p
-              className="head-data3"
-              onClick={() => {
-                setsortid(!sortid);
-                chgSortId();
-              }}
-            >
-              No
-            </p>
-            <p
-              className="head-data3"
-              onClick={() => {
-                setsortDate(!sortDate);
-                chgSortDate();
-              }}
-            >
-              Date
-            </p>
-            <p
-              className="head-data3"
-              onClick={() => {
-                setsortTime(!sortTime);
-                chgSortTime();
-              }}
-            >
-              Time
-            </p>
-            <p
-              className="head-data3"
-              onClick={() => {
-                setsortFname(!sortFname);
-                chgSortFname();
-              }}
-            >
-              Firstname
-            </p>
-            <p className="head-data3 lname">Lastname</p>
-            <p
-              className="head-data3"
-              onClick={() => {
-                setsortUser(!sortUser);
-                chgSortUser();
-              }}
-            >
-              User Type
-            </p>
-            <p
-              className="head-data3"
-              onClick={() => {
-                setsortStart(!sortStart);
-                chgSortStart();
-              }}
-            >
-              Start Date
-            </p>
-            <p
-              className="head-data3"
-              onClick={() => {
-                setsortEnd(!sortEnd);
-                chgSortEnd();
-              }}
-            >
-              End Date
-            </p>
-            <p className="head-empty3"></p>
-          </div> */}
-          {/* <hr className="top-table" /> */}
           <div className="table-scroll">
-            {/* // todo use Datatables Library  */}
             <Blogslist
               memberList={memberList}
               deleteMember={deleteMember}
               showUser={showUser}
               edituser={edituser}
+              setExMemberList={setExMemberList}
             />
           </div>
         </div>
