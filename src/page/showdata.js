@@ -7,12 +7,71 @@ import Axios from "axios";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import ListIcon from "@mui/icons-material/List";
+import jwt_decode from "jwt-decode";
 
 function ShowData() {
   const navigate = useNavigate();
   const location = useLocation();
   const showNewMember = location.state.newMemberList;
   const [Labelhide, setLabelhide] = useState("");
+  const [Username, setUsername] = useState("");
+  const [token, setToken] = useState("");
+  const [expire, setExpire] = useState("");
+
+  const refreshToken = async () => {
+    try {
+      const response = await Axios.get("http://localhost:3002/token");
+      setToken(response.data.accessToken);
+      const decoded = jwt_decode(response.data.accessToken);
+      setUsername(decoded.Username);
+      setExpire(decoded.exp);
+    } catch (error) {
+      if (error.response) {
+        navigate("/login");
+        localStorage.clear();
+        console.log(error.response);
+      }
+    }
+  };
+
+  const axiosJWT = Axios.create();
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const response = await Axios.get("http://localhost:3002/token");
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        setUsername(decoded.Username);
+        setExpire(decoded.exp);
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  const getUserAdmin = async () => {
+    await axiosJWT.get("http://localhost:3002/useradmin", {
+      headers: {
+        Username: Username,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
+  const Logout = async () => {
+    try {
+      await Axios.delete("http://localhost:3002/logout");
+      localStorage.clear();
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onFirstCheckEnd = () => {
     if (!showNewMember[0].enddate) {
@@ -20,18 +79,6 @@ function ShowData() {
     } else {
       setLabelhide("");
     }
-  };
-
-  const auth = () => {
-    const checkUser = localStorage.getItem("auth");
-    if (checkUser !== "adminLogin") {
-      navigate("/login");
-    }
-  };
-
-  const BtoLogin = () => {
-    localStorage.removeItem("auth");
-    navigate("/login");
   };
 
   const Back = () => {
@@ -73,7 +120,8 @@ function ShowData() {
   };
 
   useEffect(() => {
-    auth();
+    refreshToken();
+    getUserAdmin();
     onFirstCheckEnd();
   }, []);
 
@@ -135,7 +183,7 @@ function ShowData() {
                 whileTap={{ scale: 0.9 }}
                 className="icon5"
                 onClick={() => {
-                  BtoLogin();
+                  Logout();
                 }}
               >
                 <LogoutOutlinedIcon
@@ -151,7 +199,7 @@ function ShowData() {
                 whileTap={{ scale: 0.9 }}
                 className="icon5"
                 onClick={() => {
-                  BtoLogin();
+                  Logout();
                 }}
               >
                 <LogoutOutlinedIcon

@@ -16,35 +16,32 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const checkLogin = () => {
-    const auth = localStorage.getItem("auth");
-    if (auth === "adminLogin") {
-      navigate("/table");
-    }
-  };
-
   const OnSubmit = () => {
-    login();
+    authLogin();
   };
 
-  const login = () => {
-    Axios.post("http://localhost:3002/login", {
-      Username: username,
-      Password: password,
-    }).then(async (response) => {
-      if (response.data.msg === "Matched") {
-        localStorage.setItem("auth", "adminLogin");
-        Swal.fire({
-          icon: "success",
-          title: "LOGGED IN",
-          showConfirmButton: false,
-          timer: 1200,
-          timerProgressBar: true,
-        });
-        setTimeout(function () {
-          navigate("/table");
-        }, 1500);
-      } else if (response.data.msg === "not Matched") {
+  const authLogin = async () => {
+    try {
+      await Axios.post("http://localhost:3002/login", {
+        Username: username,
+        Password: password,
+      });
+      Swal.fire({
+        icon: "success",
+        title: "LOGGED IN",
+        showConfirmButton: false,
+        timer: 1200,
+        timerProgressBar: true,
+      });
+      localStorage.setItem("auth", "loggedIn");
+      setTimeout(function () {
+        navigate("/table");
+      }, 1500);
+    } catch (error) {
+      if (
+        error.response.data.msg === "not Matched" ||
+        error.response.data.msg === "Username not found"
+      ) {
         Swal.fire({
           icon: "error",
           title: "Wrong Username or Password",
@@ -53,7 +50,14 @@ function Login() {
           timerProgressBar: true,
         });
       }
-    });
+    }
+  };
+
+  const checkLogin = () => {
+    const chk = localStorage.getItem("auth");
+    if (chk === "loggedIn") {
+      navigate("/table");
+    }
   };
 
   useEffect(() => {
@@ -110,14 +114,6 @@ function Login() {
             >
               Login
             </motion.button>
-
-            {/* <input
-              type="button"
-              className="btn loginbutt2"
-              value="Login"
-              onClick={() => {
-              }}
-            /> */}
           </form>
         </div>
       </div>

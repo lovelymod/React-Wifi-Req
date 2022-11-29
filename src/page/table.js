@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import TableSideBar from "./tablesideBar";
 import { motion } from "framer-motion";
 import ListIcon from "@mui/icons-material/List";
+import jwt_decode from "jwt-decode";
 
 function MyTable() {
   const navigate = useNavigate();
@@ -20,6 +21,64 @@ function MyTable() {
   const timeStamp = moment().format("YYYY_MM_DD");
   const [exMemberList, setExMemberList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [Username, setUsername] = useState("");
+  const [token, setToken] = useState("");
+  const [expire, setExpire] = useState("");
+
+  const refreshToken = async () => {
+    try {
+      const response = await Axios.get("http://localhost:3002/token");
+      setToken(response.data.accessToken);
+      const decoded = jwt_decode(response.data.accessToken);
+      setUsername(decoded.Username);
+      setExpire(decoded.exp);
+    } catch (error) {
+      if (error.response) {
+        navigate("/login");
+        localStorage.clear();
+        console.log(error.response);
+      }
+    }
+  };
+
+  const axiosJWT = Axios.create();
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const response = await Axios.get("http://localhost:3002/token");
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        setUsername(decoded.Username);
+        setExpire(decoded.exp);
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  const getUserAdmin = async () => {
+    await axiosJWT.get("http://localhost:3002/useradmin", {
+      headers: {
+        Username: Username,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
+  const Logout = async () => {
+    try {
+      await Axios.delete("http://localhost:3002/logout");
+      localStorage.clear();
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const fetchData = async () => {
     const getUser = await Axios.get("http://localhost:3002/getusers");
@@ -71,6 +130,7 @@ function MyTable() {
       if (result.isConfirmed) {
         const newMemberList = memberList.filter((val) => val.id !== id);
         setMemberList(newMemberList);
+        setExMemberList(newMemberList);
         Swal.fire({
           icon: "success",
           title: "Deleted !",
@@ -81,19 +141,7 @@ function MyTable() {
       }
     });
   };
-
-  const auth = () => {
-    const checkUser = localStorage.getItem("auth");
-    if (checkUser !== "adminLogin") {
-      navigate("/login");
-    }
-  };
-
-  const BtoLogin = () => {
-    localStorage.removeItem("auth");
-    navigate("/login");
-  };
-
+  
   const gotoAdminSub = () => {
     navigate("/adminsubmit");
   };
@@ -128,9 +176,9 @@ function MyTable() {
   const toggle = () => {
     setIsOpen(!isOpen);
   };
-
   useEffect(() => {
-    auth();
+    refreshToken();
+    getUserAdmin();
     fetchData();
   }, []);
 
@@ -189,7 +237,7 @@ function MyTable() {
               whileTap={{ scale: 0.9 }}
               className="icon3"
               onClick={() => {
-                BtoLogin();
+                Logout();
               }}
               style={{ display: isOpen ? "block" : "none" }}
             >

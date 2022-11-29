@@ -8,17 +8,18 @@ import Axios from "axios";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import ListIcon from "@mui/icons-material/List";
+import jwt_decode from "jwt-decode";
 
 function EditUser() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const showNewMember = location.state.newMemberList;
-  const [newMember, setNewmember] = useState(showNewMember);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const showNewMember = location.state.newMemberList;
+  const [newMember, setNewmember] = useState(showNewMember);
 
   const [fname, setFname] = useState(showNewMember[0].Firstname);
   const [lname, setLname] = useState(showNewMember[0].Lastname);
@@ -38,6 +39,65 @@ function EditUser() {
 
   let strDtype = dtype;
 
+  const [Username, setUsername] = useState("");
+  const [token, setToken] = useState("");
+  const [expire, setExpire] = useState("");
+
+  const refreshToken = async () => {
+    try {
+      const response = await Axios.get("http://localhost:3002/token");
+      setToken(response.data.accessToken);
+      const decoded = jwt_decode(response.data.accessToken);
+      setUsername(decoded.Username);
+      setExpire(decoded.exp);
+    } catch (error) {
+      if (error.response) {
+        navigate("/login");
+        localStorage.clear();
+        console.log(error.response);
+      }
+    }
+  };
+
+  const axiosJWT = Axios.create();
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const response = await Axios.get("http://localhost:3002/token");
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        setUsername(decoded.Username);
+        setExpire(decoded.exp);
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  const getUserAdmin = async () => {
+    await axiosJWT.get("http://localhost:3002/useradmin", {
+      headers: {
+        Username: Username,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
+  const Logout = async () => {
+    try {
+      await Axios.delete("http://localhost:3002/logout");
+      localStorage.clear();
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const swapData = () => {
     if (strDtype === "etc.") {
       strDtype = etc;
@@ -48,19 +108,7 @@ function EditUser() {
     navigate("/table");
   };
 
-  const auth = () => {
-    const checkUser = localStorage.getItem("auth");
-    if (checkUser !== "adminLogin") {
-      navigate("/login");
-    }
-  };
-
-  const BtoLogin = () => {
-    localStorage.removeItem("auth");
-    navigate("/login");
-  };
-
-  const UpdateData = (id) => {
+  const UpdateData = async (id) => {
     swapData();
     // Axios.put("http://localhost:3001/update", {
     //   id: id,
@@ -76,7 +124,7 @@ function EditUser() {
     //   End_Date: enddate,
     //   Remark: remark,
     // })
-    Axios.patch("http://localhost:3002/updateusers", {
+    await Axios.patch("http://localhost:3002/updateusers", {
       id: id,
       Firstname: fname,
       Lastname: lname,
@@ -165,7 +213,8 @@ function EditUser() {
   };
 
   useEffect(() => {
-    auth();
+    refreshToken();
+    getUserAdmin();
     onFirstCheck();
     onFirstCheckEnd();
   }, []);
@@ -228,7 +277,7 @@ function EditUser() {
                 whileTap={{ scale: 0.9 }}
                 className="icon6"
                 onClick={() => {
-                  BtoLogin();
+                  Logout();
                 }}
               >
                 <LogoutOutlinedIcon
@@ -244,7 +293,7 @@ function EditUser() {
                 whileTap={{ scale: 0.9 }}
                 className="icon6"
                 onClick={() => {
-                  BtoLogin();
+                  Logout();
                 }}
               >
                 <LogoutOutlinedIcon

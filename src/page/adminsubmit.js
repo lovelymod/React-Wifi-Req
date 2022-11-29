@@ -1,14 +1,15 @@
 import "./admidsubmit.css";
 import { useState, useEffect } from "react";
-import Axios from "axios";
+import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import Axios from "axios";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { motion } from "framer-motion";
 import ListIcon from "@mui/icons-material/List";
+import jwt_decode from "jwt-decode";
 
 function AdminSub() {
   const navigate = useNavigate();
@@ -30,23 +31,81 @@ function AdminSub() {
   const [startdate, setStartdate] = useState("");
   const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
-
   const [Labelhide, setLabelhide] = useState("");
   const [etcDisable, setetcDisable] = useState("hidden");
 
   const strUtype = utype;
   let strDtype = dtype;
 
+  const [Username, setUsername] = useState("");
+  const [token, setToken] = useState("");
+  const [expire, setExpire] = useState("");
+
+  const refreshToken = async () => {
+    try {
+      const response = await Axios.get("http://localhost:3002/token");
+      setToken(response.data.accessToken);
+      const decoded = jwt_decode(response.data.accessToken);
+      setUsername(decoded.Username);
+      setExpire(decoded.exp);
+    } catch (error) {
+      if (error.response) {
+        navigate("/login");
+        localStorage.clear();
+        console.log(error.response);
+      }
+    }
+  };
+
+  const axiosJWT = Axios.create();
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const response = await Axios.get("http://localhost:3002/token");
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        setUsername(decoded.Username);
+        setExpire(decoded.exp);
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  const getUserAdmin = async () => {
+    await axiosJWT.get("http://localhost:3002/useradmin", {
+      headers: {
+        Username: Username,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
+  const Logout = async () => {
+    try {
+      await Axios.delete("http://localhost:3002/logout");
+      localStorage.clear();
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const OnSubmit = () => {
     addRequest();
   };
 
-  const addRequest = () => {
+  const addRequest = async () => {
     swapData();
     const dates = moment().format("YYYY-MM-DD");
     const times = moment().format("HH:mm");
 
-    Axios.post("http://localhost:3002/users", {
+    await Axios.post("http://localhost:3002/users", {
       Firstname: fname,
       Lastname: lname,
       User_Type: strUtype,
@@ -110,24 +169,13 @@ function AdminSub() {
     }
   };
 
-  const auth = () => {
-    const checkUser = localStorage.getItem("auth");
-    if (checkUser !== "adminLogin") {
-      navigate("/login");
-    }
-  };
-
-  const BtoLogin = () => {
-    localStorage.removeItem("auth");
-    navigate("/login");
-  };
-
   const Back = () => {
     navigate("/table");
   };
 
   useEffect(() => {
-    auth();
+    refreshToken();
+    getUserAdmin();
   }, []);
 
   return (
@@ -188,7 +236,7 @@ function AdminSub() {
                 whileTap={{ scale: 0.9 }}
                 className="icon4"
                 onClick={() => {
-                  BtoLogin();
+                  Logout();
                 }}
               >
                 <LogoutOutlinedIcon
@@ -204,7 +252,7 @@ function AdminSub() {
                 whileTap={{ scale: 0.9 }}
                 className="icon4"
                 onClick={() => {
-                  BtoLogin();
+                  Logout();
                 }}
               >
                 <LogoutOutlinedIcon

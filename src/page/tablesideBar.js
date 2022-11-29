@@ -3,13 +3,19 @@ import { useNavigate } from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ListIcon from "@mui/icons-material/List";
 import { motion } from "framer-motion";
+import Axios from "axios";
 
 const TableSideBar = () => {
   const navigate = useNavigate();
 
-  const BtoLogin = () => {
-    localStorage.removeItem("auth");
-    navigate("/login");
+  const Logout = async () => {
+    try {
+      await Axios.delete("http://localhost:3002/logout");
+      localStorage.clear();
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const Back = () => {
@@ -27,7 +33,7 @@ const TableSideBar = () => {
           <div className="box-intop">
             <img className="logo-table3" src="img/LS-01.png" alt="" srcSet="" />
             <motion.button
-              whileHover={{ scale: 1.1}}
+              whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="ListIcon3"
               onClick={() => {
@@ -57,7 +63,7 @@ const TableSideBar = () => {
               whileTap={{ scale: 0.9 }}
               className="icon3"
               onClick={() => {
-                BtoLogin();
+                Logout();
               }}
             >
               <LogoutOutlinedIcon
@@ -73,7 +79,7 @@ const TableSideBar = () => {
               whileTap={{ scale: 0.9 }}
               className="icon3"
               onClick={() => {
-                BtoLogin();
+                Logout();
               }}
             >
               <LogoutOutlinedIcon

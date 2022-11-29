@@ -32,13 +32,13 @@ const Blogslist = ({
       End_Date : "333"
     },
   ]
-
+  //  todo fix width page on mobile phone
   const columns = [
     {
       width: "5%",
       title: "No",
       dataIndex: "id",
-      key: "no",
+      key: "id",
       defaultSortOrder: "descend",
       sorter: (a, b) => a.id - b.id,
     },
@@ -82,7 +82,7 @@ const Blogslist = ({
       width: "5%",
       title: "Time",
       dataIndex: "Times",
-      key: "time",
+      key: "Times",
       sorter: (a, b) => a.Times.localeCompare(b.Times),
     },
     {
@@ -125,7 +125,7 @@ const Blogslist = ({
       width: "15%",
       title: "Lastname",
       dataIndex: "Lastname",
-      key: "lastname",
+      key: "Lastname",
       sorter: (a, b) => a.Lastname.localeCompare(b.Lastname),
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
         return (
@@ -161,7 +161,7 @@ const Blogslist = ({
       width: "10%",
       title: "UserType",
       dataIndex: "User_Type",
-      key: "userType",
+      key: "User_Type",
       sorter: (a, b) => a.User_Type.localeCompare(b.User_Type),
       filters: [
         {
@@ -194,10 +194,9 @@ const Blogslist = ({
     },
     {
       width: "10%",
-
       title: "Start Date",
       dataIndex: "Start_Date",
-      key: "startDate",
+      key: "Start_Date",
       sorter: (a, b) => a.Start_Date.localeCompare(b.Start_Date),
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
         return (
@@ -233,7 +232,7 @@ const Blogslist = ({
       width: "10%",
       title: "End Date",
       dataIndex: "End_Date",
-      key: "endDate",
+      key: "End_Date",
       sorter: (a, b) => a.End_Date.localeCompare(b.End_Date),
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
         return (
@@ -270,7 +269,7 @@ const Blogslist = ({
       width: "20%",
       title: "Action",
       dataIndex: "",
-      key: "action",
+      key: "Action",
       render: (record) => (
         <Space size="middle">
           <motion.button
