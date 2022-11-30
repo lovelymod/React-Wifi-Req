@@ -9,7 +9,6 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import moment from "moment";
 import Swal from "sweetalert2";
 import ListIcon from "@mui/icons-material/List";
-import jwt_decode from "jwt-decode";
 
 function AdminSub() {
   const navigate = useNavigate();
@@ -37,17 +36,9 @@ function AdminSub() {
   const strUtype = utype;
   let strDtype = dtype;
 
-  const [Username, setUsername] = useState("");
-  const [token, setToken] = useState("");
-  const [expire, setExpire] = useState("");
-
   const refreshToken = async () => {
     try {
-      const response = await Axios.get("http://localhost:3002/token");
-      setToken(response.data.accessToken);
-      const decoded = jwt_decode(response.data.accessToken);
-      setUsername(decoded.Username);
-      setExpire(decoded.exp);
+      await Axios.get("http://localhost:5000/token");
     } catch (error) {
       if (error.response) {
         navigate("/login");
@@ -57,38 +48,9 @@ function AdminSub() {
     }
   };
 
-  const axiosJWT = Axios.create();
-
-  axiosJWT.interceptors.request.use(
-    async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-        const response = await Axios.get("http://localhost:3002/token");
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        setToken(response.data.accessToken);
-        const decoded = jwt_decode(response.data.accessToken);
-        setUsername(decoded.Username);
-        setExpire(decoded.exp);
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
-  const getUserAdmin = async () => {
-    await axiosJWT.get("http://localhost:3002/useradmin", {
-      headers: {
-        Username: Username,
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  };
-
   const Logout = async () => {
     try {
-      await Axios.delete("http://localhost:3002/logout");
+      await Axios.delete("http://localhost:5000/logout");
       localStorage.clear();
       navigate("/login");
     } catch (error) {
@@ -105,7 +67,7 @@ function AdminSub() {
     const dates = moment().format("YYYY-MM-DD");
     const times = moment().format("HH:mm");
 
-    await Axios.post("http://localhost:3002/users", {
+    await Axios.post("http://localhost:5000/users", {
       Firstname: fname,
       Lastname: lname,
       User_Type: strUtype,
@@ -175,7 +137,6 @@ function AdminSub() {
 
   useEffect(() => {
     refreshToken();
-    getUserAdmin();
   }, []);
 
   return (

@@ -8,7 +8,6 @@ import Axios from "axios";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import ListIcon from "@mui/icons-material/List";
-import jwt_decode from "jwt-decode";
 
 function EditUser() {
   const {
@@ -39,17 +38,9 @@ function EditUser() {
 
   let strDtype = dtype;
 
-  const [Username, setUsername] = useState("");
-  const [token, setToken] = useState("");
-  const [expire, setExpire] = useState("");
-
   const refreshToken = async () => {
     try {
-      const response = await Axios.get("http://localhost:3002/token");
-      setToken(response.data.accessToken);
-      const decoded = jwt_decode(response.data.accessToken);
-      setUsername(decoded.Username);
-      setExpire(decoded.exp);
+      await Axios.get("http://localhost:5000/token");
     } catch (error) {
       if (error.response) {
         navigate("/login");
@@ -57,40 +48,11 @@ function EditUser() {
         console.log(error.response);
       }
     }
-  };
-
-  const axiosJWT = Axios.create();
-
-  axiosJWT.interceptors.request.use(
-    async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-        const response = await Axios.get("http://localhost:3002/token");
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        setToken(response.data.accessToken);
-        const decoded = jwt_decode(response.data.accessToken);
-        setUsername(decoded.Username);
-        setExpire(decoded.exp);
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
-  const getUserAdmin = async () => {
-    await axiosJWT.get("http://localhost:3002/useradmin", {
-      headers: {
-        Username: Username,
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  };
+  }; 
 
   const Logout = async () => {
     try {
-      await Axios.delete("http://localhost:3002/logout");
+      await Axios.delete("http://localhost:5000/logout");
       localStorage.clear();
       navigate("/login");
     } catch (error) {
@@ -110,21 +72,7 @@ function EditUser() {
 
   const UpdateData = async (id) => {
     swapData();
-    // Axios.put("http://localhost:3001/update", {
-    //   id: id,
-    //   Firstname: fname,
-    //   Lastname: lname,
-    //   Email: email,
-    //   Tel: tel,
-    //   User_Type: utype,
-    //   Device_Type: strDtype,
-    //   Device_Brand: dbrand,
-    //   Device_Name: dname,
-    //   Start_Date: startdate,
-    //   End_Date: enddate,
-    //   Remark: remark,
-    // })
-    await Axios.patch("http://localhost:3002/updateusers", {
+    await Axios.patch("http://localhost:5000/updateusers", {
       id: id,
       Firstname: fname,
       Lastname: lname,
@@ -214,7 +162,6 @@ function EditUser() {
 
   useEffect(() => {
     refreshToken();
-    getUserAdmin();
     onFirstCheck();
     onFirstCheckEnd();
   }, []);

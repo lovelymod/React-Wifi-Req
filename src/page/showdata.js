@@ -7,24 +7,16 @@ import Axios from "axios";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import ListIcon from "@mui/icons-material/List";
-import jwt_decode from "jwt-decode";
 
 function ShowData() {
   const navigate = useNavigate();
   const location = useLocation();
   const showNewMember = location.state.newMemberList;
   const [Labelhide, setLabelhide] = useState("");
-  const [Username, setUsername] = useState("");
-  const [token, setToken] = useState("");
-  const [expire, setExpire] = useState("");
 
   const refreshToken = async () => {
     try {
-      const response = await Axios.get("http://localhost:3002/token");
-      setToken(response.data.accessToken);
-      const decoded = jwt_decode(response.data.accessToken);
-      setUsername(decoded.Username);
-      setExpire(decoded.exp);
+      await Axios.get("http://localhost:5000/token");
     } catch (error) {
       if (error.response) {
         navigate("/login");
@@ -32,40 +24,11 @@ function ShowData() {
         console.log(error.response);
       }
     }
-  };
-
-  const axiosJWT = Axios.create();
-
-  axiosJWT.interceptors.request.use(
-    async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-        const response = await Axios.get("http://localhost:3002/token");
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        setToken(response.data.accessToken);
-        const decoded = jwt_decode(response.data.accessToken);
-        setUsername(decoded.Username);
-        setExpire(decoded.exp);
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
-  const getUserAdmin = async () => {
-    await axiosJWT.get("http://localhost:3002/useradmin", {
-      headers: {
-        Username: Username,
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  };
+  }; 
 
   const Logout = async () => {
     try {
-      await Axios.delete("http://localhost:3002/logout");
+      await Axios.delete("http://localhost:5000/logout");
       localStorage.clear();
       navigate("/login");
     } catch (error) {
@@ -96,7 +59,7 @@ function ShowData() {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://localhost:3002/users/${id}`).then((response) => {
+        Axios.delete(`http://localhost:5000/users/${id}`).then((response) => {
           if (response.data.msg === "User Deleted") {
             Swal.fire({
               icon: "success",
@@ -121,7 +84,6 @@ function ShowData() {
 
   useEffect(() => {
     refreshToken();
-    getUserAdmin();
     onFirstCheckEnd();
   }, []);
 

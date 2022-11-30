@@ -40,7 +40,7 @@ function UserSubmit() {
   };
 
   const GetIP = async () => {
-    await Axios.post("http://localhost:3002/getip").then((response) => {
+    await Axios.post("http://localhost:5000/getip").then((response) => {
       setInternalIP(response.data[1].address);
     });
   };

@@ -10,7 +10,7 @@ const TableSideBar = () => {
 
   const Logout = async () => {
     try {
-      await Axios.delete("http://localhost:3002/logout");
+      await Axios.delete("http://localhost:5000/logout");
       localStorage.clear();
       navigate("/login");
     } catch (error) {

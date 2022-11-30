@@ -27,7 +27,7 @@ function MyTable() {
 
   const refreshToken = async () => {
     try {
-      const response = await Axios.get("http://localhost:3002/token");
+      const response = await Axios.get("http://localhost:5000/token");
       setToken(response.data.accessToken);
       const decoded = jwt_decode(response.data.accessToken);
       setUsername(decoded.Username);
@@ -47,7 +47,7 @@ function MyTable() {
     async (config) => {
       const currentDate = new Date();
       if (expire * 1000 < currentDate.getTime()) {
-        const response = await Axios.get("http://localhost:3002/token");
+        const response = await Axios.get("http://localhost:5000/token");
         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
         setToken(response.data.accessToken);
         const decoded = jwt_decode(response.data.accessToken);
@@ -62,7 +62,7 @@ function MyTable() {
   );
 
   const getUserAdmin = async () => {
-    await axiosJWT.get("http://localhost:3002/useradmin", {
+    await axiosJWT.get("http://localhost:5000/useradmin", {
       headers: {
         Username: Username,
         Authorization: `Bearer ${token}`,
@@ -72,7 +72,7 @@ function MyTable() {
 
   const Logout = async () => {
     try {
-      await Axios.delete("http://localhost:3002/logout");
+      await Axios.delete("http://localhost:5000/logout");
       localStorage.clear();
       navigate("/login");
     } catch (error) {
@@ -81,7 +81,7 @@ function MyTable() {
   };
 
   const fetchData = async () => {
-    const getUser = await Axios.get("http://localhost:3002/getusers");
+    const getUser = await Axios.get("http://localhost:5000/getusers");
     setMemberList(getUser.data);
     let dataBox = getUser.data;
     let dataList = [];

@@ -29,13 +29,13 @@ const Blogslist = ({
       Lastname: "sabo",
       User_Type: "gong",
       Start_Date: "121",
-      End_Date : "333"
+      End_Date: "333",
     },
-  ]
+  ];
   //  todo fix width page on mobile phone
   const columns = [
     {
-      width: "5%",
+      width: "7.5%",
       title: "No",
       dataIndex: "id",
       key: "id",
@@ -79,14 +79,14 @@ const Blogslist = ({
       },
     },
     {
-      width: "5%",
+      width: "7.5%",
       title: "Time",
       dataIndex: "Times",
       key: "Times",
       sorter: (a, b) => a.Times.localeCompare(b.Times),
     },
     {
-      width: "15%",
+      width: "12%",
       title: "Firstname",
       dataIndex: "Firstname",
       key: "firstname",
@@ -122,7 +122,7 @@ const Blogslist = ({
       },
     },
     {
-      width: "15%",
+      width: "12%",
       title: "Lastname",
       dataIndex: "Lastname",
       key: "Lastname",
@@ -158,7 +158,7 @@ const Blogslist = ({
       },
     },
     {
-      width: "10%",
+      width: "11%",
       title: "UserType",
       dataIndex: "User_Type",
       key: "User_Type",
@@ -266,12 +266,12 @@ const Blogslist = ({
     },
     {
       align: "center",
-      width: "20%",
+      width: "18%",
       title: "Action",
       dataIndex: "",
       key: "Action",
       render: (record) => (
-        <Space size="middle">
+        <Space size="small">
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
