@@ -5,7 +5,7 @@ import "./Register.css";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-
+// todo eye password
 const Register = () => {
   const {
     register,

@@ -59,15 +59,9 @@ const Blogslist = ({
             onChange={(e) => {
               setSelectedKeys(e.target.value ? [e.target.value] : []);
             }}
-            onSearch={() => {
-              confirm();
-            }}
-            onPressEnter={() => {
-              confirm();
-            }}
-            onBlur={() => {
-              confirm();
-            }}
+            onSearch={() => confirm()}
+            onPressEnter={() => confirm()}
+            onBlur={() => confirm()}
           ></Input.Search>
         );
       },
@@ -102,15 +96,9 @@ const Blogslist = ({
             onChange={(e) => {
               setSelectedKeys(e.target.value ? [e.target.value] : []);
             }}
-            onSearch={() => {
-              confirm();
-            }}
-            onPressEnter={() => {
-              confirm();
-            }}
-            onBlur={() => {
-              confirm();
-            }}
+            onSearch={() => confirm()}
+            onPressEnter={() => confirm()}
+            onBlur={() => confirm()}
           ></Input.Search>
         );
       },
@@ -138,15 +126,9 @@ const Blogslist = ({
             onChange={(e) => {
               setSelectedKeys(e.target.value ? [e.target.value] : []);
             }}
-            onSearch={() => {
-              confirm();
-            }}
-            onPressEnter={() => {
-              confirm();
-            }}
-            onBlur={() => {
-              confirm();
-            }}
+            onSearch={() => confirm()}
+            onPressEnter={() => confirm()}
+            onBlur={() => confirm()}
           ></Input.Search>
         );
       },
@@ -209,15 +191,9 @@ const Blogslist = ({
             onChange={(e) => {
               setSelectedKeys(e.target.value ? [e.target.value] : []);
             }}
-            onSearch={() => {
-              confirm();
-            }}
-            onPressEnter={() => {
-              confirm();
-            }}
-            onBlur={() => {
-              confirm();
-            }}
+            onSearch={() => confirm()}
+            onPressEnter={() => confirm()}
+            onBlur={() => confirm()}
           ></Input.Search>
         );
       },
@@ -245,15 +221,9 @@ const Blogslist = ({
             onChange={(e) => {
               setSelectedKeys(e.target.value ? [e.target.value] : []);
             }}
-            onSearch={() => {
-              confirm();
-            }}
-            onPressEnter={() => {
-              confirm();
-            }}
-            onBlur={() => {
-              confirm();
-            }}
+            onSearch={() => confirm()}
+            onPressEnter={() => confirm()}
+            onBlur={() => confirm()}
           ></Input.Search>
         );
       },

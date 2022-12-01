@@ -26,18 +26,14 @@ function UserSubmit() {
   const [startdate, setStartdate] = useState("");
   const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
-
   const [Labelhide, setLabelhide] = useState("");
   const [etcDisable, setetcDisable] = useState("hidden");
-
   const [internalIP, setInternalIP] = useState("");
 
   const strUtype = utype;
   let strDtype = dtype;
 
-  const OnSubmit = (e) => {
-    addRequest();
-  };
+  const OnSubmit = () => addRequest();
 
   const GetIP = async () => {
     await Axios.post("http://localhost:5000/getip").then((response) => {
@@ -86,11 +82,11 @@ function UserSubmit() {
         resetField("startDate");
         resetField("endDate");
         resetField("remark");
-      }else {
+      } else {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: 'Something went wrong!',
+          text: "Something went wrong!",
           showConfirmButton: false,
         });
       }
@@ -455,9 +451,7 @@ function UserSubmit() {
                 type="button"
                 className="btn backbutt"
                 value="Cancel"
-                onClick={() => {
-                  resetForm();
-                }}
+                onClick={() => resetForm()}
               />
             </div>
           </form>

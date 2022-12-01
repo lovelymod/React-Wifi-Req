@@ -7,6 +7,7 @@ import Axios from "axios";
 
 const TableSideBar = () => {
   const navigate = useNavigate();
+  const Back = () => navigate("/table");
 
   const Logout = async () => {
     try {
@@ -16,10 +17,6 @@ const TableSideBar = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const Back = () => {
-    navigate("/table");
   };
 
   return (
@@ -36,9 +33,7 @@ const TableSideBar = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="ListIcon3"
-              onClick={() => {
-                Back();
-              }}
+              onClick={() => Back()}
             >
               <ListIcon sx={{ fontSize: "32px", color: "white" }} />
             </motion.button>
@@ -52,9 +47,7 @@ const TableSideBar = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="ListIcon3"
-              onClick={() => {
-                Back();
-              }}
+              onClick={() => Back()}
             >
               <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
             </motion.button>
@@ -62,9 +55,7 @@ const TableSideBar = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="icon3"
-              onClick={() => {
-                Logout();
-              }}
+              onClick={() => Logout()}
             >
               <LogoutOutlinedIcon
                 className="icon-exit3"
@@ -78,9 +69,7 @@ const TableSideBar = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="icon3"
-              onClick={() => {
-                Logout();
-              }}
+              onClick={() => Logout()}
             >
               <LogoutOutlinedIcon
                 className="icon-exit3"

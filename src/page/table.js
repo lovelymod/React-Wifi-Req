@@ -29,9 +29,13 @@ function MyTable() {
     }
   };
 
+  const gotoAdminSub = () => navigate("/adminsubmit");
+  const Back = () => navigate("/table");
+  const toggle = () => setIsOpen(!isOpen);
+
   const Logout = () => {
-      localStorage.clear();
-      navigate("/login");  
+    localStorage.clear();
+    navigate("/login");
   };
 
   const fetchData = async () => {
@@ -96,14 +100,6 @@ function MyTable() {
     });
   };
 
-  const gotoAdminSub = () => {
-    navigate("/adminsubmit");
-  };
-
-  const Back = () => {
-    navigate("/table");
-  };
-
   const headers = [
     { label: "No", key: "id" },
     { label: "IpAddr", key: "Ip_Addr" },
@@ -127,9 +123,6 @@ function MyTable() {
     filename: `RequestList_${timeStamp}.csv`,
   };
 
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
   useEffect(() => {
     authentication();
     // getUserAdmin();
@@ -155,9 +148,7 @@ function MyTable() {
           <div className="top-img3">
             <button
               className="icon-back2"
-              onClick={() => {
-                toggle();
-              }}
+              onClick={() => toggle()}
               style={{
                 left: isOpen ? "50px" : "10px",
                 transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
@@ -177,9 +168,7 @@ function MyTable() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="ListIcon3"
-              onClick={() => {
-                Back();
-              }}
+              onClick={() => Back()}
               style={{ display: isOpen ? "block" : "none" }}
             >
               <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
@@ -190,9 +179,7 @@ function MyTable() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="icon3"
-              onClick={() => {
-                Logout();
-              }}
+              onClick={() => Logout()}
               style={{ display: isOpen ? "block" : "none" }}
             >
               <LogoutOutlinedIcon
@@ -218,9 +205,7 @@ function MyTable() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   className="icon-create3"
-                  onClick={() => {
-                    gotoAdminSub();
-                  }}
+                  onClick={() => gotoAdminSub()}
                 >
                   <AddIcon sx={{ fontSize: "20px", color: "white" }} />
                 </motion.button>
@@ -242,9 +227,7 @@ function MyTable() {
                   type="button"
                   className="btn create3"
                   value="Create User"
-                  onClick={() => {
-                    gotoAdminSub();
-                  }}
+                  onClick={() => gotoAdminSub()}
                 />
                 <CSVLink {...csvReport}>
                   <motion.input

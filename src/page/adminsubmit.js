@@ -46,13 +46,12 @@ function AdminSub() {
   };
 
   const Logout = () => {
-      localStorage.clear();
-      navigate("/login");  
+    localStorage.clear();
+    navigate("/login");
   };
 
-  const OnSubmit = () => {
-    addRequest();
-  };
+  const Back = () => navigate("/table");
+  const OnSubmit = () => addRequest();
 
   const addRequest = async () => {
     swapData();
@@ -123,10 +122,6 @@ function AdminSub() {
     }
   };
 
-  const Back = () => {
-    navigate("/table");
-  };
-
   useEffect(() => {
     authentication();
   }, []);
@@ -162,9 +157,7 @@ function AdminSub() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="ListIcon4"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               >
                 <ListIcon sx={{ fontSize: "32px", color: "white" }} />
               </motion.button>
@@ -178,9 +171,7 @@ function AdminSub() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="ListIcon4"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               >
                 <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
               </motion.button>
@@ -188,9 +179,7 @@ function AdminSub() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="icon4"
-                onClick={() => {
-                  Logout();
-                }}
+                onClick={() => Logout()}
               >
                 <LogoutOutlinedIcon
                   className="icon-exit4"
@@ -204,9 +193,7 @@ function AdminSub() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="icon4"
-                onClick={() => {
-                  Logout();
-                }}
+                onClick={() => Logout()}
               >
                 <LogoutOutlinedIcon
                   className="icon-exit4"
@@ -225,9 +212,7 @@ function AdminSub() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="backbuttAdminTop4"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               >
                 {
                   <ArrowBackIosIcon
@@ -243,9 +228,7 @@ function AdminSub() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="backbuttAdminTop4"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               >
                 {
                   <ArrowBackIosIcon
@@ -257,12 +240,7 @@ function AdminSub() {
             </div>
           )}
           <div className="row-nameButt4">
-            <button
-              className="nameButt4"
-              onClick={() => {
-                Back();
-              }}
-            >
+            <button className="nameButt4" onClick={() => Back()}>
               <p className="message4">Wi-Fi Request List</p>
             </button>
             <p className="message4-back">/Create User</p>
@@ -573,9 +551,7 @@ function AdminSub() {
                 type="button"
                 className="btn backbuttAdmin4"
                 value="Cancel"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               />
             </div>
           </form>

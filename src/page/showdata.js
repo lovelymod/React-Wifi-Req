@@ -24,8 +24,8 @@ function ShowData() {
   };
 
   const Logout = () => {
-      localStorage.clear();
-      navigate("/login");  
+    localStorage.clear();
+    navigate("/login");
   };
 
   const onFirstCheckEnd = () => {
@@ -36,9 +36,7 @@ function ShowData() {
     }
   };
 
-  const Back = () => {
-    navigate("/table");
-  };
+  const Back = () => navigate("/table");
 
   const DeleteUser = (id) => {
     Swal.fire({
@@ -110,9 +108,7 @@ function ShowData() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="ListIcon5"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               >
                 <ListIcon sx={{ fontSize: "32px", color: "white" }} />
               </motion.button>
@@ -126,9 +122,7 @@ function ShowData() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="ListIcon4"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               >
                 <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
               </motion.button>
@@ -136,9 +130,7 @@ function ShowData() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="icon5"
-                onClick={() => {
-                  Logout();
-                }}
+                onClick={() => Logout()}
               >
                 <LogoutOutlinedIcon
                   className="icon-exit5"
@@ -152,9 +144,7 @@ function ShowData() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="icon5"
-                onClick={() => {
-                  Logout();
-                }}
+                onClick={() => Logout()}
               >
                 <LogoutOutlinedIcon
                   className="icon-exit5"
@@ -174,9 +164,7 @@ function ShowData() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   className="backbutt5"
-                  onClick={() => {
-                    Back();
-                  }}
+                  onClick={() => Back()}
                 >
                   {
                     <ArrowBackIosIcon
@@ -192,9 +180,7 @@ function ShowData() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   className="backbutt5"
-                  onClick={() => {
-                    Back();
-                  }}
+                  onClick={() => Back()}
                 >
                   {
                     <ArrowBackIosIcon
@@ -206,12 +192,7 @@ function ShowData() {
               </div>
             )}
             <div className="row-nameButt4">
-              <button
-                className="nameButt4"
-                onClick={() => {
-                  Back();
-                }}
-              >
+              <button className="nameButt4" onClick={() => Back()}>
                 <p className="message4">Wi-Fi Request List</p>
               </button>
               <p className="message4-back">/User Information</p>
@@ -297,9 +278,7 @@ function ShowData() {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       className="btn edit-butt-sw5"
-                      onClick={() => {
-                        edituser(val.id);
-                      }}
+                      onClick={() => edituser(val.id)}
                     >
                       Edit
                     </motion.button>
@@ -308,9 +287,7 @@ function ShowData() {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       className="btn del-butt-sw5"
-                      onClick={() => {
-                        DeleteUser(val.id);
-                      }}
+                      onClick={() => DeleteUser(val.id)}
                     >
                       Delete
                     </motion.button>

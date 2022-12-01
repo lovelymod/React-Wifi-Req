@@ -264,11 +264,11 @@
     
     .App3{
         display: flex;
+        z-index: 0 !important;
         /* flex-direction: column;  */     
     }
     .left-manu3{
-        z-index: 1 ;
-        /* margin-right: 0px; */
+        z-index: 2 ;
         transition: all 0.5s;
     }
 
@@ -307,7 +307,6 @@
         height: 100%;
         /* width: 100%; */
         /* display: none; */
-        z-index: 0;
         /* transition: all 0.5s; */
         
     }

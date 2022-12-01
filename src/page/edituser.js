@@ -58,9 +58,7 @@ function EditUser() {
     }
   };
 
-  const Back = () => {
-    navigate("/table");
-  };
+  const Back = () => navigate("/table");
 
   const UpdateData = async (id) => {
     swapData();
@@ -189,9 +187,7 @@ function EditUser() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="ListIcon6"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               >
                 <ListIcon sx={{ fontSize: "32px", color: "white" }} />
               </motion.button>
@@ -205,9 +201,7 @@ function EditUser() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="ListIcon6"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               >
                 <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
               </motion.button>
@@ -215,9 +209,7 @@ function EditUser() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="icon6"
-                onClick={() => {
-                  Logout();
-                }}
+                onClick={() => Logout()}
               >
                 <LogoutOutlinedIcon
                   className="icon-exit6"
@@ -231,9 +223,7 @@ function EditUser() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="icon6"
-                onClick={() => {
-                  Logout();
-                }}
+                onClick={() => Logout()}
               >
                 <LogoutOutlinedIcon
                   className="icon-exit6"
@@ -252,9 +242,7 @@ function EditUser() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="backbutt6"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               >
                 {
                   <ArrowBackIosIcon
@@ -270,9 +258,7 @@ function EditUser() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="backbutt6"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               >
                 {
                   <ArrowBackIosIcon
@@ -284,12 +270,7 @@ function EditUser() {
             </div>
           )}
           <div className="row-nameButt4">
-            <button
-              className="nameButt4"
-              onClick={() => {
-                Back();
-              }}
-            >
+            <button className="nameButt4" onClick={() => Back()}>
               <p className="message4">Wi-Fi Request List</p>
             </button>
             <p className="message4-back">/Edit</p>
@@ -298,11 +279,7 @@ function EditUser() {
         {showNewMember.map((val, key) => {
           return (
             <div className="contain-data6" key={val.id}>
-              <form
-                onSubmit={handleSubmit(() => {
-                  UpdateData(val.id);
-                })}
-              >
+              <form onSubmit={handleSubmit(() => UpdateData(val.id))}>
                 <div className="row-data6">
                   <span className="split-contain6">
                     <label htmlFor="inputFname" className="form-label fl6">
@@ -572,9 +549,7 @@ function EditUser() {
                       className=" form-control remark6"
                       id="inputremark"
                       defaultValue={val.Remark}
-                      onChange={(e) => {
-                        setRemark(e.target.value);
-                      }}
+                      onChange={(e) => setRemark(e.target.value)}
                     />
                   </span>
                 </div>
@@ -593,9 +568,7 @@ function EditUser() {
                     type="button"
                     className="btn cancelbutt6"
                     value="Cancel"
-                    onClick={() => {
-                      Back();
-                    }}
+                    onClick={() => Back()}
                   />
                 </div>
               </form>

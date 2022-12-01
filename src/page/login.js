@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+// todo eye password
 function Login() {
   const {
     register,
@@ -14,13 +16,19 @@ function Login() {
   } = useForm();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [hidePwd, setHidePwd] = useState("password");
   const navigate = useNavigate();
 
-  const toRegister = () => navigate("/register");
-
-  const OnSubmit = () => {
-    authLogin();
+  const showPwd = () => {
+    if (hidePwd === "password") {
+      setHidePwd("text");
+    } else {
+      setHidePwd("password");
+    }
   };
+
+  const toRegister = () => navigate("/register");
+  const OnSubmit = () => authLogin();
 
   const authLogin = async () => {
     try {
@@ -95,14 +103,14 @@ function Login() {
                   required: true,
                 })}
               />
-              {errors.username && (
-                <p className="fill-message">Please fill this form</p>
-              )}
             </div>
-            <div className="row-contain-login2">
+            {errors.username && (
+              <p className="fill-message">Please fill this form</p>
+            )}
+            <div className="row-contain-login2-pwd">
               <input
-                type="password"
-                className="form-control input2"
+                type={hidePwd}
+                className="input2-pwd"
                 id="password"
                 placeholder="Password"
                 {...register("password", {
@@ -110,10 +118,14 @@ function Login() {
                   required: true,
                 })}
               />
-              {errors.password && (
-                <p className="fill-message">Please fill this form</p>
-              )}
+              {hidePwd === "password" ? (
+                <VisibilityOffIcon className="eyeVisit" onClick={() => showPwd()} />
+              ) : 
+              <VisibilityIcon className="eyeVisit" onClick={() => showPwd()} />}
             </div>
+            {errors.password && (
+              <p className="fill-message">Please fill this form</p>
+            )}
             <div className="row-contain-login2-butt">
               <motion.button
                 whileHover={{ scale: 1.1 }}
@@ -122,17 +134,15 @@ function Login() {
               >
                 Login
               </motion.button>
-              <div style={{width: "20px"}}></div>
+              <div style={{ width: "20px" }}></div>
               <motion.input
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              type="button"
-              value="Register"
-              className="btn loginbutt2"
-              onClick={() => {
-                toRegister();
-              }}
-            />
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                type="button"
+                value="Register"
+                className="btn loginbutt2"
+                onClick={() => toRegister()}
+              />
             </div>
           </form>
         </div>
