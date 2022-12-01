@@ -16,6 +16,8 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const toRegister = () => navigate("/register");
+
   const OnSubmit = () => {
     authLogin();
   };
@@ -25,6 +27,11 @@ function Login() {
       await Axios.post("http://localhost:5000/login", {
         Username: username,
         Password: password,
+      }).then((response) => {
+        localStorage.setItem("refreshToken", response.data.refreshToken);
+        setTimeout(() => {
+          localStorage.clear();
+        }, 24 * 60 * 60 * 1000);
       });
       Swal.fire({
         icon: "success",
@@ -107,13 +114,26 @@ function Login() {
                 <p className="fill-message">Please fill this form</p>
               )}
             </div>
-            <motion.button
+            <div className="row-contain-login2-butt">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="btn loginbutt2"
+              >
+                Login
+              </motion.button>
+              <div style={{width: "20px"}}></div>
+              <motion.input
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              type="button"
+              value="Register"
               className="btn loginbutt2"
-            >
-              Login
-            </motion.button>
+              onClick={() => {
+                toRegister();
+              }}
+            />
+            </div>
           </form>
         </div>
       </div>

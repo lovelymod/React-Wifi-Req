@@ -38,26 +38,18 @@ function EditUser() {
 
   let strDtype = dtype;
 
-  const refreshToken = async () => {
-    try {
-      await Axios.get("http://localhost:5000/token");
-    } catch (error) {
-      if (error.response) {
-        navigate("/login");
-        localStorage.clear();
-        console.log(error.response);
-      }
-    }
-  }; 
-
-  const Logout = async () => {
-    try {
-      await Axios.delete("http://localhost:5000/logout");
-      localStorage.clear();
+  const authentication = () => {
+    const getStatus = localStorage.getItem("auth");
+    console.log(getStatus);
+    if (!getStatus) {
       navigate("/login");
-    } catch (error) {
-      console.log(error);
+      localStorage.clear();
     }
+  };
+
+  const Logout = () => {
+    localStorage.clear();
+    navigate("/login");
   };
 
   const swapData = () => {
@@ -161,7 +153,7 @@ function EditUser() {
   };
 
   useEffect(() => {
-    refreshToken();
+    authentication();
     onFirstCheck();
     onFirstCheckEnd();
   }, []);
@@ -356,7 +348,7 @@ function EditUser() {
                     </label>
 
                     <input
-                      type="email"
+                      type="text"
                       className=" form-control fc6"
                       id="inputEmail"
                       defaultValue={val.Email}
@@ -364,7 +356,7 @@ function EditUser() {
                         onChange: (e) => setEmail(e.target.value),
                         required: "Please fill this form",
                         pattern: {
-                          value: /[a-z0-9._]+@[a-z0-9.-]+.[a-z]{2,}$/,
+                          value: /^[\w]+[@]+([\w-]+\.)+[\w-]{2,4}$/,
                           message: "Please correct this form",
                         },
                       })}

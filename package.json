@@ -24,6 +24,7 @@
     "react": "^18.2.0",
     "react-admin": "^4.5.2",
     "react-bootstrap": "^2.6.0",
+    "react-cookie": "^4.1.1",
     "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.39.4",
@@ -36,7 +37,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "stop": "taskkill -F -IM node.exe"
   },
   "eslintConfig": {
     "extends": [

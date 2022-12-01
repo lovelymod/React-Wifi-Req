@@ -13,7 +13,6 @@ import Swal from "sweetalert2";
 import TableSideBar from "./tablesideBar";
 import { motion } from "framer-motion";
 import ListIcon from "@mui/icons-material/List";
-import jwt_decode from "jwt-decode";
 
 function MyTable() {
   const navigate = useNavigate();
@@ -21,63 +20,18 @@ function MyTable() {
   const timeStamp = moment().format("YYYY_MM_DD");
   const [exMemberList, setExMemberList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [Username, setUsername] = useState("");
-  const [token, setToken] = useState("");
-  const [expire, setExpire] = useState("");
 
-  const refreshToken = async () => {
-    try {
-      const response = await Axios.get("http://localhost:5000/token");
-      setToken(response.data.accessToken);
-      const decoded = jwt_decode(response.data.accessToken);
-      setUsername(decoded.Username);
-      setExpire(decoded.exp);
-    } catch (error) {
-      if (error.response) {
-        navigate("/login");
-        localStorage.clear();
-        console.log(error.response);
-      }
-    }
-  };
-
-  const axiosJWT = Axios.create();
-
-  axiosJWT.interceptors.request.use(
-    async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-        const response = await Axios.get("http://localhost:5000/token");
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        setToken(response.data.accessToken);
-        const decoded = jwt_decode(response.data.accessToken);
-        setUsername(decoded.Username);
-        setExpire(decoded.exp);
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
-  const getUserAdmin = async () => {
-    await axiosJWT.get("http://localhost:5000/useradmin", {
-      headers: {
-        Username: Username,
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  };
-
-  const Logout = async () => {
-    try {
-      await Axios.delete("http://localhost:5000/logout");
-      localStorage.clear();
+  const authentication = async () => {
+    const getStatus = localStorage.getItem("auth");
+    if (!getStatus) {
       navigate("/login");
-    } catch (error) {
-      console.log(error);
+      localStorage.clear();
     }
+  };
+
+  const Logout = () => {
+      localStorage.clear();
+      navigate("/login");  
   };
 
   const fetchData = async () => {
@@ -141,7 +95,7 @@ function MyTable() {
       }
     });
   };
-  
+
   const gotoAdminSub = () => {
     navigate("/adminsubmit");
   };
@@ -177,8 +131,8 @@ function MyTable() {
     setIsOpen(!isOpen);
   };
   useEffect(() => {
-    refreshToken();
-    getUserAdmin();
+    authentication();
+    // getUserAdmin();
     fetchData();
   }, []);
 

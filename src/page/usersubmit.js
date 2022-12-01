@@ -203,7 +203,7 @@ function UserSubmit() {
                 </label>
 
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
                   id="inputEmail"
                   placeholder="admin@gmail.com"
@@ -211,7 +211,7 @@ function UserSubmit() {
                     onChange: (e) => setEmail(e.target.value),
                     required: "Please fill this form",
                     pattern: {
-                      value: /[a-z0-9._]+@[a-z0-9.-]+.[a-z]{2,}$/,
+                      value: /^[\w]+[@]+([\w-]+\.)+[\w-]{2,4}$/,
                       message: "Please correct this form",
                     },
                   })}

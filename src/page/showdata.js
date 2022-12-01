@@ -14,26 +14,18 @@ function ShowData() {
   const showNewMember = location.state.newMemberList;
   const [Labelhide, setLabelhide] = useState("");
 
-  const refreshToken = async () => {
-    try {
-      await Axios.get("http://localhost:5000/token");
-    } catch (error) {
-      if (error.response) {
-        navigate("/login");
-        localStorage.clear();
-        console.log(error.response);
-      }
-    }
-  }; 
-
-  const Logout = async () => {
-    try {
-      await Axios.delete("http://localhost:5000/logout");
-      localStorage.clear();
+  const authentication = () => {
+    const getStatus = localStorage.getItem("auth");
+    console.log(getStatus);
+    if (!getStatus) {
       navigate("/login");
-    } catch (error) {
-      console.log(error);
+      localStorage.clear();
     }
+  };
+
+  const Logout = () => {
+      localStorage.clear();
+      navigate("/login");  
   };
 
   const onFirstCheckEnd = () => {
@@ -83,7 +75,7 @@ function ShowData() {
   };
 
   useEffect(() => {
-    refreshToken();
+    authentication();
     onFirstCheckEnd();
   }, []);
 

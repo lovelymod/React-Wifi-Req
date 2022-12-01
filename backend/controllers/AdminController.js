@@ -54,8 +54,7 @@ export const Login = async (req, res) => {
       { adminId, Username },
       process.env.REFRESH_TOKEN_SECRET,
       {
-        // todo do not forget to change to 1d exp
-        expiresIn: "1d",
+        expiresIn: "20s",
       }
     );
     await Adminloging.update(
@@ -66,11 +65,12 @@ export const Login = async (req, res) => {
         },
       }
     );
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-    res.json({ accessToken ,msg: "Matched"});
+    // ! cant res cookie without disable web security
+    // res.cookie("refreshToken", refreshToken, {
+    //   httpOnly: true,
+    //   maxAge: 24 * 60 * 60 * 1000,
+    // });
+    res.json({ accessToken,refreshToken ,msg: "Matched"});
   } catch (error) {
     // res.status(400).json({ msg: "not Matched" });
     res.status(404).json({msg:"Username not found"});
