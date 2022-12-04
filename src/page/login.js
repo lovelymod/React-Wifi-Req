@@ -6,14 +6,14 @@ import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import Cookies from 'js-cookie';
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import Cookies from "js-cookie";
 
 function Login() {
   const {
     register,
     handleSubmit,
-    setFocus ,
+    setFocus,
     formState: { errors },
   } = useForm();
   const [username, setUsername] = useState("");
@@ -38,7 +38,7 @@ function Login() {
         Username: username,
         Password: password,
       }).then((response) => {
-        Cookies.set('refreshToken', response.data.refreshToken,{ expires: 1 })
+        Cookies.set("refreshToken", response.data.refreshToken, { expires: 1 });
       });
       Swal.fire({
         icon: "success",
@@ -118,9 +118,16 @@ function Login() {
                 })}
               />
               {hidePwd === "password" ? (
-                <VisibilityOffIcon className="eyeVisit" onClick={() => showPwd()} />
-              ) : 
-              <VisibilityIcon className="eyeVisit" onClick={() => showPwd()} />}
+                <VisibilityOffIcon
+                  className="eyeVisit"
+                  onClick={() => showPwd()}
+                />
+              ) : (
+                <VisibilityIcon
+                  className="eyeVisit"
+                  onClick={() => showPwd()}
+                />
+              )}
             </div>
             {errors.password && (
               <p className="fill-message">Please fill this form</p>

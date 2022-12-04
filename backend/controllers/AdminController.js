@@ -20,22 +20,20 @@ export const Register = async (req, res) => {
       Username: Username,
     },
   });
-  console.log(username);
-  if (username) {
-    res.status(400).json({ msg: "This username has already exist" });
-  }
-  // if (Password !== confPassword)
-  //   return res
-  //     .status(400)
-  //     .json({ msg: "Password and Confirm Password do not match" });
+  if (username)
+    return res.status(400).json({ msg: "This username has already exist" });
+  if (Password !== confPassword)
+    return res
+      .status(400)
+      .json({ msg: "Password and Confirm Password do not match" });
   const salt = await bcrypt.genSalt(5);
   const hashPassword = await bcrypt.hash(Password, salt);
   try {
-    // await Adminloging.create({
-    //   Username: Username,
-    //   Password: hashPassword,
-    // });
-    // res.json({ msg: "Registration Successful" });
+    await Adminloging.create({
+      Username: Username,
+      Password: hashPassword,
+    });
+    res.json({ msg: "Registration Successful" });
   } catch (error) {
     console.log(error);
   }

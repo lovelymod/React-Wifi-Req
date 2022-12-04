@@ -5,7 +5,9 @@ import "./Register.css";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-// todo eye password
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
 const Register = () => {
   const {
     register,
@@ -15,17 +17,29 @@ const Register = () => {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
+  const [hidePwd, setHidePwd] = useState("password");
+  const [hideconfPwd, setHideconfPwd] = useState("password");
+
+  const showPwd = () => {
+    if (hidePwd === "password") {
+      setHidePwd("text");
+    } else {
+      setHidePwd("password");
+    }
+  };
+
+  const showconfPwd = () => {
+    if (hideconfPwd === "password") {
+      setHideconfPwd("text");
+    } else {
+      setHideconfPwd("password");
+    }
+  };
 
   const navigate = useNavigate();
-
-  const OnSubmit = () => {
-    Register();
-  };
-
-  const Back = () => {
-    navigate("/login");
-  };
-
+  const Back = () => navigate("/login");
+  const OnSubmit = () => Register();
+  
   const Register = async () => {
     try {
       await axios
@@ -35,7 +49,6 @@ const Register = () => {
           confPassword: confPassword,
         })
         .then((response) => {
-          
           Swal.fire({
             icon: "success",
             title: `${response.data.msg}`,
@@ -53,7 +66,7 @@ const Register = () => {
           icon: "error",
           title: `${error.response.data.msg}`,
           showConfirmButton: false,
-          timer: 1200,
+          timer: 2000,
           timerProgressBar: true,
         });
       }
@@ -83,16 +96,16 @@ const Register = () => {
                   required: true,
                 })}
               />
-              {errors.Username && (
-                <p className="fill-message2">Please fill this form</p>
-              )}
             </div>
+            {errors.Username && (
+              <p className="fill-message2">Please fill this form</p>
+            )}
           </div>
           <div className="field">
-            <div className="controls">
+            <div className="controls-pwd">
               <input
-                type="Password"
-                className="form-control inputreg"
+                type={hidePwd}
+                className="inputreg-pwd"
                 placeholder="Password"
                 value={Password}
                 {...register("Password", {
@@ -100,16 +113,27 @@ const Register = () => {
                   required: true,
                 })}
               />
-              {errors.Password && (
-                <p className="fill-message2">Please fill this form</p>
+              {hidePwd === "password" ? (
+                <VisibilityOffIcon
+                  className="eyeVisit"
+                  onClick={() => showPwd()}
+                />
+              ) : (
+                <VisibilityIcon
+                  className="eyeVisit"
+                  onClick={() => showPwd()}
+                />
               )}
             </div>
+            {errors.Password && (
+              <p className="fill-message2">Please fill this form</p>
+            )}
           </div>
           <div className="field">
-            <div className="controls">
+            <div className="controls-pwd">
               <input
-                type="Password"
-                className="form-control inputreg"
+                type={hideconfPwd}
+                className="inputreg-pwd"
                 placeholder="Confirm Password"
                 value={confPassword}
                 {...register("ConfirmPassword", {
@@ -117,12 +141,23 @@ const Register = () => {
                   required: true,
                 })}
               />
-              {errors.ConfirmPassword && (
-                <p className="fill-message2">Please fill this form</p>
+              {hideconfPwd === "password" ? (
+                <VisibilityOffIcon
+                  className="eyeVisit"
+                  onClick={() => showconfPwd()}
+                />
+              ) : (
+                <VisibilityIcon
+                  className="eyeVisit"
+                  onClick={() => showconfPwd()}
+                />
               )}
             </div>
+            {errors.ConfirmPassword && (
+              <p className="fill-message2">Please fill this form</p>
+            )}
           </div>
-          <div className="field">
+          <div className="field-button">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
