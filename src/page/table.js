@@ -13,6 +13,9 @@ import Swal from "sweetalert2";
 import TableSideBar from "./tablesideBar";
 import { motion } from "framer-motion";
 import ListIcon from "@mui/icons-material/List";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 function MyTable() {
   const navigate = useNavigate();
@@ -20,23 +23,75 @@ function MyTable() {
   const timeStamp = moment().format("YYYY_MM_DD");
   const [exMemberList, setExMemberList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [Username, setUsername] = useState("");
+  const [token, setToken] = useState("");
+  const [expire, setExpire] = useState("");
 
-  const authentication = async () => {
-    const getStatus = localStorage.getItem("auth");
-    if (!getStatus) {
+  const refreshToken = async () => {
+    try {
+      const refreshToken = Cookies.get("refreshToken");
+      const response = await axios.get("http://localhost:5000/token", {
+        params: { refreshToken: refreshToken },
+      });
+      setToken(response.data.accessToken);
+      const decoded = jwt_decode(response.data.accessToken);
+      setUsername(decoded.Username);
+      setExpire(decoded.exp);
+    } catch (error) {
+      if (error.response) {
+        navigate("/login");
+      }
+    }
+  };
+
+  const axiosJWT = axios.create();
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const refreshToken = Cookies.get("refreshToken");
+        const response = await axios.get("http://localhost:5000/token", {
+          params: { refreshToken: refreshToken },
+        });
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        setUsername(decoded.Username);
+        setExpire(decoded.exp);
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  const getUserAdmin = async () => {
+    await axiosJWT.get("http://localhost:5000/useradmin", {
+      headers: {
+        Username: Username,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
+  const Logout = async () => {
+    try {
+      const refreshToken = Cookies.get("refreshToken");
+      await axios.delete("http://localhost:5000/logout", {
+        params: { refreshToken: refreshToken },
+      });
+      Cookies.remove("refreshToken");
       navigate("/login");
-      localStorage.clear();
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const gotoAdminSub = () => navigate("/adminsubmit");
   const Back = () => navigate("/table");
   const toggle = () => setIsOpen(!isOpen);
-
-  const Logout = () => {
-    localStorage.clear();
-    navigate("/login");
-  };
 
   const fetchData = async () => {
     const getUser = await Axios.get("http://localhost:5000/getusers");
@@ -124,8 +179,8 @@ function MyTable() {
   };
 
   useEffect(() => {
-    authentication();
-    // getUserAdmin();
+    refreshToken();
+    getUserAdmin();
     fetchData();
   }, []);
 

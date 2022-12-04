@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ListIcon from "@mui/icons-material/List";
 import { motion } from "framer-motion";
-import Axios from "axios";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const TableSideBar = () => {
   const navigate = useNavigate();
@@ -11,8 +12,11 @@ const TableSideBar = () => {
 
   const Logout = async () => {
     try {
-      await Axios.delete("http://localhost:5000/logout");
-      localStorage.clear();
+      const refreshToken = Cookies.get("refreshToken");
+      await axios.delete("http://localhost:5000/logout", {
+        params: { refreshToken: refreshToken },
+      });
+      Cookies.remove("refreshToken")
       navigate("/login");
     } catch (error) {
       console.log(error);

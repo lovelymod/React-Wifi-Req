@@ -7,11 +7,13 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from '@mui/icons-material/Visibility';
-// todo eye password
+import Cookies from 'js-cookie';
+
 function Login() {
   const {
     register,
     handleSubmit,
+    setFocus ,
     formState: { errors },
   } = useForm();
   const [username, setUsername] = useState("");
@@ -36,10 +38,7 @@ function Login() {
         Username: username,
         Password: password,
       }).then((response) => {
-        localStorage.setItem("refreshToken", response.data.refreshToken);
-        setTimeout(() => {
-          localStorage.clear();
-        }, 24 * 60 * 60 * 1000);
+        Cookies.set('refreshToken', response.data.refreshToken,{ expires: 1 })
       });
       Swal.fire({
         icon: "success",
@@ -48,7 +47,6 @@ function Login() {
         timer: 1200,
         timerProgressBar: true,
       });
-      localStorage.setItem("auth", "loggedIn");
       setTimeout(function () {
         navigate("/table");
       }, 1500);
@@ -77,6 +75,7 @@ function Login() {
 
   useEffect(() => {
     checkLogin();
+    setFocus("username");
   }, []);
   return (
     <motion.div

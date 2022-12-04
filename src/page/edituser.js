@@ -8,6 +8,8 @@ import Axios from "axios";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import ListIcon from "@mui/icons-material/List";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 function EditUser() {
   const {
@@ -38,18 +40,30 @@ function EditUser() {
 
   let strDtype = dtype;
 
-  const authentication = () => {
-    const getStatus = localStorage.getItem("auth");
-    console.log(getStatus);
-    if (!getStatus) {
-      navigate("/login");
-      localStorage.clear();
+  const refreshToken = async () => {
+    try {
+      const refreshToken = Cookies.get("refreshToken");
+      await axios.get("http://localhost:5000/token", {
+        params: { refreshToken: refreshToken },
+      });
+    } catch (error) {
+      if (error.response) {
+        navigate("/login");
+      }
     }
   };
 
-  const Logout = () => {
-    localStorage.clear();
-    navigate("/login");
+  const Logout = async () => {
+    try {
+      const refreshToken = Cookies.get("refreshToken");
+      await axios.delete("http://localhost:5000/logout", {
+        params: { refreshToken: refreshToken },
+      });
+      Cookies.remove("refreshToken");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const swapData = () => {
@@ -151,7 +165,7 @@ function EditUser() {
   };
 
   useEffect(() => {
-    authentication();
+    refreshToken();
     onFirstCheck();
     onFirstCheckEnd();
   }, []);

@@ -3,9 +3,7 @@ import jwt from "jsonwebtoken"
 
 export const refreshToken = async(req, res) => {
     try {
-        const refreshToken = req.cookie.refreshToken;    
-        // ! this line
-        
+        const refreshToken = req.query.refreshToken;  
         if(!refreshToken) return res.sendStatus(401);
         const admin = await Adminloging.findAll({
             where:{

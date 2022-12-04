@@ -35,7 +35,7 @@ const Register = () => {
           confPassword: confPassword,
         })
         .then((response) => {
-          console.log(response.data.msg);
+          
           Swal.fire({
             icon: "success",
             title: `${response.data.msg}`,

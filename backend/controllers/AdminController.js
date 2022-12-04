@@ -15,18 +15,27 @@ export const getUserAdmin = async (req, res) => {
 
 export const Register = async (req, res) => {
   const { Username, Password, confPassword } = req.body;
-  if (Password !== confPassword)
-    return res
-      .status(400)
-      .json({ msg: "Password and Confirm Password do not match" });
+  const username = await Adminloging.findOne({
+    where: {
+      Username: Username,
+    },
+  });
+  console.log(username);
+  if (username) {
+    res.status(400).json({ msg: "This username has already exist" });
+  }
+  // if (Password !== confPassword)
+  //   return res
+  //     .status(400)
+  //     .json({ msg: "Password and Confirm Password do not match" });
   const salt = await bcrypt.genSalt(5);
   const hashPassword = await bcrypt.hash(Password, salt);
   try {
-    await Adminloging.create({
-      Username: Username,
-      Password: hashPassword,
-    });
-    res.json({ msg: "Registration Successful" });
+    // await Adminloging.create({
+    //   Username: Username,
+    //   Password: hashPassword,
+    // });
+    // res.json({ msg: "Registration Successful" });
   } catch (error) {
     console.log(error);
   }
@@ -40,7 +49,7 @@ export const Login = async (req, res) => {
       },
     });
     const match = await bcrypt.compare(req.body.Password, admin[0].Password);
-    if(!match) return res.status(400).json({msg: "not Matched"});
+    if (!match) return res.status(400).json({ msg: "not Matched" });
     const adminId = admin[0].id;
     const Username = admin[0].Username;
     const accessToken = jwt.sign(
@@ -54,7 +63,7 @@ export const Login = async (req, res) => {
       { adminId, Username },
       process.env.REFRESH_TOKEN_SECRET,
       {
-        expiresIn: "20s",
+        expiresIn: "1d",
       }
     );
     await Adminloging.update(
@@ -65,20 +74,18 @@ export const Login = async (req, res) => {
         },
       }
     );
-    // ! cant res cookie without disable web security
-    // res.cookie("refreshToken", refreshToken, {
-    //   httpOnly: true,
-    //   maxAge: 24 * 60 * 60 * 1000,
-    // });
-    res.json({ accessToken,refreshToken ,msg: "Matched"});
+    res.json({
+      refreshToken: refreshToken,
+      accessToken: accessToken,
+      msg: "Matched",
+    });
   } catch (error) {
-    // res.status(400).json({ msg: "not Matched" });
-    res.status(404).json({msg:"Username not found"});
+    res.status(404).json({ msg: "Username not found" });
   }
 };
 
 export const Logout = async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
+  const refreshToken = req.query.refreshToken;
   if (!refreshToken) return res.sendStatus(204);
   const admin = await Adminloging.findAll({
     where: {
@@ -95,6 +102,5 @@ export const Logout = async (req, res) => {
       },
     }
   );
-  res.clearCookie("refreshToken");
   return res.sendStatus(200);
 };
