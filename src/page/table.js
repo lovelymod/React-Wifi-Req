@@ -1,16 +1,16 @@
-import "./table.css";
+import "../style/table.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import Axios from "axios";
-import Blogslist from "./blogslist";
+import Blogslist from "../components/blogslist";
+import TableSideBar from "../components/tablesideBar";
 import { CSVLink } from "react-csv";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import DownloadIcon from "@mui/icons-material/Download";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Swal from "sweetalert2";
-import TableSideBar from "./tablesideBar";
 import { motion } from "framer-motion";
 import ListIcon from "@mui/icons-material/List";
 import jwt_decode from "jwt-decode";
@@ -245,7 +245,7 @@ function MyTable() {
           </div>
         </div>
       ) : (
-        <TableSideBar />
+        <TableSideBar/>
       )}
 
       <div className="bg3" style={{ width: isOpen ? "75%" : "100%" }}>

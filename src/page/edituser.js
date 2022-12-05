@@ -1,15 +1,14 @@
-import "./edituser.css";
+import "../style/edituser.css";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Axios from "axios";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
-import ListIcon from "@mui/icons-material/List";
 import Cookies from "js-cookie";
 import axios from "axios";
+import SideBar from "../components/sideBar";
 
 function EditUser() {
   const {
@@ -178,76 +177,7 @@ function EditUser() {
       exit={{ opacity: 0 }}
       transition={{ delay: 0.1 }}
     >
-      <div className="left-manu6">
-        <div className="top-img6">
-          {window.innerWidth > 100 && window.innerWidth < 1000 ? (
-            <div>
-              <img
-                className="logo-table6"
-                src="img/LS-02.png"
-                alt=""
-                srcSet=""
-              />
-            </div>
-          ) : (
-            <div className="box-intop">
-              <img
-                className="logo-table6"
-                src="img/LS-01.png"
-                alt=""
-                srcSet=""
-              />
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="ListIcon6"
-                onClick={() => Back()}
-              >
-                <ListIcon sx={{ fontSize: "32px", color: "white" }} />
-              </motion.button>
-            </div>
-          )}
-        </div>
-        <div className="bottom-img6">
-          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
-            <div>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="ListIcon6"
-                onClick={() => Back()}
-              >
-                <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="icon6"
-                onClick={() => Logout()}
-              >
-                <LogoutOutlinedIcon
-                  className="icon-exit6"
-                  sx={{ fontSize: "40px", color: "white" }}
-                />
-              </motion.button>
-            </div>
-          ) : (
-            <div>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="icon6"
-                onClick={() => Logout()}
-              >
-                <LogoutOutlinedIcon
-                  className="icon-exit6"
-                  style={{ fontSize: "40px", color: "#0174B3" }}
-                />
-              </motion.button>
-            </div>
-          )}
-        </div>
-      </div>
+      <SideBar Back={Back} Logout={Logout} />
       <div className="bg6">
         <div className="headerInfo6">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (

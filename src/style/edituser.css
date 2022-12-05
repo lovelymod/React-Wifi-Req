@@ -14,61 +14,6 @@
   background-color: #f0f1f2;
 }
 
-.left-manu6 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  /* border: 2px solid black; */
-  height: 100%;
-  width: 10%;
-  background-color: white;
-  margin-right: 10px;
-  border-top-right-radius: 30px;
-}
-
-.top-img6 {
-  /* border: 5px solid black; */
-  height: 50%;
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.ListIcon6{
-  border: 0px;
-  border-radius: 10px;
-  background-color: #0174B3;
-  margin-top: 50px;
-  width: 50px;
-  height: 50px;
-}
-
-.logo-table6 {
-  width: 100px;
-  height: 100px;
-}
-
-.icon6 {
-  border: 0px;
-  background-color: white;
-}
-
-.icon6:hover{
-  background-color: #f1f2f3 ;
-  border-radius: 10px;
-}
-
-.bottom-img6 {
-  height: 50%;
-  padding-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-}
-
 .bg6 {
   /* border: 2px solid red; */
   width: 90%;
@@ -242,38 +187,6 @@
     flex-direction: column;
   }
 
-  .left-manu6 {
-    width: 100%;
-    height: 15%;
-    border-top-right-radius: 0px;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-    margin-bottom: 10px;
-    background-color: #0174b3;
-    flex-direction: row;
-  }
-
-  .top-img6 {
-    height: 100%;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .logo-table6 {
-    width: 70px;
-    height: 70px;
-    margin-bottom: 10px;
-  }
-
-  .bottom-img6 {
-    height: 100%;
-    width: 0%;
-    align-items: flex-end;
-    padding-right: 50px;
-    display: none;
-  }
-
   .bg6 {
     border: 0px;
     background-color: white;
@@ -360,52 +273,6 @@
   .App6 {
     flex-direction: column;
     overflow: scroll;
-  }
-
-  .left-manu6 {
-    /* border: 5px solid green; */
-    width: 100%;
-    height: 15%;
-    border-top-right-radius: 0px;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-    margin-bottom: 10px;
-    background-color: #0174b3;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .top-img6 {
-    height: 100%;
-    width: 50%;
-    align-items: flex-start;
-    padding-top: 30px;
-    padding-left: 50px;
-  }
-
-  .ListIcon6{
-    border: 0px;
-    border-radius: 10px;
-    background-color: white;
-    margin-right: 50px;
-    width: 50px;
-    height: 50px;
-  }
-
-  .bottom-img6 {
-    height: 100%;
-    width: 50%;
-    align-items: flex-end;
-    padding-right: 50px;
-  }
-
-  .icon6 {
-    border: 0px;
-    background-color: #0174b3;
-  }
-
-  .icon6:hover{
-    background-color: #0069a1;
   }
 
   .bg6 {

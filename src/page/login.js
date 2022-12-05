@@ -1,4 +1,4 @@
-import "./login.css";
+import "../style/login.css";
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -67,10 +67,8 @@ function Login() {
   };
 
   const checkLogin = () => {
-    const chk = localStorage.getItem("auth");
-    if (chk === "loggedIn") {
-      navigate("/table");
-    }
+    const chk = Cookies.get("refreshToken");
+    if (chk) navigate("/table");
   };
 
   useEffect(() => {

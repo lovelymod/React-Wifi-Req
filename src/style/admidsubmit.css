@@ -15,6 +15,63 @@
   background-color: #f0f1f2;
 }
 
+.imagesAdmin4 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 2px solid black; */
+  height: 100%;
+  width: 10%;
+  background-color: white;
+  margin-right: 10px;
+  border-top-right-radius: 30px;
+}
+.boxtop4 {
+  /* border: 2px solid black; */
+  height: 50%;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logoAdmin4 {
+  width: 100px;
+  height: 100px;
+}
+
+.ListIcon4 {
+  border: 0px;
+  border-radius: 10px;
+  background-color: #0174b3;
+  margin-top: 50px;
+  width: 50px;
+  height: 50px;
+}
+
+.boxbottom4 {
+  /* border: 2px solid black; */
+  height: 50%;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.icon4 {
+  border: 0px;
+  background-color: white;
+}
+
+.icon4:hover {
+  border-radius: 10px;
+  background-color: #f1f2f3;
+}
+
+
+
 .bgAdmin4 {
   width: 90%;
   height: 100% !important;
@@ -44,8 +101,8 @@
 }
 
 .containerAdmin4 {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .backbuttAdminTop4 {
@@ -61,30 +118,29 @@
   background-color: #0174b3;
 }
 
-.afterButt4{
+.afterButt4 {
   position: relative;
   color: #ffb401;
   font-size: 36px;
   top: 6px;
-  
 }
 
-.backbuttAdminTop4:hover{
-  background-color: #0069a1 ;
+.backbuttAdminTop4:hover {
+  background-color: #0069a1;
   border-radius: 10px;
 }
 
-.row-nameButt4{
+.row-nameButt4 {
   display: flex;
 }
 
-.nameButt4{
+.nameButt4 {
   width: fit-content;
   border: 0px;
   background-color: #0174b3;
 }
 
-.message4-back{
+.message4-back {
   text-align: start;
   color: white;
   font-size: 24px;
@@ -97,9 +153,8 @@
   font-size: 24px;
 }
 
-.message4:hover{
+.message4:hover {
   color: white;
-
 }
 
 .regisbuttAdmin4 {
@@ -164,68 +219,13 @@
   /* border: 1px solid blue; */
 }
 
-.imagesAdmin4 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  /* border: 2px solid black; */
-  height: 100%;
-  width: 10%;
-  background-color: white;
-  margin-right: 10px;
-  border-top-right-radius: 30px;
-}
-.boxtop4 {
-  /* border: 2px solid black; */
-  height: 50%;
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.ListIcon4{
-  border: 0px;
-  border-radius: 10px;
-  background-color: #0174B3;
-  margin-top: 50px;
-  width: 50px;
-  height: 50px;
-}
-
-.boxbottom4 {
-  /* border: 2px solid black; */
-  height: 50%;
-  padding-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.icon4 {
-  border: 0px;
-  background-color: white;
-}
-
-.icon4:hover {
-  border-radius: 10px;
-  background-color: #f1f2f3;
-}
-
-.logoAdmin4 {
-  width: 100px;
-  height: 100px;
-}
-
-.box44{
+.box44 {
   /* border: 1px solid black; */
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: #FFB401;
+  color: #ffb401;
 }
 
 .row-containAdmin-butt4 {
@@ -243,7 +243,6 @@
   align-self: start;
   padding-top: 50px;
   padding-left: 150px;
-
 }
 
 .split-contain4 {
@@ -350,17 +349,15 @@ form {
     margin-bottom: 20px;
   }
 
-  .afterButt4{
+  .afterButt4 {
     top: -3px;
-    
   }
 
-  .backbuttAdminTop4:hover{
-    background-color: #f1f2f3 ;
-    
+  .backbuttAdminTop4:hover {
+    background-color: #f1f2f3;
   }
 
-  .nameButt4{
+  .nameButt4 {
     display: none;
   }
 
@@ -440,7 +437,7 @@ form {
     padding-right: 50px;
   }
 
-  .ListIcon4{
+  .ListIcon4 {
     border: 0px;
     border-radius: 10px;
     background-color: white;
@@ -480,17 +477,16 @@ form {
     margin-top: 15px;
   }
 
-  .afterButt4{
+  .afterButt4 {
     top: 4px;
-    
   }
-  .nameButt4{
+  .nameButt4 {
     width: fit-content;
     border: 0px;
     background-color: white;
   }
-  
-  .message4-back{
+
+  .message4-back {
     text-align: start;
     color: black;
     font-size: 24px;

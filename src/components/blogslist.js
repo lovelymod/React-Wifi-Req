@@ -1,4 +1,4 @@
-import "./table.css";
+import "../style/table.css";
 import { Table, Tag, Space, Input } from "antd";
 import "antd/dist/antd";
 import { motion } from "framer-motion";
@@ -32,7 +32,7 @@ const Blogslist = ({
       End_Date: "333",
     },
   ];
-  //  todo fix width page on mobile phone
+  
   const columns = [
     {
       width: "7.5%",
@@ -80,7 +80,7 @@ const Blogslist = ({
       sorter: (a, b) => a.Times.localeCompare(b.Times),
     },
     {
-      width: "12%",
+      width: "13%",
       title: "Firstname",
       dataIndex: "Firstname",
       key: "firstname",
@@ -110,7 +110,7 @@ const Blogslist = ({
       },
     },
     {
-      width: "12%",
+      width: "13%",
       title: "Lastname",
       dataIndex: "Lastname",
       key: "Lastname",
@@ -140,7 +140,7 @@ const Blogslist = ({
       },
     },
     {
-      width: "11%",
+      width: "12%",
       title: "UserType",
       dataIndex: "User_Type",
       key: "User_Type",
@@ -236,12 +236,12 @@ const Blogslist = ({
     },
     {
       align: "center",
-      width: "18%",
+      width: "15%",
       title: "Action",
       dataIndex: "",
       key: "Action",
       render: (record) => (
-        <Space size="small">
+        <Space className="boxAction" size="small">
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}

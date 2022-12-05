@@ -1,14 +1,13 @@
-import "./admidsubmit.css";
+import "../style/admidsubmit.css";
+import SideBar from "../components/sideBar";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import moment from "moment";
 import Swal from "sweetalert2";
-import ListIcon from "@mui/icons-material/List";
 import Cookies from "js-cookie";
 import axios from "axios";
 
@@ -148,76 +147,7 @@ function AdminSub() {
       exit={{ opacity: 0 }}
       transition={{ delay: 0.1 }}
     >
-      <div className="imagesAdmin4">
-        <div className="boxtop4">
-          {window.innerWidth > 100 && window.innerWidth < 1000 ? (
-            <div>
-              <img
-                className="logoAdmin4"
-                src="img/LS-02.png"
-                alt=""
-                srcSet=""
-              />
-            </div>
-          ) : (
-            <div className="box-intop">
-              <img
-                className="logoAdmin4"
-                src="img/LS-01.png"
-                alt=""
-                srcSet=""
-              />
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="ListIcon4"
-                onClick={() => Back()}
-              >
-                <ListIcon sx={{ fontSize: "32px", color: "white" }} />
-              </motion.button>
-            </div>
-          )}
-        </div>
-        <div className="boxbottom4">
-          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
-            <div>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="ListIcon4"
-                onClick={() => Back()}
-              >
-                <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="icon4"
-                onClick={() => Logout()}
-              >
-                <LogoutOutlinedIcon
-                  className="icon-exit4"
-                  sx={{ fontSize: "40px", color: "white" }}
-                />
-              </motion.button>
-            </div>
-          ) : (
-            <div>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="icon4"
-                onClick={() => Logout()}
-              >
-                <LogoutOutlinedIcon
-                  className="icon-exit4"
-                  style={{ fontSize: "40px", color: "#0174B3" }}
-                />
-              </motion.button>
-            </div>
-          )}
-        </div>
-      </div>
+      <SideBar Back={Back} Logout={Logout} />
       <div className="bgAdmin4">
         <div className="headerAdmin4">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (

@@ -1,7 +1,7 @@
+import "../style/Register.css";
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./Register.css";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";

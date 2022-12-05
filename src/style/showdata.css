@@ -13,60 +13,6 @@
     background-color: #f0f1f2;
 }
 
-.left-manu5{
-    border-top-right-radius: 30px;
-    margin-right: 10px;
-    /* border: 1px solid black; */
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    height: 100%;
-    width: 10%;
-}
-
-.top-img5{
-    /* border: 1px solid black; */
-    height: 50%;
-    border-top-right-radius: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 20px;
-}
-
-.ListIcon5{
-    border: 0px;
-    border-radius: 10px;
-    background-color: #0174B3;
-    margin-top: 50px;
-    width: 50px;
-    height: 50px;
-  }
-
-.logo-table5{
-    width: 100px;
-    height: 100px;
-}
-
-.bottom-img5{
-    /* border: 1px solid black; */
-    height: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    padding-bottom: 20px;
-}
-
-.icon5{
-    border: 0px;
-    background-color: white;
-}
-
-.icon5:hover{
-    background-color: #f0f1f2;
-    border-radius: 10px;
-}
-
 .bg5{
     /* border: 2px solid red; */
     width: 90%;
@@ -109,7 +55,7 @@
     background-color: #0174B3;
     display: flex;
     align-items: center;
-    /* margin-top: 11px; */
+    /* marintopgin-top: 11px; */
     margin-left: 50px;
 }
 
@@ -270,37 +216,11 @@
         flex-direction: column;
     }
 
-    .left-manu5{
-        width: 100%;
-        height:  15%;
-        border-top-right-radius: 0px;
-        border: 0px;
-        margin-bottom: 0px;
-        background-color: #0174B3;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    .top-img5{
-        height: 100%;
-        width: 100%;
-        border-top-right-radius: 0px;
-        justify-content: center;
-        align-items: center; 
-    }
-    .logo-table5{
-        width: 70px;
-        height: 70px;
-        margin-bottom: 10px;
-    }
-
-    .bottom-img5{
-        display: none;
-    }
-
     .bg5{
         width: 100%;
-        height: 85% !important;
+        height: 85% ;
+        border-top-right-radius: 30px ;
+        border-top-left-radius: 30px ;
       }
     .headerInfo5{
         background-color: white;
@@ -309,6 +229,8 @@
         flex-direction: row;
         justify-content: flex-start;
         align-items: center;
+        border-top-right-radius: 30px ;
+        border-top-left-radius: 30px ;
     }
 
     .box55{
@@ -317,6 +239,7 @@
         display: flex;
         flex-direction: row;
         color: #FFB401;
+        margin-left: 10px;
     }
 
     .row-nameButt4{
@@ -344,7 +267,6 @@
     }
 
     .showcontain5{
-        margin-top: 10px ;
         background-color: white;
     }
     
@@ -377,6 +299,8 @@
     .row-butt5{
         padding: 0px 30px;
         width: 100%;
+        margin-bottom: 20px;
+        justify-content: center;
     }
 
     .emtpy-box5{
@@ -390,49 +314,6 @@
   @media only screen and (min-width:601px) and (max-width:900px) {
     .App5{
         flex-direction: column;
-    }
-
-    .left-manu5{
-        width: 100%;
-        height: 15%;
-        border-top-right-radius: 0px;
-        border-bottom-left-radius: 30px;
-        border-bottom-right-radius: 30px;
-        margin-bottom: 10px;
-        background-color: #0174B3;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    .top-img5{
-        border-top-right-radius: 0px;
-        height: 100%;
-        width: 50%;
-        justify-content: flex-start;
-        padding-top: 30px;
-        padding-left: 50px;
-    }
-    .bottom-img5{
-        height: 100%;
-        width: 50%;
-        justify-content: flex-end;
-        padding-right: 50px;
-    }
-
-    .ListIcon4{
-        border: 0px;
-        border-radius: 10px;
-        background-color: white;
-        margin-right: 50px;
-        width: 50px;
-        height: 50px;
-      }
-    .icon5{
-        background-color: #0174B3;
-    }
-
-    .icon3:hover{
-        background-color: #012d44;
     }
 
     .bg5{
