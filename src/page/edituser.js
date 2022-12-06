@@ -206,7 +206,7 @@ function EditUser() {
               >
                 {
                   <ArrowBackIosIcon
-                    sx={{ fontSize: "32px", color: "#FFB401" }}
+                    sx={{ fontSize: "32px", color: "#0174B3" }}
                   />
                 }{" "}
               </motion.button>
