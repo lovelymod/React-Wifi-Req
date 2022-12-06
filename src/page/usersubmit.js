@@ -34,7 +34,6 @@ function UserSubmit() {
   let strDtype = dtype;
 
   const OnSubmit = () => addRequest();
-
   const GetIP = async () => {
     await Axios.post("http://localhost:5000/getip").then((response) => {
       setInternalIP(response.data[1].address);
@@ -46,7 +45,7 @@ function UserSubmit() {
     const dates = moment().format("YYYY-MM-DD");
     const times = moment().format("HH:mm");
 
-    Axios.post("http://localhost:3002/users", {
+    Axios.post("http://localhost:5000/users", {
       Firstname: fname,
       Lastname: lname,
       User_Type: strUtype,
