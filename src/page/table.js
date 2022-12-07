@@ -196,7 +196,7 @@ function MyTable() {
         <div
           className="left-manu3"
           style={{
-            width: isOpen ? "25%" : "0%",
+            left: isOpen ? "0px" : "-100px",
             marginRight: isOpen ? "10px" : "0px",
           }}
         >
@@ -205,7 +205,7 @@ function MyTable() {
               className="icon-back2"
               onClick={() => toggle()}
               style={{
-                left: isOpen ? "50px" : "10px",
+                left: "58px",
                 transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
               }}
             >
@@ -245,10 +245,10 @@ function MyTable() {
           </div>
         </div>
       ) : (
-        <TableSideBar/>
+        <TableSideBar />
       )}
 
-      <div className="bg3" style={{ width: isOpen ? "75%" : "100%" }}>
+      <div className="bg3">
         <div className="header-top3">
           <span className="left3">
             <h2 className="name3">Wi-Fi Request List</h2>
