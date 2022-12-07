@@ -1,6 +1,6 @@
 import "../style/table.css";
-import { Table, Tag, Space, Input } from "antd";
 import "antd/dist/antd";
+import { Table, Tag, Space, Input } from "antd";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { SearchOutlined } from "@mui/icons-material";
@@ -32,7 +32,7 @@ const Blogslist = ({
       End_Date: "333",
     },
   ];
-  
+
   const columns = [
     {
       width: "7.5%",
@@ -53,7 +53,6 @@ const Blogslist = ({
           <Input.Search
             enterButton
             allowClear
-            autoFocus
             placeholder="Enter Date..."
             value={selectedKeys[0]}
             onChange={(e) => {
@@ -90,7 +89,6 @@ const Blogslist = ({
           <Input.Search
             enterButton
             allowClear
-            autoFocus
             placeholder="Enter Firstname..."
             value={selectedKeys[0]}
             onChange={(e) => {
@@ -120,7 +118,6 @@ const Blogslist = ({
           <Input.Search
             enterButton
             allowClear
-            autoFocus
             placeholder="Enter Lastname..."
             value={selectedKeys[0]}
             onChange={(e) => {
@@ -185,7 +182,6 @@ const Blogslist = ({
           <Input.Search
             enterButton
             allowClear
-            autoFocus
             placeholder="Enter Start Date..."
             value={selectedKeys[0]}
             onChange={(e) => {
@@ -215,7 +211,6 @@ const Blogslist = ({
           <Input.Search
             enterButton
             allowClear
-            autoFocus
             placeholder="Enter End Date..."
             value={selectedKeys[0]}
             onChange={(e) => {
