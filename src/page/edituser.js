@@ -1,24 +1,25 @@
-import "./edituser.css";
+import "../style/edituser.css";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Axios from "axios";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
-import ListIcon from "@mui/icons-material/List";
+import Cookies from "js-cookie";
+import axios from "axios";
+import SideBar from "../components/sideBar";
 
 function EditUser() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const showNewMember = location.state.newMemberList;
-  const [newMember, setNewmember] = useState(showNewMember);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const showNewMember = location.state.newMemberList;
+  const [newMember, setNewmember] = useState(showNewMember);
 
   const [fname, setFname] = useState(showNewMember[0].Firstname);
   const [lname, setLname] = useState(showNewMember[0].Lastname);
@@ -38,45 +39,43 @@ function EditUser() {
 
   let strDtype = dtype;
 
+  const refreshToken = async () => {
+    try {
+      const refreshToken = Cookies.get("refreshToken");
+      await axios.get("http://localhost:5000/token", {
+        params: { refreshToken: refreshToken },
+      });
+    } catch (error) {
+      if (error.response) {
+        navigate("/login");
+      }
+    }
+  };
+
+  const Logout = async () => {
+    try {
+      const refreshToken = Cookies.get("refreshToken");
+      await axios.delete("http://localhost:5000/logout", {
+        params: { refreshToken: refreshToken },
+      });
+      Cookies.remove("refreshToken");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const swapData = () => {
     if (strDtype === "etc.") {
       strDtype = etc;
     }
   };
 
-  const Back = () => {
-    navigate("/table");
-  };
+  const Back = () => navigate("/table");
 
-  const auth = () => {
-    const checkUser = localStorage.getItem("auth");
-    if (checkUser !== "adminLogin") {
-      navigate("/login");
-    }
-  };
-
-  const BtoLogin = () => {
-    localStorage.removeItem("auth");
-    navigate("/login");
-  };
-
-  const UpdateData = (id) => {
+  const UpdateData = async (id) => {
     swapData();
-    // Axios.put("http://localhost:3001/update", {
-    //   id: id,
-    //   Firstname: fname,
-    //   Lastname: lname,
-    //   Email: email,
-    //   Tel: tel,
-    //   User_Type: utype,
-    //   Device_Type: strDtype,
-    //   Device_Brand: dbrand,
-    //   Device_Name: dname,
-    //   Start_Date: startdate,
-    //   End_Date: enddate,
-    //   Remark: remark,
-    // })
-    Axios.patch("http://localhost:3002/updateusers", {
+    await Axios.patch("http://localhost:5000/updateusers", {
       id: id,
       Firstname: fname,
       Lastname: lname,
@@ -165,7 +164,7 @@ function EditUser() {
   };
 
   useEffect(() => {
-    auth();
+    refreshToken();
     onFirstCheck();
     onFirstCheckEnd();
   }, []);
@@ -178,84 +177,7 @@ function EditUser() {
       exit={{ opacity: 0 }}
       transition={{ delay: 0.1 }}
     >
-      <div className="left-manu6">
-        <div className="top-img6">
-          {window.innerWidth > 100 && window.innerWidth < 1000 ? (
-            <div>
-              <img
-                className="logo-table6"
-                src="img/LS-02.png"
-                alt=""
-                srcSet=""
-              />
-            </div>
-          ) : (
-            <div className="box-intop">
-              <img
-                className="logo-table6"
-                src="img/LS-01.png"
-                alt=""
-                srcSet=""
-              />
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="ListIcon6"
-                onClick={() => {
-                  Back();
-                }}
-              >
-                <ListIcon sx={{ fontSize: "32px", color: "white" }} />
-              </motion.button>
-            </div>
-          )}
-        </div>
-        <div className="bottom-img6">
-          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
-            <div>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="ListIcon6"
-                onClick={() => {
-                  Back();
-                }}
-              >
-                <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="icon6"
-                onClick={() => {
-                  BtoLogin();
-                }}
-              >
-                <LogoutOutlinedIcon
-                  className="icon-exit6"
-                  sx={{ fontSize: "40px", color: "white" }}
-                />
-              </motion.button>
-            </div>
-          ) : (
-            <div>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="icon6"
-                onClick={() => {
-                  BtoLogin();
-                }}
-              >
-                <LogoutOutlinedIcon
-                  className="icon-exit6"
-                  style={{ fontSize: "40px", color: "#0174B3" }}
-                />
-              </motion.button>
-            </div>
-          )}
-        </div>
-      </div>
+      <SideBar Back={Back} Logout={Logout} />
       <div className="bg6">
         <div className="headerInfo6">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
@@ -264,9 +186,7 @@ function EditUser() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="backbutt6"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               >
                 {
                   <ArrowBackIosIcon
@@ -282,13 +202,11 @@ function EditUser() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="backbutt6"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               >
                 {
                   <ArrowBackIosIcon
-                    sx={{ fontSize: "32px", color: "#FFB401" }}
+                    sx={{ fontSize: "32px", color: "#0174B3" }}
                   />
                 }{" "}
               </motion.button>
@@ -296,12 +214,7 @@ function EditUser() {
             </div>
           )}
           <div className="row-nameButt4">
-            <button
-              className="nameButt4"
-              onClick={() => {
-                Back();
-              }}
-            >
+            <button className="nameButt4" onClick={() => Back()}>
               <p className="message4">Wi-Fi Request List</p>
             </button>
             <p className="message4-back">/Edit</p>
@@ -310,11 +223,7 @@ function EditUser() {
         {showNewMember.map((val, key) => {
           return (
             <div className="contain-data6" key={val.id}>
-              <form
-                onSubmit={handleSubmit(() => {
-                  UpdateData(val.id);
-                })}
-              >
+              <form onSubmit={handleSubmit(() => UpdateData(val.id))}>
                 <div className="row-data6">
                   <span className="split-contain6">
                     <label htmlFor="inputFname" className="form-label fl6">
@@ -360,7 +269,7 @@ function EditUser() {
                     </label>
 
                     <input
-                      type="email"
+                      type="text"
                       className=" form-control fc6"
                       id="inputEmail"
                       defaultValue={val.Email}
@@ -368,7 +277,7 @@ function EditUser() {
                         onChange: (e) => setEmail(e.target.value),
                         required: "Please fill this form",
                         pattern: {
-                          value: /[a-z0-9._]+@[a-z0-9.-]+.[a-z]{2,}$/,
+                          value: /^[\w]+[@]+([\w-]+\.)+[\w-]{2,4}$/,
                           message: "Please correct this form",
                         },
                       })}
@@ -584,9 +493,7 @@ function EditUser() {
                       className=" form-control remark6"
                       id="inputremark"
                       defaultValue={val.Remark}
-                      onChange={(e) => {
-                        setRemark(e.target.value);
-                      }}
+                      onChange={(e) => setRemark(e.target.value)}
                     />
                   </span>
                 </div>
@@ -605,9 +512,7 @@ function EditUser() {
                     type="button"
                     className="btn cancelbutt6"
                     value="Cancel"
-                    onClick={() => {
-                      Back();
-                    }}
+                    onClick={() => Back()}
                   />
                 </div>
               </form>

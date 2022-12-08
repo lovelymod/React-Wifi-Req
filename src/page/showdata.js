@@ -1,46 +1,59 @@
-import "./showdata.css";
+import "../style/showdata.css";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import Axios from "axios";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
-import ListIcon from "@mui/icons-material/List";
+import Cookies from "js-cookie";
+import axios from "axios";
+import SideBar from "../components/sideBar";
 
 function ShowData() {
   const navigate = useNavigate();
   const location = useLocation();
   const showNewMember = location.state.newMemberList;
   console.log(
-    "🚀 ~ file: showdata.js ~ line 15 ~ ShowData ~ showNewMember",
+    "🚀 ~ file: showdata.js:16 ~ ShowData ~ showNewMember",
     showNewMember
   );
   const [Labelhide, setLabelhide] = useState("");
 
+  const refreshToken = async () => {
+    try {
+      const refreshToken = Cookies.get("refreshToken");
+      await axios.get("http://localhost:5000/token", {
+        params: { refreshToken: refreshToken },
+      });
+    } catch (error) {
+      if (error.response) {
+        navigate("/login");
+      }
+    }
+  };
+
+  const Logout = async () => {
+    try {
+      const refreshToken = Cookies.get("refreshToken");
+      await axios.delete("http://localhost:5000/logout", {
+        params: { refreshToken: refreshToken },
+      });
+      Cookies.remove("refreshToken");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onFirstCheckEnd = () => {
-    if (!showNewMember[0].enddate) {
+    if (!showNewMember[0].End_Date) {
       setLabelhide("hidden");
     } else {
       setLabelhide("");
     }
   };
 
-  const auth = () => {
-    const checkUser = localStorage.getItem("auth");
-    if (checkUser !== "adminLogin") {
-      navigate("/login");
-    }
-  };
-
-  const BtoLogin = () => {
-    localStorage.removeItem("auth");
-    navigate("/login");
-  };
-
-  const Back = () => {
-    navigate("/table");
-  };
+  const Back = () => navigate("/table");
 
   const DeleteUser = (id) => {
     Swal.fire({
@@ -53,7 +66,7 @@ function ShowData() {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://localhost:3002/users/${id}`).then((response) => {
+        Axios.delete(`http://localhost:5000/users/${id}`).then((response) => {
           if (response.data.msg === "User Deleted") {
             Swal.fire({
               icon: "success",
@@ -77,7 +90,7 @@ function ShowData() {
   };
 
   useEffect(() => {
-    auth();
+    refreshToken();
     onFirstCheckEnd();
   }, []);
 
@@ -89,84 +102,7 @@ function ShowData() {
       exit={{ opacity: 0 }}
       transition={{ delay: 0.1 }}
     >
-      <div className="left-manu5">
-        <div className="top-img5">
-          {window.innerWidth > 100 && window.innerWidth < 1000 ? (
-            <div>
-              <img
-                className="logo-table5"
-                src="img/LS-02.png"
-                alt=""
-                srcSet=""
-              />
-            </div>
-          ) : (
-            <div className="box-intop">
-              <img
-                className="logo-table5"
-                src="img/LS-01.png"
-                alt=""
-                srcSet=""
-              />
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="ListIcon5"
-                onClick={() => {
-                  Back();
-                }}
-              >
-                <ListIcon sx={{ fontSize: "32px", color: "white" }} />
-              </motion.button>
-            </div>
-          )}
-        </div>
-        <div className="bottom-img5">
-          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
-            <div>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="ListIcon4"
-                onClick={() => {
-                  Back();
-                }}
-              >
-                <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="icon5"
-                onClick={() => {
-                  BtoLogin();
-                }}
-              >
-                <LogoutOutlinedIcon
-                  className="icon-exit5"
-                  sx={{ fontSize: "40px", color: "white" }}
-                />
-              </motion.button>
-            </div>
-          ) : (
-            <div>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="icon5"
-                onClick={() => {
-                  BtoLogin();
-                }}
-              >
-                <LogoutOutlinedIcon
-                  className="icon-exit5"
-                  sx={{ fontSize: "40px", color: "#0174B3" }}
-                />
-              </motion.button>
-            </div>
-          )}
-        </div>
-      </div>
+      <SideBar Back={Back} Logout={Logout} />
       <div className="bg5">
         <span className="right5">
           <div className="headerInfo5">
@@ -176,9 +112,7 @@ function ShowData() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   className="backbutt5"
-                  onClick={() => {
-                    Back();
-                  }}
+                  onClick={() => Back()}
                 >
                   {
                     <ArrowBackIosIcon
@@ -194,9 +128,7 @@ function ShowData() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   className="backbutt5"
-                  onClick={() => {
-                    Back();
-                  }}
+                  onClick={() => Back()}
                 >
                   {
                     <ArrowBackIosIcon
@@ -208,12 +140,7 @@ function ShowData() {
               </div>
             )}
             <div className="row-nameButt4">
-              <button
-                className="nameButt4"
-                onClick={() => {
-                  Back();
-                }}
-              >
+              <button className="nameButt4" onClick={() => Back()}>
                 <p className="message4">Wi-Fi Request List</p>
               </button>
               <p className="message4-back">/User Information</p>
@@ -299,9 +226,7 @@ function ShowData() {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       className="btn edit-butt-sw5"
-                      onClick={() => {
-                        edituser(val.id);
-                      }}
+                      onClick={() => edituser(val.id)}
                     >
                       Edit
                     </motion.button>
@@ -310,9 +235,7 @@ function ShowData() {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       className="btn del-butt-sw5"
-                      onClick={() => {
-                        DeleteUser(val.id);
-                      }}
+                      onClick={() => DeleteUser(val.id)}
                     >
                       Delete
                     </motion.button>

@@ -1,50 +1,60 @@
-import "./login.css";
+import "../style/login.css";
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import Cookies from "js-cookie";
 
 function Login() {
   const {
     register,
     handleSubmit,
+    setFocus,
     formState: { errors },
   } = useForm();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [hidePwd, setHidePwd] = useState("password");
   const navigate = useNavigate();
 
-  const checkLogin = () => {
-    const auth = localStorage.getItem("auth");
-    if (auth === "adminLogin") {
-      navigate("/table");
+  const showPwd = () => {
+    if (hidePwd === "password") {
+      setHidePwd("text");
+    } else {
+      setHidePwd("password");
     }
   };
 
-  const OnSubmit = () => {
-    login();
-  };
+  const toRegister = () => navigate("/register");
+  const OnSubmit = () => authLogin();
 
-  const login = () => {
-    Axios.post("http://localhost:3002/login", {
-      Username: username,
-      Password: password,
-    }).then(async (response) => {
-      if (response.data.msg === "Matched") {
-        localStorage.setItem("auth", "adminLogin");
-        Swal.fire({
-          icon: "success",
-          title: "LOGGED IN",
-          showConfirmButton: false,
-          timer: 1200,
-          timerProgressBar: true,
-        });
-        setTimeout(function () {
-          navigate("/table");
-        }, 1500);
-      } else if (response.data.msg === "not Matched") {
+  const authLogin = async () => {
+    try {
+      await Axios.post("http://localhost:5000/login", {
+        Username: username,
+        Password: password,
+      }).then((response) => {
+        Cookies.set("refreshToken", response.data.refreshToken, { expires: 1 });
+      });
+      Swal.fire({
+        icon: "success",
+        title: "LOGGED IN",
+        showConfirmButton: false,
+        timer: 1200,
+        timerProgressBar: true,
+      });
+      setTimeout(function () {
+        navigate("/table");
+      }, 1500);
+    } catch (error) {
+      if (
+        error.response.data.msg === "not Matched" ||
+        error.response.data.msg === "Username not found"
+      ) {
         Swal.fire({
           icon: "error",
           title: "Wrong Username or Password",
@@ -53,11 +63,17 @@ function Login() {
           timerProgressBar: true,
         });
       }
-    });
+    }
+  };
+
+  const checkLogin = () => {
+    const chk = Cookies.get("refreshToken");
+    if (chk) navigate("/table");
   };
 
   useEffect(() => {
     checkLogin();
+    setFocus("username");
   }, []);
   return (
     <motion.div
@@ -84,14 +100,14 @@ function Login() {
                   required: true,
                 })}
               />
-              {errors.username && (
-                <p className="fill-message">Please fill this form</p>
-              )}
             </div>
-            <div className="row-contain-login2">
+            {errors.username && (
+              <p className="fill-message">Please fill this form</p>
+            )}
+            <div className="row-contain-login2-pwd">
               <input
-                type="password"
-                className="form-control input2"
+                type={hidePwd}
+                className="input2-pwd"
                 id="password"
                 placeholder="Password"
                 {...register("password", {
@@ -99,25 +115,39 @@ function Login() {
                   required: true,
                 })}
               />
-              {errors.password && (
-                <p className="fill-message">Please fill this form</p>
+              {hidePwd === "password" ? (
+                <VisibilityOffIcon
+                  className="eyeVisit"
+                  onClick={() => showPwd()}
+                />
+              ) : (
+                <VisibilityIcon
+                  className="eyeVisit"
+                  onClick={() => showPwd()}
+                />
               )}
             </div>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="btn loginbutt2"
-            >
-              Login
-            </motion.button>
-
-            {/* <input
-              type="button"
-              className="btn loginbutt2"
-              value="Login"
-              onClick={() => {
-              }}
-            /> */}
+            {errors.password && (
+              <p className="fill-message">Please fill this form</p>
+            )}
+            <div className="row-contain-login2-butt">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="btn loginbutt2"
+              >
+                Login
+              </motion.button>
+              <div style={{ width: "20px" }}></div>
+              <motion.input
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                type="button"
+                value="Register"
+                className="btn loginbutt2"
+                onClick={() => toRegister()}
+              />
+            </div>
           </form>
         </div>
       </div>

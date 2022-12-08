@@ -1,4 +1,4 @@
-import "./usersubmit.css";
+import "../style/usersubmit.css";
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import { useForm } from "react-hook-form";
@@ -26,21 +26,16 @@ function UserSubmit() {
   const [startdate, setStartdate] = useState("");
   const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
-
   const [Labelhide, setLabelhide] = useState("");
   const [etcDisable, setetcDisable] = useState("hidden");
-
   const [internalIP, setInternalIP] = useState("");
 
   const strUtype = utype;
   let strDtype = dtype;
 
-  const OnSubmit = (e) => {
-    addRequest();
-  };
-
+  const OnSubmit = () => addRequest();
   const GetIP = async () => {
-    await Axios.post("http://localhost:3002/getip").then((response) => {
+    await Axios.post("http://localhost:5000/getip").then((response) => {
       setInternalIP(response.data[1].address);
     });
   };
@@ -50,7 +45,7 @@ function UserSubmit() {
     const dates = moment().format("YYYY-MM-DD");
     const times = moment().format("HH:mm");
 
-    Axios.post("http://localhost:3002/users", {
+    Axios.post("http://localhost:5000/users", {
       Firstname: fname,
       Lastname: lname,
       User_Type: strUtype,
@@ -86,6 +81,13 @@ function UserSubmit() {
         resetField("startDate");
         resetField("endDate");
         resetField("remark");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Something went wrong!",
+          showConfirmButton: false,
+        });
       }
     });
   };
@@ -141,7 +143,7 @@ function UserSubmit() {
     >
       <div className="bg1">
         <div className="images1">
-          <img className="logo1" src="img/LS-01.png" alt="" srcSet="" />
+          <img className="logo1" src="img/LS-02.png" alt="" srcSet="" />
         </div>
 
         <div className="header1">
@@ -152,7 +154,7 @@ function UserSubmit() {
             <div className="row-contain1">
               <span className="split-contain1">
                 <label htmlFor="inputFname" className="form-label fl1">
-                  First Name :
+                  First Name : <p className="star">*</p>
                 </label>
 
                 <input
@@ -171,7 +173,7 @@ function UserSubmit() {
 
               <span className="split-contain1">
                 <label htmlFor="inputLname" className="form-label fl1">
-                  Last Name :
+                  Last Name : <p className="star">*</p>
                 </label>
                 <input
                   type="text"
@@ -192,11 +194,11 @@ function UserSubmit() {
             <div className="row-contain1">
               <span className="split-contain1">
                 <label htmlFor="email" className="form-label fl1">
-                  Email :
+                  Email : <p className="star">*</p>
                 </label>
 
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
                   id="inputEmail"
                   placeholder="admin@gmail.com"
@@ -204,7 +206,7 @@ function UserSubmit() {
                     onChange: (e) => setEmail(e.target.value),
                     required: "Please fill this form",
                     pattern: {
-                      value: /[a-z0-9._]+@[a-z0-9.-]+.[a-z]{2,}$/,
+                      value: /^[\w]+[@]+([\w-]+\.)+[\w-]{2,4}$/,
                       message: "Please correct this form",
                     },
                   })}
@@ -216,7 +218,7 @@ function UserSubmit() {
 
               <span className="split-contain1">
                 <label htmlFor="tel" className="form-label fl1">
-                  Tel :
+                  Tel : <p className="star">*</p>
                 </label>
 
                 <input
@@ -250,7 +252,7 @@ function UserSubmit() {
             <div className="row-contain1">
               <span className="split-contain1">
                 <label htmlFor="UserType" className="form-label fl1">
-                  User Type :
+                  User Type : <p className="star">*</p>
                 </label>
 
                 <select
@@ -280,7 +282,7 @@ function UserSubmit() {
 
               <span className="split-contain1">
                 <label htmlFor="DeviceType" className="form-label fl1">
-                  Device Type :
+                  Device Type : <p className="star">*</p>
                 </label>
 
                 <select
@@ -334,7 +336,7 @@ function UserSubmit() {
             <div className="row-contain1">
               <span className="split-contain1">
                 <label htmlFor="deviceBrand" className="form-label fl1">
-                  Device Brand :
+                  Device Brand : <p className="star">*</p>
                 </label>
 
                 <input
@@ -354,7 +356,7 @@ function UserSubmit() {
 
               <span className="split-contain1">
                 <label htmlFor="deviceName" className="form-label fl1">
-                  Device Name :
+                  Device Name : <p className="star">*</p>
                 </label>
 
                 <input
@@ -376,7 +378,7 @@ function UserSubmit() {
             <div className="row-contain1">
               <span className="split-contain1">
                 <label htmlFor="startDate" className="form-label fl1">
-                  Start Date :
+                  Start Date : <p className="star">*</p>
                 </label>
 
                 <input
@@ -396,7 +398,7 @@ function UserSubmit() {
 
               <span className="split-contain1" hidden={Labelhide}>
                 <label htmlFor="endDate" className="form-label fl1">
-                  End Date :
+                  End Date : <p className="star">*</p>
                 </label>
                 <input
                   type="date"
@@ -448,9 +450,7 @@ function UserSubmit() {
                 type="button"
                 className="btn backbutt"
                 value="Cancel"
-                onClick={() => {
-                  resetForm();
-                }}
+                onClick={() => resetForm()}
               />
             </div>
           </form>

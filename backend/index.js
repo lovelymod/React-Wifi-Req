@@ -15,4 +15,5 @@ app.use(UserRoute);
 app.use(AdminRoute);
 
  
-app.listen(3002, ()=> console.log('Server running at port 3002'));
+app.listen(5000, ()=> console.log('Server running at port 5000'));
+// app.listen(3002, ()=> console.log('Server running at port 3002'));
