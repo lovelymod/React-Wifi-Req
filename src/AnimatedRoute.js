@@ -5,10 +5,9 @@ import AdminSub from "./page/adminsubmit";
 import ShowData from "./page/showdata";
 import EditUser from "./page/edituser";
 import Testform from "./testform";
-import { useLocation } from "react-router-dom";
-import { Routes, Route } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
 import Register from "./page/Register";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
 function AnimatedRoute() {
   const location = useLocation();

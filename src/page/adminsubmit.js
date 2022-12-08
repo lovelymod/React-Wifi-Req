@@ -1,14 +1,15 @@
-import "./admidsubmit.css";
+import "../style/admidsubmit.css";
+import SideBar from "../components/sideBar";
 import { useState, useEffect } from "react";
-import Axios from "axios";
+import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useNavigate } from "react-router-dom";
+import Axios from "axios";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { motion } from "framer-motion";
-import ListIcon from "@mui/icons-material/List";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 function AdminSub() {
   const navigate = useNavigate();
@@ -30,23 +31,47 @@ function AdminSub() {
   const [startdate, setStartdate] = useState("");
   const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
-
   const [Labelhide, setLabelhide] = useState("");
   const [etcDisable, setetcDisable] = useState("hidden");
 
   const strUtype = utype;
   let strDtype = dtype;
 
-  const OnSubmit = () => {
-    addRequest();
+  const refreshToken = async () => {
+    try {
+      const refreshToken = Cookies.get("refreshToken");
+      await axios.get("http://localhost:5000/token", {
+        params: { refreshToken: refreshToken },
+      });
+    } catch (error) {
+      if (error.response) {
+        navigate("/login");
+      }
+    }
   };
 
-  const addRequest = () => {
+  const Logout = async () => {
+    try {
+      const refreshToken = Cookies.get("refreshToken");
+      await axios.delete("http://localhost:5000/logout", {
+        params: { refreshToken: refreshToken },
+      });
+      Cookies.remove("refreshToken");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const Back = () => navigate("/table");
+  const OnSubmit = () => addRequest();
+
+  const addRequest = async () => {
     swapData();
     const dates = moment().format("YYYY-MM-DD");
     const times = moment().format("HH:mm");
 
-    Axios.post("http://localhost:3002/users", {
+    await Axios.post("http://localhost:5000/users", {
       Firstname: fname,
       Lastname: lname,
       User_Type: strUtype,
@@ -110,24 +135,8 @@ function AdminSub() {
     }
   };
 
-  const auth = () => {
-    const checkUser = localStorage.getItem("auth");
-    if (checkUser !== "adminLogin") {
-      navigate("/login");
-    }
-  };
-
-  const BtoLogin = () => {
-    localStorage.removeItem("auth");
-    navigate("/login");
-  };
-
-  const Back = () => {
-    navigate("/table");
-  };
-
   useEffect(() => {
-    auth();
+    refreshToken();
   }, []);
 
   return (
@@ -138,84 +147,7 @@ function AdminSub() {
       exit={{ opacity: 0 }}
       transition={{ delay: 0.1 }}
     >
-      <div className="imagesAdmin4">
-        <div className="boxtop4">
-          {window.innerWidth > 100 && window.innerWidth < 1000 ? (
-            <div>
-              <img
-                className="logoAdmin4"
-                src="img/LS-02.png"
-                alt=""
-                srcSet=""
-              />
-            </div>
-          ) : (
-            <div className="box-intop">
-              <img
-                className="logoAdmin4"
-                src="img/LS-01.png"
-                alt=""
-                srcSet=""
-              />
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="ListIcon4"
-                onClick={() => {
-                  Back();
-                }}
-              >
-                <ListIcon sx={{ fontSize: "32px", color: "white" }} />
-              </motion.button>
-            </div>
-          )}
-        </div>
-        <div className="boxbottom4">
-          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
-            <div>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="ListIcon4"
-                onClick={() => {
-                  Back();
-                }}
-              >
-                <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="icon4"
-                onClick={() => {
-                  BtoLogin();
-                }}
-              >
-                <LogoutOutlinedIcon
-                  className="icon-exit4"
-                  sx={{ fontSize: "40px", color: "white" }}
-                />
-              </motion.button>
-            </div>
-          ) : (
-            <div>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="icon4"
-                onClick={() => {
-                  BtoLogin();
-                }}
-              >
-                <LogoutOutlinedIcon
-                  className="icon-exit4"
-                  style={{ fontSize: "40px", color: "#0174B3" }}
-                />
-              </motion.button>
-            </div>
-          )}
-        </div>
-      </div>
+      <SideBar Back={Back} Logout={Logout} />
       <div className="bgAdmin4">
         <div className="headerAdmin4">
           {window.innerWidth > 601 && window.innerWidth < 1000 ? (
@@ -224,9 +156,7 @@ function AdminSub() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="backbuttAdminTop4"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               >
                 {
                   <ArrowBackIosIcon
@@ -242,13 +172,11 @@ function AdminSub() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="backbuttAdminTop4"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               >
                 {
                   <ArrowBackIosIcon
-                    sx={{ fontSize: "32px", color: "#FFB401" }}
+                    sx={{ fontSize: "32px", color: "#0174B3" }}
                   />
                 }{" "}
               </motion.button>
@@ -256,12 +184,7 @@ function AdminSub() {
             </div>
           )}
           <div className="row-nameButt4">
-            <button
-              className="nameButt4"
-              onClick={() => {
-                Back();
-              }}
-            >
+            <button className="nameButt4" onClick={() => Back()}>
               <p className="message4">Wi-Fi Request List</p>
             </button>
             <p className="message4-back">/Create User</p>
@@ -275,7 +198,7 @@ function AdminSub() {
             <div className="row-containAdmin4">
               <span className="split-contain4">
                 <label htmlFor="inputFname" className="form-label flAdmin4">
-                  First Name :
+                  First Name : <p className="star">*</p>
                 </label>
 
                 <input
@@ -294,7 +217,7 @@ function AdminSub() {
 
               <span className="split-contain4">
                 <label htmlFor="inputLname" className="form-label flAdmin4">
-                  Last Name :
+                  Last Name : <p className="star">*</p>
                 </label>
                 <input
                   type="text"
@@ -315,11 +238,11 @@ function AdminSub() {
             <div className="row-containAdmin4">
               <span className="split-contain4">
                 <label htmlFor="email" className="form-label flAdmin4">
-                  Email :
+                  Email : <p className="star">*</p>
                 </label>
 
                 <input
-                  type="email"
+                  type="text"
                   className=" form-control fcAdmin4"
                   id="inputEmail"
                   placeholder="admin@gmail.com"
@@ -327,7 +250,7 @@ function AdminSub() {
                     onChange: (e) => setEmail(e.target.value),
                     required: "Please fill this form",
                     pattern: {
-                      value: /[a-z0-9._]+@[a-z0-9.-]+.[a-z]{2,}$/,
+                      value: /^[\w]+[@]+([\w-]+\.)+[\w-]{2,4}$/,
                       message: "Please correct this form",
                     },
                   })}
@@ -339,7 +262,7 @@ function AdminSub() {
 
               <span className="split-contain4">
                 <label htmlFor="tel" className="form-label flAdmin4">
-                  Tel :
+                  Tel : <p className="star">*</p>
                 </label>
 
                 <input
@@ -373,7 +296,7 @@ function AdminSub() {
             <div className="row-containAdmin4">
               <span className="split-contain4">
                 <label htmlFor="UserType" className="form-label flAdmin4">
-                  User Type :
+                  User Type : <p className="star">*</p>
                 </label>
 
                 <select
@@ -403,7 +326,7 @@ function AdminSub() {
 
               <span className="split-contain4">
                 <label htmlFor="DeviceType" className="form-label flAdmin4">
-                  Device Type :
+                  Device Type : <p className="star">*</p>
                 </label>
 
                 <select
@@ -457,7 +380,7 @@ function AdminSub() {
             <div className="row-containAdmin4">
               <span className="split-contain4">
                 <label htmlFor="deviceBrand" className="form-label flAdmin4">
-                  Device Brand :
+                  Device Brand : <p className="star">*</p>
                 </label>
 
                 <input
@@ -477,7 +400,7 @@ function AdminSub() {
 
               <span className="split-contain4">
                 <label htmlFor="deviceName" className="form-label flAdmin4">
-                  Device Name :
+                  Device Name : <p className="star">*</p>
                 </label>
 
                 <input
@@ -499,7 +422,7 @@ function AdminSub() {
             <div className="row-containAdmin4">
               <span className="split-contain4">
                 <label htmlFor="startDate" className="form-label flAdmin4">
-                  Start Date :
+                  Start Date : <p className="star">*</p>
                 </label>
 
                 <input
@@ -519,7 +442,7 @@ function AdminSub() {
 
               <span className="split-contain4" hidden={Labelhide}>
                 <label htmlFor="endDate" className="form-label flAdmin4">
-                  End Date :
+                  End Date : <p className="star">*</p>
                 </label>
 
                 <input
@@ -572,9 +495,7 @@ function AdminSub() {
                 type="button"
                 className="btn backbuttAdmin4"
                 value="Cancel"
-                onClick={() => {
-                  Back();
-                }}
+                onClick={() => Back()}
               />
             </div>
           </form>

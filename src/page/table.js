@@ -1,80 +1,100 @@
-import "./table.css";
+import "../style/table.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import Axios from "axios";
-import Blogslist from "./blogslist";
+import Blogslist from "../components/blogslist";
+import TableSideBar from "../components/tablesideBar";
 import { CSVLink } from "react-csv";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import DownloadIcon from "@mui/icons-material/Download";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Swal from "sweetalert2";
-import TableSideBar from "./tablesideBar";
 import { motion } from "framer-motion";
 import ListIcon from "@mui/icons-material/List";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 function MyTable() {
-  const $ = require("jquery");
-  $.DataTable = require("datatables.net");
   const navigate = useNavigate();
   const [memberList, setMemberList] = useState([]);
-  const [sortid, setsortid] = useState(true);
-  const [sortDate, setsortDate] = useState(true);
-  const [sortTime, setsortTime] = useState(true);
-  const [sortFname, setsortFname] = useState(true);
-  const [sortUser, setsortUser] = useState(true);
-  const [sortStart, setsortStart] = useState(true);
-  const [sortEnd, setsortEnd] = useState(true);
   const timeStamp = moment().format("YYYY_MM_DD");
-
   const [exMemberList, setExMemberList] = useState([]);
-
   const [isOpen, setIsOpen] = useState(false);
+  const [Username, setUsername] = useState("");
+  const [token, setToken] = useState("");
+  const [expire, setExpire] = useState("");
 
-  // const getMember = () => {
-  //   Axios.get("http://localhost:3002/getusers").then((response) => {
-  //     setMemberList(response.data);
-  //   });
-  // };
-  const chgSortId = () => {
-    sortid === true
-      ? memberList.sort((a, b) => (a.id < b.id ? 1 : -1))
-      : memberList.sort((a, b) => (a.id > b.id ? 1 : -1));
+  const refreshToken = async () => {
+    try {
+      const refreshToken = Cookies.get("refreshToken");
+      const response = await axios.get("http://localhost:5000/token", {
+        params: { refreshToken: refreshToken },
+      });
+      setToken(response.data.accessToken);
+      const decoded = jwt_decode(response.data.accessToken);
+      setUsername(decoded.Username);
+      setExpire(decoded.exp);
+    } catch (error) {
+      if (error.response) {
+        navigate("/login");
+      }
+    }
   };
-  const chgSortDate = () => {
-    sortDate === true
-      ? memberList.sort((a, b) => (a.Dates < b.Dates ? 1 : -1))
-      : memberList.sort((a, b) => (a.Dates > b.Dates ? 1 : -1));
+
+  const axiosJWT = axios.create();
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const refreshToken = Cookies.get("refreshToken");
+        const response = await axios.get("http://localhost:5000/token", {
+          params: { refreshToken: refreshToken },
+        });
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        setUsername(decoded.Username);
+        setExpire(decoded.exp);
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  const getUserAdmin = async () => {
+    await axiosJWT.get("http://localhost:5000/useradmin", {
+      headers: {
+        Username: Username,
+        Authorization: `Bearer ${token}`,
+      },
+    });
   };
-  const chgSortTime = () => {
-    sortTime === true
-      ? memberList.sort((a, b) => (a.Times < b.Times ? 1 : -1))
-      : memberList.sort((a, b) => (a.Times > b.Times ? 1 : -1));
+
+  const Logout = async () => {
+    try {
+      const refreshToken = Cookies.get("refreshToken");
+      await axios.delete("http://localhost:5000/logout", {
+        params: { refreshToken: refreshToken },
+      });
+      Cookies.remove("refreshToken");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const chgSortFname = () => {
-    sortFname === true
-      ? memberList.sort((a, b) => (a.Firstname < b.Firstname ? 1 : -1))
-      : memberList.sort((a, b) => (a.Firstname > b.Firstname ? 1 : -1));
-  };
-  const chgSortUser = () => {
-    sortUser === true
-      ? memberList.sort((a, b) => (a.User_Type < b.User_Type ? 1 : -1))
-      : memberList.sort((a, b) => (a.User_Type > b.User_Type ? 1 : -1));
-  };
-  const chgSortStart = () => {
-    sortStart === true
-      ? memberList.sort((a, b) => (a.Start_Date < b.Start_Date ? 1 : -1))
-      : memberList.sort((a, b) => (a.Start_Date > b.Start_Date ? 1 : -1));
-  };
-  const chgSortEnd = () => {
-    sortEnd === true
-      ? memberList.sort((a, b) => (a.End_Date < b.End_Date ? 1 : -1))
-      : memberList.sort((a, b) => (a.End_Date > b.End_Date ? 1 : -1));
-  };
+
+  const gotoAdminSub = () => navigate("/adminsubmit");
+  const Back = () => navigate("/table");
+  const toggle = () => setIsOpen(!isOpen);
 
   const fetchData = async () => {
-    const getUser = await Axios.get("http://localhost:3002/getusers");
+    const getUser = await Axios.get("http://localhost:5000/getusers");
     setMemberList(getUser.data);
     let dataBox = getUser.data;
     let dataList = [];
@@ -123,6 +143,7 @@ function MyTable() {
       if (result.isConfirmed) {
         const newMemberList = memberList.filter((val) => val.id !== id);
         setMemberList(newMemberList);
+        setExMemberList(newMemberList);
         Swal.fire({
           icon: "success",
           title: "Deleted !",
@@ -132,26 +153,6 @@ function MyTable() {
         });
       }
     });
-  };
-
-  const auth = () => {
-    const checkUser = localStorage.getItem("auth");
-    if (checkUser !== "adminLogin") {
-      navigate("/login");
-    }
-  };
-
-  const BtoLogin = () => {
-    localStorage.removeItem("auth");
-    navigate("/login");
-  };
-
-  const gotoAdminSub = () => {
-    navigate("/adminsubmit");
-  };
-
-  const Back = () => {
-    navigate("/table");
   };
 
   const headers = [
@@ -177,12 +178,9 @@ function MyTable() {
     filename: `RequestList_${timeStamp}.csv`,
   };
 
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
-
   useEffect(() => {
-    auth();
+    refreshToken();
+    getUserAdmin();
     fetchData();
   }, []);
 
@@ -198,18 +196,16 @@ function MyTable() {
         <div
           className="left-manu3"
           style={{
-            width: isOpen ? "25%" : "0%",
+            left: isOpen ? "0px" : "-100px",
             marginRight: isOpen ? "10px" : "0px",
           }}
         >
           <div className="top-img3">
             <button
               className="icon-back2"
-              onClick={() => {
-                toggle();
-              }}
+              onClick={() => toggle()}
               style={{
-                left: isOpen ? "50px" : "10px",
+                left: "58px",
                 transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
               }}
             >
@@ -227,9 +223,7 @@ function MyTable() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="ListIcon3"
-              onClick={() => {
-                Back();
-              }}
+              onClick={() => Back()}
               style={{ display: isOpen ? "block" : "none" }}
             >
               <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
@@ -240,9 +234,7 @@ function MyTable() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="icon3"
-              onClick={() => {
-                BtoLogin();
-              }}
+              onClick={() => Logout()}
               style={{ display: isOpen ? "block" : "none" }}
             >
               <LogoutOutlinedIcon
@@ -256,7 +248,7 @@ function MyTable() {
         <TableSideBar />
       )}
 
-      <div className="bg3" style={{ width: isOpen ? "75%" : "100%" }}>
+      <div className="bg3">
         <div className="header-top3">
           <span className="left3">
             <h2 className="name3">Wi-Fi Request List</h2>
@@ -268,9 +260,7 @@ function MyTable() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   className="icon-create3"
-                  onClick={() => {
-                    gotoAdminSub();
-                  }}
+                  onClick={() => gotoAdminSub()}
                 >
                   <AddIcon sx={{ fontSize: "20px", color: "white" }} />
                 </motion.button>
@@ -292,9 +282,7 @@ function MyTable() {
                   type="button"
                   className="btn create3"
                   value="Create User"
-                  onClick={() => {
-                    gotoAdminSub();
-                  }}
+                  onClick={() => gotoAdminSub()}
                 />
                 <CSVLink {...csvReport}>
                   <motion.input
@@ -310,81 +298,13 @@ function MyTable() {
           </span>
         </div>
         <div className="all-scroll">
-          {/* <div className="head-table3">
-            <p
-              className="head-data3"
-              onClick={() => {
-                setsortid(!sortid);
-                chgSortId();
-              }}
-            >
-              No
-            </p>
-            <p
-              className="head-data3"
-              onClick={() => {
-                setsortDate(!sortDate);
-                chgSortDate();
-              }}
-            >
-              Date
-            </p>
-            <p
-              className="head-data3"
-              onClick={() => {
-                setsortTime(!sortTime);
-                chgSortTime();
-              }}
-            >
-              Time
-            </p>
-            <p
-              className="head-data3"
-              onClick={() => {
-                setsortFname(!sortFname);
-                chgSortFname();
-              }}
-            >
-              Firstname
-            </p>
-            <p className="head-data3 lname">Lastname</p>
-            <p
-              className="head-data3"
-              onClick={() => {
-                setsortUser(!sortUser);
-                chgSortUser();
-              }}
-            >
-              User Type
-            </p>
-            <p
-              className="head-data3"
-              onClick={() => {
-                setsortStart(!sortStart);
-                chgSortStart();
-              }}
-            >
-              Start Date
-            </p>
-            <p
-              className="head-data3"
-              onClick={() => {
-                setsortEnd(!sortEnd);
-                chgSortEnd();
-              }}
-            >
-              End Date
-            </p>
-            <p className="head-empty3"></p>
-          </div> */}
-          {/* <hr className="top-table" /> */}
           <div className="table-scroll">
-            {/* // todo use Datatables Library  */}
             <Blogslist
               memberList={memberList}
               deleteMember={deleteMember}
               showUser={showUser}
               edituser={edituser}
+              setExMemberList={setExMemberList}
             />
           </div>
         </div>
