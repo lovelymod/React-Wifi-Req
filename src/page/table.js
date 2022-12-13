@@ -157,7 +157,7 @@ function MyTable() {
 
   const headers = [
     { label: "No", key: "id" },
-    { label: "IpAddr", key: "Ip_Addr" },
+    { label: "IP Address", key: "Ip_Addr" },
     { label: "First Name", key: "Firstname" },
     { label: "Last Name", key: "Lastname" },
     { label: "Email", key: "Email" },

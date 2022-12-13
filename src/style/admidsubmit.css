@@ -9,7 +9,6 @@
   font-family: "Kanit", sans-serif;
   display: flex;
   justify-content: center;
-  /* border: 2px solid yellow; */
   width: 100vw;
   height: 100vh;
   background-color: #f0f1f2;
@@ -20,7 +19,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* border: 2px solid black; */
   height: 100%;
   width: 10%;
   background-color: white;
@@ -28,7 +26,6 @@
   border-top-right-radius: 30px;
 }
 .boxtop4 {
-  /* border: 2px solid black; */
   height: 50%;
   padding-top: 20px;
   display: flex;
@@ -51,7 +48,6 @@
 }
 
 .boxbottom4 {
-  /* border: 2px solid black; */
   height: 50%;
   padding-bottom: 20px;
   display: flex;
@@ -70,13 +66,10 @@
   background-color: #f1f2f3;
 }
 
-
-
 .bgAdmin4 {
   width: 90%;
   height: 100% !important;
   height: fit-content;
-  /* border: 5px solid green; */
   background-color: white;
   border-top-left-radius: 30px;
 }
@@ -91,7 +84,6 @@
 }
 
 .containerAdmin4 {
-  /* border: 2px solid red; */
   height: 85%;
   overflow: auto;
 }
@@ -114,7 +106,6 @@
   height: fit-content;
   color: #ffb401 !important;
   margin-left: 50px;
-  /* margin-top: 12px; */
   background-color: #0174b3;
 }
 
@@ -208,7 +199,6 @@
   align-items: flex-end;
   width: 65%;
   justify-content: flex-end;
-  /* border: 2px solid black; */
 }
 
 .row-containAdmin4 {
@@ -216,11 +206,9 @@
   justify-content: space-between;
   align-items: center;
   width: 65%;
-  /* border: 1px solid blue; */
 }
 
 .box44 {
-  /* border: 1px solid black; */
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -233,13 +221,11 @@
   justify-content: space-around;
   align-items: center;
   width: 65%;
-  /* border: 1px solid blue; */
   margin-bottom: 20px;
 }
 
 .row-containMessage4 {
   color: #ffb401;
-  /* border: 1px solid blue; */
   align-self: start;
   padding-top: 50px;
   padding-left: 150px;
@@ -248,11 +234,9 @@
 .split-contain4 {
   width: 45%;
   justify-content: space-between;
-  /* border: 1px solid black ; */
 }
 
 .split-containRemark4 {
-  /* border: 1px solid black; */
   width: 100%;
   justify-content: space-between;
 }
@@ -410,7 +394,6 @@ form {
   }
 
   .imagesAdmin4 {
-    /* border: 5px solid green; */
     width: 100%;
     height: 15%;
     border-top-right-radius: 0px;

@@ -5,7 +5,6 @@
 }
 
 .App6 {
-  /* border: 5px solid black; */
   font-family: "Kanit", sans-serif;
   display: flex;
   justify-content: center;
@@ -15,16 +14,13 @@
 }
 
 .bg6 {
-  /* border: 2px solid red; */
   width: 90%;
   height: 100%;
   background-color: white;
   border-top-left-radius: 30px;
-  
 }
 
 .headerInfo6 {
-  /* border: 2px solid purple; */
   display: flex;
   flex-direction: column;
   border-top-left-radius: 28px;
@@ -39,10 +35,9 @@
   flex-direction: row;
   align-items: center;
   color: #ffb401;
-  /* border: 1px solid black; */
 }
 
-.afterButt6{
+.afterButt6 {
   position: relative;
   color: #ffb401;
   font-size: 36px;
@@ -56,15 +51,15 @@
   align-items: center;
   width: fit-content;
   height: fit-content;
-  color: #ffb401 ;
+  color: #ffb401;
   margin-left: 50px;
   margin-top: 0px;
   background-color: #0174b3;
 }
 
-.backbutt6:hover{
-  background-color: #0069a1 ;
-  border-radius: 10px ;
+.backbutt6:hover {
+  background-color: #0069a1;
+  border-radius: 10px;
 }
 
 .message6 {
@@ -74,24 +69,21 @@
   font-size: 24px;
 }
 
-
 .contain-data6 {
-  /* border: 5px solid pink; */
   height: 85%;
   overflow: auto;
 }
 .contain-data6::-webkit-scrollbar {
-/* Hide scrollbar for Chrome, Safari and Opera */
-  display: none; 
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  display: none;
 }
 
 .contain-data6 {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .row-data6 {
-  /* border: 2px solid crimson; */
   height: fit-content;
   display: flex;
   justify-content: space-between;
@@ -101,7 +93,6 @@
 
 .split-contain6 {
   justify-content: space-between;
-  /* border: 1px solid black; */
   width: 45%;
 }
 
@@ -119,7 +110,6 @@
   align-items: flex-end;
   width: 65%;
   justify-content: flex-end;
-  /* border: 2px solid black; */
 }
 
 .fl6 {
@@ -127,7 +117,6 @@
 }
 
 .split-containRemarkedit6 {
-  /* border: 1px solid black; */
   width: 100%;
 }
 
@@ -140,7 +129,6 @@
 }
 
 .row-butt6 {
-  /* border: 2px solid pink; */
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -179,11 +167,9 @@
   background-color: #ff5240 !important;
   color: #ffb401 !important;
 }
- 
 
 @media only screen and (max-width: 600px) {
   .App6 {
-    
     flex-direction: column;
   }
 
@@ -193,7 +179,6 @@
     width: 100%;
     height: 85%;
     border-top-right-radius: 30px !important;
-
   }
 
   .headerInfo6 {
@@ -202,7 +187,6 @@
     flex-direction: row;
     height: 13%;
     align-items: center;
-    /* border: 1px solid black; */
   }
 
   .box66 {
@@ -213,7 +197,7 @@
     color: #ffb401;
   }
 
-  .afterButt6{
+  .afterButt6 {
     top: 2px !important;
   }
 
@@ -225,9 +209,9 @@
     margin-bottom: 10px !important;
   }
 
-  .backbutt6:hover{
-    background-color: #f1f2f3 ;
-    border-radius: 10px ;
+  .backbutt6:hover {
+    background-color: #f1f2f3;
+    border-radius: 10px;
   }
 
   .message6 {
@@ -236,7 +220,6 @@
   }
 
   .contain-data6 {
-    /* border: 1px solid black; */
     height: 87%;
     overflow: auto;
   }
@@ -294,7 +277,7 @@
     color: #ffb401;
   }
 
-  .afterButt6{
+  .afterButt6 {
     top: 0px !important;
   }
 
@@ -302,17 +285,16 @@
     background-color: white !important;
     margin-bottom: 10px !important;
   }
-  .backbutt6:hover{
-    background-color: #f1f2f3 ;
-    border-radius: 10px ;
+  .backbutt6:hover {
+    background-color: #f1f2f3;
+    border-radius: 10px;
   }
 
-  .afterButt6{
+  .afterButt6 {
     position: relative;
     color: #ffb401;
     font-size: 36px;
     top: 6px;
-    
   }
 
   .message6 {
