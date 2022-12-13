@@ -269,24 +269,22 @@ const Blogslist = ({
     },
   ];
   return (
-    <>
-      <Table
-        dataSource={memberList}
-        columns={columns}
-        sticky={true}
-        bordered
-        pagination={{
-          position: ["bottomCenter"],
-          current: page,
-          pageSize: pageSize,
-          onChange: (page, pageSize) => {
-            setPage(page);
-            setPageSize(pageSize);
-          },
-        }}
-        onChange={handleChange}
-      />
-    </>
+    <Table
+      dataSource={memberList}
+      columns={columns}
+      sticky={true}
+      bordered
+      pagination={{
+        position: ["bottomCenter"],
+        current: page,
+        pageSize: pageSize,
+        onChange: (page, pageSize) => {
+          setPage(page);
+          setPageSize(pageSize);
+        },
+      }}
+      onChange={handleChange}
+    />
   );
 };
 

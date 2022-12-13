@@ -180,7 +180,7 @@ function EditUser() {
       <SideBar Back={Back} Logout={Logout} />
       <div className="bg6">
         <div className="headerInfo6">
-          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
+          {window.innerWidth > 100 && window.innerWidth < 1000 ? (
             <div className="box66">
               <motion.button
                 whileHover={{ scale: 1.1 }}
