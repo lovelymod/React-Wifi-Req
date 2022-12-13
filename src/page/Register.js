@@ -39,7 +39,7 @@ const Register = () => {
   const navigate = useNavigate();
   const Back = () => navigate("/login");
   const OnSubmit = () => Register();
-  
+
   const Register = async () => {
     try {
       await axios

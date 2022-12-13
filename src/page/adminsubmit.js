@@ -10,15 +10,55 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 function AdminSub() {
   const navigate = useNavigate();
+  const schema = yup.object().shape({
+    inputFirstname: yup.string().required("Firstname is required."),
+    inputLastname: yup.string().required("Lastname is required."),
+    inputEmail: yup
+      .string()
+      .email("Please correct this email.")
+      .required("Email is required.")
+      .matches(
+        /^[\w]+[@]+([\w-]+\.)+[\w-]{2,4}$/,
+        "Please correct this email."
+      ),
+    inputUsertype: yup.string().required("Usertype is required."),
+    inputTel: yup
+      .string()
+      .required("Phone number is required.")
+      .min(10, "Phone number must least 10 characters")
+      .max(12, "Phone number must most 10 characters")
+      .matches(
+        /(^[0-9]{10}$)|(^[0-9]{3}-[0-9]{3}-[0-9]{4}$)/,
+        "Phone number should be 0-9"
+      ),
+    inputDevicetype: yup.string().required("Devicetype is required."),
+    inputEtc: yup.string().when("inputDevicetype", {
+      is: "etc.",
+      then: yup.string().required("Etc. is required"),
+    }),
+    inputdeviceBrand: yup.string().required("Devicebrand is required."),
+    inputdeviceName: yup.string().required("Devicename is required."),
+    startDate: yup.string().required("Startdate is required."),
+    endDate: yup.string().when("inputUsertype", {
+      is: (inputUsertype) =>
+        inputUsertype === "internship" || inputUsertype === "guest",
+      then: yup.string().required("Enddate is required."),
+    }),
+    remark: yup.string().nullable().notRequired(),
+  });
   const {
     register,
     handleSubmit,
     resetField,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [utype, setUtype] = useState("");
@@ -81,7 +121,7 @@ function AdminSub() {
       Device_Brand: dbrand,
       Device_Name: dname,
       Start_Date: startdate,
-      End_Date: enddate,
+      End_Date: strUtype === "staff" ? "" : enddate,
       Remark: remark,
       Dates: dates,
       Times: times,
@@ -150,7 +190,7 @@ function AdminSub() {
       <SideBar Back={Back} Logout={Logout} />
       <div className="bgAdmin4">
         <div className="headerAdmin4">
-          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
+          {window.innerWidth > 100 && window.innerWidth < 1000 ? (
             <div className="box44">
               <motion.button
                 whileHover={{ scale: 1.1 }}
@@ -176,7 +216,7 @@ function AdminSub() {
               >
                 {
                   <ArrowBackIosIcon
-                    sx={{ fontSize: "32px", color: "#0174B3" }}
+                    sx={{ fontSize: "32px", color: "#ffb401" }}
                   />
                 }{" "}
               </motion.button>
@@ -207,11 +247,12 @@ function AdminSub() {
                   placeholder="First Name"
                   {...register("inputFirstname", {
                     onChange: (e) => setFname(e.target.value),
-                    required: true,
                   })}
                 />
                 {errors.inputFirstname && (
-                  <p className="fill-message">Please fill this form</p>
+                  <p className="fill-message">
+                    {errors?.inputFirstname?.message}
+                  </p>
                 )}
               </span>
 
@@ -226,11 +267,12 @@ function AdminSub() {
                   placeholder="Last Name"
                   {...register("inputLastname", {
                     onChange: (e) => setLname(e.target.value),
-                    required: true,
                   })}
                 />
                 {errors.inputLastname && (
-                  <p className="fill-message">Please fill this form</p>
+                  <p className="fill-message">
+                    {errors?.inputLastname?.message}
+                  </p>
                 )}
               </span>
             </div>
@@ -248,11 +290,6 @@ function AdminSub() {
                   placeholder="admin@gmail.com"
                   {...register("inputEmail", {
                     onChange: (e) => setEmail(e.target.value),
-                    required: "Please fill this form",
-                    pattern: {
-                      value: /^[\w]+[@]+([\w-]+\.)+[\w-]{2,4}$/,
-                      message: "Please correct this form",
-                    },
                   })}
                 />
                 {errors?.inputEmail && (
@@ -272,19 +309,6 @@ function AdminSub() {
                   placeholder="095xxxxxxx"
                   {...register("inputTel", {
                     onChange: (e) => setTel(e.target.value),
-                    required: "Please fill this form",
-                    maxLength: {
-                      value: 12,
-                      message: "Phone number must most 10 characters",
-                    },
-                    minLength: {
-                      value: 10,
-                      message: "Phone number must least 10 characters",
-                    },
-                    pattern: {
-                      value: /(^[0-9]{10}$)|(^[0-9]{3}-[0-9]{3}-[0-9]{4}$)/,
-                      message: "Please correct this form",
-                    },
                   })}
                 />
                 {errors?.inputTel && (
@@ -309,7 +333,6 @@ function AdminSub() {
                       setUtype(e.target.value);
                       HideLabel(e.target.value);
                     },
-                    required: "Please select one option",
                   })}
                 >
                   <option disabled value="">
@@ -339,7 +362,6 @@ function AdminSub() {
                       Checketc(e.target.value);
                       setDtype(e.target.value);
                     },
-                    required: "Please select one option",
                   })}
                 >
                   <option disabled value="">
@@ -368,11 +390,10 @@ function AdminSub() {
                   placeholder="Etc please fill ..."
                   {...register("inputEtc", {
                     onChange: (e) => setEtc(e.target.value),
-                    required: dtype === "etc." ? true : false,
                   })}
                 />
                 {errors.inputEtc && (
-                  <p className="fill-message">Please fill this form</p>
+                  <p className="fill-message">{errors?.inputEtc?.message}</p>
                 )}
               </span>
             </div>
@@ -390,11 +411,12 @@ function AdminSub() {
                   placeholder="Apple , Sumsung , ..."
                   {...register("inputdeviceBrand", {
                     onChange: (e) => setDbrand(e.target.value),
-                    required: true,
                   })}
                 />
                 {errors.inputdeviceBrand && (
-                  <p className="fill-message">Please fill this form</p>
+                  <p className="fill-message">
+                    {errors?.inputdeviceBrand?.message}
+                  </p>
                 )}
               </span>
 
@@ -410,11 +432,12 @@ function AdminSub() {
                   placeholder=""
                   {...register("inputdeviceName", {
                     onChange: (e) => setDname(e.target.value),
-                    required: true,
                   })}
                 />
                 {errors.inputdeviceName && (
-                  <p className="fill-message">Please fill this form</p>
+                  <p className="fill-message">
+                    {errors?.inputdeviceName?.message}
+                  </p>
                 )}
               </span>
             </div>
@@ -432,11 +455,10 @@ function AdminSub() {
                   id="startDate"
                   {...register("startDate", {
                     onChange: (e) => setStartdate(e.target.value),
-                    required: true,
                   })}
                 />
                 {errors.startDate && (
-                  <p className="fill-message">Please fill this form</p>
+                  <p className="fill-message">{errors?.startDate?.message}</p>
                 )}
               </span>
 
@@ -452,11 +474,10 @@ function AdminSub() {
                   id="endDate"
                   {...register("endDate", {
                     onChange: (e) => setEnddate(e.target.value),
-                    required: utype === "staff" ? false : true,
                   })}
                 />
                 {errors.endDate && (
-                  <p className="fill-message">Please fill this form</p>
+                  <p className="fill-message">{errors?.endDate?.message}</p>
                 )}
               </span>
             </div>
@@ -474,7 +495,6 @@ function AdminSub() {
                   id="remark"
                   {...register("remark", {
                     onChange: (e) => setRemark(e.target.value),
-                    required: false,
                   })}
                 />
               </span>

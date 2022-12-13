@@ -15,13 +15,11 @@
   font-family: "Kanit", sans-serif;
   display: flex;
   background-color: #f0f1f2;
-  /* border: 1px solid rgb(17, 247, 74); */
 }
 
 .left-manu3 {
   border-top-right-radius: 30px;
   margin-right: 10px;
-  /* border: 1px solid black; */
   background-color: white;
   height: 100%;
   width: 10%;
@@ -35,10 +33,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* border: 1px solid black; */
 }
 .box-intop {
-  /* border: 1px solid black; */
   width: 100%;
   height: 100%;
   display: flex;
@@ -66,7 +62,6 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  /* border: 1px solid black; */
 }
 
 .icon3 {
@@ -85,11 +80,9 @@
   height: 100%;
   background-color: white;
   border-top-left-radius: 30px;
-  /* border: 1px solid black; */
 }
 
 .header-top3 {
-  /* border: 1px solid orange ; */
   display: flex;
   justify-content: space-around;
   background-color: #0174b3;
@@ -100,7 +93,6 @@
 .left3 {
   width: 50%;
   height: 100%;
-  /* border: 5px solid yellowgreen ; */
   display: flex;
   align-items: center;
 }
@@ -114,7 +106,6 @@
 .right3 {
   width: 50%;
   height: 100%;
-  /* border: 5px solid yellowgreen ; */
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -140,18 +131,15 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* border: 2px solid brown ; */
   height: 50px;
   padding-top: 10px;
 }
 
 .head-data3 {
-  /* border: 2px solid crimson ; */
   display: flex;
   justify-content: center;
   min-width: 100px;
   max-width: 150px;
-  /* padding-right: 30px; */
 }
 
 .head-data3:hover {
@@ -171,25 +159,29 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  /* border: 2px solid crimson ; */
 }
 
 .all-scroll {
-  /* border: 2px solid crimson ; */
   height: 85%;
 }
 
 .table-scroll {
-  /* border: 2px solid crimson ; */
   height: 100%;
   overflow: auto;
+}
+.table-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.table-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .member3 {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* border: 2px solid deepskyblue ; */
   height: 50px;
   width: 100%;
   font-weight: bold;
@@ -198,7 +190,6 @@
 }
 
 .member-data3 {
-  /* border: 2px solid crimson ; */
   display: flex;
   justify-content: center;
   min-width: 130px;
@@ -212,7 +203,6 @@
 }
 
 .box-edit3 {
-  /* border: 2px solid crimson ; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -252,7 +242,6 @@
   .App3 {
     display: flex;
     z-index: 0 !important;
-    /* flex-direction: column;  */
   }
   .left-manu3 {
     z-index: 20;
@@ -354,7 +343,6 @@
   }
 
   .all-scroll {
-    /* border: 1px solid aqua ; */
     width: 100%;
     height: 90%;
     overflow-x: scroll;
@@ -370,7 +358,6 @@
   }
 
   .table-scroll {
-    /* border: 3px solid crimson ; */
     width: 250%;
     height: 100%;
   }
@@ -422,7 +409,6 @@
   }
 
   .top-img3 {
-    /* border: 1px solid black; */
     background-color: #0174b3;
     height: 100%;
     width: 50%;
@@ -435,7 +421,6 @@
   }
 
   .bottom-img3 {
-    /* border: 1px solid black; */
     background-color: #0174b3;
     height: 100%;
     width: 50%;
@@ -477,7 +462,6 @@
     color: white !important;
   }
   .all-scroll {
-    /* border: 7px solid crimson ; */
     width: 100%;
     height: 86%;
     overflow-x: scroll;
@@ -498,7 +482,6 @@
   }
 
   .table-scroll {
-    /* border: 5px solid crimson ; */
     width: 150%;
     height: 100%;
   }
