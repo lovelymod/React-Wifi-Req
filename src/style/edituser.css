@@ -1,11 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,300&display=swap");
-
-* {
-  box-sizing: border-box;
-}
-
 .App6 {
-  font-family: "Kanit", sans-serif;
   display: flex;
   justify-content: center;
   width: 100vw;
