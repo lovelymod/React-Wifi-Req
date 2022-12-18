@@ -76,14 +76,13 @@ function Login() {
     setFocus("username");
   }, []);
   return (
-    <motion.div
-      className="App2"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ delay: 0.1 }}
-    >
-      <div className="bg2">
+    <div className="App2">
+      <motion.div
+        className="bg2"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0 }}
+      >
         <div className="images2">
           <img className="logo2" src="img/LS-02.png" alt="" srcSet="" />
         </div>
@@ -150,8 +149,8 @@ function Login() {
             </div>
           </form>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
 

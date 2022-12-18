@@ -74,14 +74,13 @@ const Register = () => {
   };
 
   return (
-    <motion.div
-      className="App-regis"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ delay: 0.1 }}
-    >
-      <div className="container-regis">
+    <div className="App-regis">
+      <motion.div
+        className="container-regis"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0 }}
+      >
         <form onSubmit={handleSubmit(OnSubmit)} className="box-regis">
           <img className="logo-regis" src="img/LS-01.png" alt="" srcSet="" />
           <div className="field">
@@ -177,8 +176,8 @@ const Register = () => {
             />
           </div>
         </form>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 
