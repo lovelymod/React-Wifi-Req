@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "../components/schema";
 
 function UserSubmit() {
   const {
@@ -12,8 +14,9 @@ function UserSubmit() {
     handleSubmit,
     resetField,
     formState: { errors },
-  } = useForm();
-
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [utype, setUtype] = useState("");
@@ -34,6 +37,7 @@ function UserSubmit() {
   let strDtype = dtype;
 
   const OnSubmit = () => addRequest();
+
   const GetIP = async () => {
     await Axios.post("http://localhost:5000/getip").then((response) => {
       setInternalIP(response.data[1].address);
@@ -55,7 +59,7 @@ function UserSubmit() {
       Device_Brand: dbrand,
       Device_Name: dname,
       Start_Date: startdate,
-      End_Date: enddate,
+      End_Date: strUtype === "staff" ? "" : enddate,
       Remark: remark,
       Dates: dates,
       Times: times,
@@ -134,14 +138,16 @@ function UserSubmit() {
   }, []);
 
   return (
-    <motion.div
-      className="App1"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ delay: 0.1 }}
-    >
-      <div className="bg1">
+    <div className="App1">
+      <motion.div
+        className="bg1"
+        initial={{ scale: 0 }}
+        animate={{ scale: 0.9 }}
+        transition={{
+          delay: 0.3,
+          duration: 0.3,
+        }}
+      >
         <div className="images1">
           <img className="logo1" src="img/LS-02.png" alt="" srcSet="" />
         </div>
@@ -163,11 +169,12 @@ function UserSubmit() {
                   placeholder="First Name"
                   {...register("inputFirstname", {
                     onChange: (e) => setFname(e.target.value),
-                    required: true,
                   })}
                 />
                 {errors.inputFirstname && (
-                  <p className="fill-message">Please fill this form</p>
+                  <p className="fill-message">
+                    {errors?.inputFirstname?.message}
+                  </p>
                 )}
               </span>
 
@@ -182,11 +189,12 @@ function UserSubmit() {
                   placeholder="Last Name"
                   {...register("inputLastname", {
                     onChange: (e) => setLname(e.target.value),
-                    required: true,
                   })}
                 />
                 {errors.inputLastname && (
-                  <p className="fill-message">Please fill this form</p>
+                  <p className="fill-message">
+                    {errors?.inputLastname?.message}
+                  </p>
                 )}
               </span>
             </div>
@@ -204,11 +212,6 @@ function UserSubmit() {
                   placeholder="admin@gmail.com"
                   {...register("inputEmail", {
                     onChange: (e) => setEmail(e.target.value),
-                    required: "Please fill this form",
-                    pattern: {
-                      value: /^[\w]+[@]+([\w-]+\.)+[\w-]{2,4}$/,
-                      message: "Please correct this form",
-                    },
                   })}
                 />
                 {errors?.inputEmail && (
@@ -228,19 +231,6 @@ function UserSubmit() {
                   placeholder="095xxxxxxx"
                   {...register("inputTel", {
                     onChange: (e) => setTel(e.target.value),
-                    required: "Please fill this form",
-                    maxLength: {
-                      value: 12,
-                      message: "Phone number must most 10 characters",
-                    },
-                    minLength: {
-                      value: 10,
-                      message: "Phone number must least 10 characters",
-                    },
-                    pattern: {
-                      value: /(^[0-9]{10}$)|(^[0-9]{3}-[0-9]{3}-[0-9]{4}$)/,
-                      message: "Please correct this form",
-                    },
                   })}
                 />
                 {errors?.inputTel && (
@@ -265,7 +255,6 @@ function UserSubmit() {
                       setUtype(e.target.value);
                       HideLabel(e.target.value);
                     },
-                    required: "Please select one option",
                   })}
                 >
                   <option disabled value="">
@@ -295,7 +284,6 @@ function UserSubmit() {
                       Checketc(e.target.value);
                       setDtype(e.target.value);
                     },
-                    required: "Please select one option",
                   })}
                 >
                   <option disabled value="">
@@ -324,11 +312,10 @@ function UserSubmit() {
                   placeholder="Etc please fill ..."
                   {...register("inputEtc", {
                     onChange: (e) => setEtc(e.target.value),
-                    required: dtype === "etc." ? true : false,
                   })}
                 />
                 {errors.inputEtc && (
-                  <p className="fill-message">Please fill this form</p>
+                  <p className="fill-message">{errors?.inputEtc?.message}</p>
                 )}
               </span>
             </div>
@@ -346,11 +333,12 @@ function UserSubmit() {
                   placeholder="Apple , Sumsung , ..."
                   {...register("inputdeviceBrand", {
                     onChange: (e) => setDbrand(e.target.value),
-                    required: true,
                   })}
                 />
                 {errors.inputdeviceBrand && (
-                  <p className="fill-message">Please fill this form</p>
+                  <p className="fill-message">
+                    {errors?.inputdeviceBrand?.message}
+                  </p>
                 )}
               </span>
 
@@ -366,11 +354,12 @@ function UserSubmit() {
                   placeholder=""
                   {...register("inputdeviceName", {
                     onChange: (e) => setDname(e.target.value),
-                    required: true,
                   })}
                 />
                 {errors.inputdeviceName && (
-                  <p className="fill-message">Please fill this form</p>
+                  <p className="fill-message">
+                    {errors?.inputdeviceName?.message}
+                  </p>
                 )}
               </span>
             </div>
@@ -388,11 +377,10 @@ function UserSubmit() {
                   id="startDate"
                   {...register("startDate", {
                     onChange: (e) => setStartdate(e.target.value),
-                    required: true,
                   })}
                 />
                 {errors.startDate && (
-                  <p className="fill-message">Please fill this form</p>
+                  <p className="fill-message">{errors?.startDate?.message}</p>
                 )}
               </span>
 
@@ -407,11 +395,10 @@ function UserSubmit() {
                   id="endDate"
                   {...register("endDate", {
                     onChange: (e) => setEnddate(e.target.value),
-                    required: utype === "staff" ? false : true,
                   })}
                 />
                 {errors.endDate && (
-                  <p className="fill-message">Please fill this form</p>
+                  <p className="fill-message">{errors?.endDate?.message}</p>
                 )}
               </span>
             </div>
@@ -429,7 +416,6 @@ function UserSubmit() {
                   id="remark"
                   {...register("remark", {
                     onChange: (e) => setRemark(e.target.value),
-                    required: false,
                   })}
                 />
               </span>
@@ -455,8 +441,8 @@ function UserSubmit() {
             </div>
           </form>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
 

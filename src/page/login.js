@@ -76,13 +76,7 @@ function Login() {
     setFocus("username");
   }, []);
   return (
-    <motion.div
-      className="App2"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ delay: 0.1 }}
-    >
+    <div className="App2">
       <div className="bg2">
         <div className="images2">
           <img className="logo2" src="img/LS-02.png" alt="" srcSet="" />
@@ -151,7 +145,7 @@ function Login() {
           </form>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

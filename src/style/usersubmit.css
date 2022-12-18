@@ -1,31 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,300&display=swap");
 
-*{
+* {
   box-sizing: border-box;
 }
 
 .App1 {
-  font-family: 'Kanit', sans-serif;
+  font-family: "Kanit", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f0f1f2;
-  /* border: 3px solid blue; */
   height: 100vh;
   width: 100vw;
-  /* overflow: auto; */
   padding-top: 20px;
   padding-bottom: 20px;
 }
 
-.bg1{
-  width: 1100px;
+.bg1 {
+  width: 1000px;
   height: 100%;
-  /* height: fit-content; */
   box-shadow: 5px 5px 50px 5px gray;
   background-color: white;
   border-radius: 30px;
-  /* border: 2px solid black; */
   overflow: auto;
 }
 
@@ -34,18 +30,17 @@
 }
 
 .bg1 {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
-.message{
+.message {
   text-align: center;
-  color: #FFB401;
-  
+  color: #ffb401;
 }
 
-.regisbutt{
-  background-color: #0174B3 !important;
+.regisbutt {
+  background-color: #0174b3 !important;
   color: white !important;
   border-radius: 50px !important;
   width: 150px !important;
@@ -56,8 +51,8 @@
   font-weight: bold !important;
 }
 
-.backbutt{
-  background-color: #FFB401 !important;
+.backbutt {
+  background-color: #ffb401 !important;
   color: white !important;
   border-radius: 50px !important;
   width: 150px !important;
@@ -68,164 +63,136 @@
   font-weight: bold !important;
 }
 
-.regisbutt:active{
-  background-color: #FFB401 !important;
-  color: #FF5240 !important;
+.regisbutt:active {
+  background-color: #ffb401 !important;
+  color: #ff5240 !important;
 }
 
-.backbutt:active{
-  background-color: #FF5240 !important;
-  color: #FFB401 !important;
+.backbutt:active {
+  background-color: #ff5240 !important;
+  color: #ffb401 !important;
 }
 
-.form-control,.form-select{
+.form-control,
+.form-select {
   width: 300px !important;
   height: 60px !important;
   border-radius: 50px !important;
   margin-bottom: 10px !important;
 }
 
-.fl1{
-  /* border: 1px solid black; */
-
+.fl1 {
   font-size: 16px;
   display: flex;
 }
 
-.star{
+.star {
   margin-left: 5px;
   color: red;
   font-size: 20px;
-  /* border: 1px solid black; */
   height: 0px;
 }
 
-.solo1{
+.solo1 {
   display: flex;
   align-items: center;
   width: 700px;
   justify-content: flex-end;
 }
 
-
-.images1{
+.images1 {
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
   padding-top: 30px;
   padding-bottom: 30px;
-  background-color: #0174B3;
+  background-color: #0174b3;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-  
-  
 }
 
-img{
+img {
   width: 150px;
   height: 150px;
 }
 
-.row-contain1{
+.row-contain1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 700px;
-  /* border: 1px solid blue; */
 }
 
-.row-contain-butt1{
+.row-contain-butt1 {
   display: flex;
   justify-content: space-around;
   align-items: center;
   width: 700px;
-  /* border: 1px solid blue; */
 }
 
-
-
-.split-contain1{
-  
+.split-contain1 {
   justify-content: space-between;
-  /* border: 1px solid black; */
-
 }
 
-.remark1{
+.remark1 {
   width: 700px !important;
-}
-/* .split-contain-last{
-  border: 1px solid black;
-  width: 100%;
+  padding-top: 5px !important;
 }
 
-.remark{
-  width: 100% !important;
-} */
-
-.fill-message{
+.fill-message {
   color: red;
 }
 
-form{
+form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-label{
+label {
   margin-right: 50px;
 }
 
-@media only screen and (max-width:600px) {
-
-  .row-contain1,.solo1{
+@media only screen and (max-width: 600px) {
+  .row-contain1,
+  .solo1 {
     flex-direction: column;
     width: fit-content;
-
   }
 
-  .row-contain-butt1{
+  .row-contain-butt1 {
     width: 400px;
   }
 
-  .regisbutt,.backbutt{
+  .regisbutt,
+  .backbutt {
     width: 100px !important;
     height: 50px !important;
   }
 
-
-  .remark1{
+  .remark1 {
     width: 300px !important;
     height: 300px !important;
   }
 }
 
-@media only screen and (min-width:601px) and (max-width:900px) {
-
-  .row-contain1,.solo1{
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+  .row-contain1,
+  .solo1 {
     flex-direction: row;
   }
 
-  .row-contain-butt1{
+  .row-contain-butt1 {
     width: 500px;
   }
 
-  .bg1{
+  .bg1 {
     max-width: 800px;
+    height: 1050px;
   }
 
-
-  .remark1{
+  .remark1 {
     width: 700px !important;
   }
-
-  
- 
 }
-
-
-
-
-

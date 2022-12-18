@@ -157,7 +157,7 @@ function MyTable() {
 
   const headers = [
     { label: "No", key: "id" },
-    { label: "IpAddr", key: "Ip_Addr" },
+    { label: "IP Address", key: "Ip_Addr" },
     { label: "First Name", key: "Firstname" },
     { label: "Last Name", key: "Lastname" },
     { label: "Email", key: "Email" },
@@ -185,13 +185,7 @@ function MyTable() {
   }, []);
 
   return (
-    <motion.div
-      className="App3"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ delay: 0.1 }}
-    >
+    <div className="App3">
       {window.innerWidth > 100 && window.innerWidth < 600 ? (
         <div
           className="left-manu3"
@@ -309,7 +303,7 @@ function MyTable() {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

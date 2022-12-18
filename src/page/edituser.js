@@ -9,13 +9,17 @@ import { motion } from "framer-motion";
 import Cookies from "js-cookie";
 import axios from "axios";
 import SideBar from "../components/sideBar";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "../components/schema";
 
 function EditUser() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const navigate = useNavigate();
   const location = useLocation();
   const showNewMember = location.state.newMemberList;
@@ -170,17 +174,11 @@ function EditUser() {
   }, []);
 
   return (
-    <motion.div
-      className="App6"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ delay: 0.1 }}
-    >
+    <div className="App6">
       <SideBar Back={Back} Logout={Logout} />
       <div className="bg6">
         <div className="headerInfo6">
-          {window.innerWidth > 601 && window.innerWidth < 1000 ? (
+          {window.innerWidth > 100 && window.innerWidth < 1000 ? (
             <div className="box66">
               <motion.button
                 whileHover={{ scale: 1.1 }}
@@ -192,7 +190,7 @@ function EditUser() {
                   <ArrowBackIosIcon
                     sx={{ fontSize: "32px", color: "#0174B3" }}
                   />
-                }{" "}
+                }
               </motion.button>
               <p className="afterButt6">Edit User</p>
             </div>
@@ -206,9 +204,9 @@ function EditUser() {
               >
                 {
                   <ArrowBackIosIcon
-                    sx={{ fontSize: "32px", color: "#0174B3" }}
+                    sx={{ fontSize: "32px", color: "#FFB401" }}
                   />
-                }{" "}
+                }
               </motion.button>
               <p className="afterButt6">Edit User</p>
             </div>
@@ -236,11 +234,12 @@ function EditUser() {
                       defaultValue={val.Firstname}
                       {...register("inputFirstname", {
                         onChange: (e) => setFname(e.target.value),
-                        required: true,
                       })}
                     />
                     {errors.inputFirstname && (
-                      <p className="fill-message">Please fill this form</p>
+                      <p className="fill-message">
+                        {errors?.inputFirstname?.message}
+                      </p>
                     )}
                   </span>
                   <span className="split-contain6">
@@ -254,11 +253,12 @@ function EditUser() {
                       defaultValue={val.Lastname}
                       {...register("inputLastname", {
                         onChange: (e) => setLname(e.target.value),
-                        required: true,
                       })}
                     />
                     {errors.inputLastname && (
-                      <p className="fill-message">Please fill this form</p>
+                      <p className="fill-message">
+                        {errors?.inputLastname?.message}
+                      </p>
                     )}
                   </span>
                 </div>
@@ -275,11 +275,6 @@ function EditUser() {
                       defaultValue={val.Email}
                       {...register("inputEmail", {
                         onChange: (e) => setEmail(e.target.value),
-                        required: "Please fill this form",
-                        pattern: {
-                          value: /^[\w]+[@]+([\w-]+\.)+[\w-]{2,4}$/,
-                          message: "Please correct this form",
-                        },
                       })}
                     />
                     {errors?.inputEmail && (
@@ -301,19 +296,6 @@ function EditUser() {
                       defaultValue={val.Tel}
                       {...register("inputTel", {
                         onChange: (e) => setTel(e.target.value),
-                        required: "Please fill this form",
-                        maxLength: {
-                          value: 12,
-                          message: "Phone number must most 10 characters",
-                        },
-                        minLength: {
-                          value: 10,
-                          message: "Phone number must least 10 characters",
-                        },
-                        pattern: {
-                          value: /(^[0-9]{10}$)|(^[0-9]{3}-[0-9]{3}-[0-9]{4}$)/,
-                          message: "Please correct this form",
-                        },
                       })}
                     />
                     {errors?.inputTel && (
@@ -332,10 +314,12 @@ function EditUser() {
                       className="form-select fs6"
                       id="inputUsertype"
                       defaultValue={val.User_Type}
-                      onChange={(e) => {
-                        setUtype(e.target.value);
-                        HideLabel(e.target.value);
-                      }}
+                      {...register("inputUsertype", {
+                        onChange: (e) => {
+                          setUtype(e.target.value);
+                          HideLabel(e.target.value);
+                        },
+                      })}
                     >
                       <option value="staff">Staff</option>
                       <option value="internship">Internship</option>
@@ -360,10 +344,12 @@ function EditUser() {
                           ? "etc."
                           : val.Device_Type
                       }
-                      onChange={(e) => {
-                        Checketc(e.target.value);
-                        setDtype(e.target.value);
-                      }}
+                      {...register("inputDevicetype", {
+                        onChange: (e) => {
+                          Checketc(e.target.value);
+                          setDtype(e.target.value);
+                        },
+                      })}
                     >
                       <option value="mobile">Mobile</option>
                       <option value="notebook">Notebook</option>
@@ -389,11 +375,12 @@ function EditUser() {
                       }
                       {...register("inputEtc", {
                         onChange: (e) => setEtc(e.target.value),
-                        required: dtype === "etc." ? true : false,
                       })}
                     />
                     {errors.inputEtc && (
-                      <p className="fill-message">Please fill this form</p>
+                      <p className="fill-message">
+                        {errors?.inputEtc?.message}
+                      </p>
                     )}
                   </span>
                 </div>
@@ -411,11 +398,12 @@ function EditUser() {
                       defaultValue={val.Device_Brand}
                       {...register("inputdeviceBrand", {
                         onChange: (e) => setDbrand(e.target.value),
-                        required: true,
                       })}
                     />
                     {errors.inputdeviceBrand && (
-                      <p className="fill-message">Please fill this form</p>
+                      <p className="fill-message">
+                        {errors?.inputdeviceBrand?.message}
+                      </p>
                     )}
                   </span>
 
@@ -431,11 +419,12 @@ function EditUser() {
                       defaultValue={val.Device_Name}
                       {...register("inputdeviceName", {
                         onChange: (e) => setDname(e.target.value),
-                        required: true,
                       })}
                     />
                     {errors.inputdeviceName && (
-                      <p className="fill-message">Please fill this form</p>
+                      <p className="fill-message">
+                        {errors?.inputdeviceName?.message}
+                      </p>
                     )}
                   </span>
                 </div>
@@ -453,11 +442,12 @@ function EditUser() {
                       defaultValue={val.Start_Date}
                       {...register("startDate", {
                         onChange: (e) => setStartdate(e.target.value),
-                        required: true,
                       })}
                     />
                     {errors.startDate && (
-                      <p className="fill-message">Please fill this form</p>
+                      <p className="fill-message">
+                        {errors?.startDate?.message}
+                      </p>
                     )}
                   </span>
 
@@ -474,11 +464,10 @@ function EditUser() {
                       defaultValue={val.End_Date}
                       {...register("endDate", {
                         onChange: (e) => setEnddate(e.target.value),
-                        required: utype === "staff" ? false : true,
                       })}
                     />
                     {errors.endDate && (
-                      <p className="fill-message">Please fill this form</p>
+                      <p className="fill-message">{errors?.endDate?.message}</p>
                     )}
                   </span>
                 </div>
@@ -493,7 +482,9 @@ function EditUser() {
                       className=" form-control remark6"
                       id="inputremark"
                       defaultValue={val.Remark}
-                      onChange={(e) => setRemark(e.target.value)}
+                      {...register("remark", {
+                        onChange: (e) => setRemark(e.target.value),
+                      })}
                     />
                   </span>
                 </div>
@@ -520,7 +511,7 @@ function EditUser() {
           );
         })}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
