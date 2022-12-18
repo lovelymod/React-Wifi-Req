@@ -174,13 +174,7 @@ function EditUser() {
   }, []);
 
   return (
-    <motion.div
-      className="App6"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ delay: 0.1 }}
-    >
+    <div className="App6">
       <SideBar Back={Back} Logout={Logout} />
       <div className="bg6">
         <div className="headerInfo6">
@@ -517,7 +511,7 @@ function EditUser() {
           );
         })}
       </div>
-    </motion.div>
+    </div>
   );
 }
 

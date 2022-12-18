@@ -273,8 +273,12 @@ const Blogslist = ({
       dataSource={memberList}
       columns={columns}
       sticky={true}
-      bordered
       pagination={{
+        showTotal: (allData, data) => {
+          return (
+            <p className="showTotal">{`Showing ${data[0]} - ${data[1]} of ${allData} items`}</p>
+          );
+        },
         position: ["bottomCenter"],
         current: page,
         pageSize: pageSize,

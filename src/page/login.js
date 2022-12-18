@@ -77,12 +77,7 @@ function Login() {
   }, []);
   return (
     <div className="App2">
-      <motion.div
-        className="bg2"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        exit={{ scale: 0 }}
-      >
+      <div className="bg2">
         <div className="images2">
           <img className="logo2" src="img/LS-02.png" alt="" srcSet="" />
         </div>
@@ -149,7 +144,7 @@ function Login() {
             </div>
           </form>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

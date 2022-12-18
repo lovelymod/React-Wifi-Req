@@ -75,12 +75,7 @@ const Register = () => {
 
   return (
     <div className="App-regis">
-      <motion.div
-        className="container-regis"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        exit={{ scale: 0 }}
-      >
+      <div className="container-regis">
         <form onSubmit={handleSubmit(OnSubmit)} className="box-regis">
           <img className="logo-regis" src="img/LS-01.png" alt="" srcSet="" />
           <div className="field">
@@ -176,7 +171,7 @@ const Register = () => {
             />
           </div>
         </form>
-      </motion.div>
+      </div>
     </div>
   );
 };

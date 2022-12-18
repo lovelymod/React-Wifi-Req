@@ -144,13 +144,7 @@ function AdminSub() {
   }, []);
 
   return (
-    <motion.div
-      className="AppAdmin4"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ delay: 0.1 }}
-    >
+    <div className="AppAdmin4">
       <SideBar Back={Back} Logout={Logout} />
       <div className="bgAdmin4">
         <div className="headerAdmin4">
@@ -485,7 +479,7 @@ function AdminSub() {
           </form>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

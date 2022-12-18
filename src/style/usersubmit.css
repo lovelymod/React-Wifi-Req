@@ -136,6 +136,7 @@ img {
 
 .remark1 {
   width: 700px !important;
+  padding-top: 5px !important;
 }
 
 .fill-message {
@@ -188,6 +189,7 @@ label {
 
   .bg1 {
     max-width: 800px;
+    height: 1050px;
   }
 
   .remark1 {

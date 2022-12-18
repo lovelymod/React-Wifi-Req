@@ -138,14 +138,16 @@ function UserSubmit() {
   }, []);
 
   return (
-    <motion.div
-      className="App1"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ delay: 0.1 }}
-    >
-      <div className="bg1">
+    <div className="App1">
+      <motion.div
+        className="bg1"
+        initial={{ scale: 0 }}
+        animate={{ scale: 0.9 }}
+        transition={{
+          delay: 0.3,
+          duration: 0.3,
+        }}
+      >
         <div className="images1">
           <img className="logo1" src="img/LS-02.png" alt="" srcSet="" />
         </div>
@@ -439,8 +441,8 @@ function UserSubmit() {
             </div>
           </form>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
 
