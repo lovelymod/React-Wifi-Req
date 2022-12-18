@@ -95,13 +95,7 @@ function ShowData() {
   }, []);
 
   return (
-    <motion.div
-      className="App5"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ delay: 0.1 }}
-    >
+    <div className="App5">
       <SideBar Back={Back} Logout={Logout} />
       <div className="bg5">
         <span className="right5">
@@ -246,7 +240,7 @@ function ShowData() {
           </div>
         </span>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
