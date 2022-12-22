@@ -20,19 +20,6 @@ const Blogslist = ({
     setExMemberList(extra.currentDataSource);
   };
 
-  const testedData = [
-    {
-      id: "1",
-      Dates: "2020",
-      Times: "12:00",
-      Firstname: "gong",
-      Lastname: "sabo",
-      User_Type: "gong",
-      Start_Date: "121",
-      End_Date: "333",
-    },
-  ];
-
   const columns = [
     {
       width: "7.5%",
@@ -279,7 +266,7 @@ const Blogslist = ({
             <p className="showTotal">{`Showing ${data[0]} - ${data[1]} of ${allData} items`}</p>
           );
         },
-        position: ["bottomCenter"],
+        position: ["bottomRight"],
         current: page,
         pageSize: pageSize,
         onChange: (page, pageSize) => {

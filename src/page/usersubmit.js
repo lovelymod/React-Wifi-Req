@@ -384,7 +384,7 @@ function UserSubmit() {
                 )}
               </span>
 
-              <span className="split-contain1">
+              <span className="split-contain1" hidden={Labelhide}>
                 <label htmlFor="endDate" className="form-label fl1">
                   End Date : <p className="star">*</p>
                 </label>
