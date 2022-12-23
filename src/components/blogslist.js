@@ -16,7 +16,7 @@ const Blogslist = ({
   const [pageSize, setPageSize] = useState(10);
 
   const handleChange = (pagination, _filters, _sorter, extra) => {
-    console.log(extra.currentDataSource);
+    // console.log(extra.currentDataSource);
     setExMemberList(extra.currentDataSource);
   };
 
@@ -257,6 +257,7 @@ const Blogslist = ({
   ];
   return (
     <Table
+      rowKey={(record) => record.id}
       dataSource={memberList}
       columns={columns}
       sticky={true}
