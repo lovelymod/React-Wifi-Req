@@ -13,10 +13,6 @@ function ShowData() {
   const navigate = useNavigate();
   const location = useLocation();
   const showNewMember = location.state.newMemberList;
-  console.log(
-    "🚀 ~ file: showdata.js:16 ~ ShowData ~ showNewMember",
-    showNewMember
-  );
   const [Labelhide, setLabelhide] = useState("");
 
   const refreshToken = async () => {
