@@ -17,18 +17,18 @@ function UserSubmit() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [utype, setUtype] = useState("");
-  const [tel, setTel] = useState("");
-  const [email, setEmail] = useState("");
-  const [dtype, setDtype] = useState("");
-  const [etc, setEtc] = useState("");
-  const [dbrand, setDbrand] = useState("");
-  const [dname, setDname] = useState("");
-  const [startdate, setStartdate] = useState("");
-  const [enddate, setEnddate] = useState("");
-  const [remark, setRemark] = useState("");
+  const [fname, setFname] = useState();
+  const [lname, setLname] = useState();
+  const [utype, setUtype] = useState();
+  const [tel, setTel] = useState();
+  const [email, setEmail] = useState();
+  const [dtype, setDtype] = useState();
+  const [etc, setEtc] = useState();
+  const [dbrand, setDbrand] = useState();
+  const [dname, setDname] = useState();
+  const [startdate, setStartdate] = useState();
+  const [enddate, setEnddate] = useState();
+  const [remark, setRemark] = useState();
   const [Labelhide, setLabelhide] = useState("");
   const [etcDisable, setetcDisable] = useState("hidden");
   const [internalIP, setInternalIP] = useState("");
@@ -142,10 +142,9 @@ function UserSubmit() {
       <motion.div
         className="bg1"
         initial={{ scale: 0 }}
-        animate={{ scale: 0.9 }}
+        animate={{ scale: 0.95 }}
         transition={{
           delay: 0.3,
-          duration: 0.3,
         }}
       >
         <div className="images1">
@@ -164,6 +163,7 @@ function UserSubmit() {
                 </label>
 
                 <input
+                  autoFocus
                   className="form-control"
                   type="text"
                   placeholder="First Name"

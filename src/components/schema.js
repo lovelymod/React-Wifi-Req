@@ -5,9 +5,9 @@ export const schema = yup.object().shape({
   inputLastname: yup.string().required("Lastname is required."),
   inputEmail: yup
     .string()
-    .email("Please correct this email.")
     .required("Email is required.")
-    .matches(/^[\w]+[@]+([\w-]+\.)+[\w-]{2,4}$/, "Please correct this email."),
+    .matches(/^[\w]+[@]+([\w-]+\.)+[\w-]{2,4}$/, "Please correct this email.")
+    .email("Please correct this email."),
   inputUsertype: yup.string().required("Usertype is required."),
   inputTel: yup
     .string()
@@ -27,9 +27,9 @@ export const schema = yup.object().shape({
   inputdeviceName: yup.string().required("Devicename is required."),
   startDate: yup.string().required("Startdate is required."),
   endDate: yup.string().when("inputUsertype", {
-    is: (inputUsertype) =>
-      inputUsertype === "internship" || inputUsertype === "guest",
-    then: yup.string().required("Enddate is required."),
+    is: (inputUsertype) => inputUsertype === "staff",
+    then: yup.string().notRequired(),
+    otherwise: yup.string().required("Enddate is required."),
   }),
   remark: yup.string().nullable().notRequired(),
 });
