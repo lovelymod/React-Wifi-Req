@@ -1,3 +1,16 @@
+//? table
+
+// import moment from "moment";
+// import Blogslist from "../components/blogslist";
+// import TableSideBar from "../components/tablesideBar";
+// import { CSVLink } from "react-csv";
+// import DownloadIcon from "@mui/icons-material/Download";
+// import ListIcon from "@mui/icons-material/List";
+// import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+// import AddIcon from "@mui/icons-material/Add";
+// import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+// import { motion } from "framer-motion";
+
 {
   /*//! {window.innerWidth > 100 && window.innerWidth < 600 ? (
         <div
@@ -109,3 +122,53 @@
               setExMemberList={setExMemberList}
             /> */
 }
+
+// let dataBox = getUser.data;
+// let dataList = [];
+
+// dataBox.forEach((item) => {
+//   dataList.push({
+//     id: item.id,
+//     Ip_Addr: item.Ip_Addr ? item.Ip_Addr.toString() : "-",
+//     Firstname: item.Firstname.toString(),
+//     Lastname: item.Lastname.toString(),
+//     Email: item.Email.toString(),
+//     Tel: '=""' + item.Tel + '""',
+//     User_Type: item.User_Type.toString(),
+//     Device_Type: item.Device_Type.toString(),
+//     Device_Brand: item.Device_Brand.toString(),
+//     Device_Name: item.Device_Name.toString(),
+//     Start_Date: item.Start_Date.toString(),
+//     End_Date: item.End_Date ? item.End_Date.toString() : "-",
+//     Dates: item.Dates.toString(),
+//     Times: item.Times.toString(),
+//   });
+// });
+// setExMemberList(dataList);
+
+// const headers = [
+//   { label: "No", key: "id" },
+//   { label: "IP Address", key: "Ip_Addr" },
+//   { label: "First Name", key: "Firstname" },
+//   { label: "Last Name", key: "Lastname" },
+//   { label: "Email", key: "Email" },
+//   { label: "Tel", key: "Tel" },
+//   { label: "Usertype", key: "User_Type" },
+//   { label: "DeviceType", key: "Device_Type" },
+//   { label: "DeviceBrand", key: "Device_Brand" },
+//   { label: "DeviceName", key: "Device_Name" },
+//   { label: "StartDate", key: "Start_Date" },
+//   { label: "EndDate", key: "End_Date" },
+//   { label: "Date(Submit)", key: "Dates" },
+//   { label: "Time(Submit)", key: "Times" },
+// ];
+
+// const csvReport = {
+//   headers: headers,
+//   data: exMemberList,
+//   filename: `RequestList_${timeStamp}.csv`,
+// };
+
+// const Back = () => navigate("/table");
+//   const toggle = () => setIsOpen(!isOpen);
+//? table
