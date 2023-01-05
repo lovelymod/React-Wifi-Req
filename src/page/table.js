@@ -1,31 +1,34 @@
 import "../style/table.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import moment from "moment";
+// import moment from "moment";
 import Axios from "axios";
 import Blogslist from "../components/blogslist";
+import MuiTable from "../components/muitable";
 import TableSideBar from "../components/tablesideBar";
-import { CSVLink } from "react-csv";
+// import { CSVLink } from "react-csv";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AddIcon from "@mui/icons-material/Add";
-import DownloadIcon from "@mui/icons-material/Download";
+// import DownloadIcon from "@mui/icons-material/Download";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
-import ListIcon from "@mui/icons-material/List";
+// import ListIcon from "@mui/icons-material/List";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { AppBar, Box, Button, IconButton, Toolbar, Typography } from "@mui/material";
 
 function MyTable() {
   const navigate = useNavigate();
   const [memberList, setMemberList] = useState([]);
-  const timeStamp = moment().format("YYYY_MM_DD");
+  // const timeStamp = moment().format("YYYY_MM_DD");
   const [exMemberList, setExMemberList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [Username, setUsername] = useState("");
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const refreshToken = async () => {
     try {
@@ -96,28 +99,29 @@ function MyTable() {
   const fetchData = async () => {
     const getUser = await Axios.get("http://localhost:5000/getusers");
     setMemberList(getUser.data);
-    let dataBox = getUser.data;
-    let dataList = [];
+    setLoading(!loading);
+    // let dataBox = getUser.data;
+    // let dataList = [];
 
-    dataBox.forEach((item) => {
-      dataList.push({
-        id: item.id,
-        Ip_Addr: item.Ip_Addr ? item.Ip_Addr.toString() : "-",
-        Firstname: item.Firstname.toString(),
-        Lastname: item.Lastname.toString(),
-        Email: item.Email.toString(),
-        Tel: '=""' + item.Tel + '""',
-        User_Type: item.User_Type.toString(),
-        Device_Type: item.Device_Type.toString(),
-        Device_Brand: item.Device_Brand.toString(),
-        Device_Name: item.Device_Name.toString(),
-        Start_Date: item.Start_Date.toString(),
-        End_Date: item.End_Date ? item.End_Date.toString() : "-",
-        Dates: item.Dates.toString(),
-        Times: item.Times.toString(),
-      });
-    });
-    setExMemberList(dataList);
+    // dataBox.forEach((item) => {
+    //   dataList.push({
+    //     id: item.id,
+    //     Ip_Addr: item.Ip_Addr ? item.Ip_Addr.toString() : "-",
+    //     Firstname: item.Firstname.toString(),
+    //     Lastname: item.Lastname.toString(),
+    //     Email: item.Email.toString(),
+    //     Tel: '=""' + item.Tel + '""',
+    //     User_Type: item.User_Type.toString(),
+    //     Device_Type: item.Device_Type.toString(),
+    //     Device_Brand: item.Device_Brand.toString(),
+    //     Device_Name: item.Device_Name.toString(),
+    //     Start_Date: item.Start_Date.toString(),
+    //     End_Date: item.End_Date ? item.End_Date.toString() : "-",
+    //     Dates: item.Dates.toString(),
+    //     Times: item.Times.toString(),
+    //   });
+    // });
+    // setExMemberList(dataList);
   };
 
   const showUser = (id) => {
@@ -155,28 +159,28 @@ function MyTable() {
     });
   };
 
-  const headers = [
-    { label: "No", key: "id" },
-    { label: "IP Address", key: "Ip_Addr" },
-    { label: "First Name", key: "Firstname" },
-    { label: "Last Name", key: "Lastname" },
-    { label: "Email", key: "Email" },
-    { label: "Tel", key: "Tel" },
-    { label: "Usertype", key: "User_Type" },
-    { label: "DeviceType", key: "Device_Type" },
-    { label: "DeviceBrand", key: "Device_Brand" },
-    { label: "DeviceName", key: "Device_Name" },
-    { label: "StartDate", key: "Start_Date" },
-    { label: "EndDate", key: "End_Date" },
-    { label: "Date(Submit)", key: "Dates" },
-    { label: "Time(Submit)", key: "Times" },
-  ];
+  // const headers = [
+  //   { label: "No", key: "id" },
+  //   { label: "IP Address", key: "Ip_Addr" },
+  //   { label: "First Name", key: "Firstname" },
+  //   { label: "Last Name", key: "Lastname" },
+  //   { label: "Email", key: "Email" },
+  //   { label: "Tel", key: "Tel" },
+  //   { label: "Usertype", key: "User_Type" },
+  //   { label: "DeviceType", key: "Device_Type" },
+  //   { label: "DeviceBrand", key: "Device_Brand" },
+  //   { label: "DeviceName", key: "Device_Name" },
+  //   { label: "StartDate", key: "Start_Date" },
+  //   { label: "EndDate", key: "End_Date" },
+  //   { label: "Date(Submit)", key: "Dates" },
+  //   { label: "Time(Submit)", key: "Times" },
+  // ];
 
-  const csvReport = {
-    headers: headers,
-    data: exMemberList,
-    filename: `RequestList_${timeStamp}.csv`,
-  };
+  // const csvReport = {
+  //   headers: headers,
+  //   data: exMemberList,
+  //   filename: `RequestList_${timeStamp}.csv`,
+  // };
 
   useEffect(() => {
     refreshToken();
@@ -186,119 +190,29 @@ function MyTable() {
 
   return (
     <div className="App3">
-      {window.innerWidth > 100 && window.innerWidth < 600 ? (
-        <div
-          className="left-manu3"
-          style={{
-            left: isOpen ? "0px" : "-100px",
-            marginRight: isOpen ? "10px" : "0px",
-          }}
-        >
-          <div className="top-img3">
-            <button
-              className="icon-back2"
-              onClick={() => toggle()}
-              style={{
-                left: "58px",
-                transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-              }}
-            >
-              <ArrowForwardIosIcon sx={{ fontSize: "20px", color: "white" }} />
-            </button>
-
-            <img
-              className="logo-table3"
-              src="img/LS-02.png"
-              alt=""
-              srcSet=""
-              style={{ display: isOpen ? "block" : "none" }}
-            />
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="ListIcon3"
-              onClick={() => Back()}
-              style={{ display: isOpen ? "block" : "none" }}
-            >
-              <ListIcon sx={{ fontSize: "32px", color: "#0174B3" }} />
-            </motion.button>
-          </div>
-          <div className="bottom-img3">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="icon3"
-              onClick={() => Logout()}
-              style={{ display: isOpen ? "block" : "none" }}
-            >
-              <LogoutOutlinedIcon
-                className="icon-exit3"
-                sx={{ fontSize: "40px", color: "white" }}
-              />
-            </motion.button>
-          </div>
-        </div>
-      ) : (
-        <TableSideBar />
-      )}
-
+      <Box mb={1}>
+        <AppBar position="static">
+          <Toolbar sx={{ padding: "10px" }}>
+            <img src="img/LS-02.png" alt="logo" width="50" height="50" />
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
+              WIFI Request List
+            </Typography>
+            <Button color="inherit" onClick={Logout}>
+              Logout
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </Box>
       <div className="bg3">
-        <div className="header-top3">
-          <span className="left3">
-            <h2 className="name3">Wi-Fi Request List</h2>
-          </span>
-          <span className="right3">
-            {window.innerWidth > 100 && window.innerWidth < 600 ? (
-              <div>
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="icon-create3"
-                  onClick={() => gotoAdminSub()}
-                >
-                  <AddIcon sx={{ fontSize: "20px", color: "white" }} />
-                </motion.button>
-                <CSVLink {...csvReport}>
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="icon-export3"
-                  >
-                    <DownloadIcon sx={{ fontSize: "18px", color: "white" }} />
-                  </motion.button>
-                </CSVLink>
-              </div>
-            ) : (
-              <div>
-                <motion.input
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  type="button"
-                  className="btn create3"
-                  value="Create User"
-                  onClick={() => gotoAdminSub()}
-                />
-                <CSVLink {...csvReport}>
-                  <motion.input
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    type="button"
-                    className="btn export3"
-                    value="Export .csv"
-                  />
-                </CSVLink>
-              </div>
-            )}
-          </span>
-        </div>
         <div className="all-scroll">
           <div className="table-scroll">
-            <Blogslist
+            <MuiTable
+              loading={loading}
               memberList={memberList}
-              deleteMember={deleteMember}
+              gotoAdminSub={gotoAdminSub}
               showUser={showUser}
               edituser={edituser}
-              setExMemberList={setExMemberList}
+              deleteMember={deleteMember}
             />
           </div>
         </div>

@@ -104,10 +104,10 @@
   border-top-right-radius: 30px;
 }
 
-img {
+/* img {
   width: 150px;
   height: 150px;
-}
+} */
 
 .row-contain1 {
   display: flex;
