@@ -1,12 +1,17 @@
 .App-regis {
   height: 100vh;
   width: 100vw;
+}
+
+.bg-regis {
+  width: 100%;
+  height: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .container-regis {
-  background-color: #ffb401;
+  /* background-color: #ffb401; */
   width: 750px;
   height: 650px;
   border-radius: 20px;
@@ -16,111 +21,16 @@
   box-shadow: 5px 5px 50px 5px gray;
 }
 
-.box-regis {
-  display: flex;
-  flex-direction: column;
-}
-
-.logo-regis {
-  width: 150px;
-  height: 150px;
-  margin-bottom: 10px;
-}
-
-.field {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.field-button {
-  display: flex;
-  flex-direction: row;
-}
-
-.controls {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.controls-pwd {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  width: 300px;
-  height: 55px;
-  background-color: white;
-  border-radius: 30px;
-  margin-bottom: 10px;
-  padding-right: 15px;
-}
-
-.fill-message2 {
-  color: red;
-  font-size: 18px;
-}
-
-.inputreg {
-  height: 55px !important;
-}
-
-.inputreg-pwd {
-  margin-left: 10px;
-  width: 100%;
-  height: 100%;
-  border-radius: 30px;
-  background-color: transparent;
-  border: none;
-  outline: none;
-}
-
-.loginbutt-regis {
-  background-color: #0174b3 !important;
-  color: #ffb401 !important;
-  border-radius: 50px !important;
-  width: 135px !important;
-  height: 55px !important;
-  font-size: 24px !important;
-  font-weight: bold !important;
-  margin: 5px !important;
-}
-
-.loginbutt-regis:active {
-  background-color: #ff5240 !important;
-  color: #0174b3 !important;
-}
-
 @media only screen and (min-width: 601px) and (max-width: 900px) {
-  .logo-regis {
-    width: 200px;
-    height: 200px;
-    margin-bottom: 20px;
-  }
   .container-regis {
-    width: 100%;
-    height: 100%;
-    border-radius: 0px;
-  }
-  .inputreg,
-  .controls-pwd {
-    height: 65px !important;
+    width: 750px;
+    height: 650px;
   }
 }
 
 @media only screen and (max-width: 600px) {
   .container-regis {
-    width: 100%;
-    height: 100%;
-    border-radius: 0px;
-  }
-
-  .inputreg,
-  .controls-pwd {
-    width: 265px !important;
-    height: 50px !important;
+    width: 750px;
+    height: 650px;
   }
 }

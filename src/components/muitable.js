@@ -12,10 +12,15 @@ import { useState } from "react";
 import { Button, Stack, Chip } from "@mui/material";
 import moment from "moment";
 import "../style/table.css";
+import AdminDialog from "../components/adminDialog";
+import DetailDialog from "./detailDialog";
 
-const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser, gotoAdminSub }) => {
+const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser }) => {
   const timeStamp = moment().format("YYYY_MM_DD");
   const [pageSize, setPageSize] = useState(25);
+  const [rowData, setRowData] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [openDetail, setOpenDetail] = useState(false);
 
   const columns = [
     {
@@ -134,7 +139,11 @@ const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser, gotoA
         <GridActionsCellItem
           icon={<FormatListBulletedRoundedIcon color="primary" />}
           label="Detail"
-          onClick={() => showUser(params.id)}
+          onClick={() => {
+            setOpenDetail(true);
+            setRowData(params.row);
+          }}
+          // onClick={() => showUser(params.id)}
           showInMenu
         />,
         <GridActionsCellItem
@@ -155,53 +164,59 @@ const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser, gotoA
 
   const gridToolBar = () => {
     return (
-      <GridToolbarContainer sx={{ display: "flex", justifyContent: "flex-end", paddingX: "50px" }}>
-        <Stack direction="row" spacing={3}>
-          <GridToolbarQuickFilter />
-          <Button variant="contained" onClick={gotoAdminSub}>
-            Add User
-          </Button>
-          <GridToolbarExport
-            csvOptions={{
-              fileName: `RequestList_${timeStamp}`,
-              utf8WithBom: true,
-              allColumns: true,
-            }}
-          />
-        </Stack>
-      </GridToolbarContainer>
+      <>
+        <GridToolbarContainer sx={{ display: "flex", justifyContent: "flex-end", paddingX: "50px" }}>
+          <Stack direction="row" spacing={3}>
+            <GridToolbarQuickFilter />
+            <Button variant="contained" onClick={() => setOpen(true)}>
+              Add User
+            </Button>
+            <GridToolbarExport
+              csvOptions={{
+                fileName: `RequestList_${timeStamp}`,
+                utf8WithBom: true,
+                allColumns: true,
+              }}
+            />
+          </Stack>
+        </GridToolbarContainer>
+      </>
     );
   };
 
   return (
-    <DataGrid
-      initialState={{
-        sorting: {
-          sortModel: [{ field: "id", sort: "desc" }],
-        },
-      }}
-      rows={memberList}
-      columns={columns}
-      sx={{
-        border: "none",
-        fontSize: "16px",
-        "& .MuiTablePagination-selectLabel": {
-          marginBottom: "0px",
-        },
-        "& .MuiTablePagination-displayedRows": {
-          marginBottom: "0px",
-        },
-      }}
-      density="comfortable"
-      loading={loading}
-      components={{ Toolbar: gridToolBar }}
-      pageSize={pageSize}
-      onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-      disableSelectionOnClick
-      disableColumnFilter
-      disableColumnSelector
-      disableDensitySelector
-    />
+    <>
+      <DataGrid
+        initialState={{
+          sorting: {
+            sortModel: [{ field: "id", sort: "desc" }],
+          },
+        }}
+        rows={memberList}
+        columns={columns}
+        sx={{
+          border: "none",
+          fontSize: "16px",
+          "& .MuiTablePagination-selectLabel": {
+            marginBottom: "0px",
+          },
+          "& .MuiTablePagination-displayedRows": {
+            marginBottom: "0px",
+          },
+        }}
+        density="comfortable"
+        loading={loading}
+        components={{ Toolbar: gridToolBar }}
+        pageSize={pageSize}
+        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+        disableSelectionOnClick
+        disableColumnFilter
+        disableColumnSelector
+        disableDensitySelector
+      ></DataGrid>
+      <AdminDialog open={open} setOpen={setOpen} />
+      <DetailDialog openDetail={openDetail} setOpenDetail={setOpenDetail} rowData={rowData} />
+    </>
   );
 };
 

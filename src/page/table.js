@@ -135,9 +135,9 @@ function MyTable() {
     <div className="App3">
       <Box mb={1}>
         <AppBar position="static">
-          <Toolbar sx={{ padding: "10px" }}>
+          <Toolbar>
             <img src="img/LS-02.png" alt="logo" width="50" height="50" />
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
+            <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
               WIFI Request List
             </Typography>
             <Button color="inherit" onClick={Logout}>
@@ -152,7 +152,6 @@ function MyTable() {
             <MuiTable
               loading={loading}
               memberList={memberList}
-              gotoAdminSub={gotoAdminSub}
               showUser={showUser}
               edituser={edituser}
               deleteMember={deleteMember}
