@@ -166,16 +166,11 @@ function UserSubmit() {
                   autoFocus
                   className="form-control"
                   type="text"
-                  placeholder="First Name"
                   {...register("inputFirstname", {
                     onChange: (e) => setFname(e.target.value),
                   })}
                 />
-                {errors.inputFirstname && (
-                  <p className="fill-message">
-                    {errors?.inputFirstname?.message}
-                  </p>
-                )}
+                {errors.inputFirstname && <p className="fill-message">{errors?.inputFirstname?.message}</p>}
               </span>
 
               <span className="split-contain1">
@@ -186,16 +181,11 @@ function UserSubmit() {
                   type="text"
                   className="form-control"
                   id="inputLastname"
-                  placeholder="Last Name"
                   {...register("inputLastname", {
                     onChange: (e) => setLname(e.target.value),
                   })}
                 />
-                {errors.inputLastname && (
-                  <p className="fill-message">
-                    {errors?.inputLastname?.message}
-                  </p>
-                )}
+                {errors.inputLastname && <p className="fill-message">{errors?.inputLastname?.message}</p>}
               </span>
             </div>
 
@@ -209,14 +199,11 @@ function UserSubmit() {
                   type="text"
                   className="form-control"
                   id="inputEmail"
-                  placeholder="admin@gmail.com"
                   {...register("inputEmail", {
                     onChange: (e) => setEmail(e.target.value),
                   })}
                 />
-                {errors?.inputEmail && (
-                  <p className="fill-message">{errors.inputEmail.message}</p>
-                )}
+                {errors?.inputEmail && <p className="fill-message">{errors.inputEmail.message}</p>}
               </span>
 
               <span className="split-contain1">
@@ -228,14 +215,11 @@ function UserSubmit() {
                   type="text"
                   className="form-control"
                   id="inputTel"
-                  placeholder="095xxxxxxx"
                   {...register("inputTel", {
                     onChange: (e) => setTel(e.target.value),
                   })}
                 />
-                {errors?.inputTel && (
-                  <p className="fill-message">{errors.inputTel.message}</p>
-                )}
+                {errors?.inputTel && <p className="fill-message">{errors.inputTel.message}</p>}
               </span>
             </div>
 
@@ -264,9 +248,7 @@ function UserSubmit() {
                   <option value="internship">Internship</option>
                   <option value="guest">Guest</option>
                 </select>
-                {errors?.inputUsertype && (
-                  <p className="fill-message">{errors.inputUsertype.message}</p>
-                )}
+                {errors?.inputUsertype && <p className="fill-message">{errors.inputUsertype.message}</p>}
               </span>
 
               <span className="split-contain1">
@@ -295,11 +277,7 @@ function UserSubmit() {
                   <option value="ipad">Ipad</option>
                   <option value="etc.">etc.</option>
                 </select>
-                {errors?.inputDevicetype && (
-                  <p className="fill-message">
-                    {errors.inputDevicetype.message}
-                  </p>
-                )}
+                {errors?.inputDevicetype && <p className="fill-message">{errors.inputDevicetype.message}</p>}
               </span>
             </div>
 
@@ -314,9 +292,7 @@ function UserSubmit() {
                     onChange: (e) => setEtc(e.target.value),
                   })}
                 />
-                {errors.inputEtc && (
-                  <p className="fill-message">{errors?.inputEtc?.message}</p>
-                )}
+                {errors.inputEtc && <p className="fill-message">{errors?.inputEtc?.message}</p>}
               </span>
             </div>
 
@@ -330,16 +306,11 @@ function UserSubmit() {
                   type="text"
                   className="form-control"
                   id="inputdeviceBrand"
-                  placeholder="Apple , Sumsung , ..."
                   {...register("inputdeviceBrand", {
                     onChange: (e) => setDbrand(e.target.value),
                   })}
                 />
-                {errors.inputdeviceBrand && (
-                  <p className="fill-message">
-                    {errors?.inputdeviceBrand?.message}
-                  </p>
-                )}
+                {errors.inputdeviceBrand && <p className="fill-message">{errors?.inputdeviceBrand?.message}</p>}
               </span>
 
               <span className="split-contain1">
@@ -351,16 +322,11 @@ function UserSubmit() {
                   type="text"
                   className="form-control"
                   id="inputdeviceName"
-                  placeholder=""
                   {...register("inputdeviceName", {
                     onChange: (e) => setDname(e.target.value),
                   })}
                 />
-                {errors.inputdeviceName && (
-                  <p className="fill-message">
-                    {errors?.inputdeviceName?.message}
-                  </p>
-                )}
+                {errors.inputdeviceName && <p className="fill-message">{errors?.inputdeviceName?.message}</p>}
               </span>
             </div>
 
@@ -379,9 +345,7 @@ function UserSubmit() {
                     onChange: (e) => setStartdate(e.target.value),
                   })}
                 />
-                {errors.startDate && (
-                  <p className="fill-message">{errors?.startDate?.message}</p>
-                )}
+                {errors.startDate && <p className="fill-message">{errors?.startDate?.message}</p>}
               </span>
 
               <span className="split-contain1" hidden={Labelhide}>
@@ -397,9 +361,7 @@ function UserSubmit() {
                     onChange: (e) => setEnddate(e.target.value),
                   })}
                 />
-                {errors.endDate && (
-                  <p className="fill-message">{errors?.endDate?.message}</p>
-                )}
+                {errors.endDate && <p className="fill-message">{errors?.endDate?.message}</p>}
               </span>
             </div>
 

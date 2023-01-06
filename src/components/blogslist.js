@@ -5,13 +5,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { SearchOutlined } from "@mui/icons-material";
 
-const Blogslist = ({
-  memberList,
-  deleteMember,
-  showUser,
-  edituser,
-  setExMemberList,
-}) => {
+const Blogslist = ({ memberList, deleteMember, showUser, edituser, setExMemberList }) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
@@ -263,9 +257,7 @@ const Blogslist = ({
       sticky={true}
       pagination={{
         showTotal: (allData, data) => {
-          return (
-            <p className="showTotal">{`Showing ${data[0]} - ${data[1]} of ${allData} items`}</p>
-          );
+          return <p className="showTotal">{`Showing ${data[0]} - ${data[1]} of ${allData} items`}</p>;
         },
         position: ["bottomRight"],
         current: page,
