@@ -14,6 +14,7 @@ import moment from "moment";
 import "../style/table.css";
 import AdminDialog from "../components/adminDialog";
 import DetailDialog from "./detailDialog";
+import { useNavigate } from "react-router-dom";
 
 const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser }) => {
   const timeStamp = moment().format("YYYY_MM_DD");
@@ -21,11 +22,14 @@ const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser }) => 
   const [rowData, setRowData] = useState([]);
   const [open, setOpen] = useState(false);
   const [openDetail, setOpenDetail] = useState(false);
+  const [strDate, setStrDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const navigate = useNavigate();
 
   const columns = [
     {
       field: "id",
-      headerName: "No.",
+      headerName: "ลำดับ",
       headerAlign: "center",
       align: "center",
       flex: 1,
@@ -33,47 +37,50 @@ const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser }) => 
 
     {
       field: "Dates",
-      headerName: "Date",
+      headerName: "วันที่",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
       field: "Times",
-      headerName: "Time",
+      headerName: "เวลา",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
       field: "Ip_Addr",
+      headerName: "เลข IP เครื่อง",
       hide: true,
     },
     {
       field: "Firstname",
-      headerName: "Firstname",
+      headerName: "ชื่อ",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
       field: "Lastname",
-      headerName: "Lastname",
+      headerName: "นามสกุล",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
       field: "Email",
+      headerName: "อีเมล",
       hide: true,
     },
     {
       field: "Tel",
+      headerName: "เบอร์โทร",
       hide: true,
     },
     {
       field: "User_Type",
-      headerName: "UserType",
+      headerName: "ประเภท",
       headerAlign: "center",
       align: "center",
       flex: 1,
@@ -104,26 +111,29 @@ const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser }) => 
     },
     {
       field: "Device_Type",
+      headerName: "ชนิดอุปกรณ์",
       hide: true,
     },
     {
       field: "Device_Brand",
+      headerName: "แบรนด์",
       hide: true,
     },
     {
       field: "Device_Name",
+      headerName: "ชื่ออุปกรณ์",
       hide: true,
     },
     {
       field: "Start_Date",
-      headerName: "Start Date",
+      headerName: "เข้าวันที่",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
       field: "End_Date",
-      headerName: "End Date",
+      headerName: "ออกวันที่",
       headerAlign: "center",
       align: "center",
       flex: 1,
@@ -135,15 +145,20 @@ const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser }) => 
       headerAlign: "center",
       align: "center",
       sortable: false,
+      flex: 0.5,
       getActions: (params) => [
         <GridActionsCellItem
           icon={<FormatListBulletedRoundedIcon color="primary" />}
           label="Detail"
           onClick={() => {
-            setOpenDetail(true);
-            setRowData(params.row);
+            const rowData = params.row;
+            navigate("/showdata", { state: { rowData } });
+
+            // setOpenDetail(true);
+            // setRowData(params.row);
+            // setStrDate(new Date(rowData.Start_Date));
+            // setEndDate(new Date(rowData.End));
           }}
-          // onClick={() => showUser(params.id)}
           showInMenu
         />,
         <GridActionsCellItem
@@ -215,7 +230,15 @@ const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser }) => 
         disableDensitySelector
       ></DataGrid>
       <AdminDialog open={open} setOpen={setOpen} />
-      <DetailDialog openDetail={openDetail} setOpenDetail={setOpenDetail} rowData={rowData} />
+      <DetailDialog
+        openDetail={openDetail}
+        setOpenDetail={setOpenDetail}
+        rowData={rowData}
+        strDate={strDate}
+        setStrDate={setStrDate}
+        endDate={endDate}
+        setEndDate={setEndDate}
+      />
     </>
   );
 };

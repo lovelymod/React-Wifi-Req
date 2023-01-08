@@ -1,6 +1,6 @@
 import "../style/login.css";
 import { useState, useEffect } from "react";
-import Axios from "axios";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,6 @@ import { loginSchema } from "../components/schema";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Cookies from "js-cookie";
-import { motion } from "framer-motion";
 import { TextField, Button, Box, AppBar, Typography, Toolbar, InputAdornment, IconButton } from "@mui/material";
 
 function Login() {
@@ -27,12 +26,14 @@ function Login() {
 
   const OnSubmit = async () => {
     try {
-      await Axios.post("http://localhost:5000/login", {
-        Username: username,
-        Password: password,
-      }).then((response) => {
-        Cookies.set("refreshToken", response.data.refreshToken, { expires: 1 });
-      });
+      await axios
+        .post("http://localhost:5000/login", {
+          Username: username,
+          Password: password,
+        })
+        .then((response) => {
+          Cookies.set("refreshToken", response.data.refreshToken, { expires: 1 });
+        });
       Swal.fire({
         icon: "success",
         title: "LOGGED IN",
@@ -56,9 +57,16 @@ function Login() {
     }
   };
 
-  const checkLogin = () => {
-    const chk = Cookies.get("refreshToken");
-    if (chk) navigate("/table");
+  const checkLogin = async () => {
+    try {
+      const refreshToken = Cookies.get("refreshToken");
+      await axios.get("http://localhost:5000/token", {
+        params: { refreshToken: refreshToken },
+      });
+      navigate("/table");
+    } catch (error) {
+      // console.log(error);
+    }
   };
   useEffect(() => {
     checkLogin();

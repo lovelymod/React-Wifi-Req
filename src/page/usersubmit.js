@@ -1,42 +1,43 @@
 import "../style/usersubmit.css";
 import { useState, useEffect } from "react";
 import Axios from "axios";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "../components/schema";
+import { userSchema } from "../components/schema";
+import { MenuItem, Stack, TextField } from "@mui/material";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 function UserSubmit() {
   const {
     register,
     handleSubmit,
-    resetField,
+    reset,
+    control,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(userSchema),
   });
-  const [fname, setFname] = useState();
-  const [lname, setLname] = useState();
-  const [utype, setUtype] = useState();
-  const [tel, setTel] = useState();
-  const [email, setEmail] = useState();
-  const [dtype, setDtype] = useState();
-  const [etc, setEtc] = useState();
-  const [dbrand, setDbrand] = useState();
-  const [dname, setDname] = useState();
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [utype, setUtype] = useState("");
+  const [tel, setTel] = useState("");
+  const [email, setEmail] = useState("");
+  const [dtype, setDtype] = useState("");
+  const [etc, setEtc] = useState("");
+  const [dbrand, setDbrand] = useState("");
+  const [dname, setDname] = useState("");
   const [startdate, setStartdate] = useState();
   const [enddate, setEnddate] = useState();
-  const [remark, setRemark] = useState();
-  const [Labelhide, setLabelhide] = useState("");
-  const [etcDisable, setetcDisable] = useState("hidden");
+  const [remark, setRemark] = useState("");
+
   const [internalIP, setInternalIP] = useState("");
 
   const strUtype = utype;
   let strDtype = dtype;
-
-  const OnSubmit = () => addRequest();
 
   const GetIP = async () => {
     await Axios.post("http://localhost:5000/getip").then((response) => {
@@ -44,7 +45,21 @@ function UserSubmit() {
     });
   };
 
-  const addRequest = () => {
+  const chgWidth = () => {
+    if (window.innerWidth < 600) {
+      return "column";
+    } else {
+      return "row";
+    }
+  };
+
+  const swapData = () => {
+    if (strDtype === "etc") {
+      strDtype = etc;
+    }
+  };
+
+  const OnSubmit = () => {
     swapData();
     const dates = moment().format("YYYY-MM-DD");
     const times = moment().format("HH:mm");
@@ -73,18 +88,9 @@ function UserSubmit() {
           timer: 1500,
           timerProgressBar: true,
         });
-        resetField("inputFirstname");
-        resetField("inputLastname");
-        resetField("inputEmail");
-        resetField("inputTel");
-        resetField("inputUsertype");
-        resetField("inputDevicetype");
-        resetField("inputEtc");
-        resetField("inputdeviceBrand");
-        resetField("inputdeviceName");
-        resetField("startDate");
-        resetField("endDate");
-        resetField("remark");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1400);
       } else {
         Swal.fire({
           icon: "error",
@@ -97,41 +103,22 @@ function UserSubmit() {
   };
 
   const resetForm = () => {
-    resetField("inputFirstname");
-    resetField("inputLastname");
-    resetField("inputEmail");
-    resetField("inputTel");
-    resetField("inputUsertype");
-    resetField("inputDevicetype");
-    resetField("inputEtc");
-    resetField("inputdeviceBrand");
-    resetField("inputdeviceName");
-    resetField("startDate");
-    resetField("endDate");
-    resetField("remark");
+    reset({
+      Firstname: "",
+      Lastname: "",
+      Email: "",
+      Tel: "",
+      UserType: "",
+      DeviceType: "",
+      DeviceBrand: "",
+      DeviceName: "",
+      StartDate: "",
+      EndDate: "",
+      Remark: "",
+    });
   };
 
-  const swapData = () => {
-    if (strDtype === "etc.") {
-      strDtype = etc;
-    }
-  };
-
-  const HideLabel = (value) => {
-    if (value === "staff") {
-      setLabelhide("hidden");
-    } else if (value !== "staff") {
-      setLabelhide("");
-    }
-  };
-
-  const Checketc = (value) => {
-    if (value === "etc.") {
-      setetcDisable("");
-    } else if (value !== "etc.") {
-      setetcDisable("hidden");
-    }
-  };
+  const d = new Date("2022-3-7");
 
   useEffect(() => {
     GetIP();
@@ -148,242 +135,192 @@ function UserSubmit() {
         }}
       >
         <div className="images1">
-          <img className="logo1" src="img/LS-02.png" alt="" srcSet="" />
+          <img className="logo1" src="img/LS-02.png" alt="" srcSet="" width="125px" height="125px" />
         </div>
 
         <div className="header1">
           <h1 className="message">Please fill out a request form</h1>
         </div>
         <div className="container1">
-          <form onSubmit={handleSubmit(OnSubmit)}>
-            <div className="row-contain1">
-              <span className="split-contain1">
-                <label htmlFor="inputFname" className="form-label fl1">
-                  First Name : <p className="star">*</p>
-                </label>
+          <Stack component="form" spacing={5} onSubmit={handleSubmit(OnSubmit)} noValidate autoComplete="off">
+            <Stack direction={chgWidth()} spacing={5} width="60%">
+              <TextField
+                variant="outlined"
+                label="Firstname"
+                {...register("Firstname", { onChange: (e) => setFname(e.target.value) })}
+                error={!!errors?.Firstname}
+                helperText={errors?.Firstname?.message}
+                required
+                fullWidth
+              />
 
-                <input
-                  autoFocus
-                  className="form-control"
-                  type="text"
-                  {...register("inputFirstname", {
-                    onChange: (e) => setFname(e.target.value),
-                  })}
+              <TextField
+                variant="outlined"
+                label="Lastname"
+                {...register("Lastname", { onChange: (e) => setLname(e.target.value) })}
+                error={!!errors?.Lastname}
+                helperText={errors?.Lastname?.message}
+                required
+                fullWidth
+              />
+            </Stack>
+            <Stack direction={chgWidth()} spacing={5} width="60%">
+              <TextField
+                variant="outlined"
+                label="Email"
+                {...register("Email", { onChange: (e) => setEmail(e.target.value) })}
+                error={!!errors?.Email}
+                helperText={errors?.Email?.message}
+                required
+                fullWidth
+              />
+              <TextField
+                variant="outlined"
+                label="Tel"
+                {...register("Tel", { onChange: (e) => setTel(e.target.value) })}
+                error={!!errors?.Tel}
+                helperText={errors?.Tel?.message}
+                required
+                fullWidth
+              />
+            </Stack>
+            <Stack direction={chgWidth()} spacing={5} width="60%">
+              <TextField
+                variant="outlined"
+                label="UserType"
+                value={utype}
+                {...register("UserType", { onChange: (e) => setUtype(e.target.value) })}
+                error={!!errors?.UserType}
+                helperText={errors?.UserType?.message}
+                select
+                required
+                fullWidth
+              >
+                <MenuItem value="staff">Staff</MenuItem>
+                <MenuItem value="internship">Internship</MenuItem>
+                <MenuItem value="guest">Guest</MenuItem>
+              </TextField>
+              <TextField
+                variant="outlined"
+                label="DeviceType"
+                value={dtype}
+                {...register("DeviceType", { onChange: (e) => setDtype(e.target.value) })}
+                error={!!errors?.DeviceType}
+                helperText={errors?.DeviceType?.message}
+                select
+                required
+                fullWidth
+              >
+                <MenuItem value="mobile">Mobile</MenuItem>
+                <MenuItem value="notebook">Notebook</MenuItem>
+                <MenuItem value="tablet">Tablet</MenuItem>
+                <MenuItem value="ipad">iPad</MenuItem>
+                <MenuItem value="etc">Etc.</MenuItem>
+              </TextField>
+            </Stack>
+
+            <Stack
+              direction={chgWidth()}
+              spacing={5}
+              width="60%"
+              justifyContent="flex-end"
+              sx={{ display: `${dtype === "etc" ? "" : "none"}` }}
+            >
+              <TextField
+                variant="outlined"
+                label="Etc."
+                {...register("Etc", { onChange: (e) => setEtc(e.target.value) })}
+                error={!!errors?.Etc}
+                helperText={errors?.Etc?.message}
+                required
+              />
+            </Stack>
+            <Stack direction={chgWidth()} spacing={5} width="60%">
+              <TextField
+                variant="outlined"
+                label="DeviceBrand"
+                {...register("DeviceBrand", { onChange: (e) => setDbrand(e.target.value) })}
+                error={!!errors?.DeviceBrand}
+                helperText={errors?.DeviceBrand?.message}
+                required
+                fullWidth
+              />
+              <TextField
+                variant="outlined"
+                label="DeviceName"
+                {...register("DeviceName", { onChange: (e) => setDname(e.target.value) })}
+                error={!!errors?.DeviceName}
+                helperText={errors?.DeviceName?.message}
+                required
+                fullWidth
+              />
+            </Stack>
+            <Stack direction={chgWidth()} spacing={5} width="60%">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <Controller
+                  control={control}
+                  name="Start Date"
+                  render={({ field: { onChange, name, ...field } }) => (
+                    <DatePicker
+                      {...field}
+                      label="StartDate"
+                      inputFormat="YYYY/MM/DD"
+                      value={d}
+                      onChange={onChange}
+                      onAccept={(newValue) => {
+                        setStartdate(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          error={!!errors?.StartDate}
+                          helperText={errors?.StartDate?.message}
+                          fullWidth
+                          required
+                        />
+                      )}
+                    />
+                  )}
                 />
-                {errors.inputFirstname && <p className="fill-message">{errors?.inputFirstname?.message}</p>}
-              </span>
-
-              <span className="split-contain1">
-                <label htmlFor="inputLname" className="form-label fl1">
-                  Last Name : <p className="star">*</p>
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="inputLastname"
-                  {...register("inputLastname", {
-                    onChange: (e) => setLname(e.target.value),
-                  })}
+                <Controller
+                  control={control}
+                  name="End Date"
+                  render={({ field: { onChange, name, ...field } }) => (
+                    <DatePicker
+                      {...field}
+                      label="End Date"
+                      inputFormat="YYYY/MM/DD"
+                      onChange={onChange}
+                      onAccept={(newValue) => {
+                        setEnddate(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          error={!!errors?.EndDate}
+                          helperText={errors?.EndDate?.message}
+                          fullWidth
+                          required
+                          sx={{ display: `${utype !== "staff" ? "" : "none"}` }}
+                        />
+                      )}
+                    />
+                  )}
                 />
-                {errors.inputLastname && <p className="fill-message">{errors?.inputLastname?.message}</p>}
-              </span>
-            </div>
-
-            <div className="row-contain1">
-              <span className="split-contain1">
-                <label htmlFor="email" className="form-label fl1">
-                  Email : <p className="star">*</p>
-                </label>
-
-                <input
-                  type="text"
-                  className="form-control"
-                  id="inputEmail"
-                  {...register("inputEmail", {
-                    onChange: (e) => setEmail(e.target.value),
-                  })}
-                />
-                {errors?.inputEmail && <p className="fill-message">{errors.inputEmail.message}</p>}
-              </span>
-
-              <span className="split-contain1">
-                <label htmlFor="tel" className="form-label fl1">
-                  Tel : <p className="star">*</p>
-                </label>
-
-                <input
-                  type="text"
-                  className="form-control"
-                  id="inputTel"
-                  {...register("inputTel", {
-                    onChange: (e) => setTel(e.target.value),
-                  })}
-                />
-                {errors?.inputTel && <p className="fill-message">{errors.inputTel.message}</p>}
-              </span>
-            </div>
-
-            <div className="row-contain1">
-              <span className="split-contain1">
-                <label htmlFor="UserType" className="form-label fl1">
-                  User Type : <p className="star">*</p>
-                </label>
-
-                <select
-                  name="userType"
-                  className="form-select"
-                  id="inputUsertype"
-                  defaultValue=""
-                  {...register("inputUsertype", {
-                    onChange: (e) => {
-                      setUtype(e.target.value);
-                      HideLabel(e.target.value);
-                    },
-                  })}
-                >
-                  <option disabled value="">
-                    Please Select
-                  </option>
-                  <option value="staff">Staff</option>
-                  <option value="internship">Internship</option>
-                  <option value="guest">Guest</option>
-                </select>
-                {errors?.inputUsertype && <p className="fill-message">{errors.inputUsertype.message}</p>}
-              </span>
-
-              <span className="split-contain1">
-                <label htmlFor="DeviceType" className="form-label fl1">
-                  Device Type : <p className="star">*</p>
-                </label>
-
-                <select
-                  name="deviceType"
-                  className="form-select"
-                  id="inputDevicetype"
-                  defaultValue=""
-                  {...register("inputDevicetype", {
-                    onChange: (e) => {
-                      Checketc(e.target.value);
-                      setDtype(e.target.value);
-                    },
-                  })}
-                >
-                  <option disabled value="">
-                    Please Select
-                  </option>
-                  <option value="mobile">Mobile</option>
-                  <option value="notebook">Notebook</option>
-                  <option value="tablet">Tablet</option>
-                  <option value="ipad">Ipad</option>
-                  <option value="etc.">etc.</option>
-                </select>
-                {errors?.inputDevicetype && <p className="fill-message">{errors.inputDevicetype.message}</p>}
-              </span>
-            </div>
-
-            <div className="solo1" hidden={etcDisable}>
-              <span className="split-contain1">
-                <input
-                  type="text"
-                  className="form-control etc"
-                  id="inputEtc"
-                  placeholder="Etc please fill ..."
-                  {...register("inputEtc", {
-                    onChange: (e) => setEtc(e.target.value),
-                  })}
-                />
-                {errors.inputEtc && <p className="fill-message">{errors?.inputEtc?.message}</p>}
-              </span>
-            </div>
-
-            <div className="row-contain1">
-              <span className="split-contain1">
-                <label htmlFor="deviceBrand" className="form-label fl1">
-                  Device Brand : <p className="star">*</p>
-                </label>
-
-                <input
-                  type="text"
-                  className="form-control"
-                  id="inputdeviceBrand"
-                  {...register("inputdeviceBrand", {
-                    onChange: (e) => setDbrand(e.target.value),
-                  })}
-                />
-                {errors.inputdeviceBrand && <p className="fill-message">{errors?.inputdeviceBrand?.message}</p>}
-              </span>
-
-              <span className="split-contain1">
-                <label htmlFor="deviceName" className="form-label fl1">
-                  Device Name : <p className="star">*</p>
-                </label>
-
-                <input
-                  type="text"
-                  className="form-control"
-                  id="inputdeviceName"
-                  {...register("inputdeviceName", {
-                    onChange: (e) => setDname(e.target.value),
-                  })}
-                />
-                {errors.inputdeviceName && <p className="fill-message">{errors?.inputdeviceName?.message}</p>}
-              </span>
-            </div>
-
-            <div className="row-contain1">
-              <span className="split-contain1">
-                <label htmlFor="startDate" className="form-label fl1">
-                  Start Date : <p className="star">*</p>
-                </label>
-
-                <input
-                  type="date"
-                  className="form-control"
-                  name="startDate"
-                  id="startDate"
-                  {...register("startDate", {
-                    onChange: (e) => setStartdate(e.target.value),
-                  })}
-                />
-                {errors.startDate && <p className="fill-message">{errors?.startDate?.message}</p>}
-              </span>
-
-              <span className="split-contain1" hidden={Labelhide}>
-                <label htmlFor="endDate" className="form-label fl1">
-                  End Date : <p className="star">*</p>
-                </label>
-                <input
-                  type="date"
-                  className="form-control"
-                  name="endDate"
-                  id="endDate"
-                  {...register("endDate", {
-                    onChange: (e) => setEnddate(e.target.value),
-                  })}
-                />
-                {errors.endDate && <p className="fill-message">{errors?.endDate?.message}</p>}
-              </span>
-            </div>
-
-            <div className="row-contain1">
-              <span className="split-containRemark1">
-                <label htmlFor="remark" className="form-label fl1">
-                  Remark :
-                </label>
-
-                <textarea
-                  type="text"
-                  className="form-control remark1"
-                  name="remark"
-                  id="remark"
-                  {...register("remark", {
-                    onChange: (e) => setRemark(e.target.value),
-                  })}
-                />
-              </span>
-            </div>
-
-            <div className="row-contain-butt1">
+              </LocalizationProvider>
+            </Stack>
+            <Stack direction={chgWidth()} spacing={5} width="60%">
+              <TextField
+                variant="outlined"
+                label="Remark"
+                rows={2}
+                {...register("Remark", { onChange: (e) => setRemark(e.target.value) })}
+                multiline
+                required
+                fullWidth
+              />
+            </Stack>
+            <Stack direction="row" justifyContent="space-around" spacing={5} width="60%">
               <motion.input
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
@@ -400,8 +337,8 @@ function UserSubmit() {
                 value="Cancel"
                 onClick={() => resetForm()}
               />
-            </div>
-          </form>
+            </Stack>
+          </Stack>
         </div>
       </motion.div>
     </div>

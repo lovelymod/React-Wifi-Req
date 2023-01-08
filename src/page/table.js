@@ -1,7 +1,6 @@
 import "../style/table.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Axios from "axios";
 import MuiTable from "../components/muitable";
 import Swal from "sweetalert2";
 import jwt_decode from "jwt-decode";
@@ -12,8 +11,6 @@ import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 function MyTable() {
   const navigate = useNavigate();
   const [memberList, setMemberList] = useState([]);
-  // const [exMemberList, setExMemberList] = useState([]);
-  // const [isOpen, setIsOpen] = useState(false);
   const [Username, setUsername] = useState("");
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
@@ -81,11 +78,9 @@ function MyTable() {
     }
   };
 
-  const gotoAdminSub = () => navigate("/adminsubmit");
-
   const fetchData = async () => {
     setLoading(true);
-    const getUser = await Axios.get("http://localhost:5000/getusers");
+    const getUser = await axios.get("http://localhost:5000/getusers");
     setMemberList(getUser.data);
     setLoading(false);
   };
@@ -113,7 +108,6 @@ function MyTable() {
       if (result.isConfirmed) {
         const newMemberList = memberList.filter((val) => val.id !== id);
         setMemberList(newMemberList);
-        // setExMemberList(newMemberList);
         Swal.fire({
           icon: "success",
           title: "Deleted !",
@@ -148,15 +142,13 @@ function MyTable() {
       </Box>
       <div className="bg3">
         <div className="all-scroll">
-          <div className="table-scroll">
-            <MuiTable
-              loading={loading}
-              memberList={memberList}
-              showUser={showUser}
-              edituser={edituser}
-              deleteMember={deleteMember}
-            />
-          </div>
+          <MuiTable
+            loading={loading}
+            memberList={memberList}
+            showUser={showUser}
+            edituser={edituser}
+            deleteMember={deleteMember}
+          />
         </div>
       </div>
     </div>

@@ -25,7 +25,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DetailDialog = ({ openDetail, setOpenDetail, rowData }) => {
+const DetailDialog = ({ openDetail, setOpenDetail, rowData, strDate, setStrDate, endDate, setEndDate }) => {
   const {
     register,
     handleSubmit,
@@ -34,7 +34,6 @@ const DetailDialog = ({ openDetail, setOpenDetail, rowData }) => {
   } = useForm({
     resolver: yupResolver(userSchema),
   });
-  console.log(rowData);
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [utype, setUtype] = useState("");
@@ -45,7 +44,7 @@ const DetailDialog = ({ openDetail, setOpenDetail, rowData }) => {
   const [dbrand, setDbrand] = useState("");
   const [dname, setDname] = useState("");
   const [startdate, setStartdate] = useState("");
-  const [enddate, setEnddate] = useState("");
+  // const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
 
   let winWidth = window.innerWidth;
@@ -61,10 +60,6 @@ const DetailDialog = ({ openDetail, setOpenDetail, rowData }) => {
   const handleClose = () => {
     setOpenDetail(false);
   };
-
-  const dateStr = "Thu Jan 12 2023 17:48:41 GMT+0700";
-  const dabo = new Date(dateStr).toISOString();
-  console.log(dabo);
 
   const onSubmit = () => {};
   return (
@@ -220,12 +215,10 @@ const DetailDialog = ({ openDetail, setOpenDetail, rowData }) => {
                       {...field}
                       label="StartDate"
                       inputFormat="YYYY/MM/DD"
-                      defaultValue={dabo}
                       onChange={onChange}
+                      value={startdate}
                       onAccept={(newValue) => {
-                        // setStartdate(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`);
-                        setStartdate(newValue);
-                        console.log(newValue);
+                        setStrDate(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`);
                       }}
                       renderInput={(params) => (
                         <TextField
@@ -251,10 +244,10 @@ const DetailDialog = ({ openDetail, setOpenDetail, rowData }) => {
                       inputFormat="YYYY/MM/DD"
                       disabled={utype === "staff"}
                       onChange={onChange}
+                      value={endDate}
                       onAccept={(newValue) => {
-                        setEnddate(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`);
+                        setEndDate(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`);
                       }}
-                      defaultValue={startdate}
                       renderInput={(params) => (
                         <TextField
                           {...params}
