@@ -47,9 +47,6 @@ const AdminDialog = ({ open, setOpen }) => {
   const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
 
-  const strUtype = utype;
-  let strDtype = dtype;
-
   const chgWidth = () => {
     if (window.innerWidth < 600) {
       return "column";
@@ -58,17 +55,11 @@ const AdminDialog = ({ open, setOpen }) => {
     }
   };
 
-  const swapData = () => {
-    if (strDtype === "etc") {
-      strDtype = etc;
-    }
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
+
   const onSubmit = async () => {
-    swapData();
     const dates = moment().format("YYYY-MM-DD");
     const times = moment().format("HH:mm");
 
@@ -76,14 +67,14 @@ const AdminDialog = ({ open, setOpen }) => {
       .post("http://localhost:5000/users", {
         Firstname: fname,
         Lastname: lname,
-        User_Type: strUtype,
+        User_Type: utype,
         Tel: tel,
         Email: email,
-        Device_Type: strDtype,
+        Device_Type: dtype === "etc" ? etc : dtype,
         Device_Brand: dbrand,
         Device_Name: dname,
         Start_Date: startdate,
-        End_Date: strUtype === "staff" ? "" : enddate,
+        End_Date: utype === "staff" ? "" : enddate,
         Remark: remark,
         Dates: dates,
         Times: times,
@@ -114,7 +105,7 @@ const AdminDialog = ({ open, setOpen }) => {
             <Stack direction={chgWidth()} spacing={5} width="70%" mt={3}>
               <TextField
                 variant="standard"
-                label="Firstname"
+                label="ชื่อ"
                 value={fname}
                 {...register("Firstname", {
                   onChange: (e) => setFname(e.target.value),
@@ -126,7 +117,7 @@ const AdminDialog = ({ open, setOpen }) => {
               />
               <TextField
                 variant="standard"
-                label="Lastname"
+                label="นามสกุล"
                 value={lname}
                 {...register("Lastname", {
                   onChange: (e) => setLname(e.target.value),
@@ -140,7 +131,7 @@ const AdminDialog = ({ open, setOpen }) => {
             <Stack direction={chgWidth()} spacing={5} width="70%" mt={3}>
               <TextField
                 variant="standard"
-                label="Email"
+                label="อีเมล"
                 value={email}
                 {...register("Email", {
                   onChange: (e) => setEmail(e.target.value),
@@ -152,7 +143,7 @@ const AdminDialog = ({ open, setOpen }) => {
               />
               <TextField
                 variant="standard"
-                label="Tel"
+                label="เบอร์โทร"
                 value={tel}
                 {...register("Tel", {
                   onChange: (e) => setTel(e.target.value),
@@ -166,7 +157,7 @@ const AdminDialog = ({ open, setOpen }) => {
             <Stack direction={chgWidth()} spacing={5} width="70%" mt={3}>
               <TextField
                 variant="standard"
-                label="UserType"
+                label="ประเภท"
                 value={utype}
                 {...register("UserType", {
                   onChange: (e) => setUtype(e.target.value),
@@ -184,7 +175,7 @@ const AdminDialog = ({ open, setOpen }) => {
 
               <TextField
                 variant="standard"
-                label="DeviceType"
+                label="ชนิดอุปกรณ์"
                 value={dtype}
                 {...register("DeviceType", {
                   onChange: (e) => setDtype(e.target.value),
@@ -211,7 +202,7 @@ const AdminDialog = ({ open, setOpen }) => {
             >
               <TextField
                 variant="standard"
-                label="Etc"
+                label="อื่นๆ"
                 value={etc}
                 {...register("Etc", {
                   onChange: (e) => setEtc(e.target.value),
@@ -224,7 +215,7 @@ const AdminDialog = ({ open, setOpen }) => {
             <Stack direction={chgWidth()} spacing={5} width="70%" mt={3}>
               <TextField
                 variant="standard"
-                label="DeviceBrand"
+                label="แบรนด์"
                 value={dbrand}
                 {...register("DeviceBrand", {
                   onChange: (e) => setDbrand(e.target.value),
@@ -236,7 +227,7 @@ const AdminDialog = ({ open, setOpen }) => {
               />
               <TextField
                 variant="standard"
-                label="DeviceName"
+                label="ชื่ออุปกรณ์"
                 value={dname}
                 {...register("DeviceName", {
                   onChange: (e) => setDname(e.target.value),
@@ -255,7 +246,7 @@ const AdminDialog = ({ open, setOpen }) => {
                   render={({ field: { onChange, name, ...field } }) => (
                     <DatePicker
                       {...field}
-                      label="StartDate"
+                      label="เข้าวันที่"
                       inputFormat="YYYY/MM/DD"
                       value={startdate}
                       onChange={onChange}
@@ -282,7 +273,7 @@ const AdminDialog = ({ open, setOpen }) => {
                   render={({ field: { onChange, onBlur, name, ...field } }) => (
                     <DatePicker
                       {...field}
-                      label="EndDate"
+                      label="ออกวันที่"
                       inputFormat="YYYY/MM/DD"
                       value={enddate}
                       disabled={utype === "staff"}
@@ -309,7 +300,7 @@ const AdminDialog = ({ open, setOpen }) => {
             <Stack direction={chgWidth()} spacing={5} width="70%" mt={3}>
               <TextField
                 variant="standard"
-                label="Remark"
+                label="หมายเหตุ"
                 value={remark}
                 rows={4}
                 {...register("Remark", {

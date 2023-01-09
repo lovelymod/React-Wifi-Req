@@ -36,9 +36,6 @@ function UserSubmit() {
 
   const [internalIP, setInternalIP] = useState("");
 
-  const strUtype = utype;
-  let strDtype = dtype;
-
   const GetIP = async () => {
     await Axios.post("http://localhost:5000/getip").then((response) => {
       setInternalIP(response.data[1].address);
@@ -53,28 +50,21 @@ function UserSubmit() {
     }
   };
 
-  const swapData = () => {
-    if (strDtype === "etc") {
-      strDtype = etc;
-    }
-  };
-
   const OnSubmit = () => {
-    swapData();
     const dates = moment().format("YYYY-MM-DD");
     const times = moment().format("HH:mm");
 
     Axios.post("http://localhost:5000/users", {
       Firstname: fname,
       Lastname: lname,
-      User_Type: strUtype,
+      User_Type: utype,
       Tel: tel,
       Email: email,
-      Device_Type: strDtype,
+      Device_Type: dtype === "etc" ? etc : dtype,
       Device_Brand: dbrand,
       Device_Name: dname,
       Start_Date: startdate,
-      End_Date: strUtype === "staff" ? "" : enddate,
+      End_Date: utype === "staff" ? "" : enddate,
       Remark: remark,
       Dates: dates,
       Times: times,
@@ -118,7 +108,7 @@ function UserSubmit() {
     });
   };
 
-  const d = new Date("2022-3-7");
+  // const d = new Date("2022-3-7");
 
   useEffect(() => {
     GetIP();
@@ -146,7 +136,7 @@ function UserSubmit() {
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
-                label="Firstname"
+                label="ชื่อ"
                 {...register("Firstname", { onChange: (e) => setFname(e.target.value) })}
                 error={!!errors?.Firstname}
                 helperText={errors?.Firstname?.message}
@@ -156,7 +146,7 @@ function UserSubmit() {
 
               <TextField
                 variant="outlined"
-                label="Lastname"
+                label="นามสกุล"
                 {...register("Lastname", { onChange: (e) => setLname(e.target.value) })}
                 error={!!errors?.Lastname}
                 helperText={errors?.Lastname?.message}
@@ -167,7 +157,7 @@ function UserSubmit() {
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
-                label="Email"
+                label="อีเมล"
                 {...register("Email", { onChange: (e) => setEmail(e.target.value) })}
                 error={!!errors?.Email}
                 helperText={errors?.Email?.message}
@@ -176,7 +166,7 @@ function UserSubmit() {
               />
               <TextField
                 variant="outlined"
-                label="Tel"
+                label="เบอร์โทร"
                 {...register("Tel", { onChange: (e) => setTel(e.target.value) })}
                 error={!!errors?.Tel}
                 helperText={errors?.Tel?.message}
@@ -187,7 +177,7 @@ function UserSubmit() {
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
-                label="UserType"
+                label="ประเภท"
                 value={utype}
                 {...register("UserType", { onChange: (e) => setUtype(e.target.value) })}
                 error={!!errors?.UserType}
@@ -202,7 +192,7 @@ function UserSubmit() {
               </TextField>
               <TextField
                 variant="outlined"
-                label="DeviceType"
+                label="ชนิดอุปกรณ์"
                 value={dtype}
                 {...register("DeviceType", { onChange: (e) => setDtype(e.target.value) })}
                 error={!!errors?.DeviceType}
@@ -228,7 +218,7 @@ function UserSubmit() {
             >
               <TextField
                 variant="outlined"
-                label="Etc."
+                label="อื่นๆ"
                 {...register("Etc", { onChange: (e) => setEtc(e.target.value) })}
                 error={!!errors?.Etc}
                 helperText={errors?.Etc?.message}
@@ -238,7 +228,7 @@ function UserSubmit() {
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
-                label="DeviceBrand"
+                label="แบรนด์"
                 {...register("DeviceBrand", { onChange: (e) => setDbrand(e.target.value) })}
                 error={!!errors?.DeviceBrand}
                 helperText={errors?.DeviceBrand?.message}
@@ -247,7 +237,7 @@ function UserSubmit() {
               />
               <TextField
                 variant="outlined"
-                label="DeviceName"
+                label="ชื่ออุปกรณ์"
                 {...register("DeviceName", { onChange: (e) => setDname(e.target.value) })}
                 error={!!errors?.DeviceName}
                 helperText={errors?.DeviceName?.message}
@@ -259,13 +249,12 @@ function UserSubmit() {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Controller
                   control={control}
-                  name="Start Date"
+                  name="StartDate"
                   render={({ field: { onChange, name, ...field } }) => (
                     <DatePicker
                       {...field}
-                      label="StartDate"
+                      label="เข้าวันที่"
                       inputFormat="YYYY/MM/DD"
-                      value={d}
                       onChange={onChange}
                       onAccept={(newValue) => {
                         setStartdate(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`);
@@ -284,11 +273,11 @@ function UserSubmit() {
                 />
                 <Controller
                   control={control}
-                  name="End Date"
+                  name="EndDate"
                   render={({ field: { onChange, name, ...field } }) => (
                     <DatePicker
                       {...field}
-                      label="End Date"
+                      label="ออกวันที่"
                       inputFormat="YYYY/MM/DD"
                       onChange={onChange}
                       onAccept={(newValue) => {
@@ -312,7 +301,7 @@ function UserSubmit() {
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
-                label="Remark"
+                label="หมายเหตุ"
                 rows={2}
                 {...register("Remark", { onChange: (e) => setRemark(e.target.value) })}
                 multiline

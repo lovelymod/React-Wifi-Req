@@ -172,3 +172,74 @@
 // const Back = () => navigate("/table");
 //   const toggle = () => setIsOpen(!isOpen);
 //? table
+
+{
+  /* <TextField
+  variant="outlined"
+  defaultValue={
+    rowData.Device_Type === "mobile" ||
+    rowData.Device_Type === "notebook" ||
+    rowData.Device_Type === "tablet" ||
+    rowData.Device_Type === "ipad"
+      ? rowData.Device_Type
+      : "etc"
+  }
+  select
+  fullWidth
+>
+  <MenuItem value="mobile">Mobile</MenuItem>
+  <MenuItem value="notebook">Notebook</MenuItem>
+  <MenuItem value="tablet">Tablet</MenuItem>
+  <MenuItem value="ipad">iPad</MenuItem>
+  <MenuItem value="etc">Etc.</MenuItem>
+</TextField>; */
+}
+
+{
+  /* <Stack
+direction={chgWidth()}
+mt={2}
+sx={{
+  display:
+    rowData.Device_Type === "mobile" ||
+    rowData.Device_Type === "notebook" ||
+    rowData.Device_Type === "tablet" ||
+    rowData.Device_Type === "ipad"
+      ? "none"
+      : "",
+}}
+>
+<Box width="100%">
+  <InputLabel sx={{ color: "black" }}>Etc:</InputLabel>
+  <TextField
+    variant="outlined"
+    defaultValue={
+      rowData.Device_Type === "mobile" ||
+      rowData.Device_Type === "notebook" ||
+      rowData.Device_Type === "tablet" ||
+      rowData.Device_Type === "ipad"
+        ? null
+        : rowData.Device_Type
+    }
+    fullWidth
+  />
+</Box>
+</Stack> */
+}
+{
+  /* <LocalizationProvider dateAdapter={AdapterDayjs}>
+  <DatePicker
+    inputFormat="YYYY/MM/DD"
+    value={new Date(rowData.Start_Date)}
+    onChange
+    renderInput={(params) => <TextField {...params} fullWidth />}
+  />
+
+  <DatePicker
+    inputFormat="YYYY/MM/DD"
+    value={new Date(rowData.End_Date)}
+    onChange
+    renderInput={(params) => <TextField {...params} fullWidth />}
+  />
+</LocalizationProvider>; */
+}

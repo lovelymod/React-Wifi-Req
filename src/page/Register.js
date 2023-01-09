@@ -70,7 +70,7 @@ const Register = () => {
         </AppBar>
       </Box>
       <div className="bg-regis">
-        <div className="container-regis">
+        <Box className="container-regis" sx={{ boxShadow: 5 }}>
           <form onSubmit={handleSubmit(OnSubmit)} style={{ width: "300px" }} noValidate autoComplete="off">
             <img src="img/LS-01.png" alt="logo" width="150px" height="150px" />
             <TextField
@@ -140,7 +140,7 @@ const Register = () => {
               back
             </Button>
           </form>
-        </div>
+        </Box>
       </div>
     </div>
   );

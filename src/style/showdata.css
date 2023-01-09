@@ -9,23 +9,13 @@
 .bg5 {
   flex-grow: 1;
   align-self: center;
-  width: 70%;
+  width: 50%;
   display: flex;
   justify-content: center;
 }
 
-/* @media only screen and (max-width: 600px) {
-  .App5 {
-    flex-direction: column;
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+  .bg5 {
+    width: 80%;
   }
-
- 
-} */
-
-/* @media only screen and (min-width: 601px) and (max-width: 900px) {
-  .App5 {
-    flex-direction: column;
-  }
-
- 
-} */
+}

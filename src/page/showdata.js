@@ -1,32 +1,18 @@
 import "../style/showdata.css";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Axios from "axios";
 import Swal from "sweetalert2";
-import { motion } from "framer-motion";
 import Cookies from "js-cookie";
 import axios from "axios";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  TextField,
-  Stack,
-  MenuItem,
-  InputLabel,
-} from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { AppBar, Box, Toolbar, Typography, Button, IconButton, Stack, InputLabel } from "@mui/material";
 
 function ShowData() {
   const navigate = useNavigate();
   const location = useLocation();
   const rowData = location.state.rowData;
-  console.log("🚀 ~ file: showdata.js:29 ~ rowData", rowData);
+  const pathName = location.pathname;
 
   const refreshToken = async () => {
     try {
@@ -91,11 +77,6 @@ function ShowData() {
     }
   };
 
-  // const edituser = (id) => {
-  //   const newMemberList = showNewMember.filter((val) => val.id === id);
-  //   navigate("/edituser", { state: { newMemberList } });
-  // };
-
   useEffect(() => {
     refreshToken();
   }, []);
@@ -119,137 +100,73 @@ function ShowData() {
         </AppBar>
       </Box>
       <div className="bg5">
-        <Box>
+        <Box width="100%" pt={3} pb={3}>
           <Box>
             <InputLabel sx={{ color: "black" }}>IP Address:</InputLabel>
-            <TextField variant="outlined" defaultValue={rowData.Ip_Addr ? rowData.Ip_Addr : "-"} fullWidth />
+            <Typography variant="h5">{rowData.Ip_Addr ? rowData.Ip_Addr : "-"}</Typography>
           </Box>
 
-          <Stack direction={chgWidth()} justifyContent="space-between" mt={3} spacing={3}>
+          <Stack direction={chgWidth()} mt={3} spacing={3}>
             <Box width="100%">
-              <InputLabel sx={{ color: "black" }}>Firstname:</InputLabel>
-              <TextField variant="outlined" defaultValue={rowData.Firstname} fullWidth />
+              <InputLabel sx={{ color: "black" }}>ชื่อ:</InputLabel>
+              <Typography variant="h5">{rowData.Firstname}</Typography>
             </Box>
             <Box width="100%">
-              <InputLabel sx={{ color: "black" }}>Lastname:</InputLabel>
-              <TextField variant="outlined" defaultValue={rowData.Lastname} fullWidth />
-            </Box>
-          </Stack>
-          <Stack direction={chgWidth()} justifyContent="space-between" mt={3} spacing={3}>
-            <Box width="100%">
-              <InputLabel sx={{ color: "black" }}>Email:</InputLabel>
-              <TextField variant="outlined" defaultValue={rowData.Email} fullWidth />
-            </Box>
-            <Box width="100%">
-              <InputLabel sx={{ color: "black" }}>Tel:</InputLabel>
-              <TextField variant="outlined" defaultValue={rowData.Tel} fullWidth />
+              <InputLabel sx={{ color: "black" }}>นามสกุล:</InputLabel>
+              <Typography variant="h5">{rowData.Lastname}</Typography>
             </Box>
           </Stack>
           <Stack direction={chgWidth()} mt={3} spacing={3}>
             <Box width="100%">
-              <InputLabel sx={{ color: "black" }}>User Type:</InputLabel>
-              <TextField variant="outlined" defaultValue={rowData.User_Type} select fullWidth>
-                <MenuItem value="staff">Staff</MenuItem>
-                <MenuItem value="internship">Internship</MenuItem>
-                <MenuItem value="guest">Guest</MenuItem>
-              </TextField>
+              <InputLabel sx={{ color: "black" }}>อีเมล:</InputLabel>
+              <Typography variant="h5">{rowData.Email}</Typography>
             </Box>
             <Box width="100%">
-              <InputLabel sx={{ color: "black" }}>Device Type:</InputLabel>
-              <TextField
-                variant="outlined"
-                defaultValue={
-                  rowData.Device_Type === "mobile" ||
-                  rowData.Device_Type === "notebook" ||
-                  rowData.Device_Type === "tablet" ||
-                  rowData.Device_Type === "ipad"
-                    ? rowData.Device_Type
-                    : "etc"
-                }
-                select
-                fullWidth
-              >
-                <MenuItem value="mobile">Mobile</MenuItem>
-                <MenuItem value="notebook">Notebook</MenuItem>
-                <MenuItem value="tablet">Tablet</MenuItem>
-                <MenuItem value="ipad">iPad</MenuItem>
-                <MenuItem value="etc">Etc.</MenuItem>
-              </TextField>
+              <InputLabel sx={{ color: "black" }}>เบอร์โทร:</InputLabel>
+              <Typography variant="h5">{rowData.Tel}</Typography>
             </Box>
           </Stack>
-          <Stack
-            direction={chgWidth()}
-            mt={2}
-            sx={{
-              display:
-                rowData.Device_Type === "mobile" ||
-                rowData.Device_Type === "notebook" ||
-                rowData.Device_Type === "tablet" ||
-                rowData.Device_Type === "ipad"
-                  ? "none"
-                  : "",
-            }}
-          >
+          <Stack direction={chgWidth()} mt={3} spacing={3}>
             <Box width="100%">
-              <InputLabel sx={{ color: "black" }}>Etc:</InputLabel>
-              <TextField
-                variant="outlined"
-                defaultValue={
-                  rowData.Device_Type === "mobile" ||
-                  rowData.Device_Type === "notebook" ||
-                  rowData.Device_Type === "tablet" ||
-                  rowData.Device_Type === "ipad"
-                    ? null
-                    : rowData.Device_Type
-                }
-                fullWidth
-              />
+              <InputLabel sx={{ color: "black" }}>ประเภท:</InputLabel>
+              <Typography variant="h5">{rowData.User_Type}</Typography>
+            </Box>
+            <Box width="100%">
+              <InputLabel sx={{ color: "black" }}>ชนิดอุปกรณ์:</InputLabel>
+              <Typography variant="h5">{rowData.Device_Type}</Typography>
             </Box>
           </Stack>
-          <Stack direction={chgWidth()} justifyContent="space-between" mt={3} spacing={3}>
+
+          <Stack direction={chgWidth()} mt={3} spacing={3}>
             <Box width="100%">
-              <InputLabel sx={{ color: "black" }}>Device Brand:</InputLabel>
-              <TextField variant="outlined" defaultValue={rowData.Device_Brand} fullWidth />
+              <InputLabel sx={{ color: "black" }}>แบรนด์</InputLabel>
+              <Typography variant="h5">{rowData.Device_Brand}</Typography>
             </Box>
             <Box width="100%">
-              <InputLabel sx={{ color: "black" }}>Device Name:</InputLabel>
-              <TextField variant="outlined" defaultValue={rowData.Device_Name} fullWidth />
+              <InputLabel sx={{ color: "black" }}>ชื่ออุปกรณ์:</InputLabel>
+              <Typography variant="h5">{rowData.Device_Name}</Typography>
             </Box>
           </Stack>
-          <Stack direction={chgWidth()} justifyContent="space-between" mt={3} spacing={3}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <Box width="100%">
-                <InputLabel sx={{ color: "black" }}>Start Date:</InputLabel>
-                <DatePicker
-                  inputFormat="YYYY/MM/DD"
-                  value={new Date(rowData.Start_Date)}
-                  onChange
-                  renderInput={(params) => <TextField {...params} fullWidth />}
-                />
-              </Box>
-              <Box width="100%" sx={{ display: rowData.User_Type === "staff" ? "none" : "" }}>
-                <InputLabel sx={{ color: "black" }}>End Date:</InputLabel>
-                <DatePicker
-                  inputFormat="YYYY/MM/DD"
-                  value={new Date(rowData.End_Date)}
-                  onChange
-                  renderInput={(params) => <TextField {...params} fullWidth />}
-                />
-              </Box>
-            </LocalizationProvider>
-          </Stack>
-          <Stack direction="row" justifyContent="space-between" mt={3} spacing={3}>
+          <Stack direction={chgWidth()} mt={3} spacing={3}>
             <Box width="100%">
-              <InputLabel sx={{ color: "black" }}>Remark:</InputLabel>
-              <TextField
-                variant="outlined"
-                defaultValue={rowData.Remark ? rowData.Remark : "-"}
-                rows={2}
-                multiline
-                required
-                fullWidth
-              />
+              <InputLabel sx={{ color: "black" }}>เข้าวันที่:</InputLabel>
+              <Typography variant="h5">{rowData.Start_Date}</Typography>
             </Box>
+            <Box width="100%" sx={{ display: rowData.User_Type === "staff" ? "none" : "" }}>
+              <InputLabel sx={{ color: "black" }}>ออกวันที่:</InputLabel>
+              <Typography variant="h5">{rowData.End_Date}</Typography>
+            </Box>
+          </Stack>
+          <Stack direction="row" mt={3} spacing={3}>
+            <Box width="100%">
+              <InputLabel sx={{ color: "black" }}>หมายเหตุ:</InputLabel>
+              <Typography variant="h5">{rowData.Remark ? rowData.Remark : "-"}</Typography>
+            </Box>
+          </Stack>
+          <Stack direction="row" mt={3} spacing={3}>
+            <Button variant="contained" onClick={() => navigate("/edituser", { state: { rowData, pathName } })}>
+              Edit
+            </Button>
           </Stack>
         </Box>
       </div>

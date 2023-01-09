@@ -13,18 +13,15 @@ import { Button, Stack, Chip } from "@mui/material";
 import moment from "moment";
 import "../style/table.css";
 import AdminDialog from "../components/adminDialog";
-import DetailDialog from "./detailDialog";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser }) => {
+const MuiTable = ({ loading, memberList, deleteMember }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const pathName = location.pathname;
   const timeStamp = moment().format("YYYY_MM_DD");
   const [pageSize, setPageSize] = useState(25);
-  const [rowData, setRowData] = useState([]);
   const [open, setOpen] = useState(false);
-  const [openDetail, setOpenDetail] = useState(false);
-  const [strDate, setStrDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const navigate = useNavigate();
 
   const columns = [
     {
@@ -153,18 +150,16 @@ const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser }) => 
           onClick={() => {
             const rowData = params.row;
             navigate("/showdata", { state: { rowData } });
-
-            // setOpenDetail(true);
-            // setRowData(params.row);
-            // setStrDate(new Date(rowData.Start_Date));
-            // setEndDate(new Date(rowData.End));
           }}
           showInMenu
         />,
         <GridActionsCellItem
           icon={<EditRoundedIcon color="primary" />}
           label="Edit"
-          onClick={() => edituser(params.id)}
+          onClick={() => {
+            const rowData = params.row;
+            navigate("/edituser", { state: { rowData, pathName } });
+          }}
           showInMenu
         />,
         <GridActionsCellItem
@@ -230,15 +225,6 @@ const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser }) => 
         disableDensitySelector
       ></DataGrid>
       <AdminDialog open={open} setOpen={setOpen} />
-      <DetailDialog
-        openDetail={openDetail}
-        setOpenDetail={setOpenDetail}
-        rowData={rowData}
-        strDate={strDate}
-        setStrDate={setStrDate}
-        endDate={endDate}
-        setEndDate={setEndDate}
-      />
     </>
   );
 };

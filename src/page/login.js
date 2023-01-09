@@ -84,7 +84,7 @@ function Login() {
         </AppBar>
       </Box>
       <div className="bg2">
-        <div className="container2">
+        <Box className="container2" sx={{ boxShadow: 5 }}>
           <img className="logo2" src="img/LS-01.png" alt="logo" width="150px" height="150px" />
           <form
             className="formlogin"
@@ -142,7 +142,7 @@ function Login() {
               register
             </Button>
           </form>
-        </div>
+        </Box>
       </div>
     </div>
   );
