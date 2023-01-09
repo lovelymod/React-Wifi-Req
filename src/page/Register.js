@@ -11,6 +11,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../components/schema";
 
 const Register = () => {
+  const [Username, setUsername] = useState("");
+  const [Password, setPassword] = useState("");
+  const [confPassword, setConfPassword] = useState("");
+  const [hidePwd, setHidePwd] = useState(true);
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -18,11 +24,6 @@ const Register = () => {
   } = useForm({
     resolver: yupResolver(registerSchema),
   });
-  const [Username, setUsername] = useState("");
-  const [Password, setPassword] = useState("");
-  const [confPassword, setConfPassword] = useState("");
-  const [hidePwd, setHidePwd] = useState(true);
-  const navigate = useNavigate();
 
   const OnSubmit = async () => {
     try {

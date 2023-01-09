@@ -12,6 +12,11 @@ import Cookies from "js-cookie";
 import { TextField, Button, Box, AppBar, Typography, Toolbar, InputAdornment, IconButton } from "@mui/material";
 
 function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [hidePwd, setHidePwd] = useState(true);
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -19,10 +24,6 @@ function Login() {
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [hidePwd, setHidePwd] = useState(true);
-  const navigate = useNavigate();
 
   const OnSubmit = async () => {
     try {

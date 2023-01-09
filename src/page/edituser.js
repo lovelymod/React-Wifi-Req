@@ -17,6 +17,29 @@ function EditUser() {
   const location = useLocation();
   const rowData = location.state.rowData;
   const prevPath = location.state.pathName;
+  const [fname, setFname] = useState(rowData.Firstname);
+  const [lname, setLname] = useState(rowData.Lastname);
+  const [email, setEmail] = useState(rowData.Email);
+  const [tel, setTel] = useState(rowData.Tel.slice(0, 3) + rowData.Tel.slice(4, 7) + rowData.Tel.slice(8, 12));
+  const [utype, setUtype] = useState(rowData.User_Type);
+  const [dtype, setDtype] = useState(
+    rowData.Device_Type === "mobile" ||
+      rowData.Device_Type === "notebook" ||
+      rowData.Device_Type === "tablet" ||
+      rowData.Device_Type === "ipad"
+      ? rowData.Device_Type
+      : "etc"
+  );
+  const [etc, setEtc] = useState(dtype === "etc" ? rowData.Device_Type : "");
+  const [dbrand, setDbrand] = useState(rowData.Device_Brand);
+  const [dname, setDname] = useState(rowData.Device_Name);
+  const [defStartDate, setDefStartDate] = useState(new Date(rowData.Start_Date));
+  const [startdate, setStartdate] = useState(rowData.Start_Date);
+  console.log("🚀 ~ file: edituser.js:38 ~ startdate", startdate);
+  const [defEndDate, setDefEndDate] = useState(new Date(rowData.End_Date));
+  const [enddate, setEnddate] = useState(rowData.End_Date);
+  const [remark, setRemark] = useState(rowData.Remark);
+
   const {
     register,
     handleSubmit,
@@ -37,28 +60,6 @@ function EditUser() {
       EndDate: rowData.End_Date,
     },
   });
-
-  const [fname, setFname] = useState(rowData.Firstname);
-  const [lname, setLname] = useState(rowData.Lastname);
-  const [email, setEmail] = useState(rowData.Email);
-  const [tel, setTel] = useState(rowData.Tel);
-  const [utype, setUtype] = useState(rowData.User_Type);
-  const [dtype, setDtype] = useState(
-    rowData.Device_Type === "mobile" ||
-      rowData.Device_Type === "notebook" ||
-      rowData.Device_Type === "tablet" ||
-      rowData.Device_Type === "ipad"
-      ? rowData.Device_Type
-      : "etc"
-  );
-  const [etc, setEtc] = useState(dtype === "etc" ? rowData.Device_Type : "");
-  const [dbrand, setDbrand] = useState(rowData.Device_Brand);
-  const [dname, setDname] = useState(rowData.Device_Name);
-  const [defStartDate, setDefStartDate] = useState(new Date(rowData.Start_Date));
-  const [startdate, setStartdate] = useState(rowData.Start_Date);
-  const [defEndDate, setDefEndDate] = useState(new Date(rowData.End_Date));
-  const [enddate, setEnddate] = useState(rowData.End_Date);
-  const [remark, setRemark] = useState(rowData.Remark);
 
   const refreshToken = async () => {
     try {
@@ -87,6 +88,7 @@ function EditUser() {
   };
 
   const OnSubmit = async (id) => {
+    const telFormat = tel.slice(0, 3) + "-" + tel.slice(3, 6) + "-" + tel.slice(6, 10);
     await axios
       .patch("http://localhost:5000/updateusers", {
         //todo id
@@ -94,7 +96,7 @@ function EditUser() {
         Firstname: fname,
         Lastname: lname,
         Email: email,
-        Tel: tel,
+        Tel: telFormat,
         User_Type: utype,
         Device_Type: dtype === "etc" ? etc : dtype,
         Device_Brand: dbrand,
@@ -153,6 +155,7 @@ function EditUser() {
       <div className="bg6">
         <Stack
           component="form"
+          width="1000px"
           spacing={5}
           onSubmit={handleSubmit(() => OnSubmit(rowData.id))}
           noValidate
@@ -254,6 +257,7 @@ function EditUser() {
               {...register("Etc", { onChange: (e) => setEtc(e.target.value) })}
               error={!!errors?.Etc}
               helperText={errors?.Etc?.message}
+              fullWidth
               required
             />
           </Stack>

@@ -26,14 +26,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const AdminDialog = ({ open, setOpen }) => {
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(userSchema),
-  });
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [utype, setUtype] = useState("");
@@ -43,9 +35,19 @@ const AdminDialog = ({ open, setOpen }) => {
   const [etc, setEtc] = useState("");
   const [dbrand, setDbrand] = useState("");
   const [dname, setDname] = useState("");
-  const [startdate, setStartdate] = useState("");
-  const [enddate, setEnddate] = useState("");
+  const [startdate, setStartdate] = useState();
+  console.log("🚀 ~ file: adminDialog.js:39 ~ startdate", startdate);
+  const [enddate, setEnddate] = useState();
   const [remark, setRemark] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(userSchema),
+  });
 
   const chgWidth = () => {
     if (window.innerWidth < 600) {
@@ -60,6 +62,7 @@ const AdminDialog = ({ open, setOpen }) => {
   };
 
   const onSubmit = async () => {
+    const telFormat = tel.slice(0, 3) + "-" + tel.slice(3, 6) + "-" + tel.slice(6, 10);
     const dates = moment().format("YYYY-MM-DD");
     const times = moment().format("HH:mm");
 
@@ -68,7 +71,7 @@ const AdminDialog = ({ open, setOpen }) => {
         Firstname: fname,
         Lastname: lname,
         User_Type: utype,
-        Tel: tel,
+        Tel: telFormat,
         Email: email,
         Device_Type: dtype === "etc" ? etc : dtype,
         Device_Brand: dbrand,
@@ -209,6 +212,7 @@ const AdminDialog = ({ open, setOpen }) => {
                 })}
                 error={!!errors?.Etc}
                 helperText={errors?.Etc?.message}
+                fullWidth
                 required={dtype === "etc"}
               />
             </Stack>
@@ -248,7 +252,7 @@ const AdminDialog = ({ open, setOpen }) => {
                       {...field}
                       label="เข้าวันที่"
                       inputFormat="YYYY/MM/DD"
-                      value={startdate}
+                      // value={startdate}
                       onChange={onChange}
                       onAccept={(newValue) => {
                         setStartdate(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`);

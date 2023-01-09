@@ -1,5 +1,5 @@
 import * as yup from "yup";
-
+// |(^[0-9]{3}-[0-9]{3}-[0-9]{4}$)
 export const userSchema = yup.object().shape({
   Firstname: yup.string().required("Firstname is required."),
   Lastname: yup.string().required("Lastname is required."),
@@ -13,8 +13,8 @@ export const userSchema = yup.object().shape({
     .string()
     .required("Phone number is required.")
     .min(10, "Phone number must least 10 characters")
-    .max(12, "Phone number must most 10 characters")
-    .matches(/(^[0-9]{10}$)|(^[0-9]{3}-[0-9]{3}-[0-9]{4}$)/, "Phone number should be 0-9"),
+    .max(10, "Phone number must most 10 characters")
+    .matches(/(^[0-9]{10}$)/, "Phone number should be 0-9"),
   DeviceType: yup.string().required("Devicetype is required."),
   Etc: yup.string().when("DeviceType", {
     is: (DeviceType) => DeviceType === "etc",

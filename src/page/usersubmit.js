@@ -12,15 +12,6 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 function UserSubmit() {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    control,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(userSchema),
-  });
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [utype, setUtype] = useState("");
@@ -31,10 +22,20 @@ function UserSubmit() {
   const [dbrand, setDbrand] = useState("");
   const [dname, setDname] = useState("");
   const [startdate, setStartdate] = useState();
+  console.log("🚀 ~ file: usersubmit.js:25 ~ startdate", startdate);
   const [enddate, setEnddate] = useState();
   const [remark, setRemark] = useState("");
-
   const [internalIP, setInternalIP] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(userSchema),
+  });
 
   const GetIP = async () => {
     await Axios.post("http://localhost:5000/getip").then((response) => {
@@ -51,6 +52,7 @@ function UserSubmit() {
   };
 
   const OnSubmit = () => {
+    const telFormat = tel.slice(0, 3) + "-" + tel.slice(3, 6) + "-" + tel.slice(6, 10);
     const dates = moment().format("YYYY-MM-DD");
     const times = moment().format("HH:mm");
 
@@ -58,7 +60,7 @@ function UserSubmit() {
       Firstname: fname,
       Lastname: lname,
       User_Type: utype,
-      Tel: tel,
+      Tel: telFormat,
       Email: email,
       Device_Type: dtype === "etc" ? etc : dtype,
       Device_Brand: dbrand,
@@ -222,6 +224,7 @@ function UserSubmit() {
                 {...register("Etc", { onChange: (e) => setEtc(e.target.value) })}
                 error={!!errors?.Etc}
                 helperText={errors?.Etc?.message}
+                fullWidth
                 required
               />
             </Stack>

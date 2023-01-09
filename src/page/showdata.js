@@ -2,7 +2,6 @@ import "../style/showdata.css";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import Axios from "axios";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -51,7 +50,7 @@ function ShowData() {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://localhost:5000/users/${id}`).then((response) => {
+        axios.delete(`http://localhost:5000/users/${id}`).then((response) => {
           if (response.data.msg === "User Deleted") {
             Swal.fire({
               icon: "success",
@@ -163,9 +162,12 @@ function ShowData() {
               <Typography variant="h5">{rowData.Remark ? rowData.Remark : "-"}</Typography>
             </Box>
           </Stack>
-          <Stack direction="row" mt={3} spacing={3}>
+          <Stack direction="row" mt={3} spacing={5}>
             <Button variant="contained" onClick={() => navigate("/edituser", { state: { rowData, pathName } })}>
               Edit
+            </Button>
+            <Button variant="outlined" color="error" onClick={() => DeleteUser(rowData.id)}>
+              Delete
             </Button>
           </Stack>
         </Box>
