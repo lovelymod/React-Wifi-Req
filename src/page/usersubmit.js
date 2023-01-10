@@ -301,6 +301,7 @@ function UserSubmit() {
                       renderInput={(params) => (
                         <TextField
                           {...params}
+                          onKeyDown={(e) => e.preventDefault()}
                           error={!!errors?.StartDate}
                           helperText={errors?.StartDate?.message}
                           fullWidth
@@ -327,6 +328,7 @@ function UserSubmit() {
                       renderInput={(params) => (
                         <TextField
                           {...params}
+                          onKeyDown={(e) => e.preventDefault()}
                           error={!!errors?.EndDate}
                           helperText={errors?.EndDate?.message}
                           fullWidth

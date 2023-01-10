@@ -312,6 +312,7 @@ const AdminDialog = ({ open, setOpen }) => {
                       renderInput={(params) => (
                         <TextField
                           {...params}
+                          onKeyDown={(e) => e.preventDefault()}
                           variant="standard"
                           error={!!errors?.StartDate}
                           helperText={errors?.StartDate?.message}
@@ -340,6 +341,7 @@ const AdminDialog = ({ open, setOpen }) => {
                       renderInput={(params) => (
                         <TextField
                           {...params}
+                          onKeyDown={(e) => e.preventDefault()}
                           variant="standard"
                           error={!!errors?.EndDate}
                           helperText={errors?.EndDate?.message}
