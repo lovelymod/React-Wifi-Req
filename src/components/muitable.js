@@ -12,15 +12,21 @@ import { useState } from "react";
 import { Button, Stack, Chip } from "@mui/material";
 import moment from "moment";
 import "../style/table.css";
+import AdminDialog from "../components/adminDialog";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser, gotoAdminSub }) => {
+const MuiTable = ({ loading, memberList, deleteMember }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const pathName = location.pathname;
   const timeStamp = moment().format("YYYY_MM_DD");
   const [pageSize, setPageSize] = useState(25);
+  const [open, setOpen] = useState(false);
 
   const columns = [
     {
       field: "id",
-      headerName: "No.",
+      headerName: "ลำดับ",
       headerAlign: "center",
       align: "center",
       flex: 1,
@@ -28,47 +34,50 @@ const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser, gotoA
 
     {
       field: "Dates",
-      headerName: "Date",
+      headerName: "วันที่",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
       field: "Times",
-      headerName: "Time",
+      headerName: "เวลา",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
       field: "Ip_Addr",
+      headerName: "เลข IP เครื่อง",
       hide: true,
     },
     {
       field: "Firstname",
-      headerName: "Firstname",
+      headerName: "ชื่อ",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
       field: "Lastname",
-      headerName: "Lastname",
+      headerName: "นามสกุล",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
       field: "Email",
+      headerName: "อีเมล",
       hide: true,
     },
     {
       field: "Tel",
+      headerName: "เบอร์โทร",
       hide: true,
     },
     {
       field: "User_Type",
-      headerName: "UserType",
+      headerName: "ประเภท",
       headerAlign: "center",
       align: "center",
       flex: 1,
@@ -99,26 +108,29 @@ const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser, gotoA
     },
     {
       field: "Device_Type",
+      headerName: "ชนิดอุปกรณ์",
       hide: true,
     },
     {
       field: "Device_Brand",
+      headerName: "แบรนด์",
       hide: true,
     },
     {
       field: "Device_Name",
+      headerName: "ชื่ออุปกรณ์",
       hide: true,
     },
     {
       field: "Start_Date",
-      headerName: "Start Date",
+      headerName: "เข้าวันที่",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
       field: "End_Date",
-      headerName: "End Date",
+      headerName: "ออกวันที่",
       headerAlign: "center",
       align: "center",
       flex: 1,
@@ -130,17 +142,24 @@ const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser, gotoA
       headerAlign: "center",
       align: "center",
       sortable: false,
+      flex: 0.5,
       getActions: (params) => [
         <GridActionsCellItem
           icon={<FormatListBulletedRoundedIcon color="primary" />}
           label="Detail"
-          onClick={() => showUser(params.id)}
+          onClick={() => {
+            const rowData = params.row;
+            navigate("/showdata", { state: { rowData } });
+          }}
           showInMenu
         />,
         <GridActionsCellItem
           icon={<EditRoundedIcon color="primary" />}
           label="Edit"
-          onClick={() => edituser(params.id)}
+          onClick={() => {
+            const rowData = params.row;
+            navigate("/edituser", { state: { rowData, pathName } });
+          }}
           showInMenu
         />,
         <GridActionsCellItem
@@ -155,53 +174,58 @@ const MuiTable = ({ loading, memberList, deleteMember, showUser, edituser, gotoA
 
   const gridToolBar = () => {
     return (
-      <GridToolbarContainer sx={{ display: "flex", justifyContent: "flex-end", paddingX: "50px" }}>
-        <Stack direction="row" spacing={3}>
-          <GridToolbarQuickFilter />
-          <Button variant="contained" onClick={gotoAdminSub}>
-            Add User
-          </Button>
-          <GridToolbarExport
-            csvOptions={{
-              fileName: `RequestList_${timeStamp}`,
-              utf8WithBom: true,
-              allColumns: true,
-            }}
-          />
-        </Stack>
-      </GridToolbarContainer>
+      <>
+        <GridToolbarContainer sx={{ display: "flex", justifyContent: "flex-end", paddingX: "50px" }}>
+          <Stack direction="row" spacing={3}>
+            <GridToolbarQuickFilter />
+            <Button variant="contained" onClick={() => setOpen(true)}>
+              Add User
+            </Button>
+            <GridToolbarExport
+              csvOptions={{
+                fileName: `RequestList_${timeStamp}`,
+                utf8WithBom: true,
+                allColumns: true,
+              }}
+            />
+          </Stack>
+        </GridToolbarContainer>
+      </>
     );
   };
 
   return (
-    <DataGrid
-      initialState={{
-        sorting: {
-          sortModel: [{ field: "id", sort: "desc" }],
-        },
-      }}
-      rows={memberList}
-      columns={columns}
-      sx={{
-        border: "none",
-        fontSize: "16px",
-        "& .MuiTablePagination-selectLabel": {
-          marginBottom: "0px",
-        },
-        "& .MuiTablePagination-displayedRows": {
-          marginBottom: "0px",
-        },
-      }}
-      density="comfortable"
-      loading={loading}
-      components={{ Toolbar: gridToolBar }}
-      pageSize={pageSize}
-      onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-      disableSelectionOnClick
-      disableColumnFilter
-      disableColumnSelector
-      disableDensitySelector
-    />
+    <>
+      <DataGrid
+        initialState={{
+          sorting: {
+            sortModel: [{ field: "id", sort: "desc" }],
+          },
+        }}
+        rows={memberList}
+        columns={columns}
+        sx={{
+          border: "none",
+          fontSize: "16px",
+          "& .MuiTablePagination-selectLabel": {
+            marginBottom: "0px",
+          },
+          "& .MuiTablePagination-displayedRows": {
+            marginBottom: "0px",
+          },
+        }}
+        density="comfortable"
+        loading={loading}
+        components={{ Toolbar: gridToolBar }}
+        pageSize={pageSize}
+        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+        disableSelectionOnClick
+        disableColumnFilter
+        disableColumnSelector
+        disableDensitySelector
+      ></DataGrid>
+      <AdminDialog open={open} setOpen={setOpen} />
+    </>
   );
 };
 

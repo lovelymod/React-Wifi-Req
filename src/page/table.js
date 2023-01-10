@@ -1,7 +1,6 @@
 import "../style/table.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Axios from "axios";
 import MuiTable from "../components/muitable";
 import Swal from "sweetalert2";
 import jwt_decode from "jwt-decode";
@@ -12,8 +11,6 @@ import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 function MyTable() {
   const navigate = useNavigate();
   const [memberList, setMemberList] = useState([]);
-  // const [exMemberList, setExMemberList] = useState([]);
-  // const [isOpen, setIsOpen] = useState(false);
   const [Username, setUsername] = useState("");
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
@@ -81,23 +78,11 @@ function MyTable() {
     }
   };
 
-  const gotoAdminSub = () => navigate("/adminsubmit");
-
   const fetchData = async () => {
     setLoading(true);
-    const getUser = await Axios.get("http://localhost:5000/getusers");
+    const getUser = await axios.get("http://localhost:5000/getusers");
     setMemberList(getUser.data);
     setLoading(false);
-  };
-
-  const showUser = (id) => {
-    const newMemberList = memberList.filter((val) => val.id === id);
-    navigate("/showdata", { state: { newMemberList } });
-  };
-
-  const edituser = (id) => {
-    const newMemberList = memberList.filter((val) => val.id === id);
-    navigate("/edituser", { state: { newMemberList } });
   };
 
   const deleteMember = (id) => {
@@ -113,7 +98,6 @@ function MyTable() {
       if (result.isConfirmed) {
         const newMemberList = memberList.filter((val) => val.id !== id);
         setMemberList(newMemberList);
-        // setExMemberList(newMemberList);
         Swal.fire({
           icon: "success",
           title: "Deleted !",
@@ -135,9 +119,9 @@ function MyTable() {
     <div className="App3">
       <Box mb={1}>
         <AppBar position="static">
-          <Toolbar sx={{ padding: "10px" }}>
+          <Toolbar>
             <img src="img/LS-02.png" alt="logo" width="50" height="50" />
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
+            <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
               WIFI Request List
             </Typography>
             <Button color="inherit" onClick={Logout}>
@@ -148,16 +132,7 @@ function MyTable() {
       </Box>
       <div className="bg3">
         <div className="all-scroll">
-          <div className="table-scroll">
-            <MuiTable
-              loading={loading}
-              memberList={memberList}
-              gotoAdminSub={gotoAdminSub}
-              showUser={showUser}
-              edituser={edituser}
-              deleteMember={deleteMember}
-            />
-          </div>
+          <MuiTable loading={loading} memberList={memberList} deleteMember={deleteMember} />
         </div>
       </div>
     </div>

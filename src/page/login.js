@@ -1,45 +1,40 @@
 import "../style/login.css";
 import { useState, useEffect } from "react";
-import Axios from "axios";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "../components/schema";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Cookies from "js-cookie";
+import { TextField, Button, Box, AppBar, Typography, Toolbar, InputAdornment, IconButton } from "@mui/material";
 
 function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [hidePwd, setHidePwd] = useState(true);
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
-    setFocus,
     formState: { errors },
-  } = useForm();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [hidePwd, setHidePwd] = useState("password");
-  const navigate = useNavigate();
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+  });
 
-  const showPwd = () => {
-    if (hidePwd === "password") {
-      setHidePwd("text");
-    } else {
-      setHidePwd("password");
-    }
-  };
-
-  const toRegister = () => navigate("/register");
-  const OnSubmit = () => authLogin();
-
-  const authLogin = async () => {
+  const OnSubmit = async () => {
     try {
-      await Axios.post("http://localhost:5000/login", {
-        Username: username,
-        Password: password,
-      }).then((response) => {
-        Cookies.set("refreshToken", response.data.refreshToken, { expires: 1 });
-      });
+      await axios
+        .post("http://localhost:5000/login", {
+          Username: username,
+          Password: password,
+        })
+        .then((response) => {
+          Cookies.set("refreshToken", response.data.refreshToken, { expires: 1 });
+        });
       Swal.fire({
         icon: "success",
         title: "LOGGED IN",
@@ -51,10 +46,7 @@ function Login() {
         navigate("/table");
       }, 1500);
     } catch (error) {
-      if (
-        error.response.data.msg === "not Matched" ||
-        error.response.data.msg === "Username not found"
-      ) {
+      if (error.response.data.msg === "not Matched" || error.response.data.msg === "Username not found") {
         Swal.fire({
           icon: "error",
           title: "Wrong Username or Password",
@@ -66,84 +58,92 @@ function Login() {
     }
   };
 
-  const checkLogin = () => {
-    const chk = Cookies.get("refreshToken");
-    if (chk) navigate("/table");
+  const checkLogin = async () => {
+    try {
+      const refreshToken = Cookies.get("refreshToken");
+      await axios.get("http://localhost:5000/token", {
+        params: { refreshToken: refreshToken },
+      });
+      navigate("/table");
+    } catch (error) {
+      // console.log(error);
+    }
   };
-
   useEffect(() => {
     checkLogin();
-    setFocus("username");
   }, []);
   return (
     <div className="App2">
+      <Box mb={1}>
+        <AppBar position="static">
+          <Toolbar>
+            <img src="img/LS-02.png" alt="logo" width="50" height="50" />
+            <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
+              Login
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </Box>
       <div className="bg2">
-        <div className="images2">
-          <img className="logo2" src="img/LS-02.png" alt="" srcSet="" />
-        </div>
-        <div className="container2">
-          <form onSubmit={handleSubmit(OnSubmit)}>
-            <div className="row-contain-login2">
-              <input
-                type="text"
-                className="form-control input2"
-                id="username"
-                placeholder="Username"
-                {...register("username", {
-                  onChange: (e) => setUsername(e.target.value),
-                  required: true,
-                })}
-              />
-            </div>
-            {errors.username && (
-              <p className="fill-message">Please fill this form</p>
-            )}
-            <div className="row-contain-login2-pwd">
-              <input
-                type={hidePwd}
-                className="input2-pwd"
-                id="password"
-                placeholder="Password"
-                {...register("password", {
-                  onChange: (e) => setPassword(e.target.value),
-                  required: true,
-                })}
-              />
-              {hidePwd === "password" ? (
-                <VisibilityOffIcon
-                  className="eyeVisit"
-                  onClick={() => showPwd()}
-                />
-              ) : (
-                <VisibilityIcon
-                  className="eyeVisit"
-                  onClick={() => showPwd()}
-                />
-              )}
-            </div>
-            {errors.password && (
-              <p className="fill-message">Please fill this form</p>
-            )}
-            <div className="row-contain-login2-butt">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="btn loginbutt2"
-              >
-                Login
-              </motion.button>
-              <div style={{ width: "20px" }}></div>
-              <motion.input
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                type="button"
-                value="Register"
-                className="btn loginbutt2"
-                onClick={() => toRegister()}
-              />
-            </div>
+        <Box className="container2" sx={{ boxShadow: 5 }}>
+          <img className="logo2" src="img/LS-01.png" alt="logo" width="150px" height="150px" />
+          <form
+            className="formlogin"
+            style={{ width: "300px" }}
+            onSubmit={handleSubmit(OnSubmit)}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              variant="standard"
+              label="Username"
+              {...register("Username", {
+                onChange: (e) => setUsername(e.target.value),
+              })}
+              error={!!errors?.Username}
+              helperText={errors?.Username?.message}
+              fullWidth
+              required
+              autoFocus
+              sx={{ marginTop: "10px" }}
+            />
+            <TextField
+              variant="standard"
+              label="Password"
+              type={hidePwd ? "password" : "text"}
+              {...register("Password", {
+                onChange: (e) => setPassword(e.target.value),
+              })}
+              error={!!errors?.Password}
+              helperText={errors?.Password?.message}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setHidePwd(!hidePwd)}>
+                      {hidePwd ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              fullWidth
+              required
+              sx={{ marginTop: "10px" }}
+            />
+            <Button type="submit" variant="contained" size="large" fullWidth sx={{ marginTop: "10px" }}>
+              login
+            </Button>
+            <Button
+              type="button"
+              variant="outlined"
+              size="large"
+              onClick={() => navigate("/register")}
+              fullWidth
+              sx={{ marginTop: "10px" }}
+            >
+              register
+            </Button>
           </form>
-        </div>
+        </Box>
       </div>
     </div>
   );
