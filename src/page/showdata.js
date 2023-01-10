@@ -166,7 +166,7 @@ function ShowData() {
             <Button variant="contained" onClick={() => navigate("/edituser", { state: { rowData, pathName } })}>
               Edit
             </Button>
-            <Button variant="outlined" color="error" onClick={() => DeleteUser(rowData.id)}>
+            <Button variant="outlined" color="warning" onClick={() => DeleteUser(rowData.id)}>
               Delete
             </Button>
           </Stack>

@@ -356,7 +356,12 @@ function EditUser() {
             <Button type="submit" variant="contained">
               Submit
             </Button>
-            <Button type="button" variant="outlined" onClick={() => navigate(prevPath, { state: { rowData } })}>
+            <Button
+              type="button"
+              variant="outlined"
+              color="warning"
+              onClick={() => navigate(prevPath, { state: { rowData } })}
+            >
               Cancel
             </Button>
           </Stack>
