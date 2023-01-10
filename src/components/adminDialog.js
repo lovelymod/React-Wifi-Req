@@ -1,17 +1,34 @@
-import "../style/usersubmit.css";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useForm, Controller } from "react-hook-form";
-import moment from "moment";
-import Swal from "sweetalert2";
-import { motion } from "framer-motion";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { userSchema } from "../components/schema";
-import { Box, MenuItem, Stack, TextField, Typography } from "@mui/material";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Stack,
+  TextField,
+  MenuItem,
+  Button,
+  Typography,
+  IconButton,
+} from "@mui/material";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { userSchema } from "./schema";
+import { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import moment from "moment";
+import * as React from "react";
+import Slide from "@mui/material/Slide";
 
-function UserSubmit() {
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const AdminDialog = ({ open, setOpen }) => {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [utype, setUtype] = useState("");
@@ -24,14 +41,13 @@ function UserSubmit() {
   const [startdate, setStartdate] = useState("");
   const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
-  const [internalIP, setInternalIP] = useState("");
 
   const {
     register,
     handleSubmit,
-    reset,
     control,
     setValue,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(userSchema),
@@ -77,12 +93,6 @@ function UserSubmit() {
     });
   };
 
-  const GetIP = async () => {
-    await axios.post("http://localhost:5000/getip").then((response) => {
-      setInternalIP(response.data[1].address);
-    });
-  };
-
   const chgWidth = () => {
     if (window.innerWidth < 600) {
       return "column";
@@ -91,12 +101,16 @@ function UserSubmit() {
     }
   };
 
-  const OnSubmit = () => {
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const onSubmit = async () => {
     const telFormat = tel.slice(0, 3) + "-" + tel.slice(3, 6) + "-" + tel.slice(6, 10);
     const dates = moment().format("YYYY-MM-DD");
     const times = moment().format("HH:mm");
 
-    axios
+    await axios
       .post("http://localhost:5000/users", {
         Firstname: fname,
         Lastname: lname,
@@ -111,108 +125,97 @@ function UserSubmit() {
         Remark: remark,
         Dates: dates,
         Times: times,
-        Ip_Addr: internalIP,
       })
       .then((response) => {
         if (response.data.msg === "User Created") {
+          setTimeout(() => {
+            window.location.reload();
+          }, 1200);
+          handleClose();
           Swal.fire({
             icon: "success",
             title: "Submited",
             showConfirmButton: false,
-            timer: 1500,
             timerProgressBar: true,
-          });
-          setTimeout(() => {
-            window.location.reload();
-          }, 1400);
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Something went wrong!",
-            showConfirmButton: false,
+            timer: 1200,
           });
         }
       });
   };
-
-  useEffect(() => {
-    GetIP();
-  }, []);
-
   return (
-    <div className="App1">
-      <Box
-        component={motion.div}
-        className="bg1"
-        initial={{ scale: 0 }}
-        animate={{ scale: 0.95 }}
-        transition={{
-          delay: 0.3,
-        }}
-        sx={{ boxShadow: "15" }}
-      >
-        <Box className="images1">
-          <img className="logo1" src="img/LS-02.png" alt="" srcSet="" width="125px" height="125px" />
-        </Box>
-
-        <Typography variant="h4" color="#ffb401" textAlign="center" mb={5}>
-          Please fill out a request form
-        </Typography>
-
-        <Box>
-          <Stack component="form" spacing={5} onSubmit={handleSubmit(OnSubmit)} noValidate autoComplete="off">
-            <Stack direction={chgWidth()} spacing={5} width="60%">
+    <>
+      <Dialog open={open} onClose={handleClose} maxWidth="md" TransitionComponent={Transition} fullWidth>
+        <DialogTitle component="div" sx={{ display: "flex" }}>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Add User
+          </Typography>
+          <IconButton color="error" onClick={handleClose}>
+            <CloseRoundedIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent dividers>
+          <DialogContentText>Please fill out user information.</DialogContentText>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
+            <Stack direction={chgWidth()} spacing={5} width="70%" mt={3}>
               <TextField
-                variant="outlined"
+                variant="standard"
                 label="ชื่อ"
                 value={fname}
-                {...register("Firstname", { onChange: (e) => setFname(e.target.value) })}
+                {...register("Firstname", {
+                  onChange: (e) => setFname(e.target.value),
+                })}
                 error={!!errors?.Firstname}
                 helperText={errors?.Firstname?.message}
                 required
                 fullWidth
               />
-
               <TextField
-                variant="outlined"
+                variant="standard"
                 label="นามสกุล"
                 value={lname}
-                {...register("Lastname", { onChange: (e) => setLname(e.target.value) })}
+                {...register("Lastname", {
+                  onChange: (e) => setLname(e.target.value),
+                })}
                 error={!!errors?.Lastname}
                 helperText={errors?.Lastname?.message}
                 required
                 fullWidth
               />
             </Stack>
-            <Stack direction={chgWidth()} spacing={5} width="60%">
+            <Stack direction={chgWidth()} spacing={5} width="70%" mt={3}>
               <TextField
-                variant="outlined"
+                variant="standard"
                 label="อีเมล"
                 value={email}
-                {...register("Email", { onChange: (e) => setEmail(e.target.value) })}
+                {...register("Email", {
+                  onChange: (e) => setEmail(e.target.value),
+                })}
                 error={!!errors?.Email}
                 helperText={errors?.Email?.message}
                 required
                 fullWidth
               />
               <TextField
-                variant="outlined"
+                variant="standard"
                 label="เบอร์โทร"
                 value={tel}
-                {...register("Tel", { onChange: (e) => setTel(e.target.value) })}
+                {...register("Tel", {
+                  onChange: (e) => setTel(e.target.value),
+                })}
                 error={!!errors?.Tel}
                 helperText={errors?.Tel?.message}
                 required
                 fullWidth
               />
             </Stack>
-            <Stack direction={chgWidth()} spacing={5} width="60%">
+            <Stack direction={chgWidth()} spacing={5} width="70%" mt={3}>
               <TextField
-                variant="outlined"
+                variant="standard"
                 label="ประเภท"
                 value={utype}
-                {...register("UserType", { onChange: (e) => setUtype(e.target.value) })}
+                {...register("UserType", {
+                  onChange: (e) => setUtype(e.target.value),
+                })}
                 error={!!errors?.UserType}
                 helperText={errors?.UserType?.message}
                 select
@@ -223,11 +226,14 @@ function UserSubmit() {
                 <MenuItem value="internship">Internship</MenuItem>
                 <MenuItem value="guest">Guest</MenuItem>
               </TextField>
+
               <TextField
-                variant="outlined"
+                variant="standard"
                 label="ชนิดอุปกรณ์"
                 value={dtype}
-                {...register("DeviceType", { onChange: (e) => setDtype(e.target.value) })}
+                {...register("DeviceType", {
+                  onChange: (e) => setDtype(e.target.value),
+                })}
                 error={!!errors?.DeviceType}
                 helperText={errors?.DeviceType?.message}
                 select
@@ -241,48 +247,53 @@ function UserSubmit() {
                 <MenuItem value="etc">Etc.</MenuItem>
               </TextField>
             </Stack>
-
             <Stack
               direction={chgWidth()}
-              spacing={5}
-              width="60%"
               justifyContent="flex-end"
+              width="70%"
+              mt={3}
               sx={{ display: `${dtype === "etc" ? "" : "none"}` }}
             >
               <TextField
-                variant="outlined"
+                variant="standard"
                 label="อื่นๆ"
                 value={etc}
-                {...register("Etc", { onChange: (e) => setEtc(e.target.value) })}
+                {...register("Etc", {
+                  onChange: (e) => setEtc(e.target.value),
+                })}
                 error={!!errors?.Etc}
                 helperText={errors?.Etc?.message}
                 fullWidth
-                required
+                required={dtype === "etc"}
               />
             </Stack>
-            <Stack direction={chgWidth()} spacing={5} width="60%">
+            <Stack direction={chgWidth()} spacing={5} width="70%" mt={3}>
               <TextField
-                variant="outlined"
+                variant="standard"
                 label="แบรนด์"
                 value={dbrand}
-                {...register("DeviceBrand", { onChange: (e) => setDbrand(e.target.value) })}
+                {...register("DeviceBrand", {
+                  onChange: (e) => setDbrand(e.target.value),
+                })}
                 error={!!errors?.DeviceBrand}
                 helperText={errors?.DeviceBrand?.message}
                 required
                 fullWidth
               />
               <TextField
-                variant="outlined"
+                variant="standard"
                 label="ชื่ออุปกรณ์"
                 value={dname}
-                {...register("DeviceName", { onChange: (e) => setDname(e.target.value) })}
+                {...register("DeviceName", {
+                  onChange: (e) => setDname(e.target.value),
+                })}
                 error={!!errors?.DeviceName}
                 helperText={errors?.DeviceName?.message}
                 required
                 fullWidth
               />
             </Stack>
-            <Stack direction={chgWidth()} spacing={5} width="60%">
+            <Stack direction={chgWidth()} spacing={5} width="70%" mt={3}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Controller
                   control={control}
@@ -302,6 +313,7 @@ function UserSubmit() {
                         <TextField
                           {...params}
                           onKeyDown={(e) => e.preventDefault()}
+                          variant="standard"
                           error={!!errors?.StartDate}
                           helperText={errors?.StartDate?.message}
                           fullWidth
@@ -311,6 +323,7 @@ function UserSubmit() {
                     />
                   )}
                 />
+
                 <Controller
                   control={control}
                   name="EndDate"
@@ -329,11 +342,12 @@ function UserSubmit() {
                         <TextField
                           {...params}
                           onKeyDown={(e) => e.preventDefault()}
+                          variant="standard"
                           error={!!errors?.EndDate}
                           helperText={errors?.EndDate?.message}
                           fullWidth
-                          required
-                          sx={{ display: `${utype !== "staff" ? "" : "none"}` }}
+                          required={utype !== "staff"}
+                          sx={{ display: `${utype === "staff" ? "none" : ""}` }}
                         />
                       )}
                     />
@@ -341,40 +355,36 @@ function UserSubmit() {
                 />
               </LocalizationProvider>
             </Stack>
-            <Stack direction={chgWidth()} spacing={5} width="60%">
+            <Stack direction={chgWidth()} spacing={5} width="70%" mt={3}>
               <TextField
-                variant="outlined"
+                variant="standard"
                 label="หมายเหตุ"
                 value={remark}
-                rows={2}
-                {...register("Remark", { onChange: (e) => setRemark(e.target.value) })}
+                rows={4}
+                {...register("Remark", {
+                  onChange: (e) => setRemark(e.target.value),
+                })}
+                error={!!errors?.Remark}
+                helperText={errors?.Remark?.message}
                 multiline
                 fullWidth
               />
             </Stack>
-            <Stack direction="row" justifyContent="space-around" spacing={5} width="60%">
-              <motion.input
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                type="submit"
-                className="btn regisbutt"
-                value="Submit"
-              />
-
-              <motion.input
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                type="button"
-                className="btn backbutt"
-                value="Reset"
-                onClick={() => resetForm()}
-              />
-            </Stack>
-          </Stack>
-        </Box>
-      </Box>
-    </div>
+            <DialogActions sx={{ width: "100%" }}>
+              <Stack direction={chgWidth()} spacing={5} mt={3} width="30%">
+                <Button type="submit" variant="contained" fullWidth>
+                  submit
+                </Button>
+                <Button type="button" variant="outlined" color="warning" onClick={resetForm} fullWidth>
+                  Reset
+                </Button>
+              </Stack>
+            </DialogActions>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </>
   );
-}
+};
 
-export default UserSubmit;
+export default AdminDialog;

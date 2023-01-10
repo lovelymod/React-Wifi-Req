@@ -5,14 +5,12 @@
   background-color: #f0f1f2;
   height: 100vh;
   width: 100vw;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px 0px;
 }
 
 .bg1 {
   width: 1000px;
   height: 100%;
-  box-shadow: 5px 5px 50px 5px gray;
   background-color: white;
   border-radius: 30px;
   overflow: auto;
@@ -27,11 +25,6 @@
   scrollbar-width: none; /* Firefox */
 }
 
-.message {
-  text-align: center;
-  color: #ffb401;
-}
-
 .regisbutt {
   background-color: #0174b3 !important;
   color: white !important;
@@ -39,8 +32,7 @@
   width: 150px !important;
   height: 70px !important;
   font-size: 24px !important;
-  margin-top: 30px !important;
-  margin-bottom: 30px !important;
+  margin: 30px 0px !important;
   font-weight: bold !important;
 }
 
@@ -51,8 +43,7 @@
   width: 150px !important;
   height: 70px !important;
   font-size: 24px !important;
-  margin-top: 30px !important;
-  margin-bottom: 30px !important;
+  margin: 30px 0px !important;
   font-weight: bold !important;
 }
 
@@ -66,126 +57,27 @@
   color: #ffb401 !important;
 }
 
-.form-control,
-.form-select {
-  width: 300px !important;
-  height: 60px !important;
-  border-radius: 50px !important;
-  margin-bottom: 10px !important;
-}
-
-.fl1 {
-  font-size: 16px;
-  display: flex;
-}
-
-.star {
-  margin-left: 5px;
-  color: red;
-  font-size: 20px;
-  height: 0px;
-}
-
-.solo1 {
-  display: flex;
-  align-items: center;
-  width: 700px;
-  justify-content: flex-end;
-}
-
 .images1 {
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding: 20px 0px;
   background-color: #0174b3;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
-}
-
-img {
-  width: 150px;
-  height: 150px;
-}
-
-.row-contain1 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 700px;
-}
-
-.row-contain-butt1 {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 700px;
-}
-
-.split-contain1 {
-  justify-content: space-between;
-}
-
-.remark1 {
-  width: 700px !important;
-  padding-top: 5px !important;
-}
-
-.fill-message {
-  color: red;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-label {
-  margin-right: 50px;
+  border-radius: 30px 30px 0px 0px;
 }
 
 @media only screen and (max-width: 600px) {
-  .row-contain1,
-  .solo1 {
-    flex-direction: column;
-    width: fit-content;
-  }
-
-  .row-contain-butt1 {
-    width: 400px;
-  }
-
   .regisbutt,
   .backbutt {
     width: 100px !important;
     height: 50px !important;
-  }
-
-  .remark1 {
-    width: 300px !important;
-    height: 300px !important;
+    font-size: 18px !important;
   }
 }
 
 @media only screen and (min-width: 601px) and (max-width: 900px) {
-  .row-contain1,
-  .solo1 {
-    flex-direction: row;
-  }
-
-  .row-contain-butt1 {
-    width: 500px;
-  }
-
   .bg1 {
     max-width: 800px;
-    height: 1050px;
-  }
-
-  .remark1 {
-    width: 700px !important;
+    height: fit-content;
   }
 }

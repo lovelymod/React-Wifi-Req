@@ -1,19 +1,17 @@
 import "../style/showdata.css";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import Axios from "axios";
 import Swal from "sweetalert2";
-import { motion } from "framer-motion";
 import Cookies from "js-cookie";
 import axios from "axios";
-import SideBar from "../components/sideBar";
+import { AppBar, Box, Toolbar, Typography, Button, IconButton, Stack, InputLabel } from "@mui/material";
 
 function ShowData() {
   const navigate = useNavigate();
   const location = useLocation();
-  const showNewMember = location.state.newMemberList;
-  const [Labelhide, setLabelhide] = useState("");
+  const rowData = location.state.rowData;
+  const pathName = location.pathname;
 
   const refreshToken = async () => {
     try {
@@ -41,16 +39,6 @@ function ShowData() {
     }
   };
 
-  const onFirstCheckEnd = () => {
-    if (!showNewMember[0].End_Date) {
-      setLabelhide("hidden");
-    } else {
-      setLabelhide("");
-    }
-  };
-
-  const Back = () => navigate("/table");
-
   const DeleteUser = (id) => {
     Swal.fire({
       title: "Confirm Delete?",
@@ -62,7 +50,7 @@ function ShowData() {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://localhost:5000/users/${id}`).then((response) => {
+        axios.delete(`http://localhost:5000/users/${id}`).then((response) => {
           if (response.data.msg === "User Deleted") {
             Swal.fire({
               icon: "success",
@@ -80,161 +68,109 @@ function ShowData() {
     });
   };
 
-  const edituser = (id) => {
-    const newMemberList = showNewMember.filter((val) => val.id === id);
-    navigate("/edituser", { state: { newMemberList } });
+  const chgWidth = () => {
+    if (window.innerWidth < 600) {
+      return "column";
+    } else {
+      return "row";
+    }
   };
 
   useEffect(() => {
     refreshToken();
-    onFirstCheckEnd();
   }, []);
 
   return (
     <div className="App5">
-      <SideBar Back={Back} Logout={Logout} />
+      <Box mb={5}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton onClick={() => navigate("/table")}>
+              <ArrowBackIosIcon sx={{ color: "white" }} />
+            </IconButton>
+            <img src="img/LS-02.png" alt="logo" width="50" height="50" />
+            <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
+              User Detail
+            </Typography>
+            <Button color="inherit" onClick={Logout}>
+              Logout
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </Box>
       <div className="bg5">
-        <span className="right5">
-          <div className="headerInfo5">
-            {window.innerWidth > 100 && window.innerWidth < 1000 ? (
-              <div className="box55">
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="backbutt5"
-                  onClick={() => Back()}
-                >
-                  {
-                    <ArrowBackIosIcon
-                      sx={{ fontSize: "32px", color: "#0174B3" }}
-                    />
-                  }{" "}
-                </motion.button>
-                <p className="afterButt5">User Information</p>
-              </div>
-            ) : (
-              <div className="box55">
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="backbutt5"
-                  onClick={() => Back()}
-                >
-                  {
-                    <ArrowBackIosIcon
-                      sx={{ fontSize: "32px", color: "#FFB401" }}
-                    />
-                  }{" "}
-                </motion.button>
-                <p className="afterButt5">User Information</p>
-              </div>
-            )}
-            <div className="row-nameButt4">
-              <button className="nameButt4" onClick={() => Back()}>
-                <p className="message4">Wi-Fi Request List</p>
-              </button>
-              <p className="message4-back">/User Information</p>
-            </div>
-          </div>
-          <div className="showcontain5">
-            {showNewMember.map((val, key) => {
-              return (
-                <div className="contain-data5" key={val.id}>
-                  <div className="row-data5">
-                    <span className="splitcontain5">
-                      <h1 className="label-data5">IP Address:</h1>
-                      <p className="data5">
-                        {val.Ip_Addr === "" || val.Ip_Addr === null
-                          ? "-"
-                          : val.Ip_Addr}
-                      </p>
-                    </span>
-                  </div>
-                  <div className="row-data5">
-                    <span className="splitcontain5">
-                      <h1 className="label-data5">Firstname:</h1>
-                      <p className="data5">{val.Firstname}</p>
-                    </span>
+        <Box width="100%" pt={3} pb={3}>
+          <Box>
+            <InputLabel sx={{ color: "black" }}>IP Address:</InputLabel>
+            <Typography variant="h5">{rowData.Ip_Addr ? rowData.Ip_Addr : "-"}</Typography>
+          </Box>
 
-                    <span className="splitcontain5">
-                      <h1 className="label-data5">Lastname:</h1>
-                      <p className="data5">{val.Lastname}</p>
-                    </span>
-                  </div>
-                  <div className="row-data5">
-                    <span className="splitcontain5">
-                      <h1 className="label-data5">Email:</h1>
-                      <p className="data5">{val.Email}</p>
-                    </span>
+          <Stack direction={chgWidth()} mt={3} spacing={3}>
+            <Box width="100%">
+              <InputLabel sx={{ color: "black" }}>ชื่อ:</InputLabel>
+              <Typography variant="h5">{rowData.Firstname}</Typography>
+            </Box>
+            <Box width="100%">
+              <InputLabel sx={{ color: "black" }}>นามสกุล:</InputLabel>
+              <Typography variant="h5">{rowData.Lastname}</Typography>
+            </Box>
+          </Stack>
+          <Stack direction={chgWidth()} mt={3} spacing={3}>
+            <Box width="100%">
+              <InputLabel sx={{ color: "black" }}>อีเมล:</InputLabel>
+              <Typography variant="h5">{rowData.Email}</Typography>
+            </Box>
+            <Box width="100%">
+              <InputLabel sx={{ color: "black" }}>เบอร์โทร:</InputLabel>
+              <Typography variant="h5">{rowData.Tel}</Typography>
+            </Box>
+          </Stack>
+          <Stack direction={chgWidth()} mt={3} spacing={3}>
+            <Box width="100%">
+              <InputLabel sx={{ color: "black" }}>ประเภท:</InputLabel>
+              <Typography variant="h5">{rowData.User_Type}</Typography>
+            </Box>
+            <Box width="100%">
+              <InputLabel sx={{ color: "black" }}>ชนิดอุปกรณ์:</InputLabel>
+              <Typography variant="h5">{rowData.Device_Type}</Typography>
+            </Box>
+          </Stack>
 
-                    <span className="splitcontain5">
-                      <h1 className="label-data5">Tel:</h1>
-                      <p className="data5">{val.Tel}</p>
-                    </span>
-                  </div>
-                  <div className="row-data5">
-                    <span className="splitcontain5">
-                      <h1 className="label-data5">User Type:</h1>
-                      <p className="data5">{val.User_Type}</p>
-                    </span>
-
-                    <span className="splitcontain5">
-                      <h1 className="label-data5">Device Type:</h1>
-                      <p className="data5">{val.Device_Type}</p>
-                    </span>
-                  </div>
-                  <div className="row-data5">
-                    <span className="splitcontain5">
-                      <h1 className="label-data5">Device Brand:</h1>
-                      <p className="data5">{val.Device_Brand}</p>
-                    </span>
-
-                    <span className="splitcontain5">
-                      <h1 className="label-data5">Device name:</h1>
-                      <p className="data5">{val.Device_Name}</p>
-                    </span>
-                  </div>
-                  <div className="row-data5">
-                    <span className="splitcontain5">
-                      <h1 className="label-data5">Start Date:</h1>
-                      <p className="data5">{val.Start_Date}</p>
-                    </span>
-
-                    <span className="splitcontain5" hidden={Labelhide}>
-                      <h1 className="label-data5">End Date:</h1>
-                      <p className="data5">{val.End_Date}</p>
-                    </span>
-                  </div>
-                  <div className="row-data5">
-                    <span className="splitcontain5">
-                      <h1 className="label-data5">Remark:</h1>
-                      <p className="data5">{val.Remark ? val.Remark : "-"}</p>
-                    </span>
-                  </div>
-                  <div className="row-butt5">
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="btn edit-butt-sw5"
-                      onClick={() => edituser(val.id)}
-                    >
-                      Edit
-                    </motion.button>
-                    <div className="emtpy-box5"></div>
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="btn del-butt-sw5"
-                      onClick={() => DeleteUser(val.id)}
-                    >
-                      Delete
-                    </motion.button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </span>
+          <Stack direction={chgWidth()} mt={3} spacing={3}>
+            <Box width="100%">
+              <InputLabel sx={{ color: "black" }}>แบรนด์</InputLabel>
+              <Typography variant="h5">{rowData.Device_Brand}</Typography>
+            </Box>
+            <Box width="100%">
+              <InputLabel sx={{ color: "black" }}>ชื่ออุปกรณ์:</InputLabel>
+              <Typography variant="h5">{rowData.Device_Name}</Typography>
+            </Box>
+          </Stack>
+          <Stack direction={chgWidth()} mt={3} spacing={3}>
+            <Box width="100%">
+              <InputLabel sx={{ color: "black" }}>เข้าวันที่:</InputLabel>
+              <Typography variant="h5">{rowData.Start_Date}</Typography>
+            </Box>
+            <Box width="100%" sx={{ display: rowData.User_Type === "staff" ? "none" : "" }}>
+              <InputLabel sx={{ color: "black" }}>ออกวันที่:</InputLabel>
+              <Typography variant="h5">{rowData.End_Date}</Typography>
+            </Box>
+          </Stack>
+          <Stack direction="row" mt={3} spacing={3}>
+            <Box width="100%">
+              <InputLabel sx={{ color: "black" }}>หมายเหตุ:</InputLabel>
+              <Typography variant="h5">{rowData.Remark ? rowData.Remark : "-"}</Typography>
+            </Box>
+          </Stack>
+          <Stack direction="row" mt={3} spacing={5}>
+            <Button variant="contained" onClick={() => navigate("/edituser", { state: { rowData, pathName } })}>
+              Edit
+            </Button>
+            <Button variant="outlined" color="error" onClick={() => DeleteUser(rowData.id)}>
+              Delete
+            </Button>
+          </Stack>
+        </Box>
       </div>
     </div>
   );
