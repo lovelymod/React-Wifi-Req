@@ -8,7 +8,10 @@ import {
   TextField,
   MenuItem,
   Button,
+  Typography,
+  IconButton,
 } from "@mui/material";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Controller, useForm } from "react-hook-form";
@@ -35,19 +38,60 @@ const AdminDialog = ({ open, setOpen }) => {
   const [etc, setEtc] = useState("");
   const [dbrand, setDbrand] = useState("");
   const [dname, setDname] = useState("");
-  const [startdate, setStartdate] = useState();
-  console.log("🚀 ~ file: adminDialog.js:39 ~ startdate", startdate);
-  const [enddate, setEnddate] = useState();
+  const [startdate, setStartdate] = useState("");
+  const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
 
   const {
     register,
     handleSubmit,
     control,
+    setValue,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(userSchema),
+    defaultValues: {
+      Firstname: "",
+      Lastname: "",
+      Email: "",
+      Tel: "",
+      UserType: "",
+      Device_Type: "",
+      DeviceBrand: "",
+      DeviceName: "",
+      StartDate: "",
+      EndDate: "",
+      Remark: "",
+    },
   });
+
+  const resetForm = () => {
+    setFname("");
+    setLname("");
+    setEmail("");
+    setTel("");
+    setUtype("");
+    setDtype("");
+    setDbrand("");
+    setDname("");
+    setStartdate(null);
+    setEnddate(null);
+    setRemark("");
+    reset({
+      Firstname: "",
+      Lastname: "",
+      Email: "",
+      Tel: "",
+      UserType: "",
+      DeviceType: "",
+      DeviceBrand: "",
+      DeviceName: "",
+      StartDate: "",
+      EndDate: "",
+      Remark: "",
+    });
+  };
 
   const chgWidth = () => {
     if (window.innerWidth < 600) {
@@ -101,7 +145,14 @@ const AdminDialog = ({ open, setOpen }) => {
   return (
     <>
       <Dialog open={open} onClose={handleClose} maxWidth="md" TransitionComponent={Transition} fullWidth>
-        <DialogTitle>Add User</DialogTitle>
+        <DialogTitle component="div" sx={{ display: "flex" }}>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Add User
+          </Typography>
+          <IconButton color="error" onClick={handleClose}>
+            <CloseRoundedIcon />
+          </IconButton>
+        </DialogTitle>
         <DialogContent dividers>
           <DialogContentText>Please fill out user information.</DialogContentText>
           <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
@@ -247,15 +298,16 @@ const AdminDialog = ({ open, setOpen }) => {
                 <Controller
                   control={control}
                   name="StartDate"
-                  render={({ field: { onChange, name, ...field } }) => (
+                  render={({ field: { name, ...field } }) => (
                     <DatePicker
                       {...field}
                       label="เข้าวันที่"
                       inputFormat="YYYY/MM/DD"
-                      // value={startdate}
-                      onChange={onChange}
-                      onAccept={(newValue) => {
-                        setStartdate(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`);
+                      value={startdate}
+                      onChange={(newValue) => {
+                        const date = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
+                        setValue("StartDate", date);
+                        setStartdate(date);
                       }}
                       renderInput={(params) => (
                         <TextField
@@ -274,16 +326,16 @@ const AdminDialog = ({ open, setOpen }) => {
                 <Controller
                   control={control}
                   name="EndDate"
-                  render={({ field: { onChange, onBlur, name, ...field } }) => (
+                  render={({ field: { name, ...field } }) => (
                     <DatePicker
                       {...field}
                       label="ออกวันที่"
                       inputFormat="YYYY/MM/DD"
                       value={enddate}
-                      disabled={utype === "staff"}
-                      onChange={onChange}
-                      onAccept={(newValue) => {
-                        setEnddate(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`);
+                      onChange={(newValue) => {
+                        const date = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
+                        setValue("EndDate", date);
+                        setEnddate(date);
                       }}
                       renderInput={(params) => (
                         <TextField
@@ -322,8 +374,8 @@ const AdminDialog = ({ open, setOpen }) => {
                 <Button type="submit" variant="contained" fullWidth>
                   submit
                 </Button>
-                <Button type="button" variant="outlined" onClick={handleClose} fullWidth>
-                  Close
+                <Button type="button" variant="outlined" color="warning" onClick={resetForm} fullWidth>
+                  Reset
                 </Button>
               </Stack>
             </DialogActions>

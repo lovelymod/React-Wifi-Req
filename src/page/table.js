@@ -85,16 +85,6 @@ function MyTable() {
     setLoading(false);
   };
 
-  const showUser = (id) => {
-    const newMemberList = memberList.filter((val) => val.id === id);
-    navigate("/showdata", { state: { newMemberList } });
-  };
-
-  const edituser = (id) => {
-    const newMemberList = memberList.filter((val) => val.id === id);
-    navigate("/edituser", { state: { newMemberList } });
-  };
-
   const deleteMember = (id) => {
     Swal.fire({
       title: "Confirm Delete?",
@@ -142,13 +132,7 @@ function MyTable() {
       </Box>
       <div className="bg3">
         <div className="all-scroll">
-          <MuiTable
-            loading={loading}
-            memberList={memberList}
-            showUser={showUser}
-            edituser={edituser}
-            deleteMember={deleteMember}
-          />
+          <MuiTable loading={loading} memberList={memberList} deleteMember={deleteMember} />
         </div>
       </div>
     </div>

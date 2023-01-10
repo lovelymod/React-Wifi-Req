@@ -20,7 +20,9 @@ function EditUser() {
   const [fname, setFname] = useState(rowData.Firstname);
   const [lname, setLname] = useState(rowData.Lastname);
   const [email, setEmail] = useState(rowData.Email);
-  const [tel, setTel] = useState(rowData.Tel.slice(0, 3) + rowData.Tel.slice(4, 7) + rowData.Tel.slice(8, 12));
+  const [tel, setTel] = useState(
+    rowData.Tel.length > 10 ? rowData.Tel.slice(0, 3) + rowData.Tel.slice(4, 7) + rowData.Tel.slice(8, 12) : rowData.Tel
+  );
   const [utype, setUtype] = useState(rowData.User_Type);
   const [dtype, setDtype] = useState(
     rowData.Device_Type === "mobile" ||
@@ -33,10 +35,7 @@ function EditUser() {
   const [etc, setEtc] = useState(dtype === "etc" ? rowData.Device_Type : "");
   const [dbrand, setDbrand] = useState(rowData.Device_Brand);
   const [dname, setDname] = useState(rowData.Device_Name);
-  const [defStartDate, setDefStartDate] = useState(new Date(rowData.Start_Date));
   const [startdate, setStartdate] = useState(rowData.Start_Date);
-  console.log("🚀 ~ file: edituser.js:38 ~ startdate", startdate);
-  const [defEndDate, setDefEndDate] = useState(new Date(rowData.End_Date));
   const [enddate, setEnddate] = useState(rowData.End_Date);
   const [remark, setRemark] = useState(rowData.Remark);
 
@@ -44,20 +43,21 @@ function EditUser() {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(userSchema),
     defaultValues: {
-      Firstname: rowData.Firstname,
-      Lastname: rowData.Lastname,
-      Email: rowData.Email,
-      Tel: rowData.Tel,
-      UserType: rowData.User_Type,
-      DeviceType: rowData.Device_Type,
-      DeviceBrand: rowData.Device_Brand,
-      DeviceName: rowData.Device_Name,
-      StartDate: rowData.Start_Date,
-      EndDate: rowData.End_Date,
+      Firstname: fname,
+      Lastname: lname,
+      Email: email,
+      Tel: tel,
+      UserType: utype,
+      DeviceType: dtype,
+      DeviceBrand: dbrand,
+      DeviceName: dname,
+      StartDate: startdate,
+      EndDate: enddate,
     },
   });
 
@@ -91,7 +91,6 @@ function EditUser() {
     const telFormat = tel.slice(0, 3) + "-" + tel.slice(3, 6) + "-" + tel.slice(6, 10);
     await axios
       .patch("http://localhost:5000/updateusers", {
-        //todo id
         id: id,
         Firstname: fname,
         Lastname: lname,
@@ -288,16 +287,16 @@ function EditUser() {
               <Controller
                 control={control}
                 name="StartDate"
-                render={({ field: { onChange, name, ...field } }) => (
+                render={({ field: { name, ...field } }) => (
                   <DatePicker
                     {...field}
                     label="เข้าวันที่"
                     inputFormat="YYYY/MM/DD"
-                    value={defStartDate}
-                    onChange={onChange}
-                    onAccept={(newValue) => {
-                      setDefStartDate(new Date(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`));
-                      setStartdate(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`);
+                    value={startdate}
+                    onChange={(newValue) => {
+                      const date = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
+                      setValue("StartDate", date);
+                      setStartdate(date);
                     }}
                     renderInput={(params) => (
                       <TextField
@@ -314,16 +313,16 @@ function EditUser() {
               <Controller
                 control={control}
                 name="EndDate"
-                render={({ field: { onChange, name, ...field } }) => (
+                render={({ field: { name, ...field } }) => (
                   <DatePicker
                     {...field}
                     label="ออกวันที่"
                     inputFormat="YYYY/MM/DD"
-                    value={defEndDate}
-                    onChange={onChange}
-                    onAccept={(newValue) => {
-                      setDefEndDate(new Date(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`));
-                      setEnddate(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`);
+                    value={enddate}
+                    onChange={(newValue) => {
+                      const date = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
+                      setValue("EndDate", date);
+                      setEnddate(date);
                     }}
                     renderInput={(params) => (
                       <TextField

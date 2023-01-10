@@ -1,13 +1,13 @@
 import "../style/usersubmit.css";
 import { useState, useEffect } from "react";
-import Axios from "axios";
+import axios from "axios";
 import { useForm, Controller } from "react-hook-form";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userSchema } from "../components/schema";
-import { MenuItem, Stack, TextField } from "@mui/material";
+import { Box, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
@@ -21,9 +21,8 @@ function UserSubmit() {
   const [etc, setEtc] = useState("");
   const [dbrand, setDbrand] = useState("");
   const [dname, setDname] = useState("");
-  const [startdate, setStartdate] = useState();
-  console.log("🚀 ~ file: usersubmit.js:25 ~ startdate", startdate);
-  const [enddate, setEnddate] = useState();
+  const [startdate, setStartdate] = useState("");
+  const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
   const [internalIP, setInternalIP] = useState("");
 
@@ -32,13 +31,54 @@ function UserSubmit() {
     handleSubmit,
     reset,
     control,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(userSchema),
+    defaultValues: {
+      Firstname: "",
+      Lastname: "",
+      Email: "",
+      Tel: "",
+      UserType: "",
+      Device_Type: "",
+      DeviceBrand: "",
+      DeviceName: "",
+      StartDate: "",
+      EndDate: "",
+      Remark: "",
+    },
   });
 
+  const resetForm = () => {
+    setFname("");
+    setLname("");
+    setEmail("");
+    setTel("");
+    setUtype("");
+    setDtype("");
+    setDbrand("");
+    setDname("");
+    setStartdate(null);
+    setEnddate(null);
+    setRemark("");
+    reset({
+      Firstname: "",
+      Lastname: "",
+      Email: "",
+      Tel: "",
+      UserType: "",
+      DeviceType: "",
+      DeviceBrand: "",
+      DeviceName: "",
+      StartDate: "",
+      EndDate: "",
+      Remark: "",
+    });
+  };
+
   const GetIP = async () => {
-    await Axios.post("http://localhost:5000/getip").then((response) => {
+    await axios.post("http://localhost:5000/getip").then((response) => {
       setInternalIP(response.data[1].address);
     });
   };
@@ -56,61 +96,45 @@ function UserSubmit() {
     const dates = moment().format("YYYY-MM-DD");
     const times = moment().format("HH:mm");
 
-    Axios.post("http://localhost:5000/users", {
-      Firstname: fname,
-      Lastname: lname,
-      User_Type: utype,
-      Tel: telFormat,
-      Email: email,
-      Device_Type: dtype === "etc" ? etc : dtype,
-      Device_Brand: dbrand,
-      Device_Name: dname,
-      Start_Date: startdate,
-      End_Date: utype === "staff" ? "" : enddate,
-      Remark: remark,
-      Dates: dates,
-      Times: times,
-      Ip_Addr: internalIP,
-    }).then((response) => {
-      if (response.data.msg === "User Created") {
-        Swal.fire({
-          icon: "success",
-          title: "Submited",
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1400);
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Something went wrong!",
-          showConfirmButton: false,
-        });
-      }
-    });
+    axios
+      .post("http://localhost:5000/users", {
+        Firstname: fname,
+        Lastname: lname,
+        User_Type: utype,
+        Tel: telFormat,
+        Email: email,
+        Device_Type: dtype === "etc" ? etc : dtype,
+        Device_Brand: dbrand,
+        Device_Name: dname,
+        Start_Date: startdate,
+        End_Date: utype === "staff" ? "" : enddate,
+        Remark: remark,
+        Dates: dates,
+        Times: times,
+        Ip_Addr: internalIP,
+      })
+      .then((response) => {
+        if (response.data.msg === "User Created") {
+          Swal.fire({
+            icon: "success",
+            title: "Submited",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1400);
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Something went wrong!",
+            showConfirmButton: false,
+          });
+        }
+      });
   };
-
-  const resetForm = () => {
-    reset({
-      Firstname: "",
-      Lastname: "",
-      Email: "",
-      Tel: "",
-      UserType: "",
-      DeviceType: "",
-      DeviceBrand: "",
-      DeviceName: "",
-      StartDate: "",
-      EndDate: "",
-      Remark: "",
-    });
-  };
-
-  // const d = new Date("2022-3-7");
 
   useEffect(() => {
     GetIP();
@@ -118,27 +142,31 @@ function UserSubmit() {
 
   return (
     <div className="App1">
-      <motion.div
+      <Box
+        component={motion.div}
         className="bg1"
         initial={{ scale: 0 }}
         animate={{ scale: 0.95 }}
         transition={{
           delay: 0.3,
         }}
+        sx={{ boxShadow: "15" }}
       >
-        <div className="images1">
+        <Box className="images1">
           <img className="logo1" src="img/LS-02.png" alt="" srcSet="" width="125px" height="125px" />
-        </div>
+        </Box>
 
-        <div className="header1">
-          <h1 className="message">Please fill out a request form</h1>
-        </div>
-        <div className="container1">
+        <Typography variant="h4" color="#ffb401" textAlign="center" mb={5}>
+          Please fill out a request form
+        </Typography>
+
+        <Box>
           <Stack component="form" spacing={5} onSubmit={handleSubmit(OnSubmit)} noValidate autoComplete="off">
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
                 label="ชื่อ"
+                value={fname}
                 {...register("Firstname", { onChange: (e) => setFname(e.target.value) })}
                 error={!!errors?.Firstname}
                 helperText={errors?.Firstname?.message}
@@ -149,6 +177,7 @@ function UserSubmit() {
               <TextField
                 variant="outlined"
                 label="นามสกุล"
+                value={lname}
                 {...register("Lastname", { onChange: (e) => setLname(e.target.value) })}
                 error={!!errors?.Lastname}
                 helperText={errors?.Lastname?.message}
@@ -160,6 +189,7 @@ function UserSubmit() {
               <TextField
                 variant="outlined"
                 label="อีเมล"
+                value={email}
                 {...register("Email", { onChange: (e) => setEmail(e.target.value) })}
                 error={!!errors?.Email}
                 helperText={errors?.Email?.message}
@@ -169,6 +199,7 @@ function UserSubmit() {
               <TextField
                 variant="outlined"
                 label="เบอร์โทร"
+                value={tel}
                 {...register("Tel", { onChange: (e) => setTel(e.target.value) })}
                 error={!!errors?.Tel}
                 helperText={errors?.Tel?.message}
@@ -221,6 +252,7 @@ function UserSubmit() {
               <TextField
                 variant="outlined"
                 label="อื่นๆ"
+                value={etc}
                 {...register("Etc", { onChange: (e) => setEtc(e.target.value) })}
                 error={!!errors?.Etc}
                 helperText={errors?.Etc?.message}
@@ -232,6 +264,7 @@ function UserSubmit() {
               <TextField
                 variant="outlined"
                 label="แบรนด์"
+                value={dbrand}
                 {...register("DeviceBrand", { onChange: (e) => setDbrand(e.target.value) })}
                 error={!!errors?.DeviceBrand}
                 helperText={errors?.DeviceBrand?.message}
@@ -241,6 +274,7 @@ function UserSubmit() {
               <TextField
                 variant="outlined"
                 label="ชื่ออุปกรณ์"
+                value={dname}
                 {...register("DeviceName", { onChange: (e) => setDname(e.target.value) })}
                 error={!!errors?.DeviceName}
                 helperText={errors?.DeviceName?.message}
@@ -253,14 +287,16 @@ function UserSubmit() {
                 <Controller
                   control={control}
                   name="StartDate"
-                  render={({ field: { onChange, name, ...field } }) => (
+                  render={({ field: { name, ...field } }) => (
                     <DatePicker
                       {...field}
                       label="เข้าวันที่"
                       inputFormat="YYYY/MM/DD"
-                      onChange={onChange}
-                      onAccept={(newValue) => {
-                        setStartdate(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`);
+                      value={startdate}
+                      onChange={(newValue) => {
+                        const date = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
+                        setValue("StartDate", date);
+                        setStartdate(date);
                       }}
                       renderInput={(params) => (
                         <TextField
@@ -277,14 +313,16 @@ function UserSubmit() {
                 <Controller
                   control={control}
                   name="EndDate"
-                  render={({ field: { onChange, name, ...field } }) => (
+                  render={({ field: { name, ...field } }) => (
                     <DatePicker
                       {...field}
                       label="ออกวันที่"
                       inputFormat="YYYY/MM/DD"
-                      onChange={onChange}
-                      onAccept={(newValue) => {
-                        setEnddate(`${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`);
+                      value={enddate}
+                      onChange={(newValue) => {
+                        const date = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
+                        setValue("EndDate", date);
+                        setEnddate(date);
                       }}
                       renderInput={(params) => (
                         <TextField
@@ -305,6 +343,7 @@ function UserSubmit() {
               <TextField
                 variant="outlined"
                 label="หมายเหตุ"
+                value={remark}
                 rows={2}
                 {...register("Remark", { onChange: (e) => setRemark(e.target.value) })}
                 multiline
@@ -326,13 +365,13 @@ function UserSubmit() {
                 whileTap={{ scale: 0.9 }}
                 type="button"
                 className="btn backbutt"
-                value="Cancel"
+                value="Reset"
                 onClick={() => resetForm()}
               />
             </Stack>
           </Stack>
-        </div>
-      </motion.div>
+        </Box>
+      </Box>
     </div>
   );
 }
