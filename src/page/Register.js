@@ -23,6 +23,11 @@ const Register = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(registerSchema),
+    defaultValues: {
+      regUsername: "",
+      regPassword: "",
+      regConfPassword: "",
+    },
   });
 
   const OnSubmit = async () => {

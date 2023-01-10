@@ -23,6 +23,10 @@ function Login() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(loginSchema),
+    defaultValues: {
+      Username: "",
+      Password: "",
+    },
   });
 
   const OnSubmit = async () => {
