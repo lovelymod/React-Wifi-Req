@@ -7,9 +7,11 @@ import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userSchema } from "../components/schema";
-import { Box, MenuItem, Stack, TextField, Typography } from "@mui/material";
+import { AppBar, Box, MenuItem, Stack, TextField, Toolbar, Typography, Switch } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import thaiFlag from "../img/thaiFlag.svg";
+import usFlag from "../img/usFlag.png";
 
 function UserSubmit() {
   const [fname, setFname] = useState("");
@@ -142,6 +144,19 @@ function UserSubmit() {
 
   return (
     <div className="App1">
+      <Box mb={1}>
+        <AppBar position="static">
+          <Toolbar>
+            <img src="img/LS-02.png" alt="logo" width="50" height="50" />
+            <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
+              WIFI Request
+            </Typography>
+            <img src={thaiFlag} alt="thai" width="20px" height="15px" />
+            <Switch color="default" />
+            <img src={usFlag} alt="uslish" width="20px" height="15px" />
+          </Toolbar>
+        </AppBar>
+      </Box>
       <Box
         component={motion.div}
         className="bg1"

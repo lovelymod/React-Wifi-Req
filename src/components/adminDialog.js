@@ -23,6 +23,7 @@ import Swal from "sweetalert2";
 import moment from "moment";
 import * as React from "react";
 import Slide from "@mui/material/Slide";
+import { motion } from "framer-motion";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -149,7 +150,7 @@ const AdminDialog = ({ open, setOpen }) => {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Add User
           </Typography>
-          <IconButton color="error" onClick={handleClose}>
+          <IconButton component={motion.button} whileHover={{ rotate: 360 }} color="error" onClick={handleClose}>
             <CloseRoundedIcon />
           </IconButton>
         </DialogTitle>
