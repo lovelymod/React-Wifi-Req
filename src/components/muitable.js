@@ -8,20 +8,55 @@ import {
 import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Stack, Chip } from "@mui/material";
 import moment from "moment";
 import "../style/table.css";
 import AdminDialog from "../components/adminDialog";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
 
-const MuiTable = ({ loading, memberList, deleteMember }) => {
+const MuiTable = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const pathName = location.pathname;
   const timeStamp = moment().format("YYYY_MM_DD");
   const [pageSize, setPageSize] = useState(25);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [memberList, setMemberList] = useState([]);
+
+  const fetchData = async () => {
+    setLoading(true);
+    const getUser = await axios.get("http://localhost:5000/getusers");
+    setMemberList(getUser.data);
+    setLoading(false);
+  };
+
+  const deleteMember = (id) => {
+    Swal.fire({
+      title: "Confirm Delete?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newMemberList = memberList.filter((val) => val.id !== id);
+        setMemberList(newMemberList);
+        Swal.fire({
+          icon: "success",
+          title: "Deleted !",
+          timer: 1200,
+          timerProgressBar: true,
+          showConfirmButton: false,
+        });
+      }
+    });
+  };
 
   const columns = [
     {
@@ -193,6 +228,10 @@ const MuiTable = ({ loading, memberList, deleteMember }) => {
       </>
     );
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>

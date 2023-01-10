@@ -2,7 +2,6 @@ import "../style/table.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MuiTable from "../components/muitable";
-import Swal from "sweetalert2";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -10,11 +9,9 @@ import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 
 function MyTable() {
   const navigate = useNavigate();
-  const [memberList, setMemberList] = useState([]);
   const [Username, setUsername] = useState("");
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const refreshToken = async () => {
     try {
@@ -78,41 +75,9 @@ function MyTable() {
     }
   };
 
-  const fetchData = async () => {
-    setLoading(true);
-    const getUser = await axios.get("http://localhost:5000/getusers");
-    setMemberList(getUser.data);
-    setLoading(false);
-  };
-
-  const deleteMember = (id) => {
-    Swal.fire({
-      title: "Confirm Delete?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#28a745",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const newMemberList = memberList.filter((val) => val.id !== id);
-        setMemberList(newMemberList);
-        Swal.fire({
-          icon: "success",
-          title: "Deleted !",
-          timer: 1200,
-          timerProgressBar: true,
-          showConfirmButton: false,
-        });
-      }
-    });
-  };
-
   useEffect(() => {
     refreshToken();
     getUserAdmin();
-    fetchData();
   }, []);
 
   return (
@@ -132,7 +97,7 @@ function MyTable() {
       </Box>
       <div className="bg3">
         <div className="all-scroll">
-          <MuiTable loading={loading} memberList={memberList} deleteMember={deleteMember} />
+          <MuiTable />
         </div>
       </div>
     </div>
