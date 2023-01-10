@@ -367,7 +367,6 @@ const AdminDialog = ({ open, setOpen }) => {
                 error={!!errors?.Remark}
                 helperText={errors?.Remark?.message}
                 multiline
-                required
                 fullWidth
               />
             </Stack>

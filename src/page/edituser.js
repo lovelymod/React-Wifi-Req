@@ -349,7 +349,6 @@ function EditUser() {
               rows={2}
               {...register("Remark", { onChange: (e) => setRemark(e.target.value) })}
               multiline
-              required
               fullWidth
             />
           </Stack>
