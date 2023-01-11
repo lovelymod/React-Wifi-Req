@@ -5,8 +5,7 @@ import MuiTable from "../components/muitable";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { AppBar, Box, Toolbar, Typography, Badge, IconButton, Paper, Tooltip, Popper } from "@mui/material";
-import { ClickAwayListener } from "@mui/base";
+import { AppBar, Box, Toolbar, Typography, Badge, IconButton, Tooltip } from "@mui/material";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
