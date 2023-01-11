@@ -5,13 +5,26 @@ import MuiTable from "../components/muitable";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, Badge, IconButton, Paper, Tooltip, Popper } from "@mui/material";
+import { ClickAwayListener } from "@mui/base";
+import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
 function MyTable() {
   const navigate = useNavigate();
   const [Username, setUsername] = useState("");
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [memberList, setMemberList] = useState([]);
+  const [notiCount, setNotiCount] = useState(3);
+
+  const fetchData = async () => {
+    setLoading(true);
+    const getUser = await axios.get("http://localhost:5000/getusers");
+    setMemberList(getUser.data);
+    setLoading(false);
+  };
 
   const refreshToken = async () => {
     try {
@@ -78,6 +91,10 @@ function MyTable() {
   useEffect(() => {
     refreshToken();
     getUserAdmin();
+    fetchData();
+    setInterval(() => {
+      fetchData();
+    }, 1000 * 60);
   }, []);
 
   return (
@@ -89,15 +106,24 @@ function MyTable() {
             <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
               WIFI Request List
             </Typography>
-            <Button color="inherit" onClick={Logout}>
-              Logout
-            </Button>
+            <Tooltip title="Notification" arrow>
+              <IconButton aria-label="notification">
+                <Badge badgeContent={notiCount} color="error">
+                  <NotificationsRoundedIcon sx={{ color: "white", fontSize: "30px" }} />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Logout" arrow>
+              <IconButton aria-label="logout" onClick={Logout} sx={{ color: "white" }}>
+                <LogoutRoundedIcon sx={{ fontSize: "30px" }} />
+              </IconButton>
+            </Tooltip>
           </Toolbar>
         </AppBar>
       </Box>
       <div className="bg3">
         <div className="all-scroll">
-          <MuiTable />
+          <MuiTable loading={loading} memberList={memberList} setMemberList={setMemberList} />
         </div>
       </div>
     </div>

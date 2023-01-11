@@ -7,13 +7,15 @@ import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userSchema } from "../components/schema";
-import { AppBar, Box, MenuItem, Stack, TextField, Toolbar, Typography, Switch } from "@mui/material";
+import { AppBar, Box, MenuItem, Stack, TextField, Toolbar, Typography, Switch, Tooltip } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import thaiFlag from "../img/thaiFlag.svg";
 import usFlag from "../img/usFlag.png";
+import langJSON from "../language/language.json";
 
 function UserSubmit() {
+  const defaultLanguage = window.localStorage.getItem("lang");
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [utype, setUtype] = useState("");
@@ -27,6 +29,7 @@ function UserSubmit() {
   const [enddate, setEnddate] = useState("");
   const [remark, setRemark] = useState("");
   const [internalIP, setInternalIP] = useState("");
+  const [toggleLanguage, setToggleLanguage] = useState(!!defaultLanguage);
 
   const {
     register,
@@ -51,7 +54,6 @@ function UserSubmit() {
       Remark: "",
     },
   });
-
   const resetForm = () => {
     setFname("");
     setLname("");
@@ -93,6 +95,15 @@ function UserSubmit() {
     }
   };
 
+  const handleLanguage = (e) => {
+    setToggleLanguage(e.target.checked);
+    if (e.target.checked) {
+      window.localStorage.setItem("lang", "en/us");
+    } else {
+      window.localStorage.removeItem("lang");
+    }
+  };
+
   const OnSubmit = () => {
     const telFormat = tel.slice(0, 3) + "-" + tel.slice(3, 6) + "-" + tel.slice(6, 10);
     const dates = moment().format("YYYY-MM-DD");
@@ -125,7 +136,7 @@ function UserSubmit() {
             timerProgressBar: true,
           });
           setTimeout(() => {
-            window.location.reload();
+            // window.location.reload();
           }, 1400);
         } else {
           Swal.fire({
@@ -151,9 +162,15 @@ function UserSubmit() {
             <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
               WIFI Request
             </Typography>
-            <img src={thaiFlag} alt="thai" width="20px" height="15px" />
-            <Switch color="default" />
-            <img src={usFlag} alt="uslish" width="20px" height="15px" />
+            <Tooltip title="TH" arrow>
+              <img src={thaiFlag} alt="thai" width="20px" height="15px" />
+            </Tooltip>
+            <Tooltip title="Change Language" arrow>
+              <Switch label="Select Language" color="default" onChange={handleLanguage} checked={toggleLanguage} />
+            </Tooltip>
+            <Tooltip title="en/Us" arrow>
+              <img src={usFlag} alt="english" width="20px" height="15px" />
+            </Tooltip>
           </Toolbar>
         </AppBar>
       </Box>
@@ -172,7 +189,7 @@ function UserSubmit() {
         </Box>
 
         <Typography variant="h4" color="#ffb401" textAlign="center" mb={5}>
-          Please fill out a request form
+          {toggleLanguage ? langJSON.title.eng : langJSON.title.th}
         </Typography>
 
         <Box>
@@ -180,7 +197,7 @@ function UserSubmit() {
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
-                label="ชื่อ"
+                label={toggleLanguage ? langJSON.firstname.eng : langJSON.firstname.th}
                 value={fname}
                 {...register("Firstname", { onChange: (e) => setFname(e.target.value) })}
                 error={!!errors?.Firstname}
@@ -191,7 +208,7 @@ function UserSubmit() {
 
               <TextField
                 variant="outlined"
-                label="นามสกุล"
+                label={toggleLanguage ? langJSON.lastname.eng : langJSON.lastname.th}
                 value={lname}
                 {...register("Lastname", { onChange: (e) => setLname(e.target.value) })}
                 error={!!errors?.Lastname}
@@ -203,7 +220,7 @@ function UserSubmit() {
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
-                label="อีเมล"
+                label={toggleLanguage ? langJSON.email.eng : langJSON.email.th}
                 value={email}
                 {...register("Email", { onChange: (e) => setEmail(e.target.value) })}
                 error={!!errors?.Email}
@@ -213,7 +230,7 @@ function UserSubmit() {
               />
               <TextField
                 variant="outlined"
-                label="เบอร์โทร"
+                label={toggleLanguage ? langJSON.tel.eng : langJSON.tel.th}
                 value={tel}
                 {...register("Tel", { onChange: (e) => setTel(e.target.value) })}
                 error={!!errors?.Tel}
@@ -225,7 +242,7 @@ function UserSubmit() {
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
-                label="ประเภท"
+                label={toggleLanguage ? langJSON.usertype.eng : langJSON.usertype.th}
                 value={utype}
                 {...register("UserType", { onChange: (e) => setUtype(e.target.value) })}
                 error={!!errors?.UserType}
@@ -240,7 +257,7 @@ function UserSubmit() {
               </TextField>
               <TextField
                 variant="outlined"
-                label="ชนิดอุปกรณ์"
+                label={toggleLanguage ? langJSON.devicetype.eng : langJSON.devicetype.th}
                 value={dtype}
                 {...register("DeviceType", { onChange: (e) => setDtype(e.target.value) })}
                 error={!!errors?.DeviceType}
@@ -266,7 +283,7 @@ function UserSubmit() {
             >
               <TextField
                 variant="outlined"
-                label="อื่นๆ"
+                label={toggleLanguage ? langJSON.etc.eng : langJSON.etc.th}
                 value={etc}
                 {...register("Etc", { onChange: (e) => setEtc(e.target.value) })}
                 error={!!errors?.Etc}
@@ -278,7 +295,7 @@ function UserSubmit() {
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
-                label="แบรนด์"
+                label={toggleLanguage ? langJSON.devicebrand.eng : langJSON.devicebrand.th}
                 value={dbrand}
                 {...register("DeviceBrand", { onChange: (e) => setDbrand(e.target.value) })}
                 error={!!errors?.DeviceBrand}
@@ -288,7 +305,7 @@ function UserSubmit() {
               />
               <TextField
                 variant="outlined"
-                label="ชื่ออุปกรณ์"
+                label={toggleLanguage ? langJSON.devicename.eng : langJSON.devicename.th}
                 value={dname}
                 {...register("DeviceName", { onChange: (e) => setDname(e.target.value) })}
                 error={!!errors?.DeviceName}
@@ -305,7 +322,7 @@ function UserSubmit() {
                   render={({ field: { name, ...field } }) => (
                     <DatePicker
                       {...field}
-                      label="เข้าวันที่"
+                      label={toggleLanguage ? langJSON.startdate.eng : langJSON.startdate.th}
                       inputFormat="YYYY/MM/DD"
                       value={startdate}
                       onChange={(newValue) => {
@@ -332,7 +349,7 @@ function UserSubmit() {
                   render={({ field: { name, ...field } }) => (
                     <DatePicker
                       {...field}
-                      label="ออกวันที่"
+                      label={toggleLanguage ? langJSON.enddate.eng : langJSON.enddate.th}
                       inputFormat="YYYY/MM/DD"
                       value={enddate}
                       onChange={(newValue) => {
@@ -359,7 +376,7 @@ function UserSubmit() {
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
-                label="หมายเหตุ"
+                label={toggleLanguage ? langJSON.remark.eng : langJSON.remark.th}
                 value={remark}
                 rows={2}
                 {...register("Remark", { onChange: (e) => setRemark(e.target.value) })}
@@ -373,7 +390,7 @@ function UserSubmit() {
                 whileTap={{ scale: 0.9 }}
                 type="submit"
                 className="btn regisbutt"
-                value="Submit"
+                value={toggleLanguage ? langJSON.btn1.eng : langJSON.btn1.th}
               />
 
               <motion.input
@@ -381,8 +398,8 @@ function UserSubmit() {
                 whileTap={{ scale: 0.9 }}
                 type="button"
                 className="btn backbutt"
-                value="Reset"
-                onClick={() => resetForm()}
+                value={toggleLanguage ? langJSON.btn2.eng : langJSON.btn2.th}
+                onClick={resetForm}
               />
             </Stack>
           </Stack>
