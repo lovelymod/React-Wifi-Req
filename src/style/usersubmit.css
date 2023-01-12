@@ -1,16 +1,16 @@
 .App1 {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   background-color: #f0f1f2;
   height: 100vh;
   width: 100vw;
-  padding: 20px 0px;
+  overflow: hidden;
 }
 
 .bg1 {
   width: 1000px;
   height: 100%;
+  align-self: center;
   background-color: white;
   border-radius: 30px;
   overflow: auto;
@@ -72,6 +72,9 @@
     width: 100px !important;
     height: 50px !important;
     font-size: 18px !important;
+  }
+  .bg1 {
+    width: 100%;
   }
 }
 

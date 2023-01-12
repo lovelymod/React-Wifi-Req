@@ -8,31 +8,21 @@ import {
 import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Stack, Chip } from "@mui/material";
 import moment from "moment";
 import "../style/table.css";
 import AdminDialog from "../components/adminDialog";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
 import Swal from "sweetalert2";
 
-const MuiTable = () => {
+const MuiTable = ({ loading, memberList, setMemberList }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const pathName = location.pathname;
   const timeStamp = moment().format("YYYY_MM_DD");
   const [pageSize, setPageSize] = useState(25);
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [memberList, setMemberList] = useState([]);
-
-  const fetchData = async () => {
-    setLoading(true);
-    const getUser = await axios.get("http://localhost:5000/getusers");
-    setMemberList(getUser.data);
-    setLoading(false);
-  };
 
   const deleteMember = (id) => {
     Swal.fire({
@@ -228,10 +218,6 @@ const MuiTable = () => {
       </>
     );
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <>

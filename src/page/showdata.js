@@ -5,7 +5,8 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { AppBar, Box, Toolbar, Typography, Button, IconButton, Stack, InputLabel } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, Button, IconButton, Stack, InputLabel, Tooltip } from "@mui/material";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
 function ShowData() {
   const navigate = useNavigate();
@@ -85,16 +86,20 @@ function ShowData() {
       <Box mb={5}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton onClick={() => navigate("/table")}>
-              <ArrowBackIosIcon sx={{ color: "white" }} />
-            </IconButton>
+            <Tooltip title="Back" arrow>
+              <IconButton onClick={() => navigate("/table")}>
+                <ArrowBackIosIcon sx={{ color: "white", fontSize: "30px" }} />
+              </IconButton>
+            </Tooltip>
             <img src="img/LS-02.png" alt="logo" width="50" height="50" />
             <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
               User Detail
             </Typography>
-            <Button color="inherit" onClick={Logout}>
-              Logout
-            </Button>
+            <Tooltip title="Logout" arrow>
+              <IconButton aria-label="logout" onClick={Logout} sx={{ color: "white" }}>
+                <LogoutRoundedIcon sx={{ fontSize: "30px" }} />
+              </IconButton>
+            </Tooltip>
           </Toolbar>
         </AppBar>
       </Box>

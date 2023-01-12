@@ -8,9 +8,21 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userSchema } from "../components/schema";
-import { AppBar, Box, Button, IconButton, MenuItem, Stack, TextField, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  MenuItem,
+  Stack,
+  TextField,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
 function EditUser() {
   const navigate = useNavigate();
@@ -138,16 +150,20 @@ function EditUser() {
       <Box mb={5}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton onClick={() => navigate(prevPath, { state: { rowData } })}>
-              <ArrowBackIosIcon sx={{ color: "white" }} />
-            </IconButton>
+            <Tooltip title="Back">
+              <IconButton onClick={() => navigate(prevPath, { state: { rowData } })}>
+                <ArrowBackIosIcon sx={{ color: "white", fontSize: "30px" }} />
+              </IconButton>
+            </Tooltip>
             <img src="img/LS-02.png" alt="logo" width="50" height="50" />
             <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
               User Edit
             </Typography>
-            <Button color="inherit" onClick={Logout}>
-              Logout
-            </Button>
+            <Tooltip title="Logout" arrow>
+              <IconButton aria-label="logout" onClick={Logout} sx={{ color: "white" }}>
+                <LogoutRoundedIcon sx={{ fontSize: "30px" }} />
+              </IconButton>
+            </Tooltip>
           </Toolbar>
         </AppBar>
       </Box>
