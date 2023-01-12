@@ -3,6 +3,7 @@
   width: 100vw;
   display: flex;
   flex-direction: column;
+  background-color: #f0f1f2;
 }
 
 .bg2 {
@@ -10,6 +11,7 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  background-color: white;
 }
 
 .container2 {

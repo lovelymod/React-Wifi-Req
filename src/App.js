@@ -25,11 +25,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <div className="App">
-          <div className="content">
-            <AnimatedRoute />
-          </div>
-        </div>
+        <AnimatedRoute />
       </Router>
     </ThemeProvider>
   );

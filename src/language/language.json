@@ -1,0 +1,62 @@
+{
+    "title" : {
+        "th" : "กรุณากรอกแบบฟอร์มคำขอ",
+        "eng" : "Please fill out a request form"
+    },
+    "firstname" : {
+        "th" : "ชื่อ",
+        "eng" : "Firstname"
+    },
+    "lastname" : {
+        "th" : "นามสกุล",
+        "eng" : "Lastname"
+    },
+    "email" : {
+        "th" : "อีเมล",
+        "eng" : "Email"
+    },
+    "tel" : {
+        "th" : "เบอร์โทร",
+        "eng" : "Tel"
+    },
+    "usertype" : {
+        "th" : "ประเภท",
+        "eng" : "User Type"
+    },
+    "devicetype" : {
+        "th" : "ชนิดอุปกรณ์",
+        "eng" : "Device Type"
+    },
+    "etc" : {
+        "th" : "อื่นๆ",
+        "eng" : "Etc"
+    },
+    "devicebrand" : {
+        "th" : "แบรนด์",
+        "eng" : "Device Brand"
+    },
+    "devicename" : {
+        "th" : "ชื่ออุปกรณ์",
+        "eng" : "Device Name"
+    },
+    "startdate" : {
+        "th" : "เข้าวันที่",
+        "eng" : "Start Date"
+    },
+    "enddate" : {
+        "th" : "ออกวันที่",
+        "eng" : "End Date"
+    },
+    "remark" : {
+        "th" : "หมายเหตุ",
+        "eng" : "Remark"
+    },
+    "btn1" : {
+        "th" : "ยืนยัน",
+        "eng" : "Submit"
+    },
+    "btn2" : {
+        "th" : "รีเซ็ต",
+        "eng" : "Reset"
+    }
+}
