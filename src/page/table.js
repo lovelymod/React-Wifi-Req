@@ -5,8 +5,7 @@ import MuiTable from "../components/muitable";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { AppBar, Box, Toolbar, Typography, Badge, IconButton, Tooltip } from "@mui/material";
-import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
+import { AppBar, Box, Toolbar, Typography, IconButton, Tooltip } from "@mui/material";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
 function MyTable() {
@@ -16,7 +15,6 @@ function MyTable() {
   const [expire, setExpire] = useState("");
   const [loading, setLoading] = useState(false);
   const [memberList, setMemberList] = useState([]);
-  const [notiCount, setNotiCount] = useState(3);
 
   const fetchData = async () => {
     setLoading(true);
@@ -105,13 +103,6 @@ function MyTable() {
             <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
               WIFI Request List
             </Typography>
-            <Tooltip title="Notification" arrow>
-              <IconButton aria-label="notification">
-                <Badge badgeContent={notiCount} color="error">
-                  <NotificationsRoundedIcon sx={{ color: "white", fontSize: "30px" }} />
-                </Badge>
-              </IconButton>
-            </Tooltip>
             <Tooltip title="Logout" arrow>
               <IconButton aria-label="logout" onClick={Logout} sx={{ color: "white" }}>
                 <LogoutRoundedIcon sx={{ fontSize: "30px" }} />
