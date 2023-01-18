@@ -79,7 +79,7 @@ function ShowData() {
 
   useEffect(() => {
     refreshToken();
-  }, []);
+  });
 
   return (
     <div className="App5">
