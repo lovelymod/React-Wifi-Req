@@ -143,7 +143,7 @@ function EditUser() {
 
   useEffect(() => {
     refreshToken();
-  }, []);
+  });
 
   return (
     <div className="App6">
