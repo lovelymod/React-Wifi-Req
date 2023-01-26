@@ -92,7 +92,7 @@ function MyTable() {
     setInterval(() => {
       fetchData();
     }, 1000 * 60);
-  });
+  }, []);
 
   return (
     <div className="App3">

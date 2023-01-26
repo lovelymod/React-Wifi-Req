@@ -75,7 +75,7 @@ function Login() {
   };
   useEffect(() => {
     checkLogin();
-  });
+  }, []);
   return (
     <div className="App2">
       <Box mb={1}>
