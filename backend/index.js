@@ -8,12 +8,11 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({ credentials:true, origin:'http://localhost:3000' }));
+app.use(cors({ credentials: true, origin: "http://localhost:3001" }));
 app.use(cookieParser());
-app.use(express.json());  
+app.use(express.json());
 app.use(UserRoute);
 app.use(AdminRoute);
 
- 
-app.listen(5000, ()=> console.log('Server running at port 5000'));
+app.listen(5000, () => console.log("Server running at port 5000"));
 // app.listen(3002, ()=> console.log('Server running at port 3002'));
