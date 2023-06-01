@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-const db = new Sequelize("wifireq2", "gong", "gong1234", {
+const db = new Sequelize("wifi_request", "root", "1234", {
   host: "localhost",
   dialect: "mysql",
 });

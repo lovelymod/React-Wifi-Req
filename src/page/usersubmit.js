@@ -7,29 +7,30 @@ import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userSchema } from "../components/schema";
-import { AppBar, Box, MenuItem, Stack, TextField, Toolbar, Typography, Switch, Tooltip } from "@mui/material";
+import { Box, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import thaiFlag from "../img/thaiFlag.svg";
-import usFlag from "../img/usFlag.png";
+
 import langJSON from "../language/language.json";
+import UserAppBar from "../components/userAppBar";
 
 function UserSubmit() {
   const defaultLanguage = window.localStorage.getItem("lang");
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [utype, setUtype] = useState("");
-  const [tel, setTel] = useState("");
-  const [email, setEmail] = useState("");
-  const [dtype, setDtype] = useState("");
-  const [etc, setEtc] = useState("");
-  const [dbrand, setDbrand] = useState("");
-  const [dname, setDname] = useState("");
-  const [startdate, setStartdate] = useState("");
-  const [enddate, setEnddate] = useState("");
-  const [remark, setRemark] = useState("");
-  const [internalIP, setInternalIP] = useState("");
   const [toggleLanguage, setToggleLanguage] = useState(!!defaultLanguage);
+  const [information, setInformation] = useState({
+    name: "",
+    role: "",
+    tel: "",
+    email: "",
+    device_type: "",
+    etc: "",
+    device_brand: "",
+    device_name: "",
+    start_date: "",
+    end_date: "",
+    remark: "",
+    ip_addr: "",
+  });
 
   const {
     register,
@@ -41,50 +42,37 @@ function UserSubmit() {
   } = useForm({
     resolver: yupResolver(userSchema),
     defaultValues: {
-      Firstname: "",
-      Lastname: "",
-      Email: "",
-      Tel: "",
-      UserType: "",
-      Device_Type: "",
-      DeviceBrand: "",
-      DeviceName: "",
-      StartDate: "",
-      EndDate: "",
-      Remark: "",
+      name: "",
+      role: "",
+      tel: "",
+      email: "",
+      device_type: "",
+      etc: "",
+      device_brand: "",
+      device_name: "",
+      start_date: "",
+      end_date: "",
+      remark: "",
     },
   });
-  const resetForm = () => {
-    setFname("");
-    setLname("");
-    setEmail("");
-    setTel("");
-    setUtype("");
-    setDtype("");
-    setDbrand("");
-    setDname("");
-    setStartdate(null);
-    setEnddate(null);
-    setRemark("");
-    reset({
-      Firstname: "",
-      Lastname: "",
-      Email: "",
-      Tel: "",
-      UserType: "",
-      DeviceType: "",
-      DeviceBrand: "",
-      DeviceName: "",
-      StartDate: "",
-      EndDate: "",
-      Remark: "",
-    });
-  };
 
-  const GetIP = async () => {
-    await axios.post("http://localhost:5000/getip").then((response) => {
-      setInternalIP(response.data[1].address);
-    });
+  const resetForm = () => {
+    const resetValue = {
+      name: "",
+      role: "",
+      tel: "",
+      email: "",
+      device_type: "",
+      etc: "",
+      device_brand: "",
+      device_name: "",
+      start_date: "",
+      end_date: "",
+      remark: "",
+    };
+
+    setInformation(resetValue);
+    reset(resetValue);
   };
 
   const chgWidth = () => {
@@ -105,26 +93,24 @@ function UserSubmit() {
   };
 
   const OnSubmit = () => {
-    const telFormat = tel.slice(0, 3) + "-" + tel.slice(3, 6) + "-" + tel.slice(6, 10);
-    const dates = moment().format("YYYY-MM-DD");
-    const times = moment().format("HH:mm");
+    const telFormat =
+      information.tel.slice(0, 3) +
+      "-" +
+      information.tel.slice(3, 6) +
+      "-" +
+      information.tel.slice(6, 10);
+    const dates = moment().format("yy-mm-d , H:mm:ss");
 
     axios
       .post("http://localhost:5000/users", {
-        Firstname: fname,
-        Lastname: lname,
-        User_Type: utype,
-        Tel: telFormat,
-        Email: email,
-        Device_Type: dtype === "etc" ? etc : dtype,
-        Device_Brand: dbrand,
-        Device_Name: dname,
-        Start_Date: startdate,
-        End_Date: utype === "staff" ? "" : enddate,
-        Remark: remark,
-        Dates: dates,
-        Times: times,
-        Ip_Addr: internalIP,
+        ...information,
+        submit_date: dates,
+        tel: telFormat,
+        device_type:
+          information.device_type === "etc"
+            ? information.etc
+            : information.device_type,
+        end_date: information.role === "staff" ? "" : information.end_date,
       })
       .then((response) => {
         if (response.data.msg === "User Created") {
@@ -150,30 +136,21 @@ function UserSubmit() {
   };
 
   useEffect(() => {
+    const GetIP = async () => {
+      await axios.post("http://localhost:5000/getip").then((response) => {
+        setInformation({ ...information, ip_addr: response.data[1].address });
+      });
+    };
+
     GetIP();
   }, []);
 
   return (
     <div className="App1">
-      <Box mb={1}>
-        <AppBar position="static">
-          <Toolbar>
-            <img src="img/LS-02.png" alt="logo" width="50" height="50" />
-            <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
-              WIFI Request
-            </Typography>
-            <Tooltip title="TH" arrow>
-              <img src={thaiFlag} alt="thai" width="20px" height="15px" />
-            </Tooltip>
-            <Tooltip title="Change Language" arrow>
-              <Switch label="Select Language" color="default" onChange={handleLanguage} checked={toggleLanguage} />
-            </Tooltip>
-            <Tooltip title="en/Us" arrow>
-              <img src={usFlag} alt="english" width="20px" height="15px" />
-            </Tooltip>
-          </Toolbar>
-        </AppBar>
-      </Box>
+      <UserAppBar
+        toggleLanguage={toggleLanguage}
+        handleLanguage={handleLanguage}
+      />
       <Box
         component={motion.div}
         className="bg1"
@@ -185,7 +162,14 @@ function UserSubmit() {
         sx={{ boxShadow: "15" }}
       >
         <Box className="images1">
-          <img className="logo1" src="img/LS-02.png" alt="" srcSet="" width="125px" height="125px" />
+          <img
+            className="logo1"
+            src="img/LS-02.png"
+            alt=""
+            srcSet=""
+            width="125px"
+            height="125px"
+          />
         </Box>
 
         <Typography variant="h4" color="#ffb401" textAlign="center" mb={5}>
@@ -193,26 +177,24 @@ function UserSubmit() {
         </Typography>
 
         <Box>
-          <Stack component="form" spacing={5} onSubmit={handleSubmit(OnSubmit)} noValidate autoComplete="off">
+          <Stack
+            component="form"
+            spacing={5}
+            onSubmit={handleSubmit(OnSubmit)}
+            noValidate
+            autoComplete="off"
+          >
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
-                label={toggleLanguage ? langJSON.firstname.eng : langJSON.firstname.th}
-                value={fname}
-                {...register("Firstname", { onChange: (e) => setFname(e.target.value) })}
-                error={!!errors?.Firstname}
-                helperText={errors?.Firstname?.message}
-                required
-                fullWidth
-              />
-
-              <TextField
-                variant="outlined"
-                label={toggleLanguage ? langJSON.lastname.eng : langJSON.lastname.th}
-                value={lname}
-                {...register("Lastname", { onChange: (e) => setLname(e.target.value) })}
-                error={!!errors?.Lastname}
-                helperText={errors?.Lastname?.message}
+                label={toggleLanguage ? langJSON.name.eng : langJSON.name.th}
+                value={information.name}
+                {...register("name", {
+                  onChange: (e) =>
+                    setInformation({ ...information, name: e.target.value }),
+                })}
+                error={!!errors?.name}
+                helperText={errors?.name?.message}
                 required
                 fullWidth
               />
@@ -221,20 +203,26 @@ function UserSubmit() {
               <TextField
                 variant="outlined"
                 label={toggleLanguage ? langJSON.email.eng : langJSON.email.th}
-                value={email}
-                {...register("Email", { onChange: (e) => setEmail(e.target.value) })}
-                error={!!errors?.Email}
-                helperText={errors?.Email?.message}
+                value={information.email}
+                {...register("email", {
+                  onChange: (e) =>
+                    setInformation({ ...information, email: e.target.value }),
+                })}
+                error={!!errors?.email}
+                helperText={errors?.email?.message}
                 required
                 fullWidth
               />
               <TextField
                 variant="outlined"
                 label={toggleLanguage ? langJSON.tel.eng : langJSON.tel.th}
-                value={tel}
-                {...register("Tel", { onChange: (e) => setTel(e.target.value) })}
-                error={!!errors?.Tel}
-                helperText={errors?.Tel?.message}
+                value={information.tel}
+                {...register("tel", {
+                  onChange: (e) =>
+                    setInformation({ ...information, tel: e.target.value }),
+                })}
+                error={!!errors?.tel}
+                helperText={errors?.tel?.message}
                 required
                 fullWidth
               />
@@ -242,11 +230,18 @@ function UserSubmit() {
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
-                label={toggleLanguage ? langJSON.usertype.eng : langJSON.usertype.th}
-                value={utype}
-                {...register("UserType", { onChange: (e) => setUtype(e.target.value) })}
-                error={!!errors?.UserType}
-                helperText={errors?.UserType?.message}
+                label={
+                  toggleLanguage
+                    ? langJSON.user_type.eng
+                    : langJSON.user_type.th
+                }
+                value={information.role}
+                {...register("role", {
+                  onChange: (e) =>
+                    setInformation({ ...information, role: e.target.value }),
+                })}
+                error={!!errors?.role}
+                helperText={errors?.role?.message}
                 select
                 required
                 fullWidth
@@ -257,11 +252,21 @@ function UserSubmit() {
               </TextField>
               <TextField
                 variant="outlined"
-                label={toggleLanguage ? langJSON.devicetype.eng : langJSON.devicetype.th}
-                value={dtype}
-                {...register("DeviceType", { onChange: (e) => setDtype(e.target.value) })}
-                error={!!errors?.DeviceType}
-                helperText={errors?.DeviceType?.message}
+                label={
+                  toggleLanguage
+                    ? langJSON.device_type.eng
+                    : langJSON.device_type.th
+                }
+                value={information.device_type}
+                {...register("device_type", {
+                  onChange: (e) =>
+                    setInformation({
+                      ...information,
+                      device_type: e.target.value,
+                    }),
+                })}
+                error={!!errors?.device_type}
+                helperText={errors?.device_type?.message}
                 select
                 required
                 fullWidth
@@ -279,15 +284,20 @@ function UserSubmit() {
               spacing={5}
               width="60%"
               justifyContent="flex-end"
-              sx={{ display: `${dtype === "etc" ? "" : "none"}` }}
+              sx={{
+                display: `${information.device_type === "etc" ? "" : "none"}`,
+              }}
             >
               <TextField
                 variant="outlined"
                 label={toggleLanguage ? langJSON.etc.eng : langJSON.etc.th}
-                value={etc}
-                {...register("Etc", { onChange: (e) => setEtc(e.target.value) })}
-                error={!!errors?.Etc}
-                helperText={errors?.Etc?.message}
+                value={information.etc}
+                {...register("etc", {
+                  onChange: (e) =>
+                    setInformation({ ...information, etc: e.target.value }),
+                })}
+                error={!!errors?.etc}
+                helperText={errors?.etc?.message}
                 fullWidth
                 required
               />
@@ -295,21 +305,41 @@ function UserSubmit() {
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
-                label={toggleLanguage ? langJSON.devicebrand.eng : langJSON.devicebrand.th}
-                value={dbrand}
-                {...register("DeviceBrand", { onChange: (e) => setDbrand(e.target.value) })}
-                error={!!errors?.DeviceBrand}
-                helperText={errors?.DeviceBrand?.message}
+                label={
+                  toggleLanguage
+                    ? langJSON.device_brand.eng
+                    : langJSON.device_brand.th
+                }
+                value={information.device_brand}
+                {...register("device_brand", {
+                  onChange: (e) =>
+                    setInformation({
+                      ...information,
+                      device_brand: e.target.value,
+                    }),
+                })}
+                error={!!errors?.device_brand}
+                helperText={errors?.device_brand?.message}
                 required
                 fullWidth
               />
               <TextField
                 variant="outlined"
-                label={toggleLanguage ? langJSON.devicename.eng : langJSON.devicename.th}
-                value={dname}
-                {...register("DeviceName", { onChange: (e) => setDname(e.target.value) })}
-                error={!!errors?.DeviceName}
-                helperText={errors?.DeviceName?.message}
+                label={
+                  toggleLanguage
+                    ? langJSON.device_name.eng
+                    : langJSON.device_name.th
+                }
+                value={information.device_name}
+                {...register("device_name", {
+                  onChange: (e) =>
+                    setInformation({
+                      ...information,
+                      device_name: e.target.value,
+                    }),
+                })}
+                error={!!errors?.device_name}
+                helperText={errors?.device_name?.message}
                 required
                 fullWidth
               />
@@ -318,24 +348,33 @@ function UserSubmit() {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Controller
                   control={control}
-                  name="StartDate"
+                  name="start_date"
                   render={({ field: { name, ...field } }) => (
                     <DatePicker
                       {...field}
-                      label={toggleLanguage ? langJSON.startdate.eng : langJSON.startdate.th}
+                      label={
+                        toggleLanguage
+                          ? langJSON.start_date.eng
+                          : langJSON.start_date.th
+                      }
                       inputFormat="YYYY/MM/DD"
-                      value={startdate}
+                      value={information.start_date}
                       onChange={(newValue) => {
-                        const date = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
-                        setValue("StartDate", date);
-                        setStartdate(date);
+                        const date = `${newValue.$y}-${newValue.$M + 1}-${
+                          newValue.$D
+                        }`;
+                        setValue("start_date", date);
+                        setInformation({
+                          ...information,
+                          start_date: date,
+                        });
                       }}
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           onKeyDown={(e) => e.preventDefault()}
-                          error={!!errors?.StartDate}
-                          helperText={errors?.StartDate?.message}
+                          error={!!errors?.start_date}
+                          helperText={errors?.start_date?.message}
                           fullWidth
                           required
                         />
@@ -345,27 +384,40 @@ function UserSubmit() {
                 />
                 <Controller
                   control={control}
-                  name="EndDate"
+                  name="end_date"
                   render={({ field: { name, ...field } }) => (
                     <DatePicker
                       {...field}
-                      label={toggleLanguage ? langJSON.enddate.eng : langJSON.enddate.th}
+                      label={
+                        toggleLanguage
+                          ? langJSON.end_date.eng
+                          : langJSON.end_date.th
+                      }
                       inputFormat="YYYY/MM/DD"
-                      value={enddate}
+                      value={information.end_date}
                       onChange={(newValue) => {
-                        const date = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
-                        setValue("EndDate", date);
-                        setEnddate(date);
+                        const date = `${newValue.$y}-${newValue.$M + 1}-${
+                          newValue.$D
+                        }`;
+                        setValue("end_date", date);
+                        setInformation({
+                          ...information,
+                          end_date: date,
+                        });
                       }}
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           onKeyDown={(e) => e.preventDefault()}
-                          error={!!errors?.EndDate}
-                          helperText={errors?.EndDate?.message}
+                          error={!!errors?.end_date}
+                          helperText={errors?.end_date?.message}
                           fullWidth
                           required
-                          sx={{ display: `${utype !== "staff" ? "" : "none"}` }}
+                          sx={{
+                            display: `${
+                              information.role !== "staff" ? "" : "none"
+                            }`,
+                          }}
                         />
                       )}
                     />
@@ -376,15 +428,28 @@ function UserSubmit() {
             <Stack direction={chgWidth()} spacing={5} width="60%">
               <TextField
                 variant="outlined"
-                label={toggleLanguage ? langJSON.remark.eng : langJSON.remark.th}
-                value={remark}
+                label={
+                  toggleLanguage ? langJSON.remark.eng : langJSON.remark.th
+                }
+                value={information.remark}
                 rows={2}
-                {...register("Remark", { onChange: (e) => setRemark(e.target.value) })}
+                {...register("remark", {
+                  onChange: (e) =>
+                    setInformation({
+                      ...information,
+                      remark: e.target.value,
+                    }),
+                })}
                 multiline
                 fullWidth
               />
             </Stack>
-            <Stack direction="row" justifyContent="space-around" spacing={5} width="60%">
+            <Stack
+              direction="row"
+              justifyContent="space-around"
+              spacing={5}
+              width="60%"
+            >
               <motion.input
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}

@@ -6,14 +6,25 @@ import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { TextField, Button, Box, AppBar, Typography, Toolbar, InputAdornment, IconButton } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Box,
+  AppBar,
+  Typography,
+  Toolbar,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../components/schema";
 
 const Register = () => {
-  const [Username, setUsername] = useState("");
-  const [Password, setPassword] = useState("");
-  const [confPassword, setConfPassword] = useState("");
+  const [infomation, setInfomation] = useState({
+    username: "",
+    password: "",
+    confPassword: "",
+  });
   const [hidePwd, setHidePwd] = useState(true);
   const navigate = useNavigate();
 
@@ -34,9 +45,9 @@ const Register = () => {
     try {
       await axios
         .post("http://localhost:5000/usersadmin", {
-          Username: Username,
-          Password: Password,
-          confPassword: confPassword,
+          username: infomation.username,
+          password: infomation.password,
+          confPassword: infomation.confPassword,
         })
         .then((response) => {
           Swal.fire({
@@ -47,7 +58,7 @@ const Register = () => {
             timerProgressBar: true,
           });
           setTimeout(() => {
-            navigate("/login");
+            navigate("/");
           }, 1500);
         });
     } catch (error) {
@@ -69,7 +80,11 @@ const Register = () => {
         <AppBar position="static">
           <Toolbar>
             <img src="img/LS-02.png" alt="logo" width="50px" height="50px" />
-            <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{ flexGrow: 1, marginLeft: "10px" }}
+            >
               Register
             </Typography>
           </Toolbar>
@@ -77,12 +92,20 @@ const Register = () => {
       </Box>
       <div className="bg-regis">
         <Box className="container-regis" sx={{ boxShadow: 5 }}>
-          <form onSubmit={handleSubmit(OnSubmit)} style={{ width: "300px" }} noValidate autoComplete="off">
+          <form
+            onSubmit={handleSubmit(OnSubmit)}
+            style={{ width: "300px" }}
+            noValidate
+            autoComplete="off"
+          >
             <img src="img/LS-01.png" alt="logo" width="150px" height="150px" />
             <TextField
               variant="standard"
               label="Enter Username"
-              {...register("regUsername", { onChange: (e) => setUsername(e.target.value) })}
+              {...register("regUsername", {
+                onChange: (e) =>
+                  setInfomation({ ...infomation, username: e.target.value }),
+              })}
               error={!!errors?.regUsername}
               helperText={errors?.regUsername?.message}
               required
@@ -95,7 +118,10 @@ const Register = () => {
               variant="standard"
               label="Enter Password"
               type={hidePwd ? "password" : "text"}
-              {...register("regPassword", { onChange: (e) => setPassword(e.target.value) })}
+              {...register("regPassword", {
+                onChange: (e) =>
+                  setInfomation({ ...infomation, password: e.target.value }),
+              })}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -116,7 +142,13 @@ const Register = () => {
               variant="standard"
               label="Enter Confirm Password"
               type={hidePwd ? "password" : "text"}
-              {...register("regConfPassword", { onChange: (e) => setConfPassword(e.target.value) })}
+              {...register("regConfPassword", {
+                onChange: (e) =>
+                  setInfomation({
+                    ...infomation,
+                    confPassword: e.target.value,
+                  }),
+              })}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -132,7 +164,13 @@ const Register = () => {
               fullWidth
               sx={{ marginTop: "10px" }}
             />
-            <Button type="submit" variant="contained" size="large" fullWidth sx={{ marginTop: "10px" }}>
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              fullWidth
+              sx={{ marginTop: "10px" }}
+            >
               register
             </Button>
             <Button

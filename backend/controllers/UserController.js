@@ -1,5 +1,5 @@
 import Users from "../models/UserModel.js";
-import os from "os";
+import os from "node:os";
 export const getUsers = async (req, res) => {
   try {
     const response = await Users.findAll();

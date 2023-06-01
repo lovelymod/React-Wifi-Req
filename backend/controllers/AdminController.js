@@ -14,24 +14,24 @@ export const getUserAdmin = async (req, res) => {
 };
 
 export const Register = async (req, res) => {
-  const { Username, Password, confPassword } = req.body;
-  const username = await Adminloging.findOne({
+  const { username, password, confPassword } = req.body;
+  const usernameInfo = await Adminloging.findOne({
     where: {
-      Username: Username,
+      username: username,
     },
   });
-  if (username)
+  if (usernameInfo)
     return res.status(400).json({ msg: "This username has already exist" });
-  if (Password !== confPassword)
+  if (password !== confPassword)
     return res
       .status(400)
       .json({ msg: "Password and Confirm Password do not match" });
   const salt = await bcrypt.genSalt(5);
-  const hashPassword = await bcrypt.hash(Password, salt);
+  const hashPassword = await bcrypt.hash(password, salt);
   try {
     await Adminloging.create({
-      Username: Username,
-      Password: hashPassword,
+      username: username,
+      password: hashPassword,
     });
     res.json({ msg: "Registration Successful" });
   } catch (error) {

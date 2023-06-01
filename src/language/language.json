@@ -3,13 +3,9 @@
         "th" : "กรุณากรอกแบบฟอร์มคำขอ",
         "eng" : "Please fill out a request form"
     },
-    "firstname" : {
+    "name" : {
         "th" : "ชื่อ",
-        "eng" : "Firstname"
-    },
-    "lastname" : {
-        "th" : "นามสกุล",
-        "eng" : "Lastname"
+        "eng" : "Name"
     },
     "email" : {
         "th" : "อีเมล",
@@ -19,11 +15,11 @@
         "th" : "เบอร์โทร",
         "eng" : "Tel"
     },
-    "usertype" : {
+    "user_type" : {
         "th" : "ประเภท",
         "eng" : "User Type"
     },
-    "devicetype" : {
+    "device_type" : {
         "th" : "ชนิดอุปกรณ์",
         "eng" : "Device Type"
     },
@@ -31,19 +27,19 @@
         "th" : "อื่นๆ",
         "eng" : "Etc"
     },
-    "devicebrand" : {
+    "device_brand" : {
         "th" : "แบรนด์",
         "eng" : "Device Brand"
     },
-    "devicename" : {
+    "device_name" : {
         "th" : "ชื่ออุปกรณ์",
         "eng" : "Device Name"
     },
-    "startdate" : {
+    "start_date" : {
         "th" : "เข้าวันที่",
         "eng" : "Start Date"
     },
-    "enddate" : {
+    "end_date" : {
         "th" : "ออกวันที่",
         "eng" : "End Date"
     },
