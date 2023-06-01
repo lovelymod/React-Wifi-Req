@@ -17,7 +17,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { registerSchema } from "../components/schema";
+import { registerSchema } from "../utils/schema";
 
 const Register = () => {
   const [infomation, setInfomation] = useState({
@@ -175,7 +175,7 @@ const Register = () => {
             </Button>
             <Button
               type="button"
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/")}
               variant="outlined"
               size="large"
               fullWidth

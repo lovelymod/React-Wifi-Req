@@ -5,11 +5,20 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "../components/schema";
+import { loginSchema } from "../utils/schema";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Cookies from "js-cookie";
-import { TextField, Button, Box, AppBar, Typography, Toolbar, InputAdornment, IconButton } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Box,
+  AppBar,
+  Typography,
+  Toolbar,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -24,8 +33,8 @@ function Login() {
   } = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      Username: "",
-      Password: "",
+      username: "",
+      password: "",
     },
   });
 
@@ -33,11 +42,13 @@ function Login() {
     try {
       await axios
         .post("http://localhost:5000/login", {
-          Username: username,
-          Password: password,
+          username: username,
+          password: password,
         })
         .then((response) => {
-          Cookies.set("refreshToken", response.data.refreshToken, { expires: 1 });
+          Cookies.set("refreshToken", response.data.refreshToken, {
+            expires: 1,
+          });
         });
       Swal.fire({
         icon: "success",
@@ -50,7 +61,10 @@ function Login() {
         navigate("/table");
       }, 1500);
     } catch (error) {
-      if (error.response.data.msg === "not Matched" || error.response.data.msg === "Username not found") {
+      if (
+        error.response.data.msg === "not Matched" ||
+        error.response.data.msg === "Username not found"
+      ) {
         Swal.fire({
           icon: "error",
           title: "Wrong Username or Password",
@@ -70,7 +84,7 @@ function Login() {
       });
       navigate("/table");
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   };
   useEffect(() => {
@@ -82,7 +96,11 @@ function Login() {
         <AppBar position="static">
           <Toolbar>
             <img src="img/LS-02.png" alt="logo" width="50" height="50" />
-            <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{ flexGrow: 1, marginLeft: "10px" }}
+            >
               Login
             </Typography>
           </Toolbar>
@@ -90,7 +108,13 @@ function Login() {
       </Box>
       <div className="bg2">
         <Box className="container2" sx={{ boxShadow: 5 }}>
-          <img className="logo2" src="img/LS-01.png" alt="logo" width="150px" height="150px" />
+          <img
+            className="logo2"
+            src="img/LS-01.png"
+            alt="logo"
+            width="150px"
+            height="150px"
+          />
           <form
             className="formlogin"
             style={{ width: "300px" }}
@@ -101,11 +125,11 @@ function Login() {
             <TextField
               variant="standard"
               label="Username"
-              {...register("Username", {
+              {...register("username", {
                 onChange: (e) => setUsername(e.target.value),
               })}
-              error={!!errors?.Username}
-              helperText={errors?.Username?.message}
+              error={!!errors?.username}
+              helperText={errors?.username?.message}
               fullWidth
               required
               autoFocus
@@ -115,11 +139,11 @@ function Login() {
               variant="standard"
               label="Password"
               type={hidePwd ? "password" : "text"}
-              {...register("Password", {
+              {...register("password", {
                 onChange: (e) => setPassword(e.target.value),
               })}
-              error={!!errors?.Password}
-              helperText={errors?.Password?.message}
+              error={!!errors?.password}
+              helperText={errors?.password?.message}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -133,7 +157,13 @@ function Login() {
               required
               sx={{ marginTop: "10px" }}
             />
-            <Button type="submit" variant="contained" size="large" fullWidth sx={{ marginTop: "10px" }}>
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              fullWidth
+              sx={{ marginTop: "10px" }}
+            >
               login
             </Button>
             <Button

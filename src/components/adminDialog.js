@@ -16,7 +16,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { userSchema } from "./schema";
+import { userSchema } from "../utils/schema";
 import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -29,18 +29,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const AdminDialog = ({ open, setOpen }) => {
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [utype, setUtype] = useState("");
-  const [tel, setTel] = useState("");
-  const [email, setEmail] = useState("");
-  const [dtype, setDtype] = useState("");
-  const [etc, setEtc] = useState("");
-  const [dbrand, setDbrand] = useState("");
-  const [dname, setDname] = useState("");
-  const [startdate, setStartdate] = useState("");
-  const [enddate, setEnddate] = useState("");
-  const [remark, setRemark] = useState("");
+  const [information, setInformation] = useState({
+    name: "",
+    role: "",
+    tel: "",
+    email: "",
+    device_type: "",
+    etc: "",
+    device_brand: "",
+    device_name: "",
+    start_date: "",
+    end_date: "",
+    remark: "",
+  });
 
   const {
     register,
@@ -52,45 +53,37 @@ const AdminDialog = ({ open, setOpen }) => {
   } = useForm({
     resolver: yupResolver(userSchema),
     defaultValues: {
-      Firstname: "",
-      Lastname: "",
-      Email: "",
-      Tel: "",
-      UserType: "",
-      Device_Type: "",
-      DeviceBrand: "",
-      DeviceName: "",
-      StartDate: "",
-      EndDate: "",
-      Remark: "",
+      name: "",
+      role: "",
+      tel: "",
+      email: "",
+      device_type: "",
+      etc: "",
+      device_brand: "",
+      device_name: "",
+      start_date: "",
+      end_date: "",
+      remark: "",
     },
   });
 
   const resetForm = () => {
-    setFname("");
-    setLname("");
-    setEmail("");
-    setTel("");
-    setUtype("");
-    setDtype("");
-    setDbrand("");
-    setDname("");
-    setStartdate(null);
-    setEnddate(null);
-    setRemark("");
-    reset({
-      Firstname: "",
-      Lastname: "",
-      Email: "",
-      Tel: "",
-      UserType: "",
-      DeviceType: "",
-      DeviceBrand: "",
-      DeviceName: "",
-      StartDate: "",
-      EndDate: "",
-      Remark: "",
-    });
+    const resetValue = {
+      name: "",
+      role: "",
+      tel: "",
+      email: "",
+      device_type: "",
+      etc: "",
+      device_brand: "",
+      device_name: "",
+      start_date: "",
+      end_date: "",
+      remark: "",
+    };
+
+    setInformation(resetValue);
+    reset(resetValue);
   };
 
   const chgWidth = () => {
@@ -106,25 +99,24 @@ const AdminDialog = ({ open, setOpen }) => {
   };
 
   const onSubmit = async () => {
-    const telFormat = tel.slice(0, 3) + "-" + tel.slice(3, 6) + "-" + tel.slice(6, 10);
-    const dates = moment().format("YYYY-MM-DD");
-    const times = moment().format("HH:mm");
+    const telFormat =
+      information.tel.slice(0, 3) +
+      "-" +
+      information.tel.slice(3, 6) +
+      "-" +
+      information.tel.slice(6, 10);
+    const dates = moment().format("yy-mm-d , H:mm:ss");
 
     await axios
       .post("http://localhost:5000/users", {
-        Firstname: fname,
-        Lastname: lname,
-        User_Type: utype,
-        Tel: telFormat,
-        Email: email,
-        Device_Type: dtype === "etc" ? etc : dtype,
-        Device_Brand: dbrand,
-        Device_Name: dname,
-        Start_Date: startdate,
-        End_Date: utype === "staff" ? "" : enddate,
-        Remark: remark,
-        Dates: dates,
-        Times: times,
+        ...information,
+        submit_date: dates,
+        tel: telFormat,
+        device_type:
+          information.device_type === "etc"
+            ? information.etc
+            : information.device_type,
+        end_date: information.role === "staff" ? "" : information.end_date,
       })
       .then((response) => {
         if (response.data.msg === "User Created") {
@@ -144,7 +136,13 @@ const AdminDialog = ({ open, setOpen }) => {
   };
   return (
     <>
-      <Dialog open={open} onClose={handleClose} maxWidth="md" TransitionComponent={Transition} fullWidth>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth="md"
+        TransitionComponent={Transition}
+        fullWidth
+      >
         <DialogTitle component="div" sx={{ display: "flex" }}>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Add User
@@ -154,30 +152,21 @@ const AdminDialog = ({ open, setOpen }) => {
           </IconButton>
         </DialogTitle>
         <DialogContent dividers>
-          <DialogContentText>Please fill out user information.</DialogContentText>
+          <DialogContentText>
+            Please fill out user information.
+          </DialogContentText>
           <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
             <Stack direction={chgWidth()} spacing={5} width="70%" mt={3}>
               <TextField
                 variant="standard"
                 label="ชื่อ"
-                value={fname}
-                {...register("Firstname", {
-                  onChange: (e) => setFname(e.target.value),
+                value={information.name}
+                {...register("name", {
+                  onChange: (e) =>
+                    setInformation({ ...information, name: e.target.value }),
                 })}
-                error={!!errors?.Firstname}
-                helperText={errors?.Firstname?.message}
-                required
-                fullWidth
-              />
-              <TextField
-                variant="standard"
-                label="นามสกุล"
-                value={lname}
-                {...register("Lastname", {
-                  onChange: (e) => setLname(e.target.value),
-                })}
-                error={!!errors?.Lastname}
-                helperText={errors?.Lastname?.message}
+                error={!!errors?.name}
+                helperText={errors?.name?.message}
                 required
                 fullWidth
               />
@@ -186,24 +175,26 @@ const AdminDialog = ({ open, setOpen }) => {
               <TextField
                 variant="standard"
                 label="อีเมล"
-                value={email}
-                {...register("Email", {
-                  onChange: (e) => setEmail(e.target.value),
+                value={information.email}
+                {...register("email", {
+                  onChange: (e) =>
+                    setInformation({ ...information, email: e.target.value }),
                 })}
-                error={!!errors?.Email}
-                helperText={errors?.Email?.message}
+                error={!!errors?.email}
+                helperText={errors?.email?.message}
                 required
                 fullWidth
               />
               <TextField
                 variant="standard"
                 label="เบอร์โทร"
-                value={tel}
-                {...register("Tel", {
-                  onChange: (e) => setTel(e.target.value),
+                value={information.tel}
+                {...register("tel", {
+                  onChange: (e) =>
+                    setInformation({ ...information, tel: e.target.value }),
                 })}
-                error={!!errors?.Tel}
-                helperText={errors?.Tel?.message}
+                error={!!errors?.tel}
+                helperText={errors?.tel?.message}
                 required
                 fullWidth
               />
@@ -212,12 +203,13 @@ const AdminDialog = ({ open, setOpen }) => {
               <TextField
                 variant="standard"
                 label="ประเภท"
-                value={utype}
-                {...register("UserType", {
-                  onChange: (e) => setUtype(e.target.value),
+                value={information.role}
+                {...register("role", {
+                  onChange: (e) =>
+                    setInformation({ ...information, role: e.target.value }),
                 })}
-                error={!!errors?.UserType}
-                helperText={errors?.UserType?.message}
+                error={!!errors?.role}
+                helperText={errors?.role?.message}
                 select
                 required
                 fullWidth
@@ -230,12 +222,16 @@ const AdminDialog = ({ open, setOpen }) => {
               <TextField
                 variant="standard"
                 label="ชนิดอุปกรณ์"
-                value={dtype}
-                {...register("DeviceType", {
-                  onChange: (e) => setDtype(e.target.value),
+                value={information.device_type}
+                {...register("device_type", {
+                  onChange: (e) =>
+                    setInformation({
+                      ...information,
+                      device_type: e.target.value,
+                    }),
                 })}
-                error={!!errors?.DeviceType}
-                helperText={errors?.DeviceType?.message}
+                error={!!errors?.device_type}
+                helperText={errors?.device_type?.message}
                 select
                 required
                 fullWidth
@@ -252,43 +248,54 @@ const AdminDialog = ({ open, setOpen }) => {
               justifyContent="flex-end"
               width="70%"
               mt={3}
-              sx={{ display: `${dtype === "etc" ? "" : "none"}` }}
+              sx={{
+                display: `${information.device_type === "etc" ? "" : "none"}`,
+              }}
             >
               <TextField
                 variant="standard"
                 label="อื่นๆ"
-                value={etc}
-                {...register("Etc", {
-                  onChange: (e) => setEtc(e.target.value),
+                value={information.etc}
+                {...register("etc", {
+                  onChange: (e) =>
+                    setInformation({ ...information, etc: e.target.value }),
                 })}
-                error={!!errors?.Etc}
-                helperText={errors?.Etc?.message}
+                error={!!errors?.etc}
+                helperText={errors?.etc?.message}
                 fullWidth
-                required={dtype === "etc"}
+                required={information.device_type === "etc"}
               />
             </Stack>
             <Stack direction={chgWidth()} spacing={5} width="70%" mt={3}>
               <TextField
                 variant="standard"
                 label="แบรนด์"
-                value={dbrand}
-                {...register("DeviceBrand", {
-                  onChange: (e) => setDbrand(e.target.value),
+                value={information.device_brand}
+                {...register("device_brand", {
+                  onChange: (e) =>
+                    setInformation({
+                      ...information,
+                      device_brand: e.target.value,
+                    }),
                 })}
-                error={!!errors?.DeviceBrand}
-                helperText={errors?.DeviceBrand?.message}
+                error={!!errors?.device_brand}
+                helperText={errors?.device_brand?.message}
                 required
                 fullWidth
               />
               <TextField
                 variant="standard"
                 label="ชื่ออุปกรณ์"
-                value={dname}
-                {...register("DeviceName", {
-                  onChange: (e) => setDname(e.target.value),
+                value={information.device_name}
+                {...register("device_name", {
+                  onChange: (e) =>
+                    setInformation({
+                      ...information,
+                      device_name: e.target.value,
+                    }),
                 })}
-                error={!!errors?.DeviceName}
-                helperText={errors?.DeviceName?.message}
+                error={!!errors?.device_name}
+                helperText={errors?.device_name?.message}
                 required
                 fullWidth
               />
@@ -297,25 +304,27 @@ const AdminDialog = ({ open, setOpen }) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Controller
                   control={control}
-                  name="StartDate"
+                  name="start_date"
                   render={({ field: { name, ...field } }) => (
                     <DatePicker
                       {...field}
                       label="เข้าวันที่"
                       inputFormat="YYYY/MM/DD"
-                      value={startdate}
+                      value={information.start_date}
                       onChange={(newValue) => {
-                        const date = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
-                        setValue("StartDate", date);
-                        setStartdate(date);
+                        const date = `${newValue.$y}-${newValue.$M + 1}-${
+                          newValue.$D
+                        }`;
+                        setValue("start_date", date);
+                        setInformation({ ...information, start_date: date });
                       }}
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           onKeyDown={(e) => e.preventDefault()}
                           variant="standard"
-                          error={!!errors?.StartDate}
-                          helperText={errors?.StartDate?.message}
+                          error={!!errors?.start_date}
+                          helperText={errors?.start_date?.message}
                           fullWidth
                           required
                         />
@@ -326,28 +335,34 @@ const AdminDialog = ({ open, setOpen }) => {
 
                 <Controller
                   control={control}
-                  name="EndDate"
+                  name="end_date"
                   render={({ field: { name, ...field } }) => (
                     <DatePicker
                       {...field}
                       label="ออกวันที่"
                       inputFormat="YYYY/MM/DD"
-                      value={enddate}
+                      value={information.end_date}
                       onChange={(newValue) => {
-                        const date = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
-                        setValue("EndDate", date);
-                        setEnddate(date);
+                        const date = `${newValue.$y}-${newValue.$M + 1}-${
+                          newValue.$D
+                        }`;
+                        setValue("end_date", date);
+                        setInformation({ ...information, end_date: date });
                       }}
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           onKeyDown={(e) => e.preventDefault()}
                           variant="standard"
-                          error={!!errors?.EndDate}
-                          helperText={errors?.EndDate?.message}
+                          error={!!errors?.end_date}
+                          helperText={errors?.end_date?.message}
                           fullWidth
-                          required={utype !== "staff"}
-                          sx={{ display: `${utype === "staff" ? "none" : ""}` }}
+                          required={information.role !== "staff"}
+                          sx={{
+                            display: `${
+                              information.role === "staff" ? "none" : ""
+                            }`,
+                          }}
                         />
                       )}
                     />
@@ -359,13 +374,14 @@ const AdminDialog = ({ open, setOpen }) => {
               <TextField
                 variant="standard"
                 label="หมายเหตุ"
-                value={remark}
+                value={information.remark}
                 rows={4}
-                {...register("Remark", {
-                  onChange: (e) => setRemark(e.target.value),
+                {...register("remark", {
+                  onChange: (e) =>
+                    setInformation({ ...information, remark: e.target.value }),
                 })}
-                error={!!errors?.Remark}
-                helperText={errors?.Remark?.message}
+                error={!!errors?.remark}
+                helperText={errors?.remark?.message}
                 multiline
                 fullWidth
               />
@@ -375,7 +391,13 @@ const AdminDialog = ({ open, setOpen }) => {
                 <Button type="submit" variant="contained" fullWidth>
                   submit
                 </Button>
-                <Button type="button" variant="outlined" color="warning" onClick={resetForm} fullWidth>
+                <Button
+                  type="button"
+                  variant="outlined"
+                  color="warning"
+                  onClick={resetForm}
+                  fullWidth
+                >
                   Reset
                 </Button>
               </Stack>

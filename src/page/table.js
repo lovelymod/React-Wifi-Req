@@ -5,7 +5,14 @@ import MuiTable from "../components/muitable";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { AppBar, Box, Toolbar, Typography, IconButton, Tooltip } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
 function MyTable() {
@@ -35,7 +42,7 @@ function MyTable() {
       setExpire(decoded.exp);
     } catch (error) {
       if (error.response) {
-        navigate("/login");
+        navigate("/");
       }
     }
   };
@@ -66,7 +73,7 @@ function MyTable() {
   const getUserAdmin = async () => {
     await axiosJWT.get("http://localhost:5000/useradmin", {
       headers: {
-        Username: Username,
+        username: Username,
         Authorization: `Bearer ${token}`,
       },
     });
@@ -79,7 +86,7 @@ function MyTable() {
         params: { refreshToken: refreshToken },
       });
       Cookies.remove("refreshToken");
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -89,9 +96,13 @@ function MyTable() {
     refreshToken();
     getUserAdmin();
     fetchData();
-    setInterval(() => {
+    const myInterval = setInterval(() => {
       fetchData();
     }, 1000 * 60);
+
+    return () => {
+      clearInterval(myInterval);
+    };
   }, []);
 
   return (
@@ -100,11 +111,19 @@ function MyTable() {
         <AppBar position="static">
           <Toolbar>
             <img src="img/LS-02.png" alt="logo" width="50" height="50" />
-            <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{ flexGrow: 1, marginLeft: "10px" }}
+            >
               WIFI Request List
             </Typography>
             <Tooltip title="Logout" arrow>
-              <IconButton aria-label="logout" onClick={Logout} sx={{ color: "white" }}>
+              <IconButton
+                aria-label="logout"
+                onClick={Logout}
+                sx={{ color: "white" }}
+              >
                 <LogoutRoundedIcon sx={{ fontSize: "30px" }} />
               </IconButton>
             </Tooltip>
@@ -113,7 +132,11 @@ function MyTable() {
       </Box>
       <div className="bg3">
         <div className="all-scroll">
-          <MuiTable loading={loading} memberList={memberList} setMemberList={setMemberList} />
+          <MuiTable
+            loading={loading}
+            memberList={memberList}
+            setMemberList={setMemberList}
+          />
         </div>
       </div>
     </div>

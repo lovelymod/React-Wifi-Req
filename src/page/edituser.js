@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { userSchema } from "../components/schema";
+import { userSchema } from "../utils/schema";
 import {
   AppBar,
   Box,
@@ -29,27 +29,25 @@ function EditUser() {
   const location = useLocation();
   const rowData = location.state.rowData;
   const prevPath = location.state.pathName;
-  const [fname, setFname] = useState(rowData.Firstname);
-  const [lname, setLname] = useState(rowData.Lastname);
-  const [email, setEmail] = useState(rowData.Email);
-  const [tel, setTel] = useState(
-    rowData.Tel.length > 10 ? rowData.Tel.slice(0, 3) + rowData.Tel.slice(4, 7) + rowData.Tel.slice(8, 12) : rowData.Tel
-  );
-  const [utype, setUtype] = useState(rowData.User_Type);
-  const [dtype, setDtype] = useState(
-    rowData.Device_Type === "mobile" ||
-      rowData.Device_Type === "notebook" ||
-      rowData.Device_Type === "tablet" ||
-      rowData.Device_Type === "ipad"
-      ? rowData.Device_Type
-      : "etc"
-  );
-  const [etc, setEtc] = useState(dtype === "etc" ? rowData.Device_Type : "");
-  const [dbrand, setDbrand] = useState(rowData.Device_Brand);
-  const [dname, setDname] = useState(rowData.Device_Name);
-  const [startdate, setStartdate] = useState(rowData.Start_Date);
-  const [enddate, setEnddate] = useState(rowData.End_Date);
-  const [remark, setRemark] = useState(rowData.Remark);
+  const [information, setInformation] = useState({
+    name: rowData.name,
+    role: rowData.role,
+    tel: rowData.tel.split("-").join(""),
+    email: rowData.email,
+    device_type:
+      rowData.device_type === "mobile" ||
+      rowData.device_type === "notebook" ||
+      rowData.device_type === "tablet" ||
+      rowData.device_type === "ipad"
+        ? rowData.device_type
+        : "etc",
+    etc: rowData.device_type === "etc" ? rowData.device_type : "",
+    device_brand: rowData.device_brand,
+    device_name: rowData.device_name,
+    start_date: rowData.start_date,
+    end_date: rowData.end_date,
+    remark: rowData.remark,
+  });
 
   const {
     register,
@@ -60,16 +58,17 @@ function EditUser() {
   } = useForm({
     resolver: yupResolver(userSchema),
     defaultValues: {
-      Firstname: fname,
-      Lastname: lname,
-      Email: email,
-      Tel: tel,
-      UserType: utype,
-      DeviceType: dtype,
-      DeviceBrand: dbrand,
-      DeviceName: dname,
-      StartDate: startdate,
-      EndDate: enddate,
+      name: information.name,
+      role: information.role,
+      tel: information.tel,
+      email: information.email,
+      device_type: information.device_type,
+      etc: information.etc,
+      device_brand: information.device_brand,
+      device_name: information.device_name,
+      start_date: information.start_date,
+      end_date: information.end_date,
+      remark: information.remark,
     },
   });
 
@@ -100,21 +99,22 @@ function EditUser() {
   };
 
   const OnSubmit = async (id) => {
-    const telFormat = tel.slice(0, 3) + "-" + tel.slice(3, 6) + "-" + tel.slice(6, 10);
+    const telFormat =
+      information.tel.slice(0, 3) +
+      "-" +
+      information.tel.slice(3, 6) +
+      "-" +
+      information.tel.slice(6, 10);
     await axios
       .patch("http://localhost:5000/updateusers", {
         id: id,
-        Firstname: fname,
-        Lastname: lname,
-        Email: email,
-        Tel: telFormat,
-        User_Type: utype,
-        Device_Type: dtype === "etc" ? etc : dtype,
-        Device_Brand: dbrand,
-        Device_Name: dname,
-        Start_Date: startdate,
-        End_Date: utype === "staff" ? "" : enddate,
-        Remark: remark,
+        ...information,
+        tel: telFormat,
+        device_type:
+          information.device_type === "etc"
+            ? information.etc
+            : information.device_type,
+        end_date: information.role === "staff" ? "" : information.end_date,
       })
       .then((response) => {
         if (response.data.msg === "User Updated") {
@@ -130,7 +130,9 @@ function EditUser() {
           }, 1500);
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const chgWidth = () => {
@@ -151,16 +153,26 @@ function EditUser() {
         <AppBar position="static">
           <Toolbar>
             <Tooltip title="Back">
-              <IconButton onClick={() => navigate(prevPath, { state: { rowData } })}>
+              <IconButton
+                onClick={() => navigate(prevPath, { state: { rowData } })}
+              >
                 <ArrowBackIosIcon sx={{ color: "white", fontSize: "30px" }} />
               </IconButton>
             </Tooltip>
             <img src="img/LS-02.png" alt="logo" width="50" height="50" />
-            <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginLeft: "10px" }}>
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{ flexGrow: 1, marginLeft: "10px" }}
+            >
               User Edit
             </Typography>
             <Tooltip title="Logout" arrow>
-              <IconButton aria-label="logout" onClick={Logout} sx={{ color: "white" }}>
+              <IconButton
+                aria-label="logout"
+                onClick={Logout}
+                sx={{ color: "white" }}
+              >
                 <LogoutRoundedIcon sx={{ fontSize: "30px" }} />
               </IconButton>
             </Tooltip>
@@ -180,21 +192,13 @@ function EditUser() {
             <TextField
               variant="outlined"
               label="ชื่อ"
-              value={fname}
-              {...register("Firstname", { onChange: (e) => setFname(e.target.value) })}
-              error={!!errors?.Firstname}
-              helperText={errors?.Firstname?.message}
-              required
-              fullWidth
-            />
-
-            <TextField
-              variant="outlined"
-              label="นามสกุล"
-              value={lname}
-              {...register("Lastname", { onChange: (e) => setLname(e.target.value) })}
-              error={!!errors?.Lastname}
-              helperText={errors?.Lastname?.message}
+              value={information.name}
+              {...register("name", {
+                onChange: (e) =>
+                  setInformation({ ...information, name: e.target.value }),
+              })}
+              error={!!errors?.name}
+              helperText={errors?.name?.message}
               required
               fullWidth
             />
@@ -203,20 +207,26 @@ function EditUser() {
             <TextField
               variant="outlined"
               label="อีเมล"
-              value={email}
-              {...register("Email", { onChange: (e) => setEmail(e.target.value) })}
-              error={!!errors?.Email}
-              helperText={errors?.Email?.message}
+              value={information.email}
+              {...register("email", {
+                onChange: (e) =>
+                  setInformation({ ...information, email: e.target.value }),
+              })}
+              error={!!errors?.email}
+              helperText={errors?.email?.message}
               required
               fullWidth
             />
             <TextField
               variant="outlined"
               label="เบอร์โทร"
-              value={tel}
-              {...register("Tel", { onChange: (e) => setTel(e.target.value) })}
-              error={!!errors?.Tel}
-              helperText={errors?.Tel?.message}
+              value={information.tel}
+              {...register("tel", {
+                onChange: (e) =>
+                  setInformation({ ...information, tel: e.target.value }),
+              })}
+              error={!!errors?.tel}
+              helperText={errors?.tel?.message}
               required
               fullWidth
             />
@@ -225,10 +235,13 @@ function EditUser() {
             <TextField
               variant="outlined"
               label="ประเภท"
-              value={utype}
-              {...register("UserType", { onChange: (e) => setUtype(e.target.value) })}
-              error={!!errors?.UserType}
-              helperText={errors?.UserType?.message}
+              value={information.role}
+              {...register("role", {
+                onChange: (e) =>
+                  setInformation({ ...information, role: e.target.value }),
+              })}
+              error={!!errors?.role}
+              helperText={errors?.role?.message}
               select
               required
               fullWidth
@@ -240,10 +253,16 @@ function EditUser() {
             <TextField
               variant="outlined"
               label="ชนิดอุปกรณ์"
-              value={dtype}
-              {...register("DeviceType", { onChange: (e) => setDtype(e.target.value) })}
-              error={!!errors?.DeviceType}
-              helperText={errors?.DeviceType?.message}
+              value={information.device_type}
+              {...register("device_type", {
+                onChange: (e) =>
+                  setInformation({
+                    ...information,
+                    device_type: e.target.value,
+                  }),
+              })}
+              error={!!errors?.device_type}
+              helperText={errors?.device_type?.message}
               select
               required
               fullWidth
@@ -262,16 +281,19 @@ function EditUser() {
             width="60%"
             justifyContent="flex-end"
             sx={{
-              display: dtype === "etc" ? "" : "none",
+              display: information.device_type === "etc" ? "" : "none",
             }}
           >
             <TextField
               variant="outlined"
               label="อื่นๆ"
-              value={etc}
-              {...register("Etc", { onChange: (e) => setEtc(e.target.value) })}
-              error={!!errors?.Etc}
-              helperText={errors?.Etc?.message}
+              value={information.etc}
+              {...register("etc", {
+                onChange: (e) =>
+                  setInformation({ ...information, etc: e.target.value }),
+              })}
+              error={!!errors?.etc}
+              helperText={errors?.etc?.message}
               fullWidth
               required
             />
@@ -280,20 +302,32 @@ function EditUser() {
             <TextField
               variant="outlined"
               label="แบรนด์"
-              value={dbrand}
-              {...register("DeviceBrand", { onChange: (e) => setDbrand(e.target.value) })}
-              error={!!errors?.DeviceBrand}
-              helperText={errors?.DeviceBrand?.message}
+              value={information.device_brand}
+              {...register("device_brand", {
+                onChange: (e) =>
+                  setInformation({
+                    ...information,
+                    device_brand: e.target.value,
+                  }),
+              })}
+              error={!!errors?.device_brand}
+              helperText={errors?.device_brand?.message}
               required
               fullWidth
             />
             <TextField
               variant="outlined"
               label="ชื่ออุปกรณ์"
-              value={dname}
-              {...register("DeviceName", { onChange: (e) => setDname(e.target.value) })}
-              error={!!errors?.DeviceName}
-              helperText={errors?.DeviceName?.message}
+              value={information.device_name}
+              {...register("device_name", {
+                onChange: (e) =>
+                  setInformation({
+                    ...information,
+                    device_name: e.target.value,
+                  }),
+              })}
+              error={!!errors?.device_name}
+              helperText={errors?.device_name?.message}
               required
               fullWidth
             />
@@ -302,24 +336,26 @@ function EditUser() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <Controller
                 control={control}
-                name="StartDate"
+                name="start_date"
                 render={({ field: { name, ...field } }) => (
                   <DatePicker
                     {...field}
                     label="เข้าวันที่"
                     inputFormat="YYYY/MM/DD"
-                    value={startdate}
+                    value={information.startdate}
                     onChange={(newValue) => {
-                      const date = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
-                      setValue("StartDate", date);
-                      setStartdate(date);
+                      const date = `${newValue.$y}-${newValue.$M + 1}-${
+                        newValue.$D
+                      }`;
+                      setValue("start_date", date);
+                      setInformation({ ...information, start_date: date });
                     }}
                     renderInput={(params) => (
                       <TextField
                         {...params}
                         onKeyDown={(e) => e.preventDefault()}
-                        error={!!errors?.StartDate}
-                        helperText={errors?.StartDate?.message}
+                        error={!!errors?.start_date}
+                        helperText={errors?.start_date?.message}
                         fullWidth
                         required
                       />
@@ -329,27 +365,33 @@ function EditUser() {
               />
               <Controller
                 control={control}
-                name="EndDate"
+                name="end_date"
                 render={({ field: { name, ...field } }) => (
                   <DatePicker
                     {...field}
                     label="ออกวันที่"
                     inputFormat="YYYY/MM/DD"
-                    value={enddate}
+                    value={information.end_date}
                     onChange={(newValue) => {
-                      const date = `${newValue.$y}-${newValue.$M + 1}-${newValue.$D}`;
-                      setValue("EndDate", date);
-                      setEnddate(date);
+                      const date = `${newValue.$y}-${newValue.$M + 1}-${
+                        newValue.$D
+                      }`;
+                      setValue("end_date", date);
+                      setInformation({ ...information, end_date: date });
                     }}
                     renderInput={(params) => (
                       <TextField
                         {...params}
                         onKeyDown={(e) => e.preventDefault()}
-                        error={!!errors?.EndDate}
-                        helperText={errors?.EndDate?.message}
+                        error={!!errors?.end_date}
+                        helperText={errors?.end_date?.message}
                         fullWidth
-                        required
-                        sx={{ display: `${utype !== "staff" ? "" : "none"}` }}
+                        required={information.role !== "staff"}
+                        sx={{
+                          display: `${
+                            information.role !== "staff" ? "" : "none"
+                          }`,
+                        }}
                       />
                     )}
                   />
@@ -361,14 +403,22 @@ function EditUser() {
             <TextField
               variant="outlined"
               label="หมายเหตุ"
-              value={remark}
+              value={information.remark}
               rows={2}
-              {...register("Remark", { onChange: (e) => setRemark(e.target.value) })}
+              {...register("remark", {
+                onChange: (e) =>
+                  setInformation({ ...information, remark: e.target.value }),
+              })}
               multiline
               fullWidth
             />
           </Stack>
-          <Stack direction="row" justifyContent="space-around" spacing={5} width="60%">
+          <Stack
+            direction="row"
+            justifyContent="space-around"
+            spacing={5}
+            width="60%"
+          >
             <Button type="submit" variant="contained">
               Submit
             </Button>

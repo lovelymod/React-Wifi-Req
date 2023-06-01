@@ -56,52 +56,29 @@ const MuiTable = ({ loading, memberList, setMemberList }) => {
       align: "center",
       flex: 1,
     },
+    {
+      field: "ip_addr",
+      headerName: "เลข IP เครื่อง",
+      hide: true,
+    },
 
     {
-      field: "Dates",
+      field: "submit_date",
       headerName: "วันที่",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
+
     {
-      field: "Times",
-      headerName: "เวลา",
-      headerAlign: "center",
-      align: "center",
-      flex: 1,
-    },
-    {
-      field: "Ip_Addr",
-      headerName: "เลข IP เครื่อง",
-      hide: true,
-    },
-    {
-      field: "Firstname",
+      field: "name",
       headerName: "ชื่อ",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      field: "Lastname",
-      headerName: "นามสกุล",
-      headerAlign: "center",
-      align: "center",
-      flex: 1,
-    },
-    {
-      field: "Email",
-      headerName: "อีเมล",
-      hide: true,
-    },
-    {
-      field: "Tel",
-      headerName: "เบอร์โทร",
-      hide: true,
-    },
-    {
-      field: "User_Type",
+      field: "role",
       headerName: "ประเภท",
       headerAlign: "center",
       align: "center",
@@ -111,50 +88,74 @@ const MuiTable = ({ loading, memberList, setMemberList }) => {
           return (
             <Chip
               label={params.value.toUpperCase()}
-              sx={{ backgroundColor: "#f6ffed", border: "1px solid #caf1ac", color: "#7dc15f" }}
+              sx={{
+                backgroundColor: "#f6ffed",
+                border: "1px solid #caf1ac",
+                color: "#7dc15f",
+              }}
             />
           );
         } else if (params.value === "internship") {
           return (
             <Chip
               label={params.value.toUpperCase()}
-              sx={{ backgroundColor: "#fff2e8", border: "1px solid #ffc9aa", color: "#da512b" }}
+              sx={{
+                backgroundColor: "#fff2e8",
+                border: "1px solid #ffc9aa",
+                color: "#da512b",
+              }}
             />
           );
         } else {
           return (
             <Chip
               label={params.value.toUpperCase()}
-              sx={{ backgroundColor: "#e6f4ff", border: "1px solid #b8ddff", color: "#4d88e5" }}
+              sx={{
+                backgroundColor: "#e6f4ff",
+                border: "1px solid #b8ddff",
+                color: "#4d88e5",
+              }}
             />
           );
         }
       },
     },
+
     {
-      field: "Device_Type",
+      field: "email",
+      headerName: "อีเมล",
+      hide: true,
+    },
+    {
+      field: "tel",
+      headerName: "เบอร์โทร",
+      hide: true,
+    },
+
+    {
+      field: "device_type",
       headerName: "ชนิดอุปกรณ์",
       hide: true,
     },
     {
-      field: "Device_Brand",
+      field: "device_brand",
       headerName: "แบรนด์",
       hide: true,
     },
     {
-      field: "Device_Name",
+      field: "device_name",
       headerName: "ชื่ออุปกรณ์",
       hide: true,
     },
     {
-      field: "Start_Date",
+      field: "start_date",
       headerName: "เข้าวันที่",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      field: "End_Date",
+      field: "end_date",
       headerName: "ออกวันที่",
       headerAlign: "center",
       align: "center",
@@ -200,7 +201,9 @@ const MuiTable = ({ loading, memberList, setMemberList }) => {
   const gridToolBar = () => {
     return (
       <>
-        <GridToolbarContainer sx={{ display: "flex", justifyContent: "flex-end", paddingX: "50px" }}>
+        <GridToolbarContainer
+          sx={{ display: "flex", justifyContent: "flex-end", paddingX: "50px" }}
+        >
           <Stack direction="row" spacing={3}>
             <GridToolbarQuickFilter />
             <Button variant="contained" onClick={() => setOpen(true)}>

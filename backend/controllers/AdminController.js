@@ -43,10 +43,10 @@ export const Login = async (req, res) => {
   try {
     const admin = await Adminloging.findAll({
       where: {
-        Username: req.body.Username,
+        username: req.body.username,
       },
     });
-    const match = await bcrypt.compare(req.body.Password, admin[0].Password);
+    const match = await bcrypt.compare(req.body.password, admin[0].password);
     if (!match) return res.status(400).json({ msg: "not Matched" });
     const adminId = admin[0].id;
     const Username = admin[0].Username;

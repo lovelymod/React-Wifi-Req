@@ -12,9 +12,9 @@ const Adminloging = db.define("admins", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  // refresh_token: {
-  //   type: DataTypes.TEXT,
-  // },
+  refresh_token: {
+    type: DataTypes.TEXT,
+  },
 });
 
 (async () => {

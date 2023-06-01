@@ -6,7 +6,7 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { userSchema } from "../components/schema";
+import { userSchema } from "../utils/schema";
 import { Box, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -18,6 +18,7 @@ function UserSubmit() {
   const defaultLanguage = window.localStorage.getItem("lang");
   const [toggleLanguage, setToggleLanguage] = useState(!!defaultLanguage);
   const [information, setInformation] = useState({
+    ip_addr: "",
     name: "",
     role: "",
     tel: "",
@@ -29,7 +30,6 @@ function UserSubmit() {
     start_date: "",
     end_date: "",
     remark: "",
-    ip_addr: "",
   });
 
   const {
@@ -412,7 +412,7 @@ function UserSubmit() {
                           error={!!errors?.end_date}
                           helperText={errors?.end_date?.message}
                           fullWidth
-                          required
+                          required={information.role !== "staff"}
                           sx={{
                             display: `${
                               information.role !== "staff" ? "" : "none"
